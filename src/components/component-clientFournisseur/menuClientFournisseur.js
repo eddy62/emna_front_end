@@ -6,6 +6,7 @@ import ListerClientFournisseur from 'C:/gitStage/EMNA/emna_front_end/src/compone
 import AddClientFournisseur from 'C:/gitStage/EMNA/emna_front_end/src/components/component-clientFournisseur/addClientFournisseur.js';
 import DetailClientFournisseur from 'C:/gitStage/EMNA/emna_front_end/src/components/component-clientFournisseur/detailClientFournisseur.js';
 import AxiosCenter from 'C:/gitStage/EMNA/emna_front_end/src/shared/services/AxiosCenter'
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
 
@@ -49,11 +50,30 @@ class MenuClientFournisseur extends Component {
 
   render() {
     return (
-      <div>
-        {/* <ListerClientFournisseur />  */}
-        <AddClientFournisseur />
-        {/* <DetailClientFournisseur client={this.state.selectedClient} /> */}
-      </div>
+
+
+
+
+
+      <Router>
+        <h1>Gestion société</h1>
+        <div>
+          <nav>
+            <ul className="nav nav-pills nav-fill">
+              <li className="nav-item">
+                <Link to="/1">
+                  <button type="button" className="btn btn-success">La Liste Des Mes Associés</button></Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/2">
+                  <button className="btn btn-success">Céer Une Société </button></Link>
+              </li>
+            </ul>
+          </nav>
+          <Route path="/1" component={ListerClientFournisseur} />
+          <Route path="/2" component={AddClientFournisseur} />
+        </div>
+      </Router>
     );
   }
 }

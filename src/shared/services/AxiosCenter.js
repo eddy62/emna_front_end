@@ -3,16 +3,33 @@ import ApiBackEnd from './../config/ApiBackEnd';
 
 const AxiosCenter = {
 
-    authenticate(values){
-        
+    authenticate(values) {
+
     },
 
-    getCurrentUser(){
+    getCurrentUser() {
         return ApiBackEnd({
-                method: 'get',
-                url: '/account',
-            })
-            
+            method: 'get',
+            url: '/account',
+        })
+
+    },
+    getClientFournisseur() {
+        return ApiBackEnd({
+            method: 'get',
+            url: '/client-fournisseurs',
+        })
+
+    },
+
+    createClientFournisseur(values) {
+        return ApiBackEnd({
+            method: 'post',
+            url: '/client-fournisseurs/new',
+            data: values,
+
+        })
+
     },
 
 

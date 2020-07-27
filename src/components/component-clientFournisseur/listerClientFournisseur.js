@@ -2,13 +2,13 @@
 import React, { Component } from 'react';
 import AxiosCenter from 'C:/gitStage/EMNA/emna_front_end/src/shared/services/AxiosCenter'
 import DetailClientFournisseur from 'C:/gitStage/EMNA/emna_front_end/src/components/component-clientFournisseur/detailClientFournisseur.js';
-import { boolean } from 'yup';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 
 
 
 class ListerClientFournisseur extends Component {
-    
+
   constructor(props) {
     super(props);
     this.state = {
@@ -104,18 +104,13 @@ class ListerClientFournisseur extends Component {
           "societeId": null
         }
       ],
-      selectedClient: null ,
-      showedClient :false 
+      selectedClient: null,
+      showedClient: false
 
     }
   }
 
   // componentDidMount() {
-  //   axios.get('https://jsonplaceholder.typicode.com/users')
-  //     .then( response => response.data )
-  //     .then( users => this.setState({ users }) )
-  //     .catch( err => console.log(err))
-
   //     AxiosCenter.getClientFournisseur().then(response => {
   //       this.state.clients = response.data ;
   //   }).catch(error => {
@@ -124,68 +119,71 @@ class ListerClientFournisseur extends Component {
   // }
 
   voirClient(client) {
-    this.setState.selectedClient = client ;
-    this.setState.showedClient = true ;
+    this.setState.selectedClient = client;
+    this.setState.showedClient = true;
   }
 
   render() {
     return (
 
-<div class="container">
-   <h2>La liste de client fournisseur </h2>           
-   <table class="table  table-striped table-bordered table-hover table-sm">
-   <caption>La liste de client fournisseur</caption>
-      <thead class="thead-dark">
-       <tr>
-         <th scope="col">Nom</th>
-        <th scope="col">SIREN</th>
-        <th scope="col">Email</th>
-      
-       </tr>
-      </thead>
-     <tbody>
-      { this.state.clients && this.state.clients.length ? (
-        this.state.clients.map( (c, index) => (
-          
-        <tr>
-           <td scope="row">{ c.nom }</td>
-          <td scope="row">{ c.siren }</td>
-         <td scope="row">{ c.email }</td>
-         <td className="text-right">
-                    <div className="btn-group flex-btn-group-container">
-                      <button voirClient= { () => this.props.voirClient(c)} type="button" class="btn btn-info">
-                      {/* <DetailClientFournisseur key= { index} client={ c } voirSelectedClient={ () => this.props.voirSelectedClient(index) } />       */}
-                        <span className="d-none d-md-inline">
-                         Detail
-                        </span>
-                      </button>
-                      <button  type="button" class="btn btn-primary">
-                        
-                        <span className="d-none d-md-inline">
-                          Moddifier
-                        </span>
-                      </button>
-                      <button   type="button" class="btn btn-danger" >
-                     
-                        <span  className="d-none d-md-inline">
-                         Supprimer
-                        </span>
-                      </button>
-                    </div>
-                  </td>
-       </tr>
+      <Router>
 
-     
-      
-        ))
-      ) : (<h1 className="text-center"> Pas des Client ... </h1>) }
- 
+        <div className="container">
+          <h2>La liste de client fournisseur </h2>
+          <table className="table  table-striped table-bordered table-hover table-sm">
+            <caption>La liste de client fournisseur</caption>
+            <thead className="thead-dark">
+              <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">SIREN</th>
+                <th scope="col">Email</th>
 
-    </tbody>
- </table>
-</div>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.clients && this.state.clients.length ? (
+                this.state.clients.map((c, index) => (
+                  <tr>
+                    <td scope="row">{c.nom}</td>
+                    <td scope="row">{c.siren}</td>
+                    <td scope="row">{c.email}</td>
+                    <td className="text-right">
+                      <div className="btn-group flex-btn-group-container">
+                        <Link to="/3">
+                          <button type="button" className="btn btn-info">
+                            <span className="d-none d-md-inline">
+                              Detail
+                            </span>
+                          </button>
+                        </Link>
+                        <button type="button" className="btn btn-primary">
 
- )
+                          <span className="d-none d-md-inline">
+                            Moddifier
+                        </span>
+                        </button>
+                        <button className="btn btn-danger" >
+                          <span className="d-none d-md-inline">
+                            Supprimer
+                        </span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+
+
+                ))
+              ) : (<h1 className="text-center"> Pas des Client ... </h1>)}
+
+
+            </tbody>
+          </table>
+          <Route path="/3" client={this.props.c} component={DetailClientFournisseur} />
+        </div>
+      </Router>
+
+    )
   }
 }
 
