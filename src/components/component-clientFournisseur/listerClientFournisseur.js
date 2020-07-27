@@ -156,6 +156,7 @@ class ListerClientFournisseur extends Component {
                             </span>
                           </button>
                         </Link>
+                        <Route path="/3" key={index} client={c} component={DetailClientFournisseur} />
                         <button type="button" className="btn btn-primary">
 
                           <span className="d-none d-md-inline">
@@ -179,7 +180,7 @@ class ListerClientFournisseur extends Component {
 
             </tbody>
           </table>
-          <Route path="/3" client={this.props.c} component={DetailClientFournisseur} />
+
         </div>
       </Router>
 
