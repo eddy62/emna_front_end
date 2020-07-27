@@ -1,0 +1,28 @@
+.container {
+  border: 5px ridge black;
+  background-color: rgb(247, 247, 234);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  padding-left: 50px;
+  height: 400px;
+  width: 300px;
+}
+
+.output {
+  font: 1rem "Fira Sans", sans-serif;
+}
+
+p,
+dt {
+  font-weight: bold;
+}
+
+dl,
+dd {
+  font-size: 0.9rem;
+}
+
+dd {
+  margin-bottom: 1em;
+}

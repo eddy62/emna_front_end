@@ -1,6 +1,9 @@
 
 import React, { Component } from 'react';
 import AxiosCenter from 'C:/gitStage/EMNA/emna_front_end/src/shared/services/AxiosCenter'
+import DetailClientFournisseur from 'C:/gitStage/EMNA/emna_front_end/src/components/component-clientFournisseur/detailClientFournisseur.js';
+import { boolean } from 'yup';
+
 
 
 
@@ -101,7 +104,9 @@ class ListerClientFournisseur extends Component {
           "societeId": null
         }
       ],
-      selectedClient: null
+      selectedClient: null ,
+      showedClient :false 
+
     }
   }
 
@@ -118,40 +123,24 @@ class ListerClientFournisseur extends Component {
   //   })
   // }
 
+  voirClient(client) {
+    this.setState.selectedClient = client ;
+    this.setState.showedClient = true ;
+  }
+
   render() {
     return (
 
-    
-    //   <div className="w-75 d-flex flex-row flex-wrap align-content-start">
-    //     <div className="w-100 d-flex flex-row flex-wrap justify-content-center my-3">
-    //   { this.state.clients && this.state.clients.length ? (
-    //     this.state.clients.map( (c, index) => (
-    //       <div key={ c.id }  className="card m-2" style={ { width: '200px'} }>
-           
-    //           <ul className="list-group">
-    //           <li className="list-group-item" >{ c.nom }</li>
-    //             <li className="list-group-item" >{ c.siren }</li>
-    //             <li className="list-group-item" >{ c.email }</li>
-    //             <li className="list-group-item" >{ c.telephone }</li>
-          
-              
-    //           </ul>
-            
-    //       </div>
-    //     ))
-    //   ) : (<h1 className="text-center"> Pas des Client ... </h1>) }
-    // </div>
-    //   </div>
-
 <div class="container">
    <h2>La liste de client fournisseur </h2>           
-   <table class="table">
-      <thead>
+   <table class="table  table-striped table-bordered table-hover table-sm">
+   <caption>La liste de client fournisseur</caption>
+      <thead class="thead-dark">
        <tr>
-         <th>Nom</th>
-        <th>SIREN</th>
-        <th>Email</th>
-        <th>TEL</th>
+         <th scope="col">Nom</th>
+        <th scope="col">SIREN</th>
+        <th scope="col">Email</th>
+      
        </tr>
       </thead>
      <tbody>
@@ -159,10 +148,31 @@ class ListerClientFournisseur extends Component {
         this.state.clients.map( (c, index) => (
           
         <tr>
-           <td>{ c.nom }</td>
-          <td>{ c.siren }</td>
-         <td>{ c.email }</td>
-         <td>{ c.telephone }</td>
+           <td scope="row">{ c.nom }</td>
+          <td scope="row">{ c.siren }</td>
+         <td scope="row">{ c.email }</td>
+         <td className="text-right">
+                    <div className="btn-group flex-btn-group-container">
+                      <button voirClient= { () => this.props.voirClient(c)} type="button" class="btn btn-info">
+                      {/* <DetailClientFournisseur key= { index} client={ c } voirSelectedClient={ () => this.props.voirSelectedClient(index) } />       */}
+                        <span className="d-none d-md-inline">
+                         Detail
+                        </span>
+                      </button>
+                      <button  type="button" class="btn btn-primary">
+                        
+                        <span className="d-none d-md-inline">
+                          Moddifier
+                        </span>
+                      </button>
+                      <button   type="button" class="btn btn-danger" >
+                     
+                        <span  className="d-none d-md-inline">
+                         Supprimer
+                        </span>
+                      </button>
+                    </div>
+                  </td>
        </tr>
 
      

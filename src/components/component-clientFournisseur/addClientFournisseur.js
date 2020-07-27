@@ -29,12 +29,13 @@ class AddClientFournisseur extends React.Component {
                 console.log(response);
             })
 
-            AxiosCenter.createClientFournisseur(values).then(response => {
-                      console.log(response.data) ;
-                  }).catch(error => {
-                      console.log(error)
-                  })
-                
+        AxiosCenter.createClientFournisseur(values).then(response => {
+            console.log(response.data);
+            console.log('values' + values)
+        }).catch(error => {
+            console.log(error)
+        })
+
         actions.setSubmitting(false);
 
     }
