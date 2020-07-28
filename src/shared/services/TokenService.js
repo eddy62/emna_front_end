@@ -1,23 +1,19 @@
-
-
 const TokenService = {
+  connexion(token) {
+    localStorage.setItem("authToken", token);
+  },
 
-    connexion(token){
-        //TODO set token
-    },
+  getToken() {
+    localStorage.getItem("authToken");
+  },
 
-    getToken(){
-        //TODO get token
-    },
+  deconnexion() {
+    localStorage.removeItem("authToken");
+  },
 
-    deconnexion(){
-        //TODO clear all storage/cookies
-    },
-
-    isAuthenticated(){
-        
-    }
-
-}
+  isAuthenticated() {
+    return localStorage.getItem("authToken") ? true : false;
+  },
+};
 
 export default TokenService;
