@@ -29,12 +29,22 @@ class AddClientFournisseur extends React.Component {
                 console.log(response);
             })
 
-        AxiosCenter.createClientFournisseur(values).then(response => {
-            console.log(response.data);
-            console.log('values' + values)
-        }).catch(error => {
-            console.log(error)
+        // AxiosCenter.createClientFournisseur(values).then(response => {
+        //     console.log(response.data);
+        //     console.log('values' + values)
+        // }).catch(error => {
+        //     console.log(error)
+        // })
+
+        axios.post(`http://localhost:8080/api/api/client-fournisseurs/new`, values, {
+            headers: {
+                Authorization: "Bearer" + " eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOIiwiZXhwIjoxNTk2MDE1NzI2fQ.06jj-aRti9IiaA1dWDiQgqOzVQCoumycrXd3P_l7-0gZV9vuDikPxn8_VB_Ou_-_72aGT2dZeEsmRQIXVGb0vA"
+            }
         })
+            .then(response => {
+                console.log(response.data)
+                // this.setState.clients = response.data;
+            })
 
         actions.setSubmitting(false);
 
@@ -48,7 +58,8 @@ class AddClientFournisseur extends React.Component {
         numero: Yup.number('Entrez la bonne format'),
         rue: Yup.string('String').min(5, 'Trop court'),
         codePostal: Yup.number('Entrez des chiffres').min(4, 'Trop court'),
-        ville: Yup.string('String')
+        ville: Yup.string('String'),
+
     });
 
     render() {
@@ -59,7 +70,10 @@ class AddClientFournisseur extends React.Component {
                 <h1>Ajouter un client fournisseur</h1>
                 <Formik
                     onSubmit={this.submit}
-                    initialValues={{ name: '', siren: 0, email: '', telephone: '', numero: 0, rue: '', codePostal: '', ville: '' }}
+                    initialValues={{
+                        name: '', siren: 0, email: '', telephone: '', numero: 0, rue: '', codePostal: '', ville: '', idSociete: 1,
+                        id: null,
+                    }}
                     validationSchema={this.userSchema}
 
                 >
