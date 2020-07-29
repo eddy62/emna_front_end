@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import NavBar from "./NavBar";
 import TokenService from "../../shared/services/TokenService";
 
 export default class Home extends Component {
@@ -8,15 +9,11 @@ export default class Home extends Component {
   };
   render() {
     return (
-      <header className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="/">
-          EMNA
-        </a>
+      <NavBar logout={this.logout} />
 
-        <div className="btn btn-primary" onClick={this.logout}>
-          Logout
-        </div>
-      </header>
+      // <div className="btn btn-primary" onClick={this.logout}>
+      //   Logout
+      // </div>
     );
   }
 }

@@ -3,11 +3,20 @@ import loginImg from "../../login.svg";
 import { Formik } from "formik";
 import AxiosCenter from "../../shared/services/AxiosCenter";
 import { withRouter } from "react-router-dom";
+import TokenService from "../../shared/services/TokenService";
 
 export class Login extends React.Component {
   submit = (values) => {
-    AxiosCenter.authenticate(values);
-    this.props.history.push("/");
+    AxiosCenter.authenticate(values)
+      .then((response) => {
+        if (response.status === 200) {
+          TokenService.connexion(response.data.id_token); //pour le token
+          this.props.history.push("/");
+        }
+      })
+      .catch((error) => {
+        console.log("User non reconnu");
+      });
   };
 
   //   console.log(response);
