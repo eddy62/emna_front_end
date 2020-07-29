@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
 import Style from './ClientFournisseur.module.css'
 
+
 class DetailsClientFournisseur extends Component {
 
     state = {
@@ -42,7 +43,7 @@ class DetailsClientFournisseur extends Component {
                     </MDBModalBody>
                     <MDBModalFooter>
                         <MDBBtn color="secondary" onClick={this.toggle(6)}>Fermer</MDBBtn>
-                        <MDBBtn color="secondary" onClick={this.toggle(6)}>Modifier</MDBBtn>
+                        <MDBBtn color="danger" onClick={this.toggle(6)}>Modifier</MDBBtn>
                     </MDBModalFooter>
                 </MDBModal>
             </MDBContainer>

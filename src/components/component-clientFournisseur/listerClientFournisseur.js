@@ -4,7 +4,6 @@ import AxiosCenter from 'C:/gitStage/EMNA/emna_front_end/src/shared/services/Axi
 import * as axios from 'axios';
 import DetailsClientFournisseur from './detailsClientFournisseur';
 import Style from './ClientFournisseur.module.css'
-import { Link, Route, Router } from 'react-router-dom';
 
 class ListerClientFournisseur extends Component {
   constructor(props) {
@@ -35,6 +34,14 @@ class ListerClientFournisseur extends Component {
   //   })
   // }
 
+  // deleteClient = (id) => {
+  //   axios.delete(`http://localhost:8080/api/client-fournisseurs/${id}`, {
+  //     headers: {
+  //       Authorization: "Basic " + " YWRtaW46YWRtaW4="
+  //     }
+  //   })
+  //     .catch(err => console.log(err))
+  // }
 
   render() {
     return (

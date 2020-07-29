@@ -69,9 +69,7 @@ class AddClientFournisseur extends React.Component {
                         nom: '', email: '', telephone: '', codePostal: '', ville: '', idSociete: 1,
                         id: null,
                     }}
-                    validationSchema={this.userSchema}
-
-                >
+                    validationSchema={this.userSchema}>
 
                     {({
 
