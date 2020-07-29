@@ -1,28 +1,20 @@
 import React, { Component } from "react";
+import TokenService from "../../shared/services/TokenService";
 
 export default class Home extends Component {
+  logout = () => {
+    this.props.history.push("/login");
+    TokenService.deconnexion();
+  };
   render() {
     return (
       <header className="navbar navbar-expand-lg navbar-light bg-light">
         <a className="navbar-brand" href="/">
           EMNA
         </a>
-        <button className="navbar-toggler">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse">
-          <ul className="navbar-nav ml-auto">
-            <li className="nav-item active">
-              <a className="nav-link" href="/">
-                Home
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/">
-                Favoris
-              </a>
-            </li>
-          </ul>
+
+        <div className="btn btn-primary" onClick={this.logout}>
+          Logout
         </div>
       </header>
     );

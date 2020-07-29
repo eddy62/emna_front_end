@@ -1,40 +1,48 @@
-import ApiBackEnd from './../config/ApiBackEnd';
-
+import ApiBackEnd from "./../config/ApiBackEnd";
+import TokenService from "./TokenService";
 
 const AxiosCenter = {
+  authenticate(values) {
+    ApiBackEnd({
+      method: "post",
+      url: "/authenticate",
+      data: values,
+    })
+      .then((response) => {
+        TokenService.connexion(response.data);
+      })
+      .catch((error) => console.log("User non reconnu TODO"));
+  },
 
-    authenticate(values) {
+  getCurrentUser() {
+    return ApiBackEnd({
+      method: "get",
+      url: "/account",
+    });
+  },
 
-    },
+  getClientFournisseur() {
+    return ApiBackEnd({
+      method: 'get',
+      url: '/client-fournisseurs',
+    })
 
-    getCurrentUser() {
-        return ApiBackEnd({
-            method: 'get',
-            url: '/account',
-        })
+  },
 
-    },
-    getClientFournisseur() {
-        return ApiBackEnd({
-            method: 'get',
-            url: '/client-fournisseurs',
-        })
+  createClientFournisseur(values) {
+    return ApiBackEnd({
+      method: 'post',
+      url: '/client-fournisseurs/new',
+      data: values,
 
-    },
+    })
 
-    createClientFournisseur(values) {
-        return ApiBackEnd({
-            method: 'post',
-            url: '/client-fournisseurs/new',
-            data: values,
-
-        })
-
-    },
+  },
 
 
 
 }
+
 
 export default AxiosCenter;
 
