@@ -14,7 +14,7 @@ const ComposantInput = ({
     form: { touched, errors },
     ...props
 }) => (
-        <div className="form-group">
+        <div className=" form-group col-6">
             <label> {props.label} </label>
             <input type="text" {...props} className="form-control" {...field} />
         </div>
@@ -24,10 +24,6 @@ class AddClientFournisseur extends React.Component {
 
     submit = (values, actions) => {
         console.log(values)
-        axios.post('https://jsonplaceholder.typicode.com/users', values)
-            .then(response => {
-                console.log(response);
-            })
 
         // AxiosCenter.createClientFournisseur(values).then(response => {
         //     console.log(response.data);
@@ -36,14 +32,14 @@ class AddClientFournisseur extends React.Component {
         //     console.log(error)
         // })
 
-        axios.post(`http://localhost:8080/api/api/client-fournisseurs/new`, values, {
+        axios.post(`http://localhost:8080/api/client-fournisseurs/new`, values, {
             headers: {
-                Authorization: "Bearer" + " eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOIiwiZXhwIjoxNTk2MDE1NzI2fQ.06jj-aRti9IiaA1dWDiQgqOzVQCoumycrXd3P_l7-0gZV9vuDikPxn8_VB_Ou_-_72aGT2dZeEsmRQIXVGb0vA"
+                Authorization: "Basic " + " YWRtaW46YWRtaW4="
             }
+
         })
             .then(response => {
-                console.log(response.data)
-                // this.setState.clients = response.data;
+                console.log("response " + response.data)
             })
 
         actions.setSubmitting(false);
@@ -51,7 +47,7 @@ class AddClientFournisseur extends React.Component {
     }
 
     userSchema = Yup.object().shape({
-        name: Yup.string('String').min(3, 'Trop court').max(20, 'Trop long').required('Requis'),
+        nom: Yup.string('String').min(3, 'Trop court').max(20, 'Trop long').required('Requis'),
         siren: Yup.number('Entres des chiffre').min(9, ' SIREN est composé de 9 chiffres').required('Le champ est obligatoire'),
         email: Yup.string().email("L'email doit être valide").required('Le champ est obligatoire'),
         telephone: Yup.number('Entrez des chiffres').min(9, 'Trop court'),
@@ -65,13 +61,12 @@ class AddClientFournisseur extends React.Component {
     render() {
         return (
 
-            <div className="container-fluid p-5 bg-light 
-            d-flex flex-column justify-content-center align-items-center">
+            <div className="container-fluid ">
                 <h1 className={Style.h1}>Ajouter un client fournisseur</h1>
                 <Formik
                     onSubmit={this.submit}
                     initialValues={{
-                        name: '', siren: 0, email: '', telephone: '', numero: 0, rue: '', codePostal: '', ville: '', idSociete: 1,
+                        nom: '', email: '', telephone: '', codePostal: '', ville: '', idSociete: 1,
                         id: null,
                     }}
                     validationSchema={this.userSchema}
@@ -84,38 +79,34 @@ class AddClientFournisseur extends React.Component {
                         isSubmitting,
 
                     }) => (
-                            <form onSubmit={handleSubmit} className="bg-white border p-5 d-flex flex-column">
-                                <Field name="name" label="Nom de la Société" component={ComposantInput} />
-                                <ErrorMessage name="name" component={ComposantErreur} />
-                                <hr></hr>
+                            <form onSubmit={handleSubmit} className=" container-fluid p-5 bg-light justify-content-center align-items-center" >
+                                <div className=" row p-2">
+                                    <Field name="nom" label="Nom de la Société" component={ComposantInput} />
+                                    <ErrorMessage name="nom" component={ComposantErreur} />
 
-                                <Field name="siren" label="SIREN" component={ComposantInput} />
-                                <ErrorMessage name="siren" type="number" component={ComposantErreur} />
-                                <hr></hr>
+                                    <Field name="siren" label="SIREN" component={ComposantInput} />
+                                    <ErrorMessage name="siren" type="number" component={ComposantErreur} />
 
-                                <Field name="email" label="Email" component={ComposantInput} />
-                                <ErrorMessage name="email" type="email" component={ComposantErreur} />
-                                <hr></hr>
+                                    <Field name="email" label="Email" component={ComposantInput} />
+                                    <ErrorMessage name="email" type="email" component={ComposantErreur} />
 
-                                <Field name="telephone" label="Téléphone" component={ComposantInput} />
-                                <ErrorMessage name="telephone" type="number" component={ComposantErreur} />
-                                <hr></hr>
+                                    <Field name="telephone" label="Téléphone" component={ComposantInput} />
+                                    <ErrorMessage name="telephone" type="number" component={ComposantErreur} />
 
-                                <Field name="numero" label="Numero" component={ComposantInput} />
-                                <ErrorMessage name="numero" type="number" component={ComposantErreur} />
-                                <hr></hr>
+                                    <Field name="numeroRue" label="Numero" component={ComposantInput} />
+                                    <ErrorMessage name="numeroRue" type="number" component={ComposantErreur} />
 
-                                <Field name="rue" label="Rue" component={ComposantInput} />
-                                <ErrorMessage name="rue" component={ComposantErreur} />
-                                <hr></hr>
+                                    <Field name="nomRue" label="Rue" component={ComposantInput} />
+                                    <ErrorMessage name="nomRue" component={ComposantErreur} />
 
-                                <Field name="codePostal" label="Code Postal" component={ComposantInput} />
-                                <ErrorMessage name="codePostal" type="number" component={ComposantErreur} />
-                                <hr></hr>
 
-                                <Field name="ville" label="Ville" component={ComposantInput} />
-                                <ErrorMessage name="ville" component={ComposantErreur} />
-                                <hr></hr>
+                                    <Field name="codePostal" label="Code Postal" component={ComposantInput} />
+                                    <ErrorMessage name="codePostal" type="number" component={ComposantErreur} />
+
+
+                                    <Field name="ville" label="Ville" component={ComposantInput} />
+                                    <ErrorMessage name="ville" component={ComposantErreur} />
+                                </div>
 
                                 <button type="submit" className="btn btn-primary">
                                     Sauvegarder
