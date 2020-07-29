@@ -1,17 +1,12 @@
 import ApiBackEnd from "./../config/ApiBackEnd";
-import TokenService from "./TokenService";
 
 const AxiosCenter = {
   authenticate(values) {
-    ApiBackEnd({
+    return ApiBackEnd({
       method: "post",
       url: "/authenticate",
       data: values,
-    })
-      .then((response) => {
-        TokenService.connexion(response.data);
-      })
-      .catch((error) => console.log("User non reconnu TODO"));
+    });
   },
 
   getCurrentUser() {
