@@ -4,7 +4,7 @@ const TokenService = {
   },
 
   getToken() {
-    localStorage.getItem("authToken");
+    return localStorage.getItem("authToken");
   },
 
   deconnexion() {

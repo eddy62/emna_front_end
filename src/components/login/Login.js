@@ -10,7 +10,7 @@ export class Login extends React.Component {
     AxiosCenter.authenticate(values)
       .then((response) => {
         if (response.status === 200) {
-          TokenService.connexion(response.data); //pour le token
+          TokenService.connexion(response.data.id_token); //pour le token
           this.props.history.push("/");
         }
       })
