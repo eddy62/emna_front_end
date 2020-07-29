@@ -50,6 +50,7 @@ class MenuClientFournisseur extends Component {
           </nav>
           <Route path="/liste" component={ListerClientFournisseur} />
           <Route path="/creer" component={AddClientFournisseur} />
+          <hr></hr>
         </div>
       </Router>
 

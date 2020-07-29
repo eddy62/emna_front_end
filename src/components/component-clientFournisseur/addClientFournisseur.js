@@ -3,7 +3,7 @@ import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import * as axios from 'axios';
 import AxiosCenter from 'C:/gitStage/EMNA/emna_front_end/src/shared/services/AxiosCenter'
-
+import Style from './ClientFournisseur.module.css'
 
 const ComposantErreur = props => (
     <div className="text-danger">{props.children}</div>
@@ -67,7 +67,7 @@ class AddClientFournisseur extends React.Component {
 
             <div className="container-fluid p-5 bg-light 
             d-flex flex-column justify-content-center align-items-center">
-                <h1>Ajouter un client fournisseur</h1>
+                <h1 className={Style.h1}>Ajouter un client fournisseur</h1>
                 <Formik
                     onSubmit={this.submit}
                     initialValues={{
@@ -87,27 +87,35 @@ class AddClientFournisseur extends React.Component {
                             <form onSubmit={handleSubmit} className="bg-white border p-5 d-flex flex-column">
                                 <Field name="name" label="Nom de la Société" component={ComposantInput} />
                                 <ErrorMessage name="name" component={ComposantErreur} />
+                                <hr></hr>
 
                                 <Field name="siren" label="SIREN" component={ComposantInput} />
                                 <ErrorMessage name="siren" type="number" component={ComposantErreur} />
+                                <hr></hr>
 
                                 <Field name="email" label="Email" component={ComposantInput} />
                                 <ErrorMessage name="email" type="email" component={ComposantErreur} />
+                                <hr></hr>
 
                                 <Field name="telephone" label="Téléphone" component={ComposantInput} />
                                 <ErrorMessage name="telephone" type="number" component={ComposantErreur} />
+                                <hr></hr>
 
                                 <Field name="numero" label="Numero" component={ComposantInput} />
                                 <ErrorMessage name="numero" type="number" component={ComposantErreur} />
+                                <hr></hr>
 
                                 <Field name="rue" label="Rue" component={ComposantInput} />
                                 <ErrorMessage name="rue" component={ComposantErreur} />
+                                <hr></hr>
 
                                 <Field name="codePostal" label="Code Postal" component={ComposantInput} />
                                 <ErrorMessage name="codePostal" type="number" component={ComposantErreur} />
+                                <hr></hr>
 
                                 <Field name="ville" label="Ville" component={ComposantInput} />
                                 <ErrorMessage name="ville" component={ComposantErreur} />
+                                <hr></hr>
 
                                 <button type="submit" className="btn btn-primary">
                                     Sauvegarder

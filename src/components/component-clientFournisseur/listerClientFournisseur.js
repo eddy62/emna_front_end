@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import AxiosCenter from 'C:/gitStage/EMNA/emna_front_end/src/shared/services/AxiosCenter'
 import * as axios from 'axios';
 import DetailsClientFournisseur from './detailsClientFournisseur';
-// import ModalPage from './DetailsClientFournisseur';
+import Style from './ClientFournisseur.module.css'
 
 
 
@@ -188,7 +188,8 @@ class ListerClientFournisseur extends Component {
   render() {
     return (
 
-      <div className="container">
+      <div className="container justify-content-center">
+        <hr></hr>
         <table className="table  table-striped table-bordered table-hover table-sm">
           <caption>La liste de client fournisseur</caption>
           <thead className="thead-dark">
