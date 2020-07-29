@@ -1,11 +1,11 @@
 
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import ListerClientFournisseur from './listerClientFournisseur';
 import AddClientFournisseur from './addClientFournisseur';
 import { MDBBtn } from "mdbreact";
 import Style from './ClientFournisseur.module.css'
-
+import NavBar from '../home/NavBar';
 
 class MenuClientFournisseur extends Component {
 
@@ -13,25 +13,26 @@ class MenuClientFournisseur extends Component {
     return (
 
       <Router>
+        <NavBar />
         <div className={Style.menu}>
           <h1 className={Style.h1}>Gestion Société</h1>
         </div>
         <div>
           <nav>
-            <ul className="nav nav-pills nav-fill">
-              <li className="nav-item">
-                <Link to="/liste">
-                  <MDBBtn>La Liste Des Mes Associés</MDBBtn></Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/creer">
-                  <MDBBtn> +Céer Une Société </MDBBtn> </Link>
-              </li>
-              <li className="nav-item">
-                <MDBBtn> +Céer Une Société </MDBBtn>
-              </li>
-            </ul>
+            <Fragment>
+              <ul className="nav nav-pills nav-fill">
+                <li className="nav-item">
+                  <Link to="/liste">
+                    <MDBBtn color="info" >La Liste Des Mes Associés</MDBBtn></Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/creer">
+                    <MDBBtn color="info" > +Céer Une Société </MDBBtn> </Link>
+                </li>
+              </ul>
+            </Fragment>
           </nav>
+
           <Route path="/liste" component={ListerClientFournisseur} />
           <Route path="/creer" component={AddClientFournisseur} />
         </div>

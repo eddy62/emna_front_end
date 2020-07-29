@@ -62,7 +62,7 @@ class AddClientFournisseur extends React.Component {
         return (
 
             <div className="container-fluid ">
-                <h1 className={Style.h1}>Ajouter un client fournisseur</h1>
+                <h1 className={Style.h2}>Ajouter un client fournisseur</h1>
                 <Formik
                     onSubmit={this.submit}
                     initialValues={{

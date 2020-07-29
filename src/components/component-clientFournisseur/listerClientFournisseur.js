@@ -4,9 +4,9 @@ import AxiosCenter from 'C:/gitStage/EMNA/emna_front_end/src/shared/services/Axi
 import * as axios from 'axios';
 import DetailsClientFournisseur from './detailsClientFournisseur';
 import Style from './ClientFournisseur.module.css'
+import { Link, Route, Router } from 'react-router-dom';
 
 class ListerClientFournisseur extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -14,7 +14,6 @@ class ListerClientFournisseur extends Component {
 
     }
   }
-
 
 
   componentDidMount() {
@@ -39,29 +38,28 @@ class ListerClientFournisseur extends Component {
 
   render() {
     return (
-
-      <div className="container">
+      <div className="container-fluid container-fluid p-5 bg-light justify-content-center align-items-center ">
         <div>
-          <table className=" table-striped table-bordered table-hover table-sm">
+          <table className=" table table-striped table-bordered table-hover table-sm">
             <caption>La liste de client fournisseur</caption>
             <thead className="thead-dark">
               <tr>
                 <th scope="col">Nom</th>
                 <th scope="col">SIREN</th>
                 <th scope="col">Email</th>
-
               </tr>
             </thead>
             <tbody>
               {this.state.clients && this.state.clients.length ? (
                 this.state.clients.map((c, index) => (
-
                   < tr key={index} >
                     <td scope="row">{c.nom}</td>
                     <td scope="row">{c.siren}</td>
                     <td scope="row">{c.email}</td>
-                    <td className="text-right">
-                      {/* <DetailsClientFournisseur client={c} /> */}
+                    <td>
+                      <div className="btn-group flex-btn-group-container">
+                        <DetailsClientFournisseur client={c} />
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -69,24 +67,6 @@ class ListerClientFournisseur extends Component {
             </tbody>
           </table>
         </div>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
-        qdsfqsdfqsdf
-
-        <br></br>
-        <br></br>
-        <br></br>
-        <br></br>
       </div>
 
     )
