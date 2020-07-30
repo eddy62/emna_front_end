@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react';
 import AxiosCenter from 'C:/gitStage/EMNA/emna_front_end/src/shared/services/AxiosCenter'
-import * as axios from 'axios';
 import DetailsClientFournisseur from './detailsClientFournisseur';
 import Style from './ClientFournisseur.module.css'
 
@@ -16,12 +15,15 @@ class ListerClientFournisseur extends Component {
 
 
   componentDidMount() {
-    AxiosCenter.getClientFournisseur().then(response => {
-      this.state.clients = response.data;
+    AxiosCenter.getClientFournisseur(1).then(response => {
+      const clients = response.data;
+      this.setState({ clients });
     }).catch(error => {
       console.log(error)
     })
   }
+
+
 
   // deleteClient = (id) => {
   //   axios.delete(`http://localhost:8080/api/client-fournisseurs/${id}`, {

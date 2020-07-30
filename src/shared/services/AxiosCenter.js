@@ -16,10 +16,10 @@ const AxiosCenter = {
     });
   },
 
-  getClientFournisseur() {
+  getClientFournisseur(id) {
     return ApiBackEnd({
       method: 'get',
-      url: '/client-fournisseurs',
+      url: `/client-fournisseurs/societe/${id}`,
     })
 
   },
@@ -27,7 +27,7 @@ const AxiosCenter = {
   createClientFournisseur(values) {
     return ApiBackEnd({
       method: 'post',
-      url: '/client-fournisseurs/new',
+      url: `/client-fournisseurs/new`,
       data: values,
 
     })
