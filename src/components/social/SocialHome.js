@@ -1,5 +1,7 @@
 import React from "react";
+import ListEmployes from "./gestion_employes/List_employes";
 import "./style1.scss";
+import { Link } from "react-router-dom";
 import {
   MDBCard,
   MDBCardBody,
@@ -43,6 +45,9 @@ class AccueilSocial extends React.Component {
       isLogginActive: true,
     };
   }
+
+  handleEmploye() {}
+
   render() {
     const title = "Gestion Social";
     const title1 = "Gestion des Employés";
@@ -82,14 +87,11 @@ class AccueilSocial extends React.Component {
                       </MDBCardText>
                       <br />
                       <div className="boutton">
-                        <MDBBtn
-                          className="boutton"
-                          rounded
-                          size="sm"
-                          onClick=""
-                        >
-                          Gerer
-                        </MDBBtn>
+                        <Link to="/listEmployes">
+                          <MDBBtn rounded size="sm">
+                            Gerer
+                          </MDBBtn>
+                        </Link>
                       </div>
                     </MDBCardBody>
                   </MDBCard>
@@ -105,9 +107,11 @@ class AccueilSocial extends React.Component {
                       </MDBCardText>
                       <br />
                       <div className="boutton">
-                        <MDBBtn className="boutton" rounded size="sm">
-                          Gerer
-                        </MDBBtn>
+                        <Link to="/listEmployes">
+                          <MDBBtn className="boutton" rounded size="sm">
+                            Gerer
+                          </MDBBtn>
+                        </Link>
                       </div>
                     </MDBCardBody>
                   </MDBCard>
@@ -124,9 +128,11 @@ class AccueilSocial extends React.Component {
                       </MDBCardText>
                       <br />
                       <div className="boutton">
-                        <MDBBtn className="boutton" rounded size="sm">
-                          Gerer
-                        </MDBBtn>
+                        <Link to="/listEmployes">
+                          <MDBBtn className="boutton" rounded size="sm">
+                            Gerer
+                          </MDBBtn>
+                        </Link>
                       </div>
                     </MDBCardBody>
                   </MDBCard>
@@ -143,9 +149,11 @@ class AccueilSocial extends React.Component {
                       </MDBCardText>
                       <br />
                       <div className="boutton">
-                        <MDBBtn className="boutton" rounded size="sm">
-                          Gerer
-                        </MDBBtn>
+                        <Link to="/listEmployes">
+                          <MDBBtn className="boutton" rounded size="sm">
+                            Gerer
+                          </MDBBtn>
+                        </Link>
                       </div>
                     </MDBCardBody>
                   </MDBCard>

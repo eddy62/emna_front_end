@@ -1,5 +1,7 @@
 import React from "react";
 import "./style2.scss";
+import { Link } from "react-router-dom";
+import ListEmployes from "./List_employes";
 import {
   MDBCardTitle,
   MDBCardHeader,
@@ -267,15 +269,21 @@ class DetailEmploye extends React.Component {
             <div>
               <hr></hr>
             </div>
-            <MDBBtn color="default" rounded size="sm">
-              Mise à jour
-            </MDBBtn>
+            <Link to="/listEmployes">
+              <MDBBtn color="default" rounded size="sm">
+                Mise à jour
+              </MDBBtn>
+            </Link>
+
             <MDBBtn color="default" rounded size="sm">
               Supprimer
             </MDBBtn>
-            <MDBBtn color="default" rounded size="sm">
-              Retour
-            </MDBBtn>
+
+            <Link to="/listEmployes">
+              <MDBBtn color="default" rounded size="sm">
+                Retour
+              </MDBBtn>
+            </Link>
           </MDBContainer>
         </div>
       </div>
