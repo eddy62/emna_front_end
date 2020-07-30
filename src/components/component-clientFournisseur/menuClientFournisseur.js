@@ -14,8 +14,8 @@ class MenuClientFournisseur extends Component {
 
       <Router>
         <NavBar />
-        <div className={Style.menu}>
-          <h1 className={Style.h1}>Gestion Société</h1>
+        <div className={"container-fluid" + Style.menu}>
+          <h1 className={Style.h1}>Gestion Client Fournisseur</h1>
         </div>
         <div>
           <nav>
@@ -23,7 +23,7 @@ class MenuClientFournisseur extends Component {
               <ul className="nav nav-pills nav-fill">
                 <li className="nav-item">
                   <Link to="/liste">
-                    <MDBBtn color="info" >La Liste Des Mes Associés</MDBBtn></Link>
+                    <MDBBtn className={Style.button} color="info" >La Liste Des Mes Associés</MDBBtn></Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/creer">

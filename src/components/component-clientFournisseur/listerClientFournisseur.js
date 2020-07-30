@@ -15,24 +15,24 @@ class ListerClientFournisseur extends Component {
   }
 
 
-  componentDidMount() {
-    axios.get('http://localhost:8080/api/client-fournisseurs/societe/1', {
-      headers: {
-        Authorization: "Basic " + " YWRtaW46YWRtaW4="
-      }
-    })
-      .then(response => response.data)
-      .then(clients => this.setState({ clients }))
-      .catch(err => console.log(err))
-  }
-
   // componentDidMount() {
-  //   AxiosCenter.getClientFournisseur().then(response => {
-  //     this.state.clients = response.data;
-  //   }).catch(error => {
-  //     console.log(error)
+  //   axios.get('http://localhost:8080/api/client-fournisseurs/societe/1', {
+  //     headers: {
+  //       Authorization: "Basic " + " YWRtaW46YWRtaW4="
+  //     }
   //   })
+  //     .then(response => response.data)
+  //     .then(clients => this.setState({ clients }))
+  //     .catch(err => console.log(err))
   // }
+
+  componentDidMount() {
+    AxiosCenter.getClientFournisseur().then(response => {
+      this.state.clients = response.data;
+    }).catch(error => {
+      console.log(error)
+    })
+  }
 
   // deleteClient = (id) => {
   //   axios.delete(`http://localhost:8080/api/client-fournisseurs/${id}`, {

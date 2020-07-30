@@ -21,7 +21,7 @@ class DetailsClientFournisseur extends Component {
     render() {
         return (
             <MDBContainer>
-                <MDBBtn onClick={this.toggle(6)}>Details</MDBBtn>
+                <MDBBtn className={Style.button1} onClick={this.toggle(6)}>Details</MDBBtn>
                 <MDBModal isOpen={this.state.modal6} toggle={this.toggle(6)} side position="top-right">
                     <MDBModalHeader toggle={this.toggle(6)}>Présentation de la société</MDBModalHeader>
                     <MDBModalBody>
