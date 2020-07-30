@@ -25,22 +25,12 @@ class AddClientFournisseur extends React.Component {
     submit = (values, actions) => {
         console.log(values)
 
-        // AxiosCenter.createClientFournisseur(values).then(response => {
-        //     console.log(response.data);
-        //     console.log('values' + values)
-        // }).catch(error => {
-        //     console.log(error)
-        // })
-
-        axios.post(`http://localhost:8080/api/client-fournisseurs/new`, values, {
-            headers: {
-                Authorization: "Basic " + " YWRtaW46YWRtaW4="
-            }
-
+        AxiosCenter.createClientFournisseur(values).then(response => {
+            console.log(response.data);
+            console.log('values' + values)
+        }).catch(error => {
+            console.log(error)
         })
-            .then(response => {
-                console.log("response " + response.data)
-            })
 
         actions.setSubmitting(false);
 

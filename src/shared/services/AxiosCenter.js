@@ -36,8 +36,20 @@ const AxiosCenter = {
 
 
 
-}
-
+  getOperation() {
+    return ApiBackEnd({
+      method: "get",
+      url: "/operations",
+    });
+  },
+  postOperation(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: "/operations",
+      data: values,
+    });
+  },
+};
 
 export default AxiosCenter;
 
