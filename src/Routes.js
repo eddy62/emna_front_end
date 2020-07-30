@@ -23,9 +23,7 @@ export default class Routes extends Component {
         <Switch>
           <PrivateRoute exact path="/" component={Home} />
           <Route path="/login" component={IndexLogin} />
-<<<<<<< HEAD
-          <Route path="/client-fournisseur" component={MenuClientFournisseur} />
-=======
+
           <Route path="/listcontrat" component={ListeContrat} />
           <Route path="/contrat" component={Contrat} />
           <Route path="/detailcontrat/:id" component={DetailContrat} />
@@ -38,7 +36,8 @@ export default class Routes extends Component {
           />
           <PrivateRoute path="/indexoperation" component={IndexOperation} />
           <PrivateRoute path="/listeoperations" component={ListeOperations} />
->>>>>>> stage
+
+          <Route path="/client-fournisseur" component={MenuClientFournisseur} />
         </Switch>
       </BrowserRouter>
     );
