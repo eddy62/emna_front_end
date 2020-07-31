@@ -1,6 +1,6 @@
 import React from "react";
 import "./style2.scss";
-import DetailEmploye from "./Detail_employe";
+//import DetailEmploye from "./Detail_employe";
 import { Link } from "react-router-dom";
 import {
   MDBCardTitle,
@@ -60,6 +60,7 @@ class ListEmployes extends React.Component {
             categorie: "Cadre",
             statut: "Project Owner",
             dateEmbauche: "2020-07-27",
+            dateFinContrat: "01-01-3000",
             heuresMensuelle: 151.66,
             salaireBrutMensuelle: 0,
             salaireHoraire: 0,
@@ -92,6 +93,7 @@ class ListEmployes extends React.Component {
             numeroSecuriteSociale: "string",
             //emploi
             dateEmbauche: "2020-07-27",
+            dateFinContrat: "01-01-3000",
             heuresMensuelle: 151.66,
             salaireBrutMensuelle: 0,
             salaireHoraire: 0,
@@ -125,11 +127,12 @@ class ListEmployes extends React.Component {
             numeroSecuriteSociale: "string",
             //emploi
             dateEmbauche: "2020-07-27",
+            dateFinContrat: "01-01-3000",
             heuresMensuelle: 151.66,
             salaireBrutMensuelle: 0,
             salaireHoraire: 0,
             statut: "string",
-            typeContrat: "CDD",
+            typeContrat: "CDI",
             //adresse
             idAdresse: 1,
             numeroRue: "22",
@@ -158,6 +161,7 @@ class ListEmployes extends React.Component {
             numeroSecuriteSociale: "string",
             //emploi
             dateEmbauche: "2020-07-27",
+            dateFinContrat: "01-01-3000",
             heuresMensuelle: 151.66,
             salaireBrutMensuelle: 0,
             salaireHoraire: 0,
@@ -191,6 +195,7 @@ class ListEmployes extends React.Component {
             numeroSecuriteSociale: "string",
             //emploi
             dateEmbauche: "2020-07-27",
+            dateFinContrat: "01-01-3000",
             heuresMensuelle: 151.66,
             salaireBrutMensuelle: 0,
             salaireHoraire: 0,
@@ -224,6 +229,7 @@ class ListEmployes extends React.Component {
             numeroSecuriteSociale: "string",
             //emploi
             dateEmbauche: "2020-07-27",
+            dateFinContrat: "01-01-3000",
             heuresMensuelle: 151.66,
             salaireBrutMensuelle: 0,
             salaireHoraire: 0,
@@ -266,6 +272,11 @@ class ListEmployes extends React.Component {
         sort: "asc",
       },
       {
+        label: "Date Sortie",
+        field: "dateSortie",
+        sort: "asc",
+      },
+      {
         label: "Type Contrat",
         field: "typeContrat",
         sort: "asc",
@@ -279,6 +290,7 @@ class ListEmployes extends React.Component {
         nom: employe.nomUsage,
         prenom: employe.prenom,
         dateEmbauche: employe.dateEmbauche,
+        dateSortie: employe.dateFinContrat,
         typeContrat: employe.typeContrat,
         clickEvent: () => {
           //<DetailEmploye details={employe} />;
@@ -288,7 +300,7 @@ class ListEmployes extends React.Component {
     });
     return (
       <MDBTable theadColor="dark" striped hover btn scrollY maxHeight="300px">
-        <MDBTableHead columns={columns} color="default" />
+        <MDBTableHead columns={columns} />
         <MDBTableBody rows={rows} />
       </MDBTable>
     );

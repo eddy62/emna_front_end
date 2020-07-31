@@ -1,29 +1,26 @@
-
-import React, { Component } from 'react';
-import AxiosCenter from 'C:/gitStage/EMNA/emna_front_end/src/shared/services/AxiosCenter'
-import DetailsClientFournisseur from './detailsClientFournisseur';
-import Style from './ClientFournisseur.module.css'
+import React, { Component } from "react";
+import AxiosCenter from "./../../shared/services/AxiosCenter";
+import DetailsClientFournisseur from "./detailsClientFournisseur";
+import Style from "./ClientFournisseur.module.css";
 
 class ListerClientFournisseur extends Component {
   constructor(props) {
     super(props);
     this.state = {
       clients: [],
-
-    }
+    };
   }
-
 
   componentDidMount() {
-    AxiosCenter.getClientFournisseur(1).then(response => {
-      const clients = response.data;
-      this.setState({ clients });
-    }).catch(error => {
-      console.log(error)
-    })
+    AxiosCenter.getClientFournisseur(1)
+      .then((response) => {
+        const clients = response.data;
+        this.setState({ clients });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
-
-
 
   // deleteClient = (id) => {
   //   axios.delete(`http://localhost:8080/api/client-fournisseurs/${id}`, {
@@ -50,7 +47,7 @@ class ListerClientFournisseur extends Component {
             <tbody>
               {this.state.clients && this.state.clients.length ? (
                 this.state.clients.map((c, index) => (
-                  < tr key={index} >
+                  <tr key={index}>
                     <td scope="row">{c.nom}</td>
                     <td scope="row">{c.siren}</td>
                     <td scope="row">{c.email}</td>
@@ -61,16 +58,15 @@ class ListerClientFournisseur extends Component {
                     </td>
                   </tr>
                 ))
-              ) : (<h1 className="text-center"> Pas des Client ... </h1>)}
+              ) : (
+                <h1 className="text-center"> Pas des Client ... </h1>
+              )}
             </tbody>
           </table>
         </div>
       </div>
-
-    )
+    );
   }
 }
 
 export default ListerClientFournisseur;
-
-

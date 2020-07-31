@@ -1,7 +1,7 @@
 import React from "react";
 import "./style2.scss";
 import { Link } from "react-router-dom";
-import ListEmployes from "./List_employes";
+//import ListEmployes from "./List_employes";
 import {
   MDBCardTitle,
   MDBCardHeader,
