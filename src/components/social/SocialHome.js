@@ -62,13 +62,9 @@ class AccueilSocial extends React.Component {
           <MDBContainer>
             <div>
               <MDBCardHeader color="default-color">
-                <MDBCardTitle>
-                  <h1>{title}</h1>
-                </MDBCardTitle>
+                <MDBCardTitle tag="h1">{title}</MDBCardTitle>
                 <br />
-                <MDBCardTitle>
-                  <h3>{entreprise}</h3>
-                </MDBCardTitle>
+                <MDBCardTitle tag="h3">{entreprise}</MDBCardTitle>
               </MDBCardHeader>
             </div>
             <div>

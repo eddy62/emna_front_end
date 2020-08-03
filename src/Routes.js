@@ -26,9 +26,11 @@ export default class Routes extends Component {
         <Switch>
           <PrivateRoute exact path="/" component={Home} />
           <Route path="/login" component={IndexLogin} />
+
           <Route path="/socialHome" component={AccueilSocial} />
           <Route path="/listEmployes" component={ListEmployes} />
-          <Route path="/detailEmploye" component={DetailEmploye} />
+          <Route path="/detailEmploye/:id" component={DetailEmploye} />
+
           <Route path="/listcontrat" component={ListeContrat} />
           <Route path="/contrat" component={Contrat} />
           <Route path="/detailcontrat/:id" component={DetailContrat} />

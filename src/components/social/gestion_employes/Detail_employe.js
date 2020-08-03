@@ -1,7 +1,6 @@
 import React from "react";
 import "./style2.scss";
 import { Link } from "react-router-dom";
-//import ListEmployes from "./List_employes";
 import {
   MDBCardTitle,
   MDBCardHeader,
@@ -80,6 +79,11 @@ class DetailEmploye extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const idEmploye = this.props.match.params.id;
+    console.log(idEmploye);
+  }
+
   render() {
     const title = "Gestion Social";
     const title1 = "Information Employé";
@@ -91,13 +95,9 @@ class DetailEmploye extends React.Component {
           <MDBContainer>
             <div>
               <MDBCardHeader color="default-color">
-                <MDBCardTitle>
-                  <h1>{title}</h1>
-                </MDBCardTitle>
+                <MDBCardTitle tag="h1">{title}</MDBCardTitle>
                 <br />
-                <MDBCardTitle>
-                  <h3>{entreprise}</h3>
-                </MDBCardTitle>
+                <MDBCardTitle tag="h3">{entreprise}</MDBCardTitle>
               </MDBCardHeader>
             </div>
             <div>
