@@ -18,6 +18,7 @@ import Bancaire from "./components/bancaire/index";
 import CreationOperation from "./components/bancaire/operation/creationOperation/creationOperation";
 import IndexOperation from "./components/bancaire/operation/index";
 import ListeOperations from "./components/bancaire/operation/listeOperations/listeOperations";
+import SupprimerClientFournisseur from "./components/component-clientFournisseur/supprimerClientFounisseur/supprimerClientFounisseur";
 
 export default class Routes extends Component {
   render() {
@@ -43,6 +44,7 @@ export default class Routes extends Component {
           <PrivateRoute path="/listeoperations" component={ListeOperations} />
 
           <Route path="/client-fournisseur" component={MenuClientFournisseur} />
+          <Route path="/clientFournisseur/delete/:id" component={SupprimerClientFournisseur} />
         </Switch>
       </BrowserRouter>
     );

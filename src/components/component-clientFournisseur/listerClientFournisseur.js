@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import AxiosCenter from "./../../shared/services/AxiosCenter";
 import DetailsClientFournisseur from "./detailsClientFournisseur";
-import Style from "./ClientFournisseur.module.css";
+import { MDBBtn } from 'mdbreact';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import SupprimerClientFournisseur from "./supprimerClientFounisseur/supprimerClientFounisseur";
 
 class ListerClientFournisseur extends Component {
   constructor(props) {
@@ -21,15 +23,6 @@ class ListerClientFournisseur extends Component {
         console.log(error);
       });
   }
-
-  // deleteClient = (id) => {
-  //   axios.delete(`http://localhost:8080/api/client-fournisseurs/${id}`, {
-  //     headers: {
-  //       Authorization: "Basic " + " YWRtaW46YWRtaW4="
-  //     }
-  //   })
-  //     .catch(err => console.log(err))
-  // }
 
   render() {
     return (
@@ -55,12 +48,23 @@ class ListerClientFournisseur extends Component {
                       <div className="btn-group flex-btn-group-container">
                         <DetailsClientFournisseur client={c} />
                       </div>
+                      {/* <MDBBtn size="sm">
+                        <Link to={`/clientFournisseur/delete/${c.id}`} >
+                          <span className="d-none d-md-inline">
+                            Supprimer
+                        </span>
+                        </Link>
+                      </MDBBtn> */}
+                      <div type="button" className="btn-group flex-btn-group-container">
+                        <SupprimerClientFournisseur client={c} />
+                      </div>
+
                     </td>
                   </tr>
                 ))
               ) : (
-                <h1 className="text-center"> Pas des Client ... </h1>
-              )}
+                  <h1 className="text-center"> Pas des Client ... </h1>
+                )}
             </tbody>
           </table>
         </div>
