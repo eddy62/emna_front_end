@@ -336,9 +336,11 @@ class ListEmployes extends React.Component {
             <div>
               <hr></hr>
             </div>
-            <MDBBtn color="default" rounded size="sm">
-              Enregistrer un Employé
-            </MDBBtn>
+            <Link to="/newEmploye">
+              <MDBBtn color="default" rounded size="sm">
+                Enregistrer un Employé
+              </MDBBtn>
+            </Link>
             <Link to="/socialHome">
               <MDBBtn color="default" rounded size="sm">
                 Retour
