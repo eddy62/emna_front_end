@@ -269,11 +269,14 @@ class DetailEmploye extends React.Component {
             <div>
               <hr></hr>
             </div>
-            <Link to="/listEmployes">
-              <MDBBtn color="default" rounded size="sm">
-                Mise à jour
-              </MDBBtn>
-            </Link>
+            <MDBBtn
+              color="default"
+              rounded
+              size="sm"
+              onClick="/updateEmploye/:id"
+            >
+              Mise à jour
+            </MDBBtn>
 
             <MDBBtn color="default" rounded size="sm">
               Supprimer

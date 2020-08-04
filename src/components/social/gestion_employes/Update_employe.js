@@ -87,11 +87,23 @@ class UpdateEmploye extends React.Component {
                     <MDBCard>
                       <MDBRow around between>
                         {/* ligne1 */}
-                        <MDBInput label="N° Matricule" outline type="text" />
+                        <MDBInput
+                          label="N° ID"
+                          outline
+                          type="text"
+                          disabled="false"
+                        />
+                        <MDBInput
+                          label="N° Matricule"
+                          outline
+                          type="text"
+                          disabled="false"
+                        />
                         <MDBInput
                           label="N° Sécurité Sociale"
                           outline
                           type="text"
+                          disabled="false"
                         />
                       </MDBRow>
                       <MDBRow between around>
