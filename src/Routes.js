@@ -12,7 +12,7 @@ import Contrat from "./components/contrat/Contrat";
 import DetailContrat from "./components/contrat/detailContrat/DetailContrat";
 import CreerContrat from "./components/contrat/creerContrat/CreerContrat";
 import Home from "./components/home/Home";
-import MenuClientFournisseur from "./components/component-clientFournisseur/menuClientFournisseur";
+import MenuClientFournisseur from "./components/clientFournisseur/menuClientFournisseur";
 
 import Bancaire from "./components/bancaire/index";
 import CreationOperation from "./components/bancaire/operation/creationOperation/creationOperation";
@@ -32,6 +32,9 @@ import SelectToAddUser from './components/pages/SelectToAddUser';
 import AddSociete from './components/societe/AddSociete';
 import ViewSociete from './components/societe/ViewSociete';
 import EditSociete from './components/societe/EditSociete';
+import ModifierClient from "./components/clientFournisseur/modifierCLientFournisseur/modifierClient";
+import ListerClientFournisseur from "./components/clientFournisseur/listerClientFournisseur";
+import AddClientFournisseur from "./components/clientFournisseur/addClientFournisseur";
 // finGestionUserRoutesImports
 
 
@@ -52,18 +55,18 @@ export default class Routes extends Component {
 
           {/* gestionUserRoutes */}
           <Route exact path="/users" component={Users} />
-        <Route exact path="/users/add" component= {AddUser} />
-        <Route exact path="/users/edit/:id" component= {EditUser} />
-        <Route exact path="/users/view/:id" component= {ViewUser} />
-        <Route exact path="/users/add/comptable" component= {AddComptable} />
-        <Route exact path="/users/view/comptable/:id" component= {ViewComptable} />
-        <Route exact path="/users/edit/comptable/:id" component= {EditComptable} />
-        <Route exact path="/users/add/societe" component= {AddSociete} />
-        <Route exact path="/users/view/societe/:id" component= {ViewSociete} />
-        <Route exact path="/users/edit/societe/:id" component= {EditSociete} />
-        <Route exact path="/users/stau" component= {SelectToAddUser} />
-        <Route component={NotFound} />
-        {/* finGestionUserRoutes */}
+          <Route exact path="/users/add" component={AddUser} />
+          <Route exact path="/users/edit/:id" component={EditUser} />
+          <Route exact path="/users/view/:id" component={ViewUser} />
+          <Route exact path="/users/add/comptable" component={AddComptable} />
+          <Route exact path="/users/view/comptable/:id" component={ViewComptable} />
+          <Route exact path="/users/edit/comptable/:id" component={EditComptable} />
+          <Route exact path="/users/add/societe" component={AddSociete} />
+          <Route exact path="/users/view/societe/:id" component={ViewSociete} />
+          <Route exact path="/users/edit/societe/:id" component={EditSociete} />
+          <Route exact path="/users/stau" component={SelectToAddUser} />
+          {/* <Route component={NotFound} /> */}
+          {/* finGestionUserRoutes */}
 
           <PrivateRoute path="/bancaire" component={Bancaire} />
           <PrivateRoute
@@ -74,6 +77,9 @@ export default class Routes extends Component {
           <PrivateRoute path="/listeoperations" component={ListeOperations} />
 
           <Route path="/client-fournisseur" component={MenuClientFournisseur} />
+          <Route path="/clientFournisseur/modifier/:id" component={ModifierClient} />
+          <Route path="/clientFournisseur/liste" component={ListerClientFournisseur} />
+          <Route path="/clientFournisseur/creer" component={AddClientFournisseur} />
         </Switch>
       </BrowserRouter>
     );

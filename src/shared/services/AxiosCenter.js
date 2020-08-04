@@ -16,7 +16,7 @@ const AxiosCenter = {
     });
   },
 
-  getClientFournisseur(id) {
+  getAllClientFournisseurBySociete(id) {
     return ApiBackEnd({
       method: 'get',
       url: `/client-fournisseurs/societe/${id}`,
@@ -24,6 +24,13 @@ const AxiosCenter = {
 
   },
 
+  getClientFournisseur(id) {
+    return ApiBackEnd({
+      method: 'get',
+      url: `/client-fournisseurs/wrapper/${id}`,
+    })
+
+  },
   createClientFournisseur(values) {
     return ApiBackEnd({
       method: 'post',
@@ -34,7 +41,13 @@ const AxiosCenter = {
 
   },
 
-
+  updateClientFournisseur(values) {
+    return ApiBackEnd({
+      method: 'put',
+      url: `/client-fournisseurs/wrapper`,
+      data: values,
+    })
+  },
 
   getOperation() {
     return ApiBackEnd({
