@@ -28,6 +28,24 @@ export default class CreerContrat extends React.Component {
                             <Field name="titre" type="text" className={'form-control' + (errors.titre && touched.titre ? ' is-invalid' : '')} />
                             <ErrorMessage name="titre" component="div" className="invalid-feedback" />
                         </div>
+                        <div className="form-group col-md-4">
+                            <label htmlFor="inputState">Type de contrat :</label>
+                            <select id="inputState" className="form-control">
+                                <option selected>CDI TEMPS PLEIN</option>
+                                <option>CDI TEMPS PARTIEL</option>
+                                <option>CDD TEMPS PLEIN</option>
+                                <option>CDD TEMPS PARTIEL</option>
+                            </select>
+                        </div>
+                        <div className="form-group col-md-4">
+                            <label htmlFor="inputState">L'employe :</label>
+                            <select id="inputState" className="form-control">
+                                <option selected>NOM - PRENOM </option>
+                                <option>NOM - PRENOM</option>
+                                <option>NOM - PRENOM</option>
+                                <option>NOM - PRENOM</option>
+                            </select>
+                        </div>
                         <div className="form-group">
                             <button type="submit" className="btn btn-primary mr-2">Register</button>
                         </div>

@@ -6,8 +6,13 @@ export default class Contrat extends React.Component {
         return(
             <div>
                 <h1>GESTION DES CONTRATS</h1>
-                <p><Link to={"/creercontrat"}>Creer un nouveau contrat</Link></p>
-                <p><Link to={"/listcontrat"}>Ma liste de contrat</Link></p>
+
+                <Link to={"/creercontrat"}><div className="card text-white bg-success mb-3" >
+                    <div className="card-header"> <h5 >Creer un nouveau contrat</h5></div>
+                </div></Link>
+                <Link to={"/listcontrat"}><div className="card text-white bg-success mb-3" >
+                    <div className="card-header"> <h5 >Voir mes contrats</h5></div>
+                </div></Link>
             </div>
             
         );
