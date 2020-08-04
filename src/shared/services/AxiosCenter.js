@@ -15,6 +15,40 @@ const AxiosCenter = {
       url: "/account",
     });
   },
+
+  getClientFournisseur(id) {
+    return ApiBackEnd({
+      method: 'get',
+      url: `/client-fournisseurs/societe/${id}`,
+    })
+
+  },
+
+  createClientFournisseur(values) {
+    return ApiBackEnd({
+      method: 'post',
+      url: `/client-fournisseurs/new`,
+      data: values,
+
+    })
+
+  },
+
+
+
+  getOperation() {
+    return ApiBackEnd({
+      method: "get",
+      url: "/operations",
+    });
+  },
+  postOperation(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: "/operations",
+      data: values,
+    });
+  },
 };
 
 export default AxiosCenter;

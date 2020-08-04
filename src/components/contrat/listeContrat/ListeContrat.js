@@ -11,7 +11,7 @@ export default class ListeContrat extends React.Component {
             contrats: [],
         };
     }
-    
+
 
     componentDidMount(){
         const query = new URLSearchParams(this.props.location.search);
@@ -20,8 +20,8 @@ export default class ListeContrat extends React.Component {
         ContratService.getContrat(1).then((resultat) => {
             const contrats = resultat.data;
             this.setState({ contrats , loaded:true});
-          })
-          .catch((err) => console.log(err));
+        })
+            .catch((err) => console.log(err));
     }
 
     listerLesContrats(props) {
@@ -78,12 +78,11 @@ export default class ListeContrat extends React.Component {
             }
 
         });
-    
+
         return (
             <div>
                 <h1>Liste des Contrats</h1>
                 {Contrats}
-                <button type="button" className="btn btn-success">Success</button>
             </div>
         );
     }
@@ -98,5 +97,5 @@ export default class ListeContrat extends React.Component {
                 <Loading/>
             );
         }
-      }
+    }
 }

@@ -1,6 +1,6 @@
-import React from 'react';
-import Axios from 'axios';
-import { Link } from 'react-router-dom';
+import React from "react";
+//import Axios from 'axios';
+import { Link } from "react-router-dom";
 export default class Contrat extends React.Component {
     render() {
         return(
