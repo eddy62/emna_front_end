@@ -15,7 +15,7 @@ import Contrat from "./components/contrat/Contrat";
 import DetailContrat from "./components/contrat/detailContrat/DetailContrat";
 import CreerContrat from "./components/contrat/creerContrat/CreerContrat";
 import Home from "./components/home/Home";
-import MenuClientFournisseur from "./components/component-clientFournisseur/menuClientFournisseur";
+import MenuClientFournisseur from "./components/clientFournisseur/menuClientFournisseur";
 
 import Bancaire from "./components/bancaire/index";
 import CreationOperation from "./components/bancaire/operation/creationOperation/creationOperation";
@@ -46,6 +46,7 @@ export default class Routes extends Component {
           <PrivateRoute exact path="/" component={Home} />
           <Route path="/login" component={IndexLogin} />
 
+          {/* Gestion Social */}
           <Route path="/socialHome" component={AccueilSocial} />
           <Route path="/listEmployes" component={ListEmployes} />
           <Route path="/detailEmploye/:id" component={DetailEmploye} />

@@ -103,7 +103,9 @@ class DetailEmploye extends React.Component {
             <div>
               <hr></hr>
             </div>
-            <MDBCardTitle className="text">{title1}</MDBCardTitle>
+            <MDBCardHeader>
+              <MDBCardTitle tag="h3">{title1}</MDBCardTitle>
+            </MDBCardHeader>
             <div>
               <hr></hr>
             </div>

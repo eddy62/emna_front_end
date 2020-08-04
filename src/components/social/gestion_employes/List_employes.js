@@ -332,6 +332,9 @@ class ListEmployes extends React.Component {
               {title1}
             </MDBCardHeader>
 
+            <div>
+              <hr></hr>
+            </div>
             <div>{this.tableau()}</div>
             <div>
               <hr></hr>
