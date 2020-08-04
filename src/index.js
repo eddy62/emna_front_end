@@ -9,6 +9,7 @@ import "mdbreact/dist/css/mdb.css";
 import { Router } from "react-router-dom";
 import history from "./History";
 
+
 ReactDOM.render(
   <Router history={history}>
     <App />
