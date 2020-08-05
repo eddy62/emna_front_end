@@ -1,5 +1,4 @@
 import React from "react";
-//import ListEmployes from "./gestion_employes/List_employes";
 import "./style1.scss";
 import { Link } from "react-router-dom";
 import {
@@ -54,49 +53,67 @@ class AccueilSocial extends React.Component {
     const title2 = "Validation Comptable";
     const title3 = "Gestion des Variables de Paie";
     const title4 = "Gestion des Fiches de Paie";
+    const title5 = "Déclaration d'Embauche";
     const entreprise = this.state.societe.raisonSociale;
 
     return (
-      <div className="App">
+      <div className="App1">
         <div className="social">
-          <MDBContainer>
-            <div>
-              <MDBCardHeader color="default-color">
-                <MDBCardTitle tag="h1">{title}</MDBCardTitle>
-                <br />
-                <MDBCardTitle tag="h3">{entreprise}</MDBCardTitle>
-              </MDBCardHeader>
-            </div>
-            <div>
-              <hr></hr>
-            </div>
-            <div>
-              <MDBRow className="mb-4">
-                <MDBCol sm="3">
-                  <MDBCard className="cadre">
+          <div>
+            <MDBContainer>
+              <div className="titre">
+                <MDBCardHeader color="default-color">
+                  <MDBCardTitle tag="h1">{title}</MDBCardTitle>
+                  <br />
+                  <MDBCardTitle tag="h3">{entreprise}</MDBCardTitle>
+                </MDBCardHeader>
+              </div>
+              <div className="titre">
+                <hr></hr>
+              </div>
+              <div className="menu">
+                <MDBRow>
+                  <MDBCard className="cadre1">
                     <MDBCardBody>
-                      <MDBCardTitle className="text">{title1}</MDBCardTitle>
+                      <MDBCardTitle tag="h4">{title1}</MDBCardTitle>
                       <br />
                       <MDBCardText>
                         Enregistrement, Consultation et Modification des données
                         des Employés de la Sociéte
                       </MDBCardText>
                       <br />
-                      <div className="boutton">
+                      <div>
                         <Link to="/listEmployes">
-                          <MDBBtn rounded size="sm">
+                          <MDBBtn rounded size="sm" color="teal accent-3">
                             Gerer
                           </MDBBtn>
                         </Link>
                       </div>
                     </MDBCardBody>
                   </MDBCard>
-                </MDBCol>
 
-                <MDBCol sm="3">
-                  <MDBCard className="cadre">
+                  <MDBCard className="cadre1">
                     <MDBCardBody>
-                      <MDBCardTitle className="text">{title2}</MDBCardTitle>
+                      <MDBCardTitle tag="h4">{title5}</MDBCardTitle>
+                      <br />
+                      <MDBCardText>
+                        Déclaration d'Embauche en ligne et télechargement
+                        Attestation d'Embauche{" "}
+                      </MDBCardText>
+                      <br />
+                      <div>
+                        <Link to="/listEmployes">
+                          <MDBBtn rounded size="sm" color="teal accent-3">
+                            Gerer
+                          </MDBBtn>
+                        </Link>
+                      </div>
+                    </MDBCardBody>
+                  </MDBCard>
+
+                  <MDBCard className="cadre1">
+                    <MDBCardBody>
+                      <MDBCardTitle tag="h4">{title2}</MDBCardTitle>
                       <br />
                       <MDBCardText>
                         Validation Comptables des variables de Paie des Employés
@@ -104,19 +121,19 @@ class AccueilSocial extends React.Component {
                       <br />
                       <div className="boutton">
                         <Link to="/listEmployes">
-                          <MDBBtn className="boutton" rounded size="sm">
+                          <MDBBtn color="teal accent-3" rounded size="sm">
                             Gerer
                           </MDBBtn>
                         </Link>
                       </div>
                     </MDBCardBody>
                   </MDBCard>
-                </MDBCol>
-
-                <MDBCol sm="3">
-                  <MDBCard className="cadre">
+                  {/* </MDBRow>
+                <br />
+                <MDBRow> */}
+                  <MDBCard className="cadre1">
                     <MDBCardBody>
-                      <MDBCardTitle className="text">{title3}</MDBCardTitle>
+                      <MDBCardTitle tag="h4">{title3}</MDBCardTitle>
                       <br />
                       <MDBCardText>
                         Enregistrement et modification des variables de paies
@@ -125,19 +142,16 @@ class AccueilSocial extends React.Component {
                       <br />
                       <div className="boutton">
                         <Link to="/listEmployes">
-                          <MDBBtn className="boutton" rounded size="sm">
+                          <MDBBtn color="teal accent-3" rounded size="sm">
                             Gerer
                           </MDBBtn>
                         </Link>
                       </div>
                     </MDBCardBody>
                   </MDBCard>
-                </MDBCol>
-
-                <MDBCol sm="3">
-                  <MDBCard className="cadre">
+                  <MDBCard className="cadre1">
                     <MDBCardBody>
-                      <MDBCardTitle className="text">{title4}</MDBCardTitle>
+                      <MDBCardTitle tag="h4">{title4}</MDBCardTitle>
                       <br />
                       <MDBCardText>
                         Consultation et Téléchargement des Fiches de Paie des
@@ -146,17 +160,17 @@ class AccueilSocial extends React.Component {
                       <br />
                       <div className="boutton">
                         <Link to="/listEmployes">
-                          <MDBBtn className="boutton" rounded size="sm">
+                          <MDBBtn color="teal accent-3" rounded size="sm">
                             Gerer
                           </MDBBtn>
                         </Link>
                       </div>
                     </MDBCardBody>
                   </MDBCard>
-                </MDBCol>
-              </MDBRow>
-            </div>
-          </MDBContainer>
+                </MDBRow>
+              </div>
+            </MDBContainer>
+          </div>
         </div>
       </div>
     );

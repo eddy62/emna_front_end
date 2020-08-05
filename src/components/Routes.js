@@ -3,11 +3,11 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { PrivateRoute } from "../helpers/PrivateRoute";
 
 //Gestion Social import
-import AccueilSocial from "./components/social/SocialHome";
-import ListEmployes from "./components/social/gestion_employes/List_employes";
-import DetailEmploye from "./components/social/gestion_employes/Detail_employe";
-import NewEmploye from "./components/social/gestion_employes/Create_employe";
-import UpdateEmploye from "./components/social/gestion_employes/Update_employe";
+import AccueilSocial from "./social/SocialHome";
+import ListEmployes from "./social/gestion_employes/List_employes";
+import DetailEmploye from "./social/gestion_employes/Detail_employe";
+import NewEmploye from "./social/gestion_employes/Create_employe";
+import UpdateEmploye from "./social/gestion_employes/Update_employe";
 
 import ListeContrat from "./contrat/listeContrat/ListeContrat";
 import Contrat from "./contrat/Contrat";

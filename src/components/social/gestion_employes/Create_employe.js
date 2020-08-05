@@ -96,7 +96,7 @@ class NewEmploye extends React.Component {
     const title1 = "Enregister un Nouvel Employé";
     const entreprise = this.state.societe.raisonSociale;
     return (
-      <div className="App">
+      <div className="app2">
         <div className="newEmp">
           <MDBContainer>
             <div>
@@ -109,7 +109,9 @@ class NewEmploye extends React.Component {
             <div>
               <hr></hr>
             </div>
-            <MDBCardTitle tag="h4">{title1}</MDBCardTitle>
+            <MDBCardHeader tag="h4" color="teal lighten-5" text="black">
+              {title1}
+            </MDBCardHeader>
             <div>
               <hr></hr>
             </div>

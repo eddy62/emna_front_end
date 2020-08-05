@@ -312,7 +312,7 @@ class ListEmployes extends React.Component {
     //const employes = this.state.societe.listeEmployes;
     //console.log(employes);
     return (
-      <div className="App">
+      <div className="App1">
         <div className="employes">
           <MDBContainer>
             <div>
@@ -325,13 +325,9 @@ class ListEmployes extends React.Component {
             <div>
               <hr></hr>
             </div>
-            <MDBCardHeader
-              tag="h3"
-              className="text-center font-weight-bold text-uppercase py-4"
-            >
+            <MDBCardHeader tag="h4" color="teal lighten-5" text="black">
               {title1}
             </MDBCardHeader>
-
             <div>
               <hr></hr>
             </div>
@@ -340,12 +336,12 @@ class ListEmployes extends React.Component {
               <hr></hr>
             </div>
             <Link to="/newEmploye">
-              <MDBBtn color="default" rounded size="sm">
-                Enregistrer un Employé
+              <MDBBtn color="teal accent-3" rounded size="sm">
+                Enregistrer un Employe
               </MDBBtn>
             </Link>
             <Link to="/socialHome">
-              <MDBBtn color="default" rounded size="sm">
+              <MDBBtn color="teal accent-3" rounded size="sm">
                 Retour
               </MDBBtn>
             </Link>
