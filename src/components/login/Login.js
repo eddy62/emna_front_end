@@ -75,7 +75,7 @@ export class Login extends React.Component {
               <MDBContainer>
                 <MDBRow>
                   <MDBCol md="6">
-                    <MDBCard>
+                    <MDBCard className="log">
                       <MDBCardBody className="mx-4">
                         <div className="text-center">
                           <h3 className="dark-grey-text mb-5">
