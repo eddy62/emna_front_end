@@ -12,7 +12,7 @@ import Contrat from "./components/contrat/Contrat";
 import DetailContrat from "./components/contrat/detailContrat/DetailContrat";
 import CreerContrat from "./components/contrat/creerContrat/CreerContrat";
 import Home from "./components/home/Home";
-import MenuClientFournisseur from "./components/component-clientFournisseur/menuClientFournisseur";
+import MenuClientFournisseur from "./components/clientFournisseur/menuClientFournisseur";
 
 import Bancaire from "./components/bancaire/index";
 import CreationOperation from "./components/bancaire/operation/creationOperation/creationOperation";
@@ -46,6 +46,7 @@ export default class Routes extends Component {
           <Route path="/listEmployes" component={ListEmployes} />
           <Route path="/detailEmploye" component={DetailEmploye} />
           <Route path="/listcontrat" component={ListeContrat} />
+
           <Route path="/contrat" component={Contrat} />
           <Route path="/detailcontrat/:id" component={DetailContrat} />
           <Route path="/creercontrat" component={CreerContrat} />
@@ -62,7 +63,7 @@ export default class Routes extends Component {
         <Route exact path="/users/view/societe/:id" component= {ViewSociete} />
         <Route exact path="/users/edit/societe/:id" component= {EditSociete} />
         <Route exact path="/users/stau" component= {SelectToAddUser} />
-        <Route component={NotFound} />
+
         {/* finGestionUserRoutes */}
 
           <PrivateRoute path="/bancaire" component={Bancaire} />
@@ -74,6 +75,7 @@ export default class Routes extends Component {
           <PrivateRoute path="/listeoperations" component={ListeOperations} />
 
           <Route path="/client-fournisseur" component={MenuClientFournisseur} />
+            <Route component={NotFound} />
         </Switch>
       </BrowserRouter>
     );

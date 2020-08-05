@@ -27,4 +27,13 @@ export default class ContratService {
                 },
             })
     }
+
+    static getEmployeBySociete(id) {
+        return axios.get('http://localhost:8080/api/contrats/' + id,
+            {
+                headers: {
+                    Authorization: "Basic YWRtaW46YWRtaW4=",
+                },
+            })
+    }
 }
