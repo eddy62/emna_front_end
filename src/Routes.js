@@ -45,8 +45,8 @@ export default class Routes extends Component {
           <Route path="/socialHome" component={AccueilSocial} />
           <Route path="/listEmployes" component={ListEmployes} />
           <Route path="/detailEmploye" component={DetailEmploye} />
-          <Route path="/listcontrat" component={ListeContrat} />
 
+          <Route path="/listcontrat" component={ListeContrat} />
           <Route path="/contrat" component={Contrat} />
           <Route path="/detailcontrat/:id" component={DetailContrat} />
           <Route path="/creercontrat" component={CreerContrat} />
