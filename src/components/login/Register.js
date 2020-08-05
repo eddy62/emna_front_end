@@ -2,6 +2,7 @@ import React from "react";
 import loginImg from "../../login.svg";
 
 export class Register extends React.Component {
+  // TO DO
   render() {
     return (
       <div className="base-container">
