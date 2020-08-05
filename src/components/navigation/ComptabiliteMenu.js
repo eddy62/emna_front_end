@@ -48,7 +48,7 @@ class ComptabiliteMenu extends React.Component {
                     </MDBCardText>
                     <br />
                     <div className="boutton">
-                      <Link to="/listEmployes">
+                      <Link to="/facture">
                         <MDBBtn className="boutton" rounded size="sm">
                           Gerer
                         </MDBBtn>
@@ -66,7 +66,7 @@ class ComptabiliteMenu extends React.Component {
                     <MDBCardText>Accéder à mes devis</MDBCardText>
                     <br />
                     <div className="boutton">
-                      <Link to="/listEmployes">
+                      <Link to="/devis">
                         <MDBBtn className="boutton" rounded size="sm">
                           Gerer
                         </MDBBtn>
@@ -86,7 +86,7 @@ class ComptabiliteMenu extends React.Component {
                     </MDBCardText>
                     <br />
                     <div className="boutton">
-                      <Link to="/socialHome">
+                      <Link to="/bancaire">
                         <MDBBtn className="boutton" rounded size="sm">
                           Gerer
                         </MDBBtn>
