@@ -43,7 +43,7 @@ const AxiosCenter = {
 
   updateClientFournisseur(values) {
     return ApiBackEnd({
-      method: 'put',
+      method: 'PUT',
       url: `/client-fournisseurs/wrapper`,
       data: values,
     })

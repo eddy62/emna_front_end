@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Formik, Field } from 'formik';
-import * as axios from 'axios';
 import Style from "./../ClientFournisseur.module.css";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import NavBar from '../../home/NavBar';
@@ -21,13 +20,16 @@ class ModifierClient extends Component {
         this.state = {
             updateClient: {},
             loaded: false,
+            IdEntity: this.props.match.params.id,
+
+
         };
     }
 
 
     componentDidMount() {
-        const IdEntity = this.props.match.params.id;
-        AxiosCenter.getClientFournisseur(IdEntity)
+        console.log(" id " + this.state.IdEntity)
+        AxiosCenter.getClientFournisseur(this.state.IdEntity)
             .then((response) => {
                 console.log(response.data);
                 const client = response.data;
@@ -36,10 +38,7 @@ class ModifierClient extends Component {
                     loaded: true,
 
                 });
-                console.log("modifierclient " + this.state.updateClient.nom)
-                console.log("siren " + this.state.updateClient.siren)
-                console.log(this.state.updateClient)
-                this.getIntialVlaues(client)
+
             })
             .catch((error) => {
                 console.log(error);
@@ -49,11 +48,13 @@ class ModifierClient extends Component {
 
 
     getInitialValues = () => {
-        return this.state.updateClient ? { ...this.state.updateClient } : { name: '', username: '', email: '' }
+        console.log("objet updateCLient " + this.state.updateClient.id)
+        return this.state.updateClient;
     }
 
 
     submit = (values, actions) => {
+        values.id = this.state.IdEntity
         AxiosCenter.updateClientFournisseur(values)
             .then((response) => {
                 console.log(response.data);
@@ -99,6 +100,7 @@ class ModifierClient extends Component {
                                     />
 
 
+
                                     <Field name="siren" label="SIREN" component={ComposantInput} />
 
 
@@ -130,6 +132,7 @@ class ModifierClient extends Component {
 
 
                                     <Field name="ville" label="Ville" component={ComposantInput} />
+                                    <Field name="pays" label="Pays" component={ComposantInput} />
 
                                 </div>
 

@@ -134,6 +134,8 @@ class AddClientFournisseur extends React.Component {
 
                   <Field name="ville" label="Ville" component={ComposantInput} />
                   <ErrorMessage name="ville" component={ComposantErreur} />
+                  <Field name="pays" label="Pays" component={ComposantInput} />
+                  <ErrorMessage name="pays" component={ComposantErreur} />
                 </div>
 
                 <button type="submit" className="btn btn-primary">
