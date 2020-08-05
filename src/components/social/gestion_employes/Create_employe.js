@@ -15,6 +15,7 @@ import {
   MDBSelectInput,
   MDBSelectOption,
   MDBSelectOptions,
+  MDBCol,
 } from "mdbreact";
 import { Form } from "formik";
 
@@ -46,6 +47,42 @@ class NewEmploye extends React.Component {
         ville: "Lille",
         listeEmployes: [{}, {}],
       },
+      employe: {
+        //identité
+        id: 0,
+        matricule: "EMP001",
+        civilite: "Monsieur",
+        nomNaissance: "Dupont",
+        nomUsage: "Dupont",
+        prenom: "TOTO",
+        dateNaissance: "1977-02-24",
+        villeNaissance: "Lyon",
+        departementNaissance: "Rhone",
+        paysNaisance: "France",
+        email: "dupont@yahoo.com",
+        telephonePortable: "string",
+        telephoneFix: "string",
+        fax: "string",
+        numeroSecuriteSociale: "string",
+        //emploi
+        categorie: "Cadre",
+        statut: "Project Owner",
+        dateEmbauche: "2020-07-27",
+        dateFinContrat: "01-01-3000",
+        heuresMensuelle: 151.66,
+        salaireBrutMensuelle: 0,
+        salaireHoraire: 0,
+        typeContrat: "CDI",
+        //adresse
+        idAdresse: 1,
+        numeroRue: "22",
+        nomRue: "Rue des bois blancs",
+        boitePostale: "",
+        codePostal: "59000",
+        ville: "Lille",
+      },
+
+      isLogginActive: true,
 
       valide: {
         value: "",
@@ -79,173 +116,287 @@ class NewEmploye extends React.Component {
             {/* formulaire */}
             <form>
               <div>
-                <MDBRow>
-                  <MDBCardBody>
-                    <MDBCardTitle className="text" tag="h5">
-                      Identité
-                    </MDBCardTitle>
-                    <MDBCard>
-                      <MDBRow around between>
-                        {/* ligne1 */}
-                        <MDBInput label="N° Matricule" outline type="text" />
+                <MDBCardBody>
+                  <MDBCardTitle className="text" tag="h5">
+                    Identitée
+                  </MDBCardTitle>
+                  <MDBCard>
+                    <MDBRow around between>
+                      {/* ligne1 */}
+                      <MDBCol md="4" className="mb-3">
                         <MDBInput
-                          label="N° Sécurité Sociale"
+                          label="N° Matricule*"
                           outline
                           type="text"
+                          id="matricule"
+                          required
                         />
-                      </MDBRow>
-                      <MDBRow between around>
-                        {/* ligne2 */}
+                      </MDBCol>
+                      <MDBCol md="6" className="mb-3">
+                        <MDBInput
+                          label="N° Sécurité Sociale*"
+                          outline
+                          type="text"
+                          id="numeroSecuriteSociale"
+                          required
+                        />
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow between around>
+                      {/* ligne2 */}
+                      <MDBCol md="2" className="mb-3">
                         <div>
                           <br />
-                          <select className="browser-default custom-select">
-                            <option>Civilité</option>
+                          <select
+                            className="browser-default custom-select"
+                            id="civilite"
+                            required
+                          >
+                            <option>Civilité*</option>
                             <option value="1">Monsieur</option>
                             <option value="2">Madame</option>
                           </select>
                         </div>
+                      </MDBCol>
+                      <MDBCol md="3" className="mb-3">
                         <MDBInput
                           label="Nom de Naissance"
                           outline
                           type="text"
+                          id="nomNaissance"
+                          required
                         />
-                        <MDBInput label="Nom d'usage" outline type="text" />
-                        <MDBInput label="Prénom" outline type="text" />
-                      </MDBRow>
-                      <MDBRow between around>
-                        {/* ligne3 */}
+                      </MDBCol>
+                      <MDBCol md="3" className="mb-3">
                         <MDBInput
-                          outline
-                          label="Date de Naissance"
-                          type="date"
-                        />
-
-                        <MDBInput
-                          label="Ville de Naissance"
+                          label="Nom d'usage*"
                           outline
                           type="text"
+                          id="nomUsage"
+                          required
                         />
-                        <MDBInput label="Département" outline type="text" />
-                        <MDBInput label="Pays" outline type="text" />
-                      </MDBRow>
-                      <MDBRow between around>
-                        {/* ligne4 */}
+                      </MDBCol>
+                      <MDBCol md="3" className="mb-3">
+                        <MDBInput
+                          label="Prénom(s)"
+                          outline
+                          type="text"
+                          id="prenom"
+                        />
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow between around>
+                      {/* ligne3 */}
+                      <MDBCol md="2" className="mb-3">
+                        <MDBInput
+                          outline
+                          label="Date Naissance*"
+                          type="date"
+                          id="dateNaissance"
+                          required
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="mb-3">
+                        <MDBInput
+                          label="Ville de Naissance*"
+                          outline
+                          type="text"
+                          required
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="mb-3">
+                        <MDBInput
+                          label="Département"
+                          outline
+                          type="text"
+                          required
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="mb-3">
+                        <MDBInput label="Pays*" outline type="text" required />
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow between around>
+                      {/* ligne4 */}
+                      <MDBCol md="4" className="mb-3">
                         <div>
                           <br />
-                          <select className="browser-default custom-select">
-                            <option>Situation Familiale</option>
+                          <select
+                            className="browser-default custom-select"
+                            required
+                          >
+                            <option>Situation Familiale*</option>
                             <option value="1">Célibataire</option>
                             <option value="2">Marié(e)</option>
                             <option value="2">Veuf(ve)</option>
                           </select>
                         </div>
+                      </MDBCol>
+                      <MDBCol md="4" className="mb-3">
                         <MDBInput
-                          label="Enfant(s) à Charge"
+                          label="Enfant(s) à Charge*"
                           outline
                           type="number"
                         />
-                      </MDBRow>
-                    </MDBCard>
-                  </MDBCardBody>
-                </MDBRow>
-                <MDBRow>
-                  <MDBCardBody>
-                    <MDBCardTitle className="text" tag="h5">
-                      Coordonnées
-                    </MDBCardTitle>
-                    <MDBCard size>
-                      <MDBRow around between>
-                        {/* ligne1 */}
+                      </MDBCol>
+                    </MDBRow>
+                  </MDBCard>
+                </MDBCardBody>
+                <MDBCardBody>
+                  <MDBCardTitle className="text" tag="h5">
+                    Coordonnées
+                  </MDBCardTitle>
+                  <MDBCard size>
+                    <MDBRow around between>
+                      {/* ligne1 */}
+                      <MDBCol md="2" className="mb-3">
                         <MDBInput label="N°" outline type="text" />
-                        <MDBInput label="Libellé" outline type="text" />
-                      </MDBRow>
-                      <MDBRow around between>
-                        {/* ligne2 */}
-                        <MDBInput label="Complément" outline type="text" />
-                        <MDBInput label="Code Postal" outline type="text" />
-
-                        <MDBInput label="Ville" outline type="text" />
-                        <MDBInput label="Pays" outline type="text" />
-                      </MDBRow>
-                      <MDBRow around between>
-                        {/* ligne3 */}
-                        <MDBInput label="Email" outline type="email" />
-                        <MDBInput label="Telephone fixe" outline type="text" />
-                        <MDBInput label="Fax" outline type="text" />
-                        <MDBInput label="Portable" outline type="text" />
-                      </MDBRow>
-                    </MDBCard>
-                  </MDBCardBody>
-                </MDBRow>
-                <MDBRow>
-                  <MDBCardBody>
-                    <MDBCardTitle className="text" tag="h5">
-                      Informations Emploi
-                    </MDBCardTitle>
-                    <MDBCard>
-                      <br />
-                      <MDBRow around between>
-                        {/* ligne1 */}
+                      </MDBCol>
+                      <MDBCol md="9" className="mb-3">
                         <MDBInput
-                          label="Sociéte"
+                          label="Libellé*"
                           outline
                           type="text"
-                          value={this.state.societe.raisonSociale}
-                          disabled="false"
+                          required
                         />
-                        <MDBInput outline label="Date Embauche" type="date" />
-                        <MDBInput outline label="Date Sortie" type="date" />
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow around between>
+                      {/* ligne2 */}
+                      <MDBInput
+                        label="Complément"
+                        outline
+                        type="text"
+                        required
+                      />
+                      <MDBInput
+                        label="Code Postal*"
+                        outline
+                        type="text"
+                        required
+                      />
 
+                      <MDBInput label="Ville*" outline type="text" required />
+                      <MDBInput label="Pays*" outline type="text" required />
+                    </MDBRow>
+                    <MDBRow around between>
+                      {/* ligne3 */}
+                      <MDBInput label="Email*" outline type="email" required />
+                      <MDBInput label="Telephone fixe" outline type="text" />
+                      <MDBInput label="Fax" outline type="text" />
+                      <MDBInput
+                        label="Portable*"
+                        outline
+                        type="text"
+                        required
+                      />
+                    </MDBRow>
+                  </MDBCard>
+                </MDBCardBody>
+                <MDBCardBody>
+                  <MDBCardTitle className="text" tag="h5">
+                    Informations Emploi
+                  </MDBCardTitle>
+                  <MDBCard>
+                    <br />
+                    <MDBRow around between>
+                      {/* ligne1 */}
+                      <MDBInput
+                        label="Sociéte"
+                        outline
+                        type="text"
+                        value={this.state.societe.raisonSociale}
+                        disabled="false"
+                      />
+                      <MDBInput
+                        outline
+                        label="Date Embauche*"
+                        type="date"
+                        required
+                      />
+                      <MDBInput outline label="Date Sortie" type="date" />
+
+                      <div>
+                        <br />
+                        <select
+                          className="browser-default custom-select"
+                          required
+                        >
+                          <option>Type Contrat*</option>
+                          <option value="1">CDD Tps Plein</option>
+                          <option value="2">CDD Tps Partiel</option>
+                          <option value="3">CDI Tps Plein</option>
+                          <option value="4">CDI Tps Partiel</option>
+                          <option value="4">Contrat Pro/Alternance</option>
+                        </select>
+                      </div>
+                    </MDBRow>
+                    <MDBRow around between>
+                      {/* ligne2 */}
+                      <MDBCol md="3" className="mb-3">
                         <div>
                           <br />
-                          <select className="browser-default custom-select">
-                            <option>Type Contrat</option>
-                            <option value="1">CDD Tps Plein</option>
-                            <option value="2">CDD Tps Partiel</option>
-                            <option value="3">CDI Tps Plein</option>
-                            <option value="4">CDI Tps Partiel</option>
-                            <option value="4">Contrat Pro/Alternance</option>
-                          </select>
-                        </div>
-                      </MDBRow>
-                      <MDBRow around between>
-                        {/* ligne2 */}
-                        <div>
-                          <br />
-                          <select className="browser-default custom-select">
-                            <option>Catégorie</option>
+                          <select
+                            className="browser-default custom-select"
+                            required
+                          >
+                            <option>Catégorie*</option>
                             <option value="1">Employé</option>
                             <option value="2">Agent de Maitrise</option>
                             <option value="3">Assimilé Cadre</option>
                             <option value="4">Stagiaire</option>
                           </select>
                         </div>
-                        <MDBInput label="Poste" outline type="text" />
+                      </MDBCol>
+                      <MDBCol md="3" className="mb-3">
+                        <MDBInput label="Poste*" outline type="text" required />
+                      </MDBCol>
+                      <MDBCol md="3" className="mb-3">
                         <div>
                           <br />
-                          <select className="browser-default custom-select">
-                            <option>Statut</option>
+                          <select
+                            className="browser-default custom-select"
+                            required
+                          >
+                            <option>Statut*</option>
                             <option value="1">Non Embauche</option>
                             <option value="2">Embauché</option>
                             <option value="3">Stagiaire</option>
                             <option value="4">Cadre</option>
                           </select>
                         </div>
-                      </MDBRow>
-                      <MDBRow around between>
-                        {/* ligne3 */}
-                        <MDBInput label="Salaire Horaire" outline type="text" />
-                        <MDBInput label="Salaire Mensuel" outline type="text" />
+                      </MDBCol>
+                    </MDBRow>
+                    <MDBRow around between>
+                      {/* ligne3 */}
+                      <MDBCol md="3" className="mb-3">
                         <MDBInput
-                          label="Heures Mensuelles"
+                          label="Salaire Horaire*"
+                          outline
+                          type="text"
+                          required
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="mb-3">
+                        <MDBInput
+                          label="Salaire Mensuel*"
+                          outline
+                          type="text"
+                          required
+                        />
+                      </MDBCol>
+                      <MDBCol md="3" className="mb-3">
+                        <MDBInput
+                          label="Heures Mensuelles*"
                           outline
                           type="text"
                         />
-                      </MDBRow>
-                    </MDBCard>
-                  </MDBCardBody>
-                </MDBRow>
+                      </MDBCol>
+                    </MDBRow>
+                  </MDBCard>
+                </MDBCardBody>
               </div>
+              <p className="small">* Mention Obligatoire</p>
               <div>
                 <hr></hr>
               </div>
