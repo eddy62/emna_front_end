@@ -9,7 +9,7 @@ class MenuClientFournisseur extends Component {
   render() {
     return (
 
-      <div className="container-fluid container-fluid p-5 bg-light justify-content-center align-items-center ">
+      <div>
         <div className={"container-fluid" + Style.menu}>
           <h1 className={Style.h1}>Gestion Client Fournisseur</h1>
         </div>
@@ -28,7 +28,8 @@ class MenuClientFournisseur extends Component {
             </ul>
           </nav>
         </div >
-      </div>
+      </div >
+
 
 
     );

@@ -1,8 +1,9 @@
 import React from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import AxiosCenter from "./../../shared/services/AxiosCenter";
-import Style from "./ClientFournisseur.module.css";
+import AxiosCenter from "../../../shared/services/AxiosCenter";
+import { Link } from "react-router-dom";
+
 
 
 const ComposantErreur = (props) => (
@@ -46,7 +47,7 @@ class AddClientFournisseur extends React.Component {
     return (
 
       <div className="container-fluid ">
-        <h1 className={Style.h2}>Ajouter un client fournisseur</h1>
+        <h1 >Ajouter un client fournisseur</h1>
         <Formik
           onSubmit={this.submit}
           initialValues={{
@@ -132,6 +133,11 @@ class AddClientFournisseur extends React.Component {
               <button type="submit" className="btn btn-primary">
                 Sauvegarder
               </button>
+              <Link to="/clientFournisseur/liste">
+                <button className="btn btn-secondary">
+                  Annuler
+                                </button>
+              </Link>
             </form>
           )}
         </Formik>
