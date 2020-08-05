@@ -1,6 +1,5 @@
 import React from "react";
 import "./style2.scss";
-//import DetailEmploye from "./Detail_employe";
 import { Link } from "react-router-dom";
 import {
   MDBCardTitle,
@@ -75,7 +74,7 @@ class ListEmployes extends React.Component {
           },
           {
             //identité
-            id: 0,
+            id: 1,
             matricule: "EMP002",
             civilite: "Monsieur",
             categorie: "Cadre",
@@ -109,7 +108,7 @@ class ListEmployes extends React.Component {
           },
           {
             //identité
-            id: 0,
+            id: 2,
             matricule: "EMP003",
             civilite: "Monsieur",
             categorie: "Cadre",
@@ -143,7 +142,7 @@ class ListEmployes extends React.Component {
           },
           {
             //identité
-            id: 0,
+            id: 3,
             matricule: "EMP004",
             civilite: "Monsieur",
             categorie: "Cadre",
@@ -177,7 +176,7 @@ class ListEmployes extends React.Component {
           },
           {
             //identité
-            id: 0,
+            id: 4,
             matricule: "EMP005",
             civilite: "Monsieur",
             categorie: "Cadre",
@@ -211,7 +210,7 @@ class ListEmployes extends React.Component {
           },
           {
             //identité
-            id: 0,
+            id: 5,
             matricule: "EMP006",
             civilite: "Monsieur",
             categorie: "Cadre",
@@ -293,7 +292,7 @@ class ListEmployes extends React.Component {
         dateSortie: employe.dateFinContrat,
         typeContrat: employe.typeContrat,
         clickEvent: () => {
-          //<DetailEmploye details={employe} />;
+          this.props.history.push("/detailEmploye/" + employe.id);
         },
       };
       rows.push(addemploye);
@@ -313,39 +312,36 @@ class ListEmployes extends React.Component {
     //const employes = this.state.societe.listeEmployes;
     //console.log(employes);
     return (
-      <div className="App">
+      <div className="App1">
         <div className="employes">
           <MDBContainer>
             <div>
               <MDBCardHeader color="default-color">
-                <MDBCardTitle>
-                  <h1>{title}</h1>
-                </MDBCardTitle>
+                <MDBCardTitle tag="h1">{title}</MDBCardTitle>
 
-                <MDBCardTitle>
-                  <h3>{entreprise}</h3>
-                </MDBCardTitle>
+                <MDBCardTitle tag="h3">{entreprise}</MDBCardTitle>
               </MDBCardHeader>
             </div>
             <div>
               <hr></hr>
             </div>
-            <MDBCardHeader
-              tag="h3"
-              className="text-center font-weight-bold text-uppercase py-4"
-            >
+            <MDBCardHeader tag="h4" color="teal lighten-5" text="black">
               {title1}
             </MDBCardHeader>
-
+            <div>
+              <hr></hr>
+            </div>
             <div>{this.tableau()}</div>
             <div>
               <hr></hr>
             </div>
-            <MDBBtn color="default" rounded size="sm">
-              Enregistrer un Employé
-            </MDBBtn>
+            <Link to="/newEmploye">
+              <MDBBtn color="teal accent-3" rounded size="sm">
+                Enregistrer un Employe
+              </MDBBtn>
+            </Link>
             <Link to="/socialHome">
-              <MDBBtn color="default" rounded size="sm">
+              <MDBBtn color="teal accent-3" rounded size="sm">
                 Retour
               </MDBBtn>
             </Link>

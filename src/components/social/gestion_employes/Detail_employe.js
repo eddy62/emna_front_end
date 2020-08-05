@@ -1,7 +1,6 @@
 import React from "react";
 import "./style2.scss";
 import { Link } from "react-router-dom";
-//import ListEmployes from "./List_employes";
 import {
   MDBCardTitle,
   MDBCardHeader,
@@ -80,30 +79,33 @@ class DetailEmploye extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const idEmploye = this.props.match.params.id;
+    console.log(idEmploye);
+  }
+
   render() {
     const title = "Gestion Social";
     const title1 = "Information Employé";
     const entreprise = this.state.societe.raisonSociale;
     const employe = this.state.employe;
     return (
-      <div className="App">
+      <div className="App1">
         <div className="employes">
           <MDBContainer>
             <div>
               <MDBCardHeader color="default-color">
-                <MDBCardTitle>
-                  <h1>{title}</h1>
-                </MDBCardTitle>
+                <MDBCardTitle tag="h1">{title}</MDBCardTitle>
                 <br />
-                <MDBCardTitle>
-                  <h3>{entreprise}</h3>
-                </MDBCardTitle>
+                <MDBCardTitle tag="h3">{entreprise}</MDBCardTitle>
               </MDBCardHeader>
             </div>
             <div>
               <hr></hr>
             </div>
-            <MDBCardTitle className="text">{title1}</MDBCardTitle>
+            <MDBCardHeader tag="h4" color="teal lighten-5" text="black">
+              {title1}
+            </MDBCardHeader>
             <div>
               <hr></hr>
             </div>
@@ -269,18 +271,22 @@ class DetailEmploye extends React.Component {
             <div>
               <hr></hr>
             </div>
-            <Link to="/listEmployes">
-              <MDBBtn color="default" rounded size="sm">
-                Mise à jour
-              </MDBBtn>
-            </Link>
+            <MDBBtn
+              color="default"
+              rounded
+              size="sm"
+              onClick="/updateEmploye/:id"
+              color="teal accent-3"
+            >
+              Mise à jour
+            </MDBBtn>
 
-            <MDBBtn color="default" rounded size="sm">
+            <MDBBtn color="default" rounded size="sm" color="teal accent-3">
               Supprimer
             </MDBBtn>
 
             <Link to="/listEmployes">
-              <MDBBtn color="default" rounded size="sm">
+              <MDBBtn color="default" rounded size="sm" color="teal accent-3">
                 Retour
               </MDBBtn>
             </Link>

@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 import { PrivateRoute } from "../helpers/PrivateRoute";
 
+//Gestion Social import
 import AccueilSocial from "./social/SocialHome";
 import ListEmployes from "./social/gestion_employes/List_employes";
 import DetailEmploye from "./social/gestion_employes/Detail_employe";
+import NewEmploye from "./social/gestion_employes/Create_employe";
+import UpdateEmploye from "./social/gestion_employes/Update_employe";
 
 import ListeContrat from "./contrat/listeContrat/ListeContrat";
 import Contrat from "./contrat/Contrat";
@@ -42,9 +45,14 @@ export default class Routes extends Component {
         <PrivateRoute exact path="/" component={HomeMenu} />
         <PrivateRoute path="/menu/comptabilite" component={ComptabiliteMenu} />
         <PrivateRoute path="/menu/juridique" component={JuridiqueMenu} />
+
+        {/* Gestion Social */}
         <PrivateRoute path="/socialHome" component={AccueilSocial} />
         <PrivateRoute path="/listEmployes" component={ListEmployes} />
         <PrivateRoute path="/detailEmploye" component={DetailEmploye} />
+        <PrivateRoute path="/newEmploye" component={NewEmploye} />
+        <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
+
         <PrivateRoute path="/listcontrat" component={ListeContrat} />
         <PrivateRoute path="/contrat" component={Contrat} />
         <PrivateRoute path="/detailcontrat/:id" component={DetailContrat} />
