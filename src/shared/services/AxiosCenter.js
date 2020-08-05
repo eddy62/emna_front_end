@@ -36,9 +36,7 @@ const AxiosCenter = {
       method: 'post',
       url: `/client-fournisseurs/new`,
       data: values,
-
     })
-
   },
 
   updateClientFournisseur(values) {
@@ -48,6 +46,13 @@ const AxiosCenter = {
       data: values,
     })
   },
+  deleteClientFournisseur(id) {
+    return ApiBackEnd({
+      method: 'delete',
+      url: `/client-fournisseurs/${id}`,
+    })
+  },
+
 
   getOperation() {
     return ApiBackEnd({
@@ -63,6 +68,8 @@ const AxiosCenter = {
     });
   },
 };
+
+
 
 export default AxiosCenter;
 
