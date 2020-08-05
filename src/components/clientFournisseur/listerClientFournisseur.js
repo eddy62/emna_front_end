@@ -50,7 +50,7 @@ class ListerClientFournisseur extends Component {
                       <td scope="row">{c.siren}</td>
                       <td scope="row">{c.email}</td>
                       <td>
-                        <div className="btn-group flex-btn-group-container">
+                        <div size="sm" className="btn-group flex-btn-group-container">
                           <DetailsClientFournisseur client={c} />
                         </div>
                         <MDBBtn size="sm">

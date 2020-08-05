@@ -43,14 +43,13 @@ class DetailsClientFournisseur extends Component {
                         </div>
                     </MDBModalBody>
                     <MDBModalFooter>
-                        <MDBBtn color="secondary" onClick={this.toggle(6)}>Fermer</MDBBtn>
-                        <MDBBtn size="sm">
-                            <Link to={`/clientFournisseur/modifier/${this.props.client.id}`} >
+                        <MDBBtn color="dark" size="sm" onClick={this.toggle(6)}>Fermer</MDBBtn>
+                        <Link to={`/clientFournisseur/modifier/${this.props.client.id}`} >
+                            <MDBBtn color="primary" size="sm">
                                 <span className="d-none d-md-inline">
-                                    Modifier
-                        </span>
-                            </Link>
-                        </MDBBtn>
+                                    Modifier </span>
+                            </MDBBtn>
+                        </Link>
                     </MDBModalFooter>
                 </MDBModal>
             </MDBContainer>
