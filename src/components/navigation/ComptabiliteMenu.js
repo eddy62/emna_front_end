@@ -12,12 +12,12 @@ import {
   MDBCol,
 } from "mdbreact";
 
-class HomeMenu extends React.Component {
+class ComptabiliteMenu extends React.Component {
   render() {
-    const title = "Bienvenue sur EMNA";
-    const title2 = "Comptabilité";
-    const title3 = "Juridique";
-    const title4 = "Social";
+    const title = "Espace Comptabilité";
+    const title2 = "Facture";
+    const title3 = "Devis";
+    const title4 = "Relevé Bancaire";
 
     return (
       <div className="App">
@@ -44,7 +44,7 @@ class HomeMenu extends React.Component {
                     <MDBCardTitle className="text">{title2}</MDBCardTitle>
                     <br />
                     <MDBCardText>
-                      Validation Comptables des variables de Paie des Employés
+                      Accéder à toutes mes factures d'achats ou de vente
                     </MDBCardText>
                     <br />
                     <div className="boutton">
@@ -63,10 +63,7 @@ class HomeMenu extends React.Component {
                   <MDBCardBody>
                     <MDBCardTitle className="text">{title3}</MDBCardTitle>
                     <br />
-                    <MDBCardText>
-                      Enregistrement et modification des variables de paies des
-                      Employés
-                    </MDBCardText>
+                    <MDBCardText>Accéder à mes devis</MDBCardText>
                     <br />
                     <div className="boutton">
                       <Link to="/listEmployes">
@@ -85,12 +82,11 @@ class HomeMenu extends React.Component {
                     <MDBCardTitle className="text">{title4}</MDBCardTitle>
                     <br />
                     <MDBCardText>
-                      Consultation et Téléchargement des Fiches de Paie des
-                      Employés
+                      Accéder à la gestion de mes relevés bancaires
                     </MDBCardText>
                     <br />
                     <div className="boutton">
-                      <Link to="/listEmployes">
+                      <Link to="/socialHome">
                         <MDBBtn className="boutton" rounded size="sm">
                           Gerer
                         </MDBBtn>
@@ -106,4 +102,4 @@ class HomeMenu extends React.Component {
     );
   }
 }
-export default HomeMenu;
+export default ComptabiliteMenu;

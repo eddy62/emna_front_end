@@ -30,7 +30,9 @@ import SelectToAddUser from "./pages/SelectToAddUser";
 import AddSociete from "./societe/AddSociete";
 import ViewSociete from "./societe/ViewSociete";
 import EditSociete from "./societe/EditSociete";
-import HomeMenu from "./home/HomeMenu";
+import HomeMenu from "./navigation/HomeMenu";
+import ComptabiliteMenu from "./navigation/ComptabiliteMenu";
+import JuridiqueMenu from "./navigation/JuridiqueMenu";
 // finGestionUserRoutesImports
 
 export default class Routes extends Component {
@@ -38,6 +40,8 @@ export default class Routes extends Component {
     return (
       <Switch>
         <PrivateRoute exact path="/" component={HomeMenu} />
+        <PrivateRoute path="/menu/comptabilite" component={ComptabiliteMenu} />
+        <PrivateRoute path="/menu/juridique" component={JuridiqueMenu} />
         <PrivateRoute path="/socialHome" component={AccueilSocial} />
         <PrivateRoute path="/listEmployes" component={ListEmployes} />
         <PrivateRoute path="/detailEmploye" component={DetailEmploye} />
