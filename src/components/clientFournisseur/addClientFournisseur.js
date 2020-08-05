@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import AxiosCenter from "./../../shared/services/AxiosCenter";
 import Style from "./ClientFournisseur.module.css";
 
+
 const ComposantErreur = (props) => (
   <div className="text-danger">{props.children}</div>
 );
@@ -16,41 +17,34 @@ const ComposantInput = ({ field, form: { touched, errors }, ...props }) => (
 );
 
 class AddClientFournisseur extends React.Component {
-  submit = (values, actions) => {
-    console.log(values);
 
+  submit = (values, actions) => {
     AxiosCenter.createClientFournisseur(values)
       .then((response) => {
         console.log(response.data);
-        console.log("values" + values);
       })
       .catch((error) => {
         console.log(error);
       });
 
-    actions.setSubmitting(false);
+    actions.setSubmitting(true);
   };
 
   userSchema = Yup.object().shape({
-    nom: Yup.string("String")
-      .min(3, "Trop court")
-      .max(20, "Trop long")
-      .required("Requis"),
-    siren: Yup.number("Entres des chiffre")
-      .min(9, " SIREN est composé de 9 chiffres")
-      .required("Le champ est obligatoire"),
-    email: Yup.string()
-      .email("L'email doit être valide")
-      .required("Le champ est obligatoire"),
-    telephone: Yup.number("Entrez des chiffres").min(9, "Trop court"),
-    numero: Yup.number("Entrez la bonne format"),
-    rue: Yup.string("String").min(5, "Trop court"),
-    codePostal: Yup.number("Entrez des chiffres").min(4, "Trop court"),
-    ville: Yup.string("String"),
+    nom: Yup.string("String").min(2, "Trop court").max(20, "Trop long").required("Le champ est obligatoire"),
+    siren: Yup.number("Entres des chiffre").required("Le champ est obligatoire"),
+    email: Yup.string().email("L'email doit être valide").required("Le champ est obligatoire"),
+    telephone: Yup.number().min(9, "Trop court"),
+    numeroRue: Yup.string().required("Le champ est obligatoire"),
+    nomRue: Yup.string().required("Le champ est obligatoire"),
+    codePostal: Yup.string().max(5, "Trop court").required("Le champ est obligatoire"),
+    ville: Yup.string().required("Le champ est obligatoire"),
+    pays: Yup.string().required("Le champ est obligatoire"),
   });
 
   render() {
     return (
+
       <div className="container-fluid ">
         <h1 className={Style.h2}>Ajouter un client fournisseur</h1>
         <Formik
@@ -131,6 +125,8 @@ class AddClientFournisseur extends React.Component {
 
                 <Field name="ville" label="Ville" component={ComposantInput} />
                 <ErrorMessage name="ville" component={ComposantErreur} />
+                <Field name="pays" label="Pays" component={ComposantInput} />
+                <ErrorMessage name="pays" component={ComposantErreur} />
               </div>
 
               <button type="submit" className="btn btn-primary">

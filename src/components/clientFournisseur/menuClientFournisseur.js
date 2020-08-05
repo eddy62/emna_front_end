@@ -1,41 +1,36 @@
-import React, { Fragment, Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import ListerClientFournisseur from "./listerClientFournisseur";
-import AddClientFournisseur from "./addClientFournisseur";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { MDBBtn } from "mdbreact";
-import Style from "./ClientFournisseur.module.css";
+import Style from './ClientFournisseur.module.css'
+
+
 
 class MenuClientFournisseur extends Component {
   render() {
     return (
-      <Router>
+
+      <div className="container-fluid container-fluid p-5 bg-light justify-content-center align-items-center ">
         <div className={"container-fluid" + Style.menu}>
           <h1 className={Style.h1}>Gestion Client Fournisseur</h1>
         </div>
         <div>
           <nav>
-            <Fragment>
-              <ul className="nav nav-pills nav-fill">
-                <li className="nav-item">
-                  <Link to="/liste">
-                    <MDBBtn className={Style.button} color="info">
-                      La Liste Des Mes Associés
-                    </MDBBtn>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/creer">
-                    <MDBBtn color="info"> +Céer Une Société </MDBBtn>{" "}
-                  </Link>
-                </li>
-              </ul>
-            </Fragment>
-          </nav>
 
-          <Route path="/liste" component={ListerClientFournisseur} />
-          <Route path="/creer" component={AddClientFournisseur} />
-        </div>
-      </Router>
+            <ul className="nav nav-pills nav-fill">
+              <li className="nav-item">
+                <Link to="/clientFournisseur/liste">
+                  <MDBBtn className={Style.button} color="info" >La Liste Des Mes Associés</MDBBtn></Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/clientFournisseur/creer">
+                  <MDBBtn color="info" > +Céer Une Société </MDBBtn> </Link>
+              </li>
+            </ul>
+          </nav>
+        </div >
+      </div>
+
+
     );
   }
 }

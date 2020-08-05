@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
 import Style from './ClientFournisseur.module.css'
+import { Link } from "react-router-dom";
 
 
 class DetailsClientFournisseur extends Component {
@@ -42,8 +43,13 @@ class DetailsClientFournisseur extends Component {
                         </div>
                     </MDBModalBody>
                     <MDBModalFooter>
-                        <MDBBtn color="secondary" onClick={this.toggle(6)}>Fermer</MDBBtn>
-                        <MDBBtn color="danger" onClick={this.toggle(6)}>Modifier</MDBBtn>
+                        <MDBBtn color="dark" size="sm" onClick={this.toggle(6)}>Fermer</MDBBtn>
+                        <Link to={`/clientFournisseur/modifier/${this.props.client.id}`} >
+                            <MDBBtn color="primary" size="sm">
+                                <span className="d-none d-md-inline">
+                                    Modifier </span>
+                            </MDBBtn>
+                        </Link>
                     </MDBModalFooter>
                 </MDBModal>
             </MDBContainer>
