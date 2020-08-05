@@ -29,6 +29,7 @@ class SideNavigation extends React.Component {
           breakWidth={this.props.breakWidth}
           triggerOpening={this.props.triggerOpening}
           style={{ transition: "padding-left .3s" }}
+          href="/"
         >
           <form role="search" className="search-form">
             <div className="form-group md-form mt-0 pt-1 ripple-parent">
@@ -45,23 +46,23 @@ class SideNavigation extends React.Component {
               id="dashboard-cat"
               icon="tachometer-alt"
             >
-              {this.rSNL("/dashboards/v1", "Facture")}
-              {this.rSNL("/dashboards/v2", "Devis")}
-              {this.rSNL("/dashboards/v3", "Relevé Bancaire")}
+              {this.rSNL("/TODO", "Facture")}
+              {this.rSNL("/TODO", "Devis")}
+              {this.rSNL("/bancaire", "Relevé Bancaire")}
             </MDBSideNavCat>
 
             <MDBSideNavCat name="Juridique" id="pages-cat" icon="scroll">
-              {this.rSNL("/pages/login", "Contrat")}
-              {this.rSNL("/pages/register", "Société")}
-              {this.rSNL("/pages/pricing", "Assemblée Générale")}
+              {this.rSNL("/contrat", "Contrat")}
+              {this.rSNL("/client-fournisseur", "Société")}
+              {this.rSNL("/TODO", "Assemblée Générale")}
             </MDBSideNavCat>
 
             <MDBSideNavCat name="Social" id="profile-cat" icon="user">
-              {this.rSNL("/profile/v1", "Employés")}
-              {this.rSNL("/profile/v2", "Variable Paie")}
-              {this.rSNL("/profile/extended", "Validation")}
-              {this.rSNL("/profile/extended", "Fiche de Paie")}
-              {this.rSNL("/profile/extended", "Déclaration d'embauche")}
+              {this.rSNL("/listEmployes", "Employés")}
+              {this.rSNL("/TODO", "Variable Paie")}
+              {this.rSNL("/TODO", "Validation")}
+              {this.rSNL("/TODO", "Fiche de Paie")}
+              {this.rSNL("/TODO", "Déclaration d'embauche")}
             </MDBSideNavCat>
 
             {/* <MDBSideNavLink topLevel to="/alerts" onClick={onLinkClick}>
