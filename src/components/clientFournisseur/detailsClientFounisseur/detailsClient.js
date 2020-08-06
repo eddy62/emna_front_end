@@ -22,7 +22,7 @@ class DetailsClientFournisseur extends Component {
     render() {
         return (
             <MDBContainer>
-                <MDBBtn color="info" size="sm" circle="true" onClick={this.toggle(6)}>Details</MDBBtn>
+                <MDBBtn color="info" size="sm" rounded circle="true" onClick={this.toggle(6)}>Details</MDBBtn>
                 <MDBModal isOpen={this.state.modal6} toggle={this.toggle(6)} side position="top-right">
                     <MDBModalHeader toggle={this.toggle(6)}>Présentation de la société</MDBModalHeader>
                     <MDBModalBody>
@@ -43,9 +43,9 @@ class DetailsClientFournisseur extends Component {
                         </div>
                     </MDBModalBody>
                     <MDBModalFooter>
-                        <MDBBtn color="dark" size="sm" onClick={this.toggle(6)}>Fermer</MDBBtn>
+                        <MDBBtn rounded color="dark" size="sm" onClick={this.toggle(6)}>Fermer</MDBBtn>
                         <Link to={`/clientFournisseur/modifier/${this.props.client.id}`} >
-                            <MDBBtn color="primary" size="sm">
+                            <MDBBtn rounded color="primary" size="sm">
                                 <span className="d-none d-md-inline">
                                     Modifier </span>
                             </MDBBtn>

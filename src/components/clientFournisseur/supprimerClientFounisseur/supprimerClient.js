@@ -44,16 +44,16 @@ class ModalPage extends Component {
     render() {
         return (
             <MDBContainer>
-                <MDBBtn color="secondary" circle="true" size="sm" onClick={this.toggle}>Supprimer</MDBBtn>
+                <MDBBtn color="secondary" rounded circle="true" size="sm" onClick={this.toggle}>Supprimer</MDBBtn>
                 <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
                     <MDBModalHeader toggle={this.toggle}>Confirmation de suppression </MDBModalHeader>
                     <MDBModalBody>
                         <span>Etez-vous certain de vouloir supprimer le client fournisseur?? </span>
                     </MDBModalBody>
                     <MDBModalFooter>
-                        <MDBBtn type="button" circle="true" size="sm" onClick={this.toggle}>Annuler</MDBBtn>
+                        <MDBBtn rounded type="button" circle="true" size="sm" onClick={this.toggle}>Annuler</MDBBtn>
                         <div onClick={e => e.stopPropagation()}>
-                            <MDBBtn toggle={this.toggle} color="secondary" onClick={this.props.suppressionConfirme} circle="true" size="sm" >
+                            <MDBBtn rounded toggle={this.toggle} color="secondary" onClick={this.props.suppressionConfirme} circle="true" size="sm" >
                                 Supprimer</MDBBtn>
                         </div>
                     </MDBModalFooter>

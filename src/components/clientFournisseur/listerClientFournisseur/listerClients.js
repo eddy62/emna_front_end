@@ -30,12 +30,12 @@ class ListerClientFournisseur extends Component {
     return (
       <div>
 
-        <div className="container-fluid container-fluid p-5 bg-light justify-content-center align-items-center ">
+        <div className="container-fluid container-fluid p-5  justify-content-center align-items-center ">
           <h1 className={Style.h2}>Liste de clients de société </h1>
           <div>
-            <table className=" table table-striped table-bordered table-hover table-sm">
-              <caption>La liste de client fournisseur</caption>
-              <thead className="thead-dark">
+            <table className="table table-striped table-bordered table-hover table-sm">
+              <caption>La liste des clients fournisseurs</caption>
+              <thead className={Style.add}>
                 <tr>
                   <th scope="col">Nom</th>
                   <th scope="col">SIREN</th>
