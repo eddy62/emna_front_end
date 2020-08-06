@@ -96,7 +96,7 @@ class NewEmploye extends React.Component {
     const title1 = "Enregister un Nouvel Employé";
     const entreprise = this.state.societe.raisonSociale;
     return (
-      <div className="app2">
+      <div className="App1">
         <div className="newEmp">
           <MDBContainer>
             <div>
@@ -403,12 +403,12 @@ class NewEmploye extends React.Component {
                 <hr></hr>
               </div>
 
-              <MDBBtn color="default" rounded size="sm" type="submit">
-                Enregister
+              <MDBBtn color="teal accent-3" rounded size="sm" type="submit">
+                Enregistrer
               </MDBBtn>
 
               <Link to="/listEmployes">
-                <MDBBtn color="default" rounded size="sm">
+                <MDBBtn color="teal accent-3" rounded size="sm">
                   Retour
                 </MDBBtn>
               </Link>

@@ -60,7 +60,7 @@ class UpdateEmploye extends React.Component {
     const title1 = "Editer un Employé";
     const entreprise = this.state.societe.raisonSociale;
     return (
-      <div className="App">
+      <div className="App1">
         <div className="newEmp">
           <MDBContainer>
             <div>
@@ -73,7 +73,9 @@ class UpdateEmploye extends React.Component {
             <div>
               <hr></hr>
             </div>
-            <MDBCardTitle tag="h4">{title1}</MDBCardTitle>
+            <MDBCardHeader tag="h4" color="teal lighten-5" text="black">
+              {title1}
+            </MDBCardHeader>
             <div>
               <hr></hr>
             </div>
@@ -284,12 +286,12 @@ class UpdateEmploye extends React.Component {
                 <hr></hr>
               </div>
 
-              <MDBBtn color="default" rounded size="sm" type="submit">
+              <MDBBtn color="teal accent-3" rounded size="sm" type="submit">
                 EDITER
               </MDBBtn>
 
               <Link to="/listEmployes">
-                <MDBBtn color="default" rounded size="sm">
+                <MDBBtn color="teal accent-3" rounded size="sm">
                   Retour
                 </MDBBtn>
               </Link>
