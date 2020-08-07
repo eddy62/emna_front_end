@@ -4,7 +4,9 @@ import * as Yup from "yup";
 import Style from "./../ClientFournisseur.module.css";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import { Link } from 'react-router-dom';
-
+import {
+    MDBBtn
+} from "mdbreact";
 
 const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
@@ -119,13 +121,13 @@ class ModifierClient extends Component {
                                 <Field name="pays" label="Pays" component={ComposantInput} />
                                 <ErrorMessage name="pays" component={ComposantErreur} />
                             </div>
-                            <button type="submit" className="btn btn-success">
+                            <MDBBtn rounded type="submit" className="btn btn-success">
                                 Sauvegarder
-                            </button>
+                            </MDBBtn>
                             <Link to="/clientFournisseur/liste">
-                                <button className="btn btn-secondary">
-                                    Annuler
-                                </button>
+                                <MDBBtn rounded className="btn btn-secondary">
+                                    <span>Retour</span>
+                                </MDBBtn>
                             </Link>
                         </form>
                     )}
