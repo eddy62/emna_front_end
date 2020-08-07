@@ -41,7 +41,9 @@ class ComptabiliteMenu extends React.Component {
               <MDBCol>
                 <MDBCard>
                   <MDBCardBody>
-                    <MDBCardTitle className="text">{title2}</MDBCardTitle>
+                    <MDBCardTitle className="MDBCardTitle">
+                      {title2}
+                    </MDBCardTitle>
                     <br />
                     <MDBCardText>
                       Accéder à toutes mes factures d'achats ou de vente
@@ -61,7 +63,9 @@ class ComptabiliteMenu extends React.Component {
               <MDBCol>
                 <MDBCard>
                   <MDBCardBody>
-                    <MDBCardTitle className="text">{title3}</MDBCardTitle>
+                    <MDBCardTitle className="MDBCardTitle">
+                      {title3}
+                    </MDBCardTitle>
                     <br />
                     <MDBCardText>Accéder à mes devis</MDBCardText>
                     <br />
@@ -79,7 +83,9 @@ class ComptabiliteMenu extends React.Component {
               <MDBCol>
                 <MDBCard>
                   <MDBCardBody>
-                    <MDBCardTitle className="text">{title4}</MDBCardTitle>
+                    <MDBCardTitle className="MDBCardTitle">
+                      {title4}
+                    </MDBCardTitle>
                     <br />
                     <MDBCardText>
                       Accéder à la gestion de mes relevés bancaires

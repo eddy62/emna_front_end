@@ -5,6 +5,7 @@ import TopNavigation from "./TopNavigation";
 import Routes from "./Routes";
 import TokenService from "../shared/services/TokenService";
 import { withRouter } from "react-router-dom";
+import AxiosCenter from "./../shared/services/AxiosCenter";
 
 class App extends Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class App extends Component {
       currentPage: "",
       sideNavToggled: false,
       breakWidth: 1400,
+      userRole: "",
     };
   }
 
@@ -28,7 +30,6 @@ class App extends Component {
     window.addEventListener("resize", this.handleResize);
     this.assessLocation(this.props.location.pathname);
   }
-
   handleResize = () => {
     this.setState({
       windowWidth: window.innerWidth,

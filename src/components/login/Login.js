@@ -48,12 +48,6 @@ export class Login extends React.Component {
       });
   };
 
-  //   console.log(response);
-  // })
-  // .catch((error) => {
-  //   //error.........
-  // });
-
   render() {
     return (
       <div className="App">
