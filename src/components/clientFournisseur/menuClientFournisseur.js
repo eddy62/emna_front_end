@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import Style from './ClientFournisseur.module.css'
 import {
   MDBCard,
   MDBCardBody,
@@ -10,36 +9,66 @@ import {
   MDBBtn, MDBContainer, MDBRow,
   MDBCol
 } from "mdbreact";
+import AxiosCenter from "../../shared/services/AxiosCenter";
 
 
 
 
 class MenuClientFournisseur extends Component {
 
+  state = {
+    clientFournisseur: {},
+    loading: false,
+    value: ''
+  };
 
+  search = async val => {
+    this.setState({ loading: true });
+    AxiosCenter.getClientFournisseurByNom(val)
+      .then((response) => {
+        const clientFournisseur = response.data;
+        this.setState({
+          clientFournisseur: clientFournisseur,
+          loaded: true,
+        });
+        console.log(" nom societe " + this.state.clientFournisseur.nom)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+  };
+
+  onChangeHandler = async e => {
+    this.search(e.target.value);
+    this.setState({ value: e.target.value });
+  };
   render() {
     return (
-
-
       <div className="justify-content-center align-items-center container-fluid p-5 ">
         <div className="justify-content-center align-items-center container-fluid p-5 ">
           <MDBContainer>
             <div className="justify-content-center align-items-center container-fluid p-5 ">
               <MDBCardHeader color="default-color">
                 <MDBCardTitle tag="h2">Recherchez parmi toutes les entreprises</MDBCardTitle>
-
                 <br></br>
                 <div className="justify-content-center container-fluid align-items-center">
                   <form class="form-inline ">
-                    <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Qui? Ou?"
+                    <input value={this.state.value}
+                      onChange={e => this.onChangeHandler(e)} class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Qui? Ou?"
                       aria-label="Search" />
                     <i class="fas fa-search" aria-hidden="true"></i>
                   </form>
                 </div>
-
               </MDBCardHeader>
             </div>
             <div>
+              <br></br>
+              {this.state.clientFournisseur ? (
+                <Link to={`/clientFournisseur/detail/${this.state.clientFournisseur.id}`}>
+                  <span>{this.state.clientFournisseur.nom}</span>
+                </Link>
+              ) : (null)}
               <br></br>
             </div>
             <div className="justify-content-center align-items-center">
