@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import DetailsClientFournisseur from "../detailsClientFounisseur/detailsClient";
 import Style from "./../ClientFournisseur.module.css";
 import SupprimerClientFournisseur from "../supprimerClientFounisseur/supprimerClient";
+import { MDBBtn } from 'mdbreact';
+import { Link } from "react-router-dom";
+
 
 class ListerClientFournisseur extends Component {
   constructor(props) {
@@ -71,7 +73,11 @@ class ListerClientFournisseur extends Component {
                       <td>{c.email}</td>
                       <td>
                         <div size="sm" className="btn-group flex-btn-group-container">
-                          <DetailsClientFournisseur client={c} />
+                          <MDBBtn color="info" rounded circle="true" size="sm">
+                            <Link to={`/clientFournisseur/detail/${c.id}`}>
+                              <span>Detail</span>
+                            </Link>
+                          </MDBBtn>
                           <SupprimerClientFournisseur client={c} />
                         </div>
 

@@ -18,8 +18,10 @@ import CreerContrat from "./contrat/creerContrat/CreerContrat";
 import MenuClientFournisseur from "./clientFournisseur/menuClientFournisseur";
 import ListerClients from "./clientFournisseur/listerClientFournisseur/listerClients";
 import AddClient from "./clientFournisseur/addClientFournisseur/addClient";
-import ModifierClient from "./clientFournisseur/modifierCLientFournisseur/modifierClient";
+import ModifierClient from "./clientFournisseur/modifierClientFournisseur/modifierClient";
 import SupprimerClient from "./clientFournisseur/supprimerClientFounisseur/supprimerClient";
+import DetailsClient from "./clientFournisseur/detailsClientFounisseur/detailsClient";
+
 
 import Bancaire from "./bancaire";
 import CreationOperation from "./bancaire/operation/creationOperation/creationOperation";
@@ -119,6 +121,10 @@ export default class Routes extends Component {
         <PrivateRoute
           path="/clientFournisseur/delete/:id"
           component={SupprimerClient}
+        />
+        <PrivateRoute
+          path="/clientFournisseur/detail/:id"
+          component={DetailsClient}
         />
         <PrivateRoute component={NotFound} />
 

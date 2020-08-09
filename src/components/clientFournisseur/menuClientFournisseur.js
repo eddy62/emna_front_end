@@ -55,7 +55,7 @@ class MenuClientFournisseur extends Component {
                 <div className="justify-content-center container-fluid align-items-center">
                   <form class="form-inline ">
                     <input value={this.state.value}
-                      onChange={e => this.onChangeHandler(e)} class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Qui? Ou?"
+                      onChange={e => this.onChangeHandler(e)} class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Raison sociale??"
                       aria-label="Search" />
                     <i class="fas fa-search" aria-hidden="true"></i>
                   </form>
@@ -64,6 +64,7 @@ class MenuClientFournisseur extends Component {
             </div>
             <div>
               <br></br>
+              <h2>Resultat recherche par nom: </h2>
               {this.state.clientFournisseur ? (
                 <Link to={`/clientFournisseur/detail/${this.state.clientFournisseur.id}`}>
                   <span>{this.state.clientFournisseur.nom}</span>

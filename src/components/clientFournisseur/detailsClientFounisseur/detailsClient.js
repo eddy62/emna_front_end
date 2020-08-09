@@ -1,60 +1,105 @@
-import React, { Component } from 'react';
-import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
-import Style from './../ClientFournisseur.module.css'
+import React from "react";
 import { Link } from "react-router-dom";
+import {
+    MDBCardTitle,
+    MDBCardHeader,
+    MDBContainer,
+    MDBCard,
+    MDBBtn,
+    MDBRow,
+    MDBCardBody,
+} from "mdbreact";
+import AxiosCenter from "../../../shared/services/AxiosCenter";
+import Style from './../ClientFournisseur.module.css'
 
-
-class DetailsClientFournisseur extends Component {
-
-    state = {
-        modal6: false,
-        modal7: false
+class Details extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            client: {},
+            loaded: false,
+            idClient: this.props.match.params.id
+        };
     }
 
-    toggle = nr => () => {
-        let modalNumber = 'modal' + nr
-        this.setState({
-            [modalNumber]: !this.state[modalNumber]
-        });
+    componentDidMount() {
+        AxiosCenter.getClientFournisseur(this.state.idClient)
+            .then((response) => {
+                const client = response.data;
+                console.log(" get client " + response.data)
+                this.setState({
+                    client: client,
+                    loaded: true,
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
-
 
     render() {
+
         return (
-            <MDBContainer>
-                <MDBBtn color="info" size="sm" rounded circle="true" onClick={this.toggle(6)}>Details</MDBBtn>
-                <MDBModal isOpen={this.state.modal6} toggle={this.toggle(6)} side position="top-right">
-                    <MDBModalHeader toggle={this.toggle(6)}>Présentation de la société</MDBModalHeader>
-                    <MDBModalBody>
-                        <div className={Style.container}>
-                            <p>Details:</p>
-                            <dl>
-                                <dt>Raison sociale</dt>
-                                <dd>{this.props.client.nom}.</dd>
-                                <dt>SIREN</dt>
-                                <dd>{this.props.client.siren}.</dd>
-                                <dt>Email</dt>
-                                <dd>{this.props.client.email}.</dd>
-                                <dt>Téléphone</dt>
-                                <dd>{this.props.client.telephone}.</dd>
-                                <dt>Adresse</dt>
-                                <dd>{this.props.client.numeroRue + " "}{this.props.client.nomRue + "  "}{this.props.client.codePostal + " "}{this.props.client.ville}.</dd>
-                            </dl>
+            <div className="App1">
+                <div className="employes">
+                    <MDBContainer>
+                        <div>
+                            <MDBCardHeader color="default-color">
+                                <MDBCardTitle tag="h3">Gestion Client Fournisseur</MDBCardTitle>
+                            </MDBCardHeader>
                         </div>
-                    </MDBModalBody>
-                    <MDBModalFooter>
-                        <MDBBtn rounded color="dark" size="sm" onClick={this.toggle(6)}>Fermer</MDBBtn>
-                        <Link to={`/clientFournisseur/modifier/${this.props.client.id}`} >
+                        <div>
+                            <hr></hr>
+                        </div>
+                        <MDBCardHeader tag="h5" color="teal lighten-5" text="black">
+                            Details: Du Client   {this.state.client.nom}
+                        </MDBCardHeader>
+
+                        <div>
+                            <MDBRow>
+                                <MDBCardBody>
+                                    <MDBCard>
+                                        <br />
+                                        <div color="teal lighten-5" >
+
+                                            <dl>
+                                                <dt>Raison sociale</dt>
+                                                <dd>{this.state.client.nom}.</dd>
+                                                <dt>SIREN</dt>
+                                                <dd>{this.state.client.siren}.</dd>
+                                                <dt>Email</dt>
+                                                <dd>{this.state.client.email}.</dd>
+                                                <dt>Téléphone</dt>
+                                                <dd>{this.state.client.telephone}.</dd>
+                                                <dt>Adresse</dt>
+                                                <dd>{this.state.client.numeroRue + " "}{this.state.client.nomRue + "  "}{this.state.client.codePostal + " "}{this.state.client.ville}.</dd>
+                                            </dl>
+                                        </div>
+                                    </MDBCard>
+                                </MDBCardBody>
+                            </MDBRow>
+                        </div>
+                        <div>
+                            <hr></hr>
+                        </div>
+                        <Link to={`/clientFournisseur/modifier/${this.state.client.id}`} >
                             <MDBBtn rounded color="primary" size="sm">
                                 <span className="d-none d-md-inline">
                                     Modifier </span>
                             </MDBBtn>
                         </Link>
-                    </MDBModalFooter>
-                </MDBModal>
-            </MDBContainer>
+
+
+                        <Link to="/client-fournisseur">
+                            <MDBBtn color="default" rounded size="sm" color="teal accent-3">
+                                Retour
+                      </MDBBtn>
+                        </Link>
+                    </MDBContainer>
+                </div>
+            </div>
         );
     }
 }
 
-export default DetailsClientFournisseur;
+export default Details;

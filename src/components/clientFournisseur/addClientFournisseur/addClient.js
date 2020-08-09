@@ -3,7 +3,7 @@ import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import { Link } from "react-router-dom";
-import Style from './../ClientFournisseur.module.css'
+import { MDBBtn } from "mdbreact";
 
 
 
@@ -65,10 +65,10 @@ class AddClientFournisseur extends React.Component {
           {({ handleSubmit, isSubmitting }) => (
             <form
               onSubmit={handleSubmit}
-              className="container-fluid p-5  justify-content-center align-items-center"
+              className="container-fluid p-5 teal lighten-5 justify-content-center align-items-center"
             >
-              <div className={Style.add + " row p-2"
-              }>
+              <div className=" row p-2"
+              >
                 <Field
                   name="nom"
                   label="Nom de la Société"
@@ -132,13 +132,13 @@ class AddClientFournisseur extends React.Component {
                 <ErrorMessage name="pays" component={ComposantErreur} />
               </div>
 
-              <button rounded type="submit" className="btn btn-primary">
+              <MDBBtn rounded type="submit" className="btn btn-success">
                 Sauvegarder
-              </button>
+              </MDBBtn>
               <Link to="/clientFournisseur/liste">
-                <button rounded className="btn btn-secondary">
+                <MDBBtn rounded className="btn btn-secondary">
                   Annuler
-                                </button>
+                                </MDBBtn>
               </Link>
             </form>
           )}

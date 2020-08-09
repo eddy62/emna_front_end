@@ -91,7 +91,7 @@ class ModifierClient extends Component {
                     {({ handleSubmit }) => (
                         <form
                             onSubmit={handleSubmit}
-                            className=" container-fluid p-5 bg-light justify-content-center align-items-center"
+                            className=" container-fluid p-5  teal lighten-5 justify-content-center align-items-center"
                         >
                             <div className=" row p-2">
                                 <Field name="nom" label="Nom de la Société" component={ComposantInput} />
