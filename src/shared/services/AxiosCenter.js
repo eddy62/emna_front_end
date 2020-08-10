@@ -54,7 +54,7 @@ const AxiosCenter = {
   getAllWrapperEmployesBySociety(id) {
     return ApiBackEnd({
       method: "get",
-      url: `/wrapperemployes/societe/${id}`,
+      url: `/wrapperemployes/society/${id}`,
     });
   },
 
@@ -65,6 +65,12 @@ const AxiosCenter = {
     });
   },
 
+  getWrapperSociete(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/wrappersociete/${id}`,
+    });
+  },
   getOperation() {
     return ApiBackEnd({
       method: "get",

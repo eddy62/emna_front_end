@@ -1,6 +1,7 @@
 import React from "react";
 import "./style2.scss";
 import { Link } from "react-router-dom";
+import AxiosCenter from "../../../shared/services/AxiosCenter";
 import {
   MDBContainer,
   MDBCardHeader,
@@ -10,86 +11,35 @@ import {
   MDBCardBody,
   MDBCard,
   MDBInput,
-  MDBSelect,
-  MDBDatePicker,
-  MDBSelectInput,
-  MDBSelectOption,
-  MDBSelectOptions,
   MDBCol,
 } from "mdbreact";
-import { Form } from "formik";
 
 class NewEmploye extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      societe: {
-        id: 1,
-        civilite: "Monsieur",
-        userId: 1,
-        comptableId: 1,
-        idInfoEntreprise: 1,
-        dateDeCreation: "2020-07-27",
-        description: "sociéte de de vente de logiciels Java",
-        domaineDactivite: "Commerciales",
-        email: "jakarta@gmail.com",
-        fax: "0954389764",
-        formeJuridique: "SARL",
-        raisonSociale: "JAKARTA SARL",
-        siren: "111 222 333",
-        siret: "111 222 333 00444",
-        telephone: "0954389765",
-        idAdresse: 1,
-        boitePostale: "1700",
-        codePostal: "59000",
-        nomRue: "Avenue des Developpeurs",
-        numeroRue: "104",
-        ville: "Lille",
-        listeEmployes: [{}, {}],
-      },
-      employe: {
-        //identité
-        id: 0,
-        matricule: "EMP001",
-        civilite: "Monsieur",
-        nomNaissance: "Dupont",
-        nomUsage: "Dupont",
-        prenom: "TOTO",
-        dateNaissance: "1977-02-24",
-        villeNaissance: "Lyon",
-        departementNaissance: "Rhone",
-        paysNaisance: "France",
-        email: "dupont@yahoo.com",
-        telephonePortable: "string",
-        telephoneFix: "string",
-        fax: "string",
-        numeroSecuriteSociale: "string",
-        //emploi
-        categorie: "Cadre",
-        statut: "Project Owner",
-        dateEmbauche: "2020-07-27",
-        dateFinContrat: "01-01-3000",
-        heuresMensuelle: 151.66,
-        salaireBrutMensuelle: 0,
-        salaireHoraire: 0,
-        typeContrat: "CDI",
-        //adresse
-        idAdresse: 1,
-        numeroRue: "22",
-        nomRue: "Rue des bois blancs",
-        boitePostale: "",
-        codePostal: "59000",
-        ville: "Lille",
-      },
-
+      societe: {},
       isLogginActive: true,
-
       valide: {
         value: "",
         valid: false,
       },
     };
   }
+
+  // componentDidMount() {
+  //   const idSociete = this.props.match.params.id;
+  //   console.log(idSociete);
+  //   AxiosCenter.getWrapperSociete(idSociete)
+  //     .then((response) => {
+  //       const societe = response.data;
+  //       console.log(societe);
+  //       this.setState({ societe: societe });
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
   render() {
     const title = "Gestion Social";
@@ -407,11 +357,18 @@ class NewEmploye extends React.Component {
                 Enregistrer
               </MDBBtn>
 
-              <Link to="/listEmployes">
-                <MDBBtn color="teal accent-3" rounded size="sm">
-                  Retour
-                </MDBBtn>
-              </Link>
+              {/* <Link to="/listEmployes"> */}
+              <MDBBtn
+                color="teal accent-3"
+                rounded
+                size="sm"
+                onClick={() => {
+                  this.props.history.push("/listEmployes/" + 1);
+                }}
+              >
+                Retour
+              </MDBBtn>
+              {/* </Link> */}
             </form>
           </MDBContainer>
         </div>

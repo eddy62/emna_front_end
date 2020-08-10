@@ -1,6 +1,7 @@
 import React from "react";
 import "./style1.scss";
 import { Link } from "react-router-dom";
+import AxiosCenter from "../../shared/services/AxiosCenter";
 import {
   MDBCard,
   MDBCardBody,
@@ -17,35 +18,22 @@ class AccueilSocial extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      societe: {
-        id: 1,
-        civilite: "Monsieur",
-        userId: 1,
-        comptableId: 1,
-        idInfoEntreprise: 1,
-        dateDeCreation: "2020-07-27",
-        description: "sociéte de de vente de logiciels Java",
-        domaineDactivite: "Commerciales",
-        email: "jakarta@gmail.com",
-        fax: "0954389764",
-        formeJuridique: "SARL",
-        raisonSociale: "JAKARTA SARL",
-        siren: "111 222 333",
-        siret: "111 222 333 00444",
-        telephone: "0954389765",
-        idAdresse: 1,
-        boitePostale: "1700",
-        codePostal: "59000",
-        nomRue: "Avenue des Developpeurs",
-        numeroRue: "104",
-        ville: "Lille",
-        listeEmployes: [{}, {}],
-      },
+      user: {},
       isLogginActive: true,
     };
   }
 
-  handleEmploye() {}
+  componentDidMount() {
+    AxiosCenter.getCurrentUser()
+      .then((response) => {
+        const user = response.data;
+        console.log(user);
+        this.setState({ user });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   render() {
     const title = "Gestion Social";
@@ -54,10 +42,10 @@ class AccueilSocial extends React.Component {
     const title3 = "Gestion des Variables de Paie";
     const title4 = "Gestion des Fiches de Paie";
     const title5 = "Déclaration Embauche";
-    const entreprise = this.state.societe.raisonSociale;
+    const entreprise = "JAKARTA SARL";
 
     return (
-      <div className="App1">
+      <div className="App">
         <div className="social">
           <div>
             <MDBContainer>
@@ -69,7 +57,7 @@ class AccueilSocial extends React.Component {
                 </MDBCardHeader>
               </div>
               <div className="titre">
-                <hr></hr>
+                <hr />
               </div>
               <div className="menu">
                 <MDBRow around between>
@@ -84,11 +72,16 @@ class AccueilSocial extends React.Component {
                         </MDBCardText>
                         <br />
                         <div>
-                          <Link to="/listEmployes">
-                            <MDBBtn rounded size="sm" color="teal accent-3">
-                              Gerer
-                            </MDBBtn>
-                          </Link>
+                          <MDBBtn
+                            rounded
+                            size="sm"
+                            color="teal accent-3"
+                            onClick={() => {
+                              this.props.history.push("/listEmployes/" + 1);
+                            }}
+                          >
+                            Gerer
+                          </MDBBtn>
                         </div>
                       </MDBCardBody>
                     </MDBCard>
@@ -178,6 +171,14 @@ class AccueilSocial extends React.Component {
                   </MDBCol>
                 </MDBRow>
               </div>
+              <div className="titre">
+                <hr />
+              </div>
+              <Link to="/">
+                <MDBBtn color="teal accent-3" rounded size="sm">
+                  Retour à l'Acceuil
+                </MDBBtn>
+              </Link>
             </MDBContainer>
           </div>
         </div>
