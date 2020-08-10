@@ -1,6 +1,5 @@
 import React from "react";
 import "./style2.scss";
-import { Link } from "react-router-dom";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import {
   MDBContainer,
@@ -46,7 +45,7 @@ class NewEmploye extends React.Component {
     const title1 = "Enregister un Nouvel Employé";
     const entreprise = this.state.societe.raisonSociale;
     return (
-      <div className="App1">
+      <div className="App">
         <div className="newEmp">
           <MDBContainer>
             <div>
