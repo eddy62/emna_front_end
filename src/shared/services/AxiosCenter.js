@@ -16,21 +16,67 @@ const AxiosCenter = {
     });
   },
 
-  getClientFournisseur(id) {
+  getAllClientFournisseurBySociete(id) {
     return ApiBackEnd({
-      method: 'get',
+      method: "get",
       url: `/client-fournisseurs/societe/${id}`,
-    })
-
+    });
   },
 
+  getClientFournisseur(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/client-fournisseurs/wrapper/${id}`,
+    });
+  },
   createClientFournisseur(values) {
     return ApiBackEnd({
-      method: 'post',
+      method: "post",
       url: `/client-fournisseurs/new`,
       data: values,
+    });
+  },
 
+  updateClientFournisseur(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/client-fournisseurs/wrapper`,
+      data: values,
+    });
+  },
+  deleteClientFournisseur(id) {
+    return ApiBackEnd({
+      method: "delete",
+      url: `/client-fournisseurs/${id}`,
+    });
+  },
+  getClientFournisseurByNom(nom) {
+    return ApiBackEnd({
+      method: 'get',
+      url: `/client-fournisseurs/nom/${nom}`,
     })
+  },
+
+  getReleve() {
+    return ApiBackEnd({
+      method: "get",
+      url: "/releves",
+    });
+  },
+
+  getReleveBySocieteId(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/releve/societe/${id}`,
+    });
+  },
+
+
+  getReleveById(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/releves/${id}`,
+    });
   },
 
 
@@ -38,6 +84,13 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "get",
       url: "/operations",
+    });
+  },
+
+  getOperationByReleveId(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/operations/releve/${id}`,
     });
   },
   postOperation(values) {

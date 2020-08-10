@@ -4,6 +4,7 @@ import {
   MDBCard,
   MDBCardBody,
   MDBCardTitle,
+  MDBCardText,
   MDBCardHeader,
   MDBBtn,
   MDBContainer,
@@ -11,17 +12,25 @@ import {
   MDBCol,
 } from "mdbreact";
 
-export class Releve extends React.Component {
+class ComptabiliteMenu extends React.Component {
   render() {
+    const title = "Espace Comptabilité";
+    const title2 = "Facture";
+    const title3 = "Devis";
+    const title4 = "Relevé Bancaire";
+
     return (
-      <div className="containerReleve">
+      <div className="App">
         <MDBContainer>
           <div>
             <MDBCardHeader color="default-color">
               <MDBCardTitle>
-                <h1>Gestion de vos relevés bancaires</h1>
+                <h1>{title}</h1>
               </MDBCardTitle>
               <br />
+              <MDBCardTitle>
+                <h3>Accueil</h3>
+              </MDBCardTitle>
             </MDBCardHeader>
           </div>
           <div>
@@ -33,21 +42,17 @@ export class Releve extends React.Component {
                 <MDBCard>
                   <MDBCardBody>
                     <MDBCardTitle className="MDBCardTitle">
-                      {" "}
-                      Relevé en cours
+                      {title2}
                     </MDBCardTitle>
                     <br />
-
+                    <MDBCardText>
+                      Accéder à toutes mes factures d'achats ou de vente
+                    </MDBCardText>
                     <br />
                     <div className="boutton">
-                      <Link to="/releveencours">
-                        <MDBBtn
-                          className="boutton"
-                          color=" teal lighten-2"
-                          rounded
-                          size="sm"
-                        >
-                          <span id="color-button"> GERER</span>
+                      <Link to="/facture">
+                        <MDBBtn className="boutton" rounded size="sm">
+                          Gerer
                         </MDBBtn>
                       </Link>
                     </div>
@@ -59,20 +64,15 @@ export class Releve extends React.Component {
                 <MDBCard>
                   <MDBCardBody>
                     <MDBCardTitle className="MDBCardTitle">
-                      Rapprochement Bancaire
+                      {title3}
                     </MDBCardTitle>
                     <br />
-
+                    <MDBCardText>Accéder à mes devis</MDBCardText>
                     <br />
                     <div className="boutton">
-                      <Link to="/menu/juridique">
-                        <MDBBtn
-                          className="boutton"
-                          color=" teal lighten-2"
-                          rounded
-                          size="sm"
-                        >
-                          <span id="color-button"> GERER</span>
+                      <Link to="/devis">
+                        <MDBBtn className="boutton" rounded size="sm">
+                          Gerer
                         </MDBBtn>
                       </Link>
                     </div>
@@ -84,20 +84,17 @@ export class Releve extends React.Component {
                 <MDBCard>
                   <MDBCardBody>
                     <MDBCardTitle className="MDBCardTitle">
-                      Historique des relevés
+                      {title4}
                     </MDBCardTitle>
                     <br />
-
+                    <MDBCardText>
+                      Accéder à la gestion de mes relevés bancaires
+                    </MDBCardText>
                     <br />
                     <div className="boutton">
-                      <Link to="/historiquereleve/3">
-                        <MDBBtn
-                          className="boutton"
-                          color=" teal lighten-2"
-                          rounded
-                          size="sm"
-                        >
-                          <span id="color-button"> GERER</span>
+                      <Link to="/bancaire">
+                        <MDBBtn className="boutton" rounded size="sm">
+                          Gerer
                         </MDBBtn>
                       </Link>
                     </div>
@@ -105,11 +102,10 @@ export class Releve extends React.Component {
                 </MDBCard>
               </MDBCol>
             </MDBRow>
-            <br />
           </div>
         </MDBContainer>
       </div>
     );
   }
 }
-export default Releve;
+export default ComptabiliteMenu;
