@@ -41,7 +41,9 @@ class JuridiqueMenu extends React.Component {
               <MDBCol>
                 <MDBCard>
                   <MDBCardBody>
-                    <MDBCardTitle className="text">{title2}</MDBCardTitle>
+                    <MDBCardTitle className="MDBCardTitle">
+                      {title2}
+                    </MDBCardTitle>
                     <br />
                     <MDBCardText>Accéder à mes contrats</MDBCardText>
                     <br />
@@ -59,7 +61,9 @@ class JuridiqueMenu extends React.Component {
               <MDBCol>
                 <MDBCard>
                   <MDBCardBody>
-                    <MDBCardTitle className="text">{title3}</MDBCardTitle>
+                    <MDBCardTitle className="MDBCardTitle">
+                      {title3}
+                    </MDBCardTitle>
                     <br />
                     <MDBCardText>
                       Accéder à mes clients/fournisseurs
@@ -79,7 +83,9 @@ class JuridiqueMenu extends React.Component {
               <MDBCol>
                 <MDBCard>
                   <MDBCardBody>
-                    <MDBCardTitle className="text">{title4}</MDBCardTitle>
+                    <MDBCardTitle className="MDBCardTitle">
+                      {title4}
+                    </MDBCardTitle>
                     <br />
                     <MDBCardText>?</MDBCardText>
                     <br />

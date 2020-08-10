@@ -3,6 +3,7 @@ import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import { Link } from "react-router-dom";
+import Style from './../ClientFournisseur.module.css'
 
 
 
@@ -64,9 +65,10 @@ class AddClientFournisseur extends React.Component {
           {({ handleSubmit, isSubmitting }) => (
             <form
               onSubmit={handleSubmit}
-              className=" container-fluid p-5 bg-light justify-content-center align-items-center"
+              className="container-fluid p-5  justify-content-center align-items-center"
             >
-              <div className=" row p-2">
+              <div className={Style.add + " row p-2"
+              }>
                 <Field
                   name="nom"
                   label="Nom de la Société"
@@ -130,18 +132,18 @@ class AddClientFournisseur extends React.Component {
                 <ErrorMessage name="pays" component={ComposantErreur} />
               </div>
 
-              <button type="submit" className="btn btn-primary">
+              <button rounded type="submit" className="btn btn-primary">
                 Sauvegarder
               </button>
               <Link to="/clientFournisseur/liste">
-                <button className="btn btn-secondary">
+                <button rounded className="btn btn-secondary">
                   Annuler
                                 </button>
               </Link>
             </form>
           )}
         </Formik>
-      </div>
+      </div >
     );
   }
 }
