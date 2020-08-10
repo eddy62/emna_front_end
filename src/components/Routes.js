@@ -18,8 +18,9 @@ import CreerContrat from "./contrat/creerContrat/CreerContrat";
 import MenuClientFournisseur from "./clientFournisseur/menuClientFournisseur";
 import ListerClients from "./clientFournisseur/listerClientFournisseur/listerClients";
 import AddClient from "./clientFournisseur/addClientFournisseur/addClient";
-//import ModifierClient from "./clientFournisseur/modifierClientFournisseur/modifierClient";
+import ModifierClient from "./clientFournisseur/modifierClientFournisseur/modifierClient";
 import SupprimerClient from "./clientFournisseur/supprimerClientFounisseur/supprimerClient";
+import DetailsClient from "./clientFournisseur/detailsClientFounisseur/detailsClient";
 //gestionBancaire
 import Bancaire from "./bancaire/index";
 import CreationOperation from "./bancaire/releve/details_releve/operation/creation_operation/creationOperation";
@@ -107,24 +108,15 @@ export default class Routes extends Component {
         <PrivateRoute path="/releveencours" component={ReleveEnCours} />
 
         {/* gestionClientFournisseur */}
-        <PrivateRoute
-          path="/client-fournisseur"
-          component={MenuClientFournisseur}
-        />
-        {/* <PrivateRoute
-          path="/clientFournisseur/modifier/:id"
-          component={ModifierClient}
-        /> */}
-        <PrivateRoute
-          path="/clientFournisseur/liste"
-          component={ListerClients}
-        />
+        <PrivateRoute path="/client-fournisseur" component={MenuClientFournisseur} />
+        <PrivateRoute path="/clientFournisseur/modifier/:id" component={ModifierClient} />
+        <PrivateRoute path="/clientFournisseur/liste" component={ListerClients} />
         <PrivateRoute path="/clientFournisseur/creer" component={AddClient} />
-        <PrivateRoute
-          path="/clientFournisseur/delete/:id"
-          component={SupprimerClient}
-        />
+        <PrivateRoute path="/clientFournisseur/delete/:id" component={SupprimerClient} />
+        <PrivateRoute path="/clientFournisseur/detail/:id" component={DetailsClient} />
         <PrivateRoute component={NotFound} />
+        {/* finGestionClientFournisseur */}
+
         <Route component={NotFound} />
       </Switch>
     );

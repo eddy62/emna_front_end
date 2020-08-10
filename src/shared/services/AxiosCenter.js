@@ -50,6 +50,13 @@ const AxiosCenter = {
       url: `/client-fournisseurs/${id}`,
     });
   },
+  getClientFournisseurByNom(nom) {
+    return ApiBackEnd({
+      method: 'get',
+      url: `/client-fournisseurs/nom/${nom}`,
+    })
+
+  },
 
   getReleve() {
     return ApiBackEnd({
