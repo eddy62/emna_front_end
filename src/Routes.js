@@ -14,6 +14,7 @@ import CreerContrat from "./components/contrat/creerContrat/CreerContrat";
 import Home from "./components/home/Home";
 import MenuClientFournisseur from "./components/component-clientFournisseur/menuClientFournisseur";
 
+
 import Bancaire from "./components/bancaire/index";
 import CreationOperation from "./components/bancaire/operation/creationOperation/creationOperation";
 import IndexOperation from "./components/bancaire/operation/index";
@@ -32,6 +33,7 @@ import SelectToAddUser from './components/pages/SelectToAddUser';
 import AddSociete from './components/societe/AddSociete';
 import ViewSociete from './components/societe/ViewSociete';
 import EditSociete from './components/societe/EditSociete';
+import NavBar from "./components/home/NavBar";
 // finGestionUserRoutesImports
 
 
@@ -39,6 +41,7 @@ export default class Routes extends Component {
   render() {
     return (
       <BrowserRouter>
+        <NavBar />
         <Switch>
           <PrivateRoute exact path="/" component={Home} />
           <Route path="/login" component={IndexLogin} />
