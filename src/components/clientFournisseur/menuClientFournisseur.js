@@ -45,79 +45,78 @@ class MenuClientFournisseur extends Component {
   };
   render() {
     return (
-      <div className="justify-content-center align-items-center container-fluid p-5 ">
+
+      <MDBContainer>
         <div className="justify-content-center align-items-center container-fluid p-5 ">
-          <MDBContainer>
-            <div className="justify-content-center align-items-center container-fluid p-5 ">
-              <MDBCardHeader color="default-color">
-                <MDBCardTitle tag="h2">Recherchez parmi toutes les entreprises</MDBCardTitle>
-                <br></br>
-                <div className="justify-content-center container-fluid align-items-center">
-                  <form class="form-inline ">
-                    <input value={this.state.value}
-                      onChange={e => this.onChangeHandler(e)} class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Raison sociale??"
-                      aria-label="Search" />
-                    <i class="fas fa-search" aria-hidden="true"></i>
-                  </form>
-                </div>
-              </MDBCardHeader>
+          <MDBCardHeader color="default-color">
+            <MDBCardTitle tag="h2">Recherchez parmi toutes les entreprises</MDBCardTitle>
+            <br></br>
+            <div className="justify-content-center container-fluid align-items-center">
+              <form class="form-inline ">
+                <input value={this.state.value}
+                  onChange={e => this.onChangeHandler(e)} class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Raison sociale??"
+                  aria-label="Search" />
+                <i class="fas fa-search" aria-hidden="true"></i>
+              </form>
             </div>
-            <div>
-              <br></br>
-              <h2>Resultat recherche par nom: </h2>
-              {this.state.clientFournisseur ? (
-                <Link to={`/clientFournisseur/detail/${this.state.clientFournisseur.id}`}>
-                  <span>{this.state.clientFournisseur.nom}</span>
-                </Link>
-              ) : (null)}
-              <br></br>
-            </div>
-            <div className="justify-content-center align-items-center">
-              <MDBRow>
-                <MDBCol>
-                  <MDBCard >
-                    <MDBCardBody>
-                      <MDBCardTitle tag="h4">Lister mes associes</MDBCardTitle>
-                      <br />
-                      <MDBCardText>
-                        Consultation et Modification des données
-                        des mes associes
-                      </MDBCardText>
-                      <br />
-                      <div>
-                        <Link to="/clientFournisseur/liste">
-                          <MDBBtn rounded size="lg" color="teal accent-3">
-                            Voir
-                          </MDBBtn>
-                        </Link>
-                      </div>
-                    </MDBCardBody>
-                  </MDBCard>
-                </MDBCol>
-                <MDBCol>
-                  <MDBCard >
-                    <MDBCardBody>
-                      <MDBCardTitle tag="h4">Ajouter un nouveau client founisseur</MDBCardTitle>
-                      <br />
-                      <MDBCardText>
-                        Enregistrement des données des mes associes
-                      </MDBCardText>
-                      <br />
-                      <div className="boutton">
-                        <Link to="/clientFournisseur/creer">
-                          <MDBBtn color="teal accent-3" rounded size="lg">
-                            +Ajouter
-                          </MDBBtn>
-                        </Link>
-                      </div>
-                    </MDBCardBody>
-                  </MDBCard>
-                </MDBCol>
-              </MDBRow>
-            </div>
-          </MDBContainer>
+          </MDBCardHeader>
         </div>
-      </div>
+        <div>
+          <br></br>
+
+          {this.state.clientFournisseur ? (
+            <Link to={`/clientFournisseur/detail/${this.state.clientFournisseur.id}`}>
+              <span>{this.state.clientFournisseur.nom}</span>
+            </Link>
+          ) : (null)}
+
+          <br></br>
+        </div>
+        <div className="justify-content-center align-items-center">
+          <MDBRow>
+            <MDBCol>
+              <MDBCard >
+                <MDBCardBody>
+                  <MDBCardTitle tag="h4">Lister mes associes</MDBCardTitle>
+                  <br />
+                  <MDBCardText>
+                    Consultation et Modification des données
+                    des mes associes
+                      </MDBCardText>
+                  <br />
+                  <div>
+                    <Link to="/clientFournisseur/liste">
+                      <MDBBtn rounded size="lg" color="teal accent-3">
+                        Voir
+                          </MDBBtn>
+                    </Link>
+                  </div>
+                </MDBCardBody>
+              </MDBCard>
+            </MDBCol>
+            <MDBCol>
+              <MDBCard >
+                <MDBCardBody>
+                  <MDBCardTitle tag="h4">Ajouter un nouveau client founisseur</MDBCardTitle>
+                  <br />
+                  <MDBCardText>
+                    Enregistrement des données des mes associes
+                      </MDBCardText>
+                  <br />
+                  <div className="boutton">
+                    <Link to="/clientFournisseur/creer">
+                      <MDBBtn color="teal accent-3" rounded size="lg">
+                        +Ajouter
+                          </MDBBtn>
+                    </Link>
+                  </div>
+                </MDBCardBody>
+              </MDBCard>
+            </MDBCol>
+          </MDBRow>
+        </div>
+      </MDBContainer>
+
 
 
     );

@@ -22,7 +22,6 @@ import ModifierClient from "./clientFournisseur/modifierClientFournisseur/modifi
 import SupprimerClient from "./clientFournisseur/supprimerClientFounisseur/supprimerClient";
 import DetailsClient from "./clientFournisseur/detailsClientFounisseur/detailsClient";
 
-
 import Bancaire from "./bancaire";
 import CreationOperation from "./bancaire/operation/creationOperation/creationOperation";
 import IndexOperation from "./bancaire/operation/index";
@@ -105,28 +104,14 @@ export default class Routes extends Component {
         <PrivateRoute path="/listeoperations" component={ListeOperations} />
 
         {/* gestionClientFournisseur */}
-        <PrivateRoute
-          path="/client-fournisseur"
-          component={MenuClientFournisseur}
-        />
-        <PrivateRoute
-          path="/clientFournisseur/modifier/:id"
-          component={ModifierClient}
-        />
-        <PrivateRoute
-          path="/clientFournisseur/liste"
-          component={ListerClients}
-        />
+        <PrivateRoute path="/client-fournisseur" component={MenuClientFournisseur} />
+        <PrivateRoute path="/clientFournisseur/modifier/:id" component={ModifierClient} />
+        <PrivateRoute path="/clientFournisseur/liste" component={ListerClients} />
         <PrivateRoute path="/clientFournisseur/creer" component={AddClient} />
-        <PrivateRoute
-          path="/clientFournisseur/delete/:id"
-          component={SupprimerClient}
-        />
-        <PrivateRoute
-          path="/clientFournisseur/detail/:id"
-          component={DetailsClient}
-        />
+        <PrivateRoute path="/clientFournisseur/delete/:id" component={SupprimerClient} />
+        <PrivateRoute path="/clientFournisseur/detail/:id" component={DetailsClient} />
         <PrivateRoute component={NotFound} />
+        {/* finGestionClientFournisseur */}
 
         <Route component={NotFound} />
       </Switch>

@@ -132,14 +132,16 @@ class AddClientFournisseur extends React.Component {
                 <ErrorMessage name="pays" component={ComposantErreur} />
               </div>
 
-              <MDBBtn rounded type="submit" className="btn btn-success">
-                Sauvegarder
+              <div className="container-fluid  justify-content-center ">
+                <MDBBtn rounded type="submit" color="primary">
+                  Sauvegarder
               </MDBBtn>
-              <Link to="/clientFournisseur/liste">
-                <MDBBtn rounded className="btn btn-secondary">
-                  Annuler
-                                </MDBBtn>
-              </Link>
+                <Link to="/client-fournisseur">
+                  <MDBBtn rounded color="teal accent-3">
+                    Retour
+                  </MDBBtn>
+                </Link>
+              </div>
             </form>
           )}
         </Formik>

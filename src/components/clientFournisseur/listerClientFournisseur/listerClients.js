@@ -91,6 +91,11 @@ class ListerClientFournisseur extends Component {
             </table>
           </div>
         </div>
+        <Link to="/client-fournisseur">
+          <MDBBtn rounded color="teal accent-3">
+            Retour
+                  </MDBBtn>
+        </Link>
       </div>
     );
   }

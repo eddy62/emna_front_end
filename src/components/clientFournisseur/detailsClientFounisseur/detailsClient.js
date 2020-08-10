@@ -10,7 +10,7 @@ import {
     MDBCardBody,
 } from "mdbreact";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import Style from './../ClientFournisseur.module.css'
+
 
 class Details extends React.Component {
     constructor(props) {
@@ -79,11 +79,9 @@ class Details extends React.Component {
                                 </MDBCardBody>
                             </MDBRow>
                         </div>
-                        <div>
-                            <hr></hr>
-                        </div>
+
                         <Link to={`/clientFournisseur/modifier/${this.state.client.id}`} >
-                            <MDBBtn rounded color="primary" size="sm">
+                            <MDBBtn rounded color="primary">
                                 <span className="d-none d-md-inline">
                                     Modifier </span>
                             </MDBBtn>
@@ -91,7 +89,7 @@ class Details extends React.Component {
 
 
                         <Link to="/client-fournisseur">
-                            <MDBBtn color="default" rounded size="sm" color="teal accent-3">
+                            <MDBBtn rounded color="teal accent-3">
                                 Retour
                       </MDBBtn>
                         </Link>
