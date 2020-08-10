@@ -1,13 +1,6 @@
-import React, {
-  Component
-} from "react";
-import {
-  Route,
-  Switch
-} from "react-router-dom";
-import {
-  PrivateRoute
-} from "../helpers/PrivateRoute";
+import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
+import { PrivateRoute } from "../helpers/PrivateRoute";
 
 //Gestion Social import
 import AccueilSocial from "./social/SocialHome";
@@ -27,12 +20,15 @@ import ListerClients from "./clientFournisseur/listerClientFournisseur/listerCli
 import AddClient from "./clientFournisseur/addClientFournisseur/addClient";
 import ModifierClient from "./clientFournisseur/modifierCLientFournisseur/modifierClient";
 import SupprimerClient from "./clientFournisseur/supprimerClientFounisseur/supprimerClient";
-
-import Bancaire from "./bancaire";
-import CreationOperation from "./bancaire/operation/creationOperation/creationOperation";
+//gestionBancaire
+import Bancaire from "./bancaire/index";
+import CreationOperation from "./bancaire/releve/details_releve/operation/creation_operation/creationOperation";
 import IndexOperation from "./bancaire/operation/index";
 import ListeOperations from "./bancaire/operation/listeOperations/listeOperations";
-
+import Releve from "./bancaire/releve/releve";
+import ListeReleves from "./bancaire/releve/historique_releves/liste_releves";
+import DetailsReleve from "./bancaire/releve/details_releve/details_releve";
+import ReleveEnCours from "./bancaire/releve/details_releve/releve_en_cours";
 // gestionUserRoutesImports
 import Users from "./users/Users";
 import NotFound from "./pages/NotFound";
@@ -53,192 +49,82 @@ import JuridiqueMenu from "./navigation/JuridiqueMenu";
 
 export default class Routes extends Component {
   render() {
-    return ( <
-      Switch >
-      <
-      PrivateRoute exact path = "/"
-      component = {
-        HomeMenu
-      }
-      /> <
-      PrivateRoute path = "/menu/comptabilite"
-      component = {
-        ComptabiliteMenu
-      }
-      /> <
-      PrivateRoute path = "/menu/juridique"
-      component = {
-        JuridiqueMenu
-      }
-      />
-
-      {
-        /* Gestion Social */ } <
-      PrivateRoute path = "/socialHome"
-      component = {
-        AccueilSocial
-      }
-      /> <
-      PrivateRoute path = "/listEmployes/:id"
-      component = {
-        ListEmployes
-      }
-      /> <
-      PrivateRoute path = "/detailEmploye/:id"
-      component = {
-        DetailEmploye
-      }
-      /> <
-      PrivateRoute path = "/newEmploye"
-      component = {
-        NewEmploye
-      }
-      /> <
-      PrivateRoute path = "/updateEmploye/:id"
-      component = {
-        UpdateEmploye
-      }
-      />
-
-      <
-      PrivateRoute path = "/listcontrat"
-      component = {
-        ListeContrat
-      }
-      /> <
-      PrivateRoute path = "/contrat"
-      component = {
-        Contrat
-      }
-      /> <
-      PrivateRoute path = "/detailcontrat/:id"
-      component = {
-        DetailContrat
-      }
-      /> <
-      PrivateRoute path = "/creercontrat"
-      component = {
-        CreerContrat
-      }
-      /> {
-        /* gestionUserRoutes */ } <
-      PrivateRoute exact path = "/users"
-      component = {
-        Users
-      }
-      /> <
-      PrivateRoute exact path = "/users/add"
-      component = {
-        AddUser
-      }
-      /> <
-      PrivateRoute exact path = "/users/edit/:id"
-      component = {
-        EditUser
-      }
-      /> <
-      PrivateRoute exact path = "/users/view/:id"
-      component = {
-        ViewUser
-      }
-      /> <
-      PrivateRoute exact path = "/users/add/comptable"
-      component = {
-        AddComptable
-      }
-      /> <
-      PrivateRoute exact path = "/users/view/comptable/:id"
-      component = {
-        ViewComptable
-      }
-      /> <
-      PrivateRoute exact path = "/users/edit/comptable/:id"
-      component = {
-        EditComptable
-      }
-      /> <
-      PrivateRoute exact path = "/users/add/societe"
-      component = {
-        AddSociete
-      }
-      /> <
-      PrivateRoute exact path = "/users/view/societe/:id"
-      component = {
-        ViewSociete
-      }
-      /> <
-      PrivateRoute exact path = "/users/edit/societe/:id"
-      component = {
-        EditSociete
-      }
-      /> <
-      PrivateRoute exact path = "/users/stau"
-      component = {
-        SelectToAddUser
-      }
-      />
-
-      {
-        /* finGestionUserRoutes */ } <
-      PrivateRoute path = "/bancaire"
-      component = {
-        Bancaire
-      }
-      /> <
-      PrivateRoute path = "/creationoperation"
-      component = {
-        CreationOperation
-      }
-      /> <
-      PrivateRoute path = "/indexoperation"
-      component = {
-        IndexOperation
-      }
-      /> <
-      PrivateRoute path = "/listeoperations"
-      component = {
-        ListeOperations
-      }
-      />
-
-      {
-        /* gestionClientFournisseur */ } <
-      PrivateRoute path = "/client-fournisseur"
-      component = {
-        MenuClientFournisseur
-      }
-      /> <
-      PrivateRoute path = "/clientFournisseur/modifier/:id"
-      component = {
-        ModifierClient
-      }
-      /> <
-      PrivateRoute path = "/clientFournisseur/liste"
-      component = {
-        ListerClients
-      }
-      /> <
-      PrivateRoute path = "/clientFournisseur/creer"
-      component = {
-        AddClient
-      }
-      /> <
-      PrivateRoute path = "/clientFournisseur/delete/:id"
-      component = {
-        SupprimerClient
-      }
-      /> <
-      PrivateRoute component = {
-        NotFound
-      }
-      />
-
-      <
-      Route component = {
-        NotFound
-      }
-      /> <
-      /Switch>
+    return (
+      <Switch>
+        <PrivateRoute exact path="/" component={HomeMenu} />
+        <PrivateRoute path="/menu/comptabilite" component={ComptabiliteMenu} />
+        <PrivateRoute path="/menu/juridique" component={JuridiqueMenu} />
+        {/* Gestion Social */}
+        <PrivateRoute path="/socialHome" component={AccueilSocial} />
+        <PrivateRoute path="/listEmployes" component={ListEmployes} />
+        <PrivateRoute path="/detailEmploye" component={DetailEmploye} />
+        <PrivateRoute path="/newEmploye" component={NewEmploye} />
+        <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
+        <PrivateRoute path="/listcontrat" component={ListeContrat} />
+        <PrivateRoute path="/contrat" component={Contrat} />
+        <PrivateRoute path="/detailcontrat/:id" component={DetailContrat} />
+        <PrivateRoute path="/creercontrat" component={CreerContrat} />
+        {/* gestionUserRoutes */}
+        <PrivateRoute exact path="/users" component={Users} />
+        <PrivateRoute exact path="/users/add" component={AddUser} />
+        <PrivateRoute exact path="/users/edit/:id" component={EditUser} />
+        <PrivateRoute exact path="/users/view/:id" component={ViewUser} />
+        <PrivateRoute
+          exact
+          path="/users/add/comptable"
+          component={AddComptable}
+        />
+        <PrivateRoute
+          exact
+          path="/users/view/comptable/:id"
+          component={ViewComptable}
+        />
+        <PrivateRoute
+          exact
+          path="/users/edit/comptable/:id"
+          component={EditComptable}
+        />
+        <PrivateRoute exact path="/users/add/societe" component={AddSociete} />
+        <PrivateRoute
+          exact
+          path="/users/view/societe/:id"
+          component={ViewSociete}
+        />
+        <PrivateRoute
+          exact
+          path="/users/edit/societe/:id"
+          component={EditSociete}
+        />
+        <PrivateRoute exact path="/users/stau" component={SelectToAddUser} />
+        {/* finGestionUserRoutes */}
+        <PrivateRoute path="/bancaire" component={Bancaire} />
+        <PrivateRoute path="/creationoperation" component={CreationOperation} />
+        <PrivateRoute path="/indexoperation" component={IndexOperation} />
+        <PrivateRoute path="/listeoperations" component={ListeOperations} />
+        <PrivateRoute path="/menureleve" component={Releve} />
+        <PrivateRoute path="/historiquereleve/:id" component={ListeReleves} />
+        <PrivateRoute path="/detailsreleve/:id" component={DetailsReleve} />
+        <PrivateRoute path="/releveencours" component={ReleveEnCours} />
+        {/* gestionClientFournisseur */}
+        <PrivateRoute
+          path="/client-fournisseur"
+          component={MenuClientFournisseur}
+        />
+        <PrivateRoute
+          path="/clientFournisseur/modifier/:id"
+          component={ModifierClient}
+        />{" "}
+        <PrivateRoute
+          path="/clientFournisseur/liste"
+          component={ListerClients}
+        />
+        <PrivateRoute path="/clientFournisseur/creer" component={AddClient} />
+        <PrivateRoute
+          path="/clientFournisseur/delete/:id"
+          component={SupprimerClient}
+        />
+        <PrivateRoute component={NotFound} /> <Route component={NotFound} />
+      </Switch>
     );
   }
 }

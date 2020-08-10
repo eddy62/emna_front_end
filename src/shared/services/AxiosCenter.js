@@ -51,6 +51,7 @@ const AxiosCenter = {
     });
   },
 
+<<<<<<< HEAD
   getAllWrapperEmployesBySociety(id) {
     return ApiBackEnd({
       method: "get",
@@ -62,6 +63,26 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "get",
       url: `/wrapperemployes/${id}`,
+=======
+  getReleve() {
+    return ApiBackEnd({
+      method: "get",
+      url: "/releves",
+    });
+  },
+
+  getReleveBySocieteId(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/releve/societe/${id}`,
+    });
+  },
+
+  getReleveById(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/releves/${id}`,
+>>>>>>> stage
     });
   },
 
@@ -75,6 +96,13 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "get",
       url: "/operations",
+    });
+  },
+
+  getOperationByReleveId(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/operations/releve/${id}`,
     });
   },
   postOperation(values) {
