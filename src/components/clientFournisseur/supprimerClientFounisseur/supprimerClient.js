@@ -11,6 +11,7 @@ class SupprimerClient extends Component {
         AxiosCenter.deleteClientFournisseur(this.props.client.id)
             .then((response) => {
                 console.log(response)
+                this.props.history.push("/clientFournisseur/liste");
             })
             .catch((error) => {
                 console.log(error);
@@ -48,7 +49,7 @@ class ModalPage extends Component {
                 <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
                     <MDBModalHeader toggle={this.toggle}>Confirmation de suppression </MDBModalHeader>
                     <MDBModalBody>
-                        <span>Etez-vous certain de vouloir supprimer le client fournisseur?? </span>
+                        <span>Etez-vous certain de vouloir supprimer le client fournisseur? </span>
                     </MDBModalBody>
                     <MDBModalFooter>
                         <MDBBtn rounded type="button" circle="true" size="sm" onClick={this.toggle}>Annuler</MDBBtn>

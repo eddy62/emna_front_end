@@ -19,7 +19,9 @@ import MenuClientFournisseur from "./clientFournisseur/menuClientFournisseur";
 import ListerClients from "./clientFournisseur/listerClientFournisseur/listerClients";
 import AddClient from "./clientFournisseur/addClientFournisseur/addClient";
 import ModifierClient from "./clientFournisseur/modifierCLientFournisseur/modifierClient";
+
 import SupprimerClient from "./clientFournisseur/supprimerClientFounisseur/supprimerClient";
+import DetailsClient from "./clientFournisseur/detailsClientFounisseur/detailsClient";
 //gestionBancaire
 import Bancaire from "./bancaire/index";
 import CreationOperation from "./bancaire/releve/details_releve/operation/creation_operation/creationOperation";
@@ -106,6 +108,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/detailsreleve/:id" component={DetailsReleve} />
         <PrivateRoute path="/releveencours" component={ReleveEnCours} />
         {/* gestionClientFournisseur */}
+
         <PrivateRoute
           path="/client-fournisseur"
           component={MenuClientFournisseur}
@@ -113,7 +116,7 @@ export default class Routes extends Component {
         <PrivateRoute
           path="/clientFournisseur/modifier/:id"
           component={ModifierClient}
-        />{" "}
+        />
         <PrivateRoute
           path="/clientFournisseur/liste"
           component={ListerClients}
@@ -123,7 +126,14 @@ export default class Routes extends Component {
           path="/clientFournisseur/delete/:id"
           component={SupprimerClient}
         />
-        <PrivateRoute component={NotFound} /> <Route component={NotFound} />
+        <PrivateRoute
+          path="/clientFournisseur/detail/:id"
+          component={DetailsClient}
+        />
+        <PrivateRoute component={NotFound} />
+        {/* finGestionClientFournisseur */}
+
+        <Route component={NotFound} />
       </Switch>
     );
   }

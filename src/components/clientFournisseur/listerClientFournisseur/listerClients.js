@@ -1,20 +1,42 @@
 import React, { Component } from "react";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import DetailsClientFournisseur from "../detailsClientFounisseur/detailsClient";
-import { Link } from "react-router-dom";
-import { MDBBtn } from 'mdbreact';
 import Style from "./../ClientFournisseur.module.css";
 import SupprimerClientFournisseur from "../supprimerClientFounisseur/supprimerClient";
+import { MDBBtn } from 'mdbreact';
+import { Link } from "react-router-dom";
+
 
 class ListerClientFournisseur extends Component {
   constructor(props) {
     super(props);
     this.state = {
       clients: [],
+      // idUser: null,
+      // roleUser: '',
+      // nomUser: '',
+
     };
   }
 
   componentDidMount() {
+
+    // AxiosCenter.getCurrentUser()
+    //   .then((response) => {
+    //     const idUser = response.data.id
+    //     const roleUser = response.data.authorities
+
+    //     console.log("data " + response.data)
+    //     this.setState({
+    //       idUser: idUser,
+    //       roleUser: roleUser
+    //     });
+    //     console.log("role " + this.state.roleUser)
+    //     console.log("id " + this.state.idUser)
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
     AxiosCenter.getAllClientFournisseurBySociete(1)
       .then((response) => {
         const clients = response.data;
@@ -46,12 +68,16 @@ class ListerClientFournisseur extends Component {
                 {this.state.clients && this.state.clients.length ? (
                   this.state.clients.map((c, index) => (
                     <tr key={index}>
-                      <td scope="row">{c.nom}</td>
-                      <td scope="row">{c.siren}</td>
-                      <td scope="row">{c.email}</td>
+                      <td >{c.nom}</td>
+                      <td >{c.siren}</td>
+                      <td>{c.email}</td>
                       <td>
                         <div size="sm" className="btn-group flex-btn-group-container">
-                          <DetailsClientFournisseur client={c} />
+                          <MDBBtn color="info" rounded circle="true" size="sm">
+                            <Link to={`/clientFournisseur/detail/${c.id}`}>
+                              <span>Detail</span>
+                            </Link>
+                          </MDBBtn>
                           <SupprimerClientFournisseur client={c} />
                         </div>
 
@@ -65,6 +91,11 @@ class ListerClientFournisseur extends Component {
             </table>
           </div>
         </div>
+        <Link to="/client-fournisseur">
+          <MDBBtn rounded color="teal accent-3">
+            Retour
+                  </MDBBtn>
+        </Link>
       </div>
     );
   }
