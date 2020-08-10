@@ -18,7 +18,8 @@ import CreerContrat from "./contrat/creerContrat/CreerContrat";
 import MenuClientFournisseur from "./clientFournisseur/menuClientFournisseur";
 import ListerClients from "./clientFournisseur/listerClientFournisseur/listerClients";
 import AddClient from "./clientFournisseur/addClientFournisseur/addClient";
-import ModifierClient from "./clientFournisseur/modifierClientFournisseur/modifierClient";
+//import ModifierClient from "./clientFournisseur/modifierClientFournisseur/modifierClient";
+//L'import a été mis en commentaire par ibo, car le code n'a pas complié ...
 import SupprimerClient from "./clientFournisseur/supprimerClientFounisseur/supprimerClient";
 import DetailsClient from "./clientFournisseur/detailsClientFounisseur/detailsClient";
 //gestionBancaire
@@ -30,6 +31,7 @@ import Releve from "./bancaire/releve/releve";
 import ListeReleves from "./bancaire/releve/historique_releves/liste_releves";
 import DetailsReleve from "./bancaire/releve/details_releve/details_releve";
 import ReleveEnCours from "./bancaire/releve/details_releve/releve_en_cours";
+
 // gestionUserRoutesImports
 import Users from "./users/Users";
 import NotFound from "./pages/NotFound";
@@ -109,7 +111,7 @@ export default class Routes extends Component {
 
         {/* gestionClientFournisseur */}
         <PrivateRoute path="/client-fournisseur" component={MenuClientFournisseur} />
-        <PrivateRoute path="/clientFournisseur/modifier/:id" component={ModifierClient} />
+        {/* <PrivateRoute path="/clientFournisseur/modifier/:id" component={ModifierClient} /> */}
         <PrivateRoute path="/clientFournisseur/liste" component={ListerClients} />
         <PrivateRoute path="/clientFournisseur/creer" component={AddClient} />
         <PrivateRoute path="/clientFournisseur/delete/:id" component={SupprimerClient} />
