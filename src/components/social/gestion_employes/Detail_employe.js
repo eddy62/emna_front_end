@@ -1,6 +1,5 @@
 import React from "react";
 import "./style2.scss";
-import { Link } from "react-router-dom";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import {
   MDBCardTitle,
