@@ -11,14 +11,30 @@ import {
   MDBRow,
   MDBCol,
 } from "mdbreact";
+import "./style.scss";
+import AxiosCenter from "./../../shared/services/AxiosCenter";
 
 class HomeMenu extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userRole: "",
+    };
+  }
+  componentDidMount() {
+    AxiosCenter.getCurrentUser().then((response) => {
+      this.setState({
+        userRole: response.data.authorities[0],
+      });
+      console.log(this.state.userRole);
+    });
+  }
   render() {
     const title = "Bienvenue sur EMNA";
     const title2 = "Comptabilité";
     const title3 = "Juridique";
     const title4 = "Social";
-
+    const title5 = "Interface Admin";
     return (
       <div className="App">
         <MDBContainer>
@@ -41,14 +57,14 @@ class HomeMenu extends React.Component {
               <MDBCol>
                 <MDBCard>
                   <MDBCardBody>
-                    <MDBCardTitle className="text">{title2}</MDBCardTitle>
+                    <MDBCardTitle className="MDBCardTitle">
+                      {title2}
+                    </MDBCardTitle>
                     <br />
-                    <MDBCardText>
-                      Validation Comptables des variables de Paie des Employés
-                    </MDBCardText>
+
                     <br />
                     <div className="boutton">
-                      <Link to="/listEmployes">
+                      <Link to="/menu/comptabilite">
                         <MDBBtn className="boutton" rounded size="sm">
                           Gerer
                         </MDBBtn>
@@ -61,15 +77,14 @@ class HomeMenu extends React.Component {
               <MDBCol>
                 <MDBCard>
                   <MDBCardBody>
-                    <MDBCardTitle className="text">{title3}</MDBCardTitle>
+                    <MDBCardTitle className="MDBCardTitle">
+                      {title3}
+                    </MDBCardTitle>
                     <br />
-                    <MDBCardText>
-                      Enregistrement et modification des variables de paies des
-                      Employés
-                    </MDBCardText>
+
                     <br />
                     <div className="boutton">
-                      <Link to="/listEmployes">
+                      <Link to="/menu/juridique">
                         <MDBBtn className="boutton" rounded size="sm">
                           Gerer
                         </MDBBtn>
@@ -82,15 +97,14 @@ class HomeMenu extends React.Component {
               <MDBCol>
                 <MDBCard>
                   <MDBCardBody>
-                    <MDBCardTitle className="text">{title4}</MDBCardTitle>
+                    <MDBCardTitle className="MDBCardTitle">
+                      {title4}
+                    </MDBCardTitle>
                     <br />
-                    <MDBCardText>
-                      Consultation et Téléchargement des Fiches de Paie des
-                      Employés
-                    </MDBCardText>
+
                     <br />
                     <div className="boutton">
-                      <Link to="/listEmployes">
+                      <Link to="/socialHome">
                         <MDBBtn className="boutton" rounded size="sm">
                           Gerer
                         </MDBBtn>
@@ -100,6 +114,30 @@ class HomeMenu extends React.Component {
                 </MDBCard>
               </MDBCol>
             </MDBRow>
+            <br />
+            {this.state.userRole === "ROLE_ADMIN" ? (
+              <MDBRow>
+                <MDBCol>
+                  <MDBCard>
+                    <MDBCardBody>
+                      <MDBCardTitle className="MDBCardTitle">
+                        {title5}
+                      </MDBCardTitle>
+                      <br />
+
+                      <br />
+                      <div className="boutton">
+                        <Link to="/socialHome">
+                          <MDBBtn className="boutton" rounded size="sm">
+                            Gerer
+                          </MDBBtn>
+                        </Link>
+                      </div>
+                    </MDBCardBody>
+                  </MDBCard>
+                </MDBCol>
+              </MDBRow>
+            ) : null}
           </div>
         </MDBContainer>
       </div>

@@ -15,8 +15,22 @@ import {
   MDBIcon,
   MDBModalFooter,
 } from "mdbreact";
+import * as Yup from "yup";
+
+const SignupSchema = Yup.object().shape({
+  username: Yup.string().required("Veuillez renseigner votre Login"),
+
+  password: Yup.string().required("Veuillez renseigner votre Mot de passe"),
+});
 
 export class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      connexionMessage: "",
+    };
+  }
+
   submit = (values) => {
     console.log(values);
     AxiosCenter.authenticate(values)
@@ -27,15 +41,12 @@ export class Login extends React.Component {
         }
       })
       .catch((error) => {
-        console.log("User non reconnu");
+        this.setState({
+          connexionMessage: "Login et/ou Mot de passe incorrect",
+        });
+        console.log(this.state.connexionMessage);
       });
   };
-
-  //   console.log(response);
-  // })
-  // .catch((error) => {
-  //   //error.........
-  // });
 
   render() {
     return (
@@ -43,6 +54,7 @@ export class Login extends React.Component {
         <Formik
           onSubmit={this.submit}
           initialValues={{ username: "", password: "" }}
+          validationSchema={SignupSchema}
         >
           {({
             values,
@@ -50,12 +62,14 @@ export class Login extends React.Component {
             handleChange,
             handleSubmit,
             isSubmitting,
+            errors,
+            touched,
           }) => (
             <form onSubmit={handleSubmit}>
               <MDBContainer>
                 <MDBRow>
                   <MDBCol md="6">
-                    <MDBCard>
+                    <MDBCard className="log">
                       <MDBCardBody className="mx-4">
                         <div className="text-center">
                           <h3 className="dark-grey-text mb-5">
@@ -74,7 +88,11 @@ export class Login extends React.Component {
                           onChange={handleChange}
                           onBlur={handleBlur}
                           getValue={values.username}
-                        />
+                        >
+                          {errors.username && touched.username ? (
+                            <div>{errors.username}</div>
+                          ) : null}
+                        </MDBInput>
                         <MDBInput
                           label="Votre mot de passe"
                           name="password"
@@ -85,7 +103,11 @@ export class Login extends React.Component {
                           onChange={handleChange}
                           onBlur={handleBlur}
                           getValue={values.password}
-                        />
+                        >
+                          {errors.password && touched.password ? (
+                            <div>{errors.password}</div>
+                          ) : null}
+                        </MDBInput>
                         <p className="font-small blue-text d-flex justify-content-end pb-3">
                           <a href="#!" className="blue-text ml-1">
                             Mot de passe oublié ?
@@ -101,6 +123,7 @@ export class Login extends React.Component {
                             Se connecter
                           </MDBBtn>
                         </div>
+                        <strong>{this.state.connexionMessage}</strong>
                       </MDBCardBody>
                       <MDBModalFooter className="mx-5 pt-3 mb-1">
                         <p className="font-small grey-text d-flex justify-content-end">
