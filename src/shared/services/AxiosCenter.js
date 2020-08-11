@@ -72,6 +72,22 @@ const AxiosCenter = {
     });
   },
 
+  createWrapperEmploye(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: `/wrapperemployes`,
+      data: values,
+    });
+  },
+
+  updateWrapperEmploye(values) {
+    return ApiBackEnd({
+      method: "put",
+      url: `/wrapperemployes`,
+      data: values,
+    });
+  },
+
   //fin Gestion Social
 
   getReleve() {

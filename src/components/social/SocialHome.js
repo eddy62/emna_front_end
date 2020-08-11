@@ -18,17 +18,19 @@ class AccueilSocial extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {},
+      societe: {},
       isLogginActive: true,
     };
   }
 
   componentDidMount() {
-    AxiosCenter.getCurrentUser()
+    const idSociete = this.props.match.params.id;
+    console.log(idSociete);
+    AxiosCenter.getWrapperSociete(idSociete)
       .then((response) => {
-        const user = response.data;
-        console.log(user);
-        this.setState({ user });
+        const societe = response.data;
+        console.log(societe);
+        this.setState({ societe: societe });
       })
       .catch((error) => {
         console.log(error);
