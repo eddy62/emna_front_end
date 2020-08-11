@@ -52,13 +52,11 @@ const AxiosCenter = {
   },
   getClientFournisseurByNom(nom) {
     return ApiBackEnd({
-      method: 'get',
+      method: "get",
       url: `/client-fournisseurs/nom/${nom}`,
-    })
-
+    });
   },
 
-<<<<<<< HEAD
   getAllWrapperEmployesBySociety(id) {
     return ApiBackEnd({
       method: "get",
@@ -70,7 +68,9 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "get",
       url: `/wrapperemployes/${id}`,
-=======
+    });
+  },
+
   getReleve() {
     return ApiBackEnd({
       method: "get",
@@ -89,7 +89,6 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "get",
       url: `/releves/${id}`,
->>>>>>> stage
     });
   },
 
