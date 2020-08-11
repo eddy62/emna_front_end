@@ -20,23 +20,23 @@ export default class ListeContrat extends React.Component {
         console.log('coucou ' + id)//123
         ContratService.getContrat(1).then((resultat) => {
             const contrats = resultat.data;
+            console.log(contrats)
             this.setState({ contrats , loaded:true});
         })
             .catch((err) => console.log(err));
     }
 
     listerLesContrats(props) {
+        console.log(props)
         const Contrats = props.contrats.map((contrat, index)=>{
             if(contrat.contratSigner){
                 return(
                     <div key={contrat.employerId} className="alert alert-success" role="alert">
-                      <h5> <div> {contrat.contratTitre} - {contrat.employerNom} - {contrat.employerPrenom} --  Validé</div>
-                          <div className="droite"><button type="button" className="btn btn--danger">Supprimer</button></div>
-                          <div className="droite">
+                      <h5>  {contrat.contratTitre} - {contrat.employerNom} {contrat.employerPrenom}
+                       <button type="button" className="btn btn--danger">Supprimer</button>
                         <Link to={"/detailcontrat/"+contrat.employerId}>
                             <button type="button" className="btn btn-outline-success">Voir le contrat</button>
                         </Link>
-                          </div>
                           </h5>
                     </div>
                 )
@@ -44,20 +44,17 @@ export default class ListeContrat extends React.Component {
                 return(
                     <div key={contrat.employerId} className="alert alert-danger" >
                         {console.log(contrat.contratSigner)}
-                       <h5> {contrat.contratTitre} - {contrat.employerNom} - {contrat.employerPrenom}  -- En attente d'une signature
-
-
-                           <input type="file"id="document" name="document" accept="image/pdf"/>
-                           <div className="droite">
-                               <button type="button" className="btn btn--danger">Supprimer</button>
-                           </div>
+                       <h5> {contrat.contratTitre} - {contrat.employerNom} {contrat.employerPrenom}  - En attente d'une signature
+                           <button type="button" className="btn btn--danger">Supprimer</button>
                         <Link to={"/detailcontrat/"+contrat.employerId}>
-                            <div className="droite">  <button type="button" className="btn btn-outline-danger">Voir le contrat</button> </div>
+                              <button type="button" className="btn btn-outline-danger">Voir le contrat</button>
                         </Link>
-
-
-
-
+                           <div className="file-field medium">
+                               <div className="btn btn-outline-secondary btn-rounded waves-effect float-left">
+                                   <span>Upload</span>
+                                   <input type="file"/>
+                               </div>
+                           </div>
                        </h5>
                     </div>
                 );
@@ -68,10 +65,15 @@ export default class ListeContrat extends React.Component {
         return (
             <div>
                 <h1>Liste des Contrats</h1>
+                <hr/>
                 {Contrats}
                 <Link to={"/contrat/"}>
                     <button type="button" className="btn btn-outline-success">Retour</button>
                 </Link>
+
+                <form className="md-form">
+
+                </form>
             </div>
         );
     }
