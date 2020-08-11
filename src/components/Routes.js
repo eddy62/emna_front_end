@@ -18,7 +18,7 @@ import CreerContrat from "./contrat/creerContrat/CreerContrat";
 import MenuClientFournisseur from "./clientFournisseur/menuClientFournisseur";
 import ListerClients from "./clientFournisseur/listerClientFournisseur/listerClients";
 import AddClient from "./clientFournisseur/addClientFournisseur/addClient";
-import ModifierClient from "./clientFournisseur/modifierClientFournisseur/modifierClient";
+import ModifierClient from "./clientFournisseur/modifierCLientFournisseur/modifierClient";
 import SupprimerClient from "./clientFournisseur/supprimerClientFounisseur/supprimerClient";
 import DetailsClient from "./clientFournisseur/detailsClientFounisseur/detailsClient";
 
