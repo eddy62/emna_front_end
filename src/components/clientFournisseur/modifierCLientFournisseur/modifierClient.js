@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Formik, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import * as Yup from "yup"
 import Style from "./../ClientFournisseur.module.css";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import { Link } from 'react-router-dom';
