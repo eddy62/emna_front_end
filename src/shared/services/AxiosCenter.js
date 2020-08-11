@@ -52,10 +52,27 @@ const AxiosCenter = {
   },
   getClientFournisseurByNom(nom) {
     return ApiBackEnd({
-      method: 'get',
+      method: "get",
       url: `/client-fournisseurs/nom/${nom}`,
-    })
+    });
   },
+
+  //Gestion Social
+  getAllWrapperEmployesBySociety(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/wrapperemployes/society/${id}`,
+    });
+  },
+
+  getWrapperEmploye(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/wrapperemployes/${id}`,
+    });
+  },
+
+  //fin Gestion Social
 
   getReleve() {
     return ApiBackEnd({
@@ -71,7 +88,6 @@ const AxiosCenter = {
     });
   },
 
-
   getReleveById(id) {
     return ApiBackEnd({
       method: "get",
@@ -79,6 +95,14 @@ const AxiosCenter = {
     });
   },
 
+  //gestion Societe
+  getWrapperSociete(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/wrappersociete/${id}`,
+    });
+  },
+  //Fin Gestion Société
 
   getOperation() {
     return ApiBackEnd({
@@ -108,7 +132,7 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "post",
       url: "/users/add",
-      data: values
+      data: values,
     });
   },
 
@@ -116,14 +140,14 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "put",
       url: "/users/edit",
-      data: values
+      data: values,
     });
   },
 
   getUser(values) {
     return ApiBackEnd({
       method: "get",
-      url: "/users/"+values,
+      url: "/users/" + values,
     });
   },
 
@@ -137,45 +161,43 @@ const AxiosCenter = {
   deleteUser(values) {
     return ApiBackEnd({
       method: "delete",
-      url: "/users/"+values,
+      url: "/users/" + values,
     });
   },
   //Fin Gestion User
-
 
   //Gestion Comptable
   addComptable(values) {
     return ApiBackEnd({
       method: "post",
       url: "/comptables/add",
-      data: values
+      data: values,
     });
   },
 
   getComptable(values) {
     return ApiBackEnd({
       method: "get",
-      url: "/comptables/"+values,
+      url: "/comptables/" + values,
     });
   },
 
   getComptableId(values) {
     return ApiBackEnd({
       method: "get",
-      url: "/comptables/refuser/"+values,
+      url: "/comptables/refuser/" + values,
     });
   },
 
   editComptable(values) {
     return ApiBackEnd({
       method: "put",
-      url:   "/comptables/edit",
-      data: values
+      url: "/comptables/edit",
+      data: values,
     });
   },
   //Fin Gestion Comptable
 
-  
   //Fin Gestion Utilisatuer, Comptable et Société.
 };
 

@@ -1,6 +1,7 @@
 import React from "react";
 import "./style2.scss";
 import { Link } from "react-router-dom";
+import AxiosCenter from "../../../shared/services/AxiosCenter";
 import {
   MDBCardTitle,
   MDBCardHeader,
@@ -15,66 +16,7 @@ class DetailEmploye extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      societe: {
-        id: 1,
-        civilite: "Monsieur",
-        userId: 1,
-        comptableId: 1,
-        idInfoEntreprise: 1,
-        dateDeCreation: "2020-07-27",
-        description: "sociéte de de vente de logiciels Java",
-        domaineDactivite: "Commerciales",
-        email: "jakarta@gmail.com",
-        fax: "0954389764",
-        formeJuridique: "SARL",
-        raisonSociale: "JAKARTA SARL",
-        siren: "111 222 333",
-        siret: "111 222 333 00444",
-        telephone: "0954389765",
-        idAdresse: 1,
-        boitePostale: "1700",
-        codePostal: "59000",
-        nomRue: "Avenue des Developpeurs",
-        numeroRue: "104",
-        ville: "Lille",
-        listeEmployes: [{}, {}],
-      },
-      employe: {
-        //identité
-        id: 0,
-        matricule: "EMP001",
-        civilite: "Monsieur",
-        nomNaissance: "Dupont",
-        nomUsage: "Dupont",
-        prenom: "TOTO",
-        dateNaissance: "1977-02-24",
-        villeNaissance: "Lyon",
-        departementNaissance: "Rhone",
-        paysNaisance: "France",
-        email: "dupont@yahoo.com",
-        telephonePortable: "06 68 88 53 30",
-        telephoneFix: "09 83 62 88 97",
-        fax: "09 83 62 88 97",
-        numeroSecuriteSociale: "1 77 02 69 000 000 00",
-        situationFamiliale: "Célibataire",
-        nombreEnfants: 1,
-        //emploi
-        categorie: "Cadre",
-        statut: "Project Owner",
-        dateEmbauche: "2020-07-27",
-        heuresMensuelle: 151.66,
-        salaireBrutMensuelle: 2084.43,
-        salaireHoraire: 14.75,
-        typeContrat: "CDI",
-        //adresse
-        idAdresse: 1,
-        numeroRue: "22",
-        nomRue: "Rue des bois blancs",
-        boitePostale: "",
-        codePostal: "59000",
-        ville: "Lille",
-        pays: "FRANCE",
-      },
+      employe: {},
       isLogginActive: true,
     };
   }
@@ -82,15 +24,24 @@ class DetailEmploye extends React.Component {
   componentDidMount() {
     const idEmploye = this.props.match.params.id;
     console.log(idEmploye);
+    AxiosCenter.getWrapperEmploye(idEmploye)
+      .then((response) => {
+        const employe = response.data;
+        console.log(employe);
+        this.setState({ employe: response.data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   render() {
     const title = "Gestion Social";
     const title1 = "Information Employé";
-    const entreprise = this.state.societe.raisonSociale;
     const employe = this.state.employe;
+    const entreprise = employe.raisonSociale;
     return (
-      <div className="App1">
+      <div className="App">
         <div className="employes">
           <MDBContainer>
             <div>
@@ -275,8 +226,10 @@ class DetailEmploye extends React.Component {
               color="default"
               rounded
               size="sm"
-              onClick="/updateEmploye/:id"
               color="teal accent-3"
+              onClick={() => {
+                this.props.history.push("/updateEmploye/" + employe.id);
+              }}
             >
               Mise à jour
             </MDBBtn>
@@ -285,11 +238,17 @@ class DetailEmploye extends React.Component {
               Supprimer
             </MDBBtn>
 
-            <Link to="/listEmployes">
-              <MDBBtn color="default" rounded size="sm" color="teal accent-3">
-                Retour
-              </MDBBtn>
-            </Link>
+            <MDBBtn
+              color="default"
+              rounded
+              size="sm"
+              color="teal accent-3"
+              onClick={() => {
+                this.props.history.push("/listEmployes/" + employe.societeId);
+              }}
+            >
+              Retour
+            </MDBBtn>
           </MDBContainer>
         </div>
       </div>
