@@ -109,6 +109,11 @@ class MenuClientFournisseur extends Component {
                         +Ajouter
                           </MDBBtn>
                     </Link>
+                    <Link to="/produits">
+                      <MDBBtn color="teal accent-3" rounded size="lg">
+                        produits
+                          </MDBBtn>
+                    </Link>
                   </div>
                 </MDBCardBody>
               </MDBCard>
