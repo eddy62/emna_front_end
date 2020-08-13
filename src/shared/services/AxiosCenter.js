@@ -22,7 +22,6 @@ const AxiosCenter = {
       method: "get",
       url: `/client-fournisseurs/societe/${id}`,
     });
-<<<<<<< HEAD
   },
 
   getAllSocietesByComptable(id) {
@@ -44,8 +43,6 @@ const AxiosCenter = {
       method: "get",
       url: `/comptables/user/${id}`,
     });
-=======
->>>>>>> 597bcd74abc1f3717f28b8389249f28911a35eac
   },
 
   getClientFournisseur(id) {
@@ -74,10 +71,6 @@ const AxiosCenter = {
       method: "delete",
       url: `/client-fournisseurs/${id}`,
     });
-<<<<<<< HEAD
-  },
-
-=======
   },
   getClientFournisseurByNom(nom) {
     return ApiBackEnd({
@@ -150,7 +143,6 @@ const AxiosCenter = {
   },
   //Fin Gestion Société
 
->>>>>>> 597bcd74abc1f3717f28b8389249f28911a35eac
   getOperation() {
     return ApiBackEnd({
       method: "get",
@@ -172,8 +164,6 @@ const AxiosCenter = {
     });
   },
 
-<<<<<<< HEAD
-=======
   //Gestion Utilisateur, Comptable et Société.
 
   //Gestion User
@@ -253,14 +243,14 @@ const AxiosCenter = {
   getProduit() {
     return ApiBackEnd({
       method: "get",
-      url: "/produits"
-    })
+      url: "/produits",
+    });
   },
   getProduitById(id) {
     return ApiBackEnd({
       method: "get",
       url: `/produits/${id}`,
-    })
+    });
   },
 
   createProduit(values) {
@@ -268,12 +258,11 @@ const AxiosCenter = {
       method: "post",
       url: "/produits",
       data: values,
-    })
-  }
+    });
+  },
   // fin getion produits
 };
 
->>>>>>> 597bcd74abc1f3717f28b8389249f28911a35eac
 export default AxiosCenter;
 
 /*
