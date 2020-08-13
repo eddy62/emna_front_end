@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Formik, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import * as Yup from "yup"
 import Style from "./../ClientFournisseur.module.css";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import { Link } from 'react-router-dom';
@@ -91,7 +91,7 @@ class ModifierClient extends Component {
                     {({ handleSubmit }) => (
                         <form
                             onSubmit={handleSubmit}
-                            className=" container-fluid p-5 bg-light justify-content-center align-items-center"
+                            className=" container-fluid p-5  teal lighten-5 justify-content-center align-items-center"
                         >
                             <div className=" row p-2">
                                 <Field name="nom" label="Nom de la Société" component={ComposantInput} />
@@ -121,14 +121,16 @@ class ModifierClient extends Component {
                                 <Field name="pays" label="Pays" component={ComposantInput} />
                                 <ErrorMessage name="pays" component={ComposantErreur} />
                             </div>
-                            <MDBBtn rounded type="submit" className="btn btn-success">
-                                Sauvegarder
-                            </MDBBtn>
-                            <Link to="/clientFournisseur/liste">
-                                <MDBBtn rounded className="btn btn-secondary">
-                                    <span>Retour</span>
-                                </MDBBtn>
-                            </Link>
+                            <div className="container-fluid  justify-content-center ">
+                                <MDBBtn rounded type="submit" color="primary">
+                                    Sauvegarder
+              </MDBBtn>
+                                <Link to="/client-fournisseur">
+                                    <MDBBtn rounded color="teal accent-3">
+                                        Retour
+                  </MDBBtn>
+                                </Link>
+                            </div>
                         </form>
                     )}
                 </Formik>

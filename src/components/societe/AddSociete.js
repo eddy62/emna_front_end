@@ -56,13 +56,10 @@ const AddSociete = () => {
         prenom,
         login,
         email,
-        role,
         langue,
-        active,
         civilite,
         telephone,
-        dateDeCreation,
-        creePar,
+    
 
         
 

@@ -34,9 +34,7 @@ export default class DetailContrat extends React.Component {
     console.log(props);
     return (
       <div>
-        {props.contrats.clauseEtArticleList.map((c, index) => (
-          <h1 key={index}>{c.titreArticle}</h1>
-        ))}
+
 
         <p>Crée le : {props.contrats.contratDateCreation}</p>
         <h1>{props.contrats.contratTitre}</h1>
@@ -75,6 +73,9 @@ export default class DetailContrat extends React.Component {
           {props.contrats.employerAdresseNumeroRue} <br />
           {props.contrats.employerAdresseVille} <br />
         </p>
+          {props.contrats.clauseEtArticleList.map((c, index) => (
+              <p key={index}>{c.titreArticle} : <br />{c.descriptionClause}</p>
+          ))}
       </div>
     );
   }
