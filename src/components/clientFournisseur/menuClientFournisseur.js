@@ -52,11 +52,11 @@ class MenuClientFournisseur extends Component {
             <MDBCardTitle tag="h2">Recherchez parmi toutes les entreprises</MDBCardTitle>
             <br></br>
             <div className="justify-content-center container-fluid align-items-center">
-              <form class="form-inline ">
+              <form className="form-inline ">
                 <input value={this.state.value}
-                  onChange={e => this.onChangeHandler(e)} class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Raison sociale??"
+                  onChange={e => this.onChangeHandler(e)} className="form-control form-control-sm mr-3 w-75" type="text" placeholder="Raison sociale??"
                   aria-label="Search" />
-                <i class="fas fa-search" aria-hidden="true"></i>
+                <i className="fas fa-search" aria-hidden="true"></i>
               </form>
             </div>
           </MDBCardHeader>
@@ -86,7 +86,7 @@ class MenuClientFournisseur extends Component {
                   <br />
                   <div>
                     <Link to="/clientFournisseur/liste">
-                      <MDBBtn rounded size="lg" color="teal accent-3">
+                      <MDBBtn rounded size="sm" color="teal accent-3">
                         Voir
                           </MDBBtn>
                     </Link>
@@ -105,7 +105,31 @@ class MenuClientFournisseur extends Component {
                   <br />
                   <div className="boutton">
                     <Link to="/clientFournisseur/creer">
-                      <MDBBtn color="teal accent-3" rounded size="lg">
+                      <MDBBtn color="teal accent-3" rounded size="sm">
+                        +Ajouter
+                          </MDBBtn>
+                    </Link>
+                  </div>
+                </MDBCardBody>
+              </MDBCard>
+            </MDBCol>
+            <MDBCol>
+              <MDBCard >
+                <MDBCardBody>
+                  <MDBCardTitle tag="h4">Produits</MDBCardTitle>
+                  <br />
+                  <MDBCardText>
+                    Enregistrement,Consultation et Modification mes produits
+                      </MDBCardText>
+                  <br />
+                  <div className="boutton">
+                    <Link to="/produits">
+                      <MDBBtn color="teal accent-3" rounded size="sm">
+                        produits
+                          </MDBBtn>
+                    </Link>
+                    <Link to="/produit/creer">
+                      <MDBBtn color="teal accent-3" rounded size="sm">
                         +Ajouter
                           </MDBBtn>
                     </Link>
