@@ -16,6 +16,7 @@ import {
   MDBModalFooter,
 } from "mdbreact";
 import * as Yup from "yup";
+import UserService from "../../shared/services/UserService";
 
 const SignupSchema = Yup.object().shape({
   username: Yup.string().required("Veuillez renseigner votre Login"),
@@ -32,12 +33,22 @@ export class Login extends React.Component {
   }
 
   submit = (values) => {
-    console.log(values);
     AxiosCenter.authenticate(values)
       .then((response) => {
         if (response.status === 200) {
           TokenService.connexion(response.data.id_token); //pour le token
-          this.props.history.push("/");
+          AxiosCenter.getCurrentUser().then((response) => {
+            UserService.setUserId(response.data.id);
+            UserService.setRole(response.data.authorities[0]);
+            this.props.history.push("/");
+          });
+          if (UserService.getRole() === "ROLE_SOCIETY") {
+            AxiosCenter.getSocieteByUser(UserService.getUserId()).then(
+              (response) => {
+                UserService.setRoleId(response.data.id);
+              }
+            );
+          }
         }
       })
       .catch((error) => {
@@ -87,7 +98,7 @@ export class Login extends React.Component {
                           success="right"
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          getValue={values.username}
+                          value={values.username}
                         >
                           {errors.username && touched.username ? (
                             <div>{errors.username}</div>
@@ -102,7 +113,7 @@ export class Login extends React.Component {
                           containerClass="mb-0"
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          getValue={values.password}
+                          value={values.password}
                         >
                           {errors.password && touched.password ? (
                             <div>{errors.password}</div>

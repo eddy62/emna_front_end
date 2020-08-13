@@ -18,41 +18,59 @@ const AxiosCenter = {
 
   getAllClientFournisseurBySociete(id) {
     return ApiBackEnd({
-      method: 'get',
+      method: "get",
       url: `/client-fournisseurs/societe/${id}`,
-    })
+    });
+  },
 
+  getAllSocietesByComptable(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/societes/comptable/${id}`,
+    });
+  },
+
+  getSocieteByUser(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/societes/user/${id}`,
+    });
+  },
+
+  getComptableByUser(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/comptables/user/${id}`,
+    });
   },
 
   getClientFournisseur(id) {
     return ApiBackEnd({
-      method: 'get',
+      method: "get",
       url: `/client-fournisseurs/wrapper/${id}`,
-    })
-
+    });
   },
   createClientFournisseur(values) {
     return ApiBackEnd({
-      method: 'post',
+      method: "post",
       url: `/client-fournisseurs/new`,
       data: values,
-    })
+    });
   },
 
   updateClientFournisseur(values) {
     return ApiBackEnd({
-      method: 'PUT',
+      method: "PUT",
       url: `/client-fournisseurs/wrapper`,
       data: values,
-    })
+    });
   },
   deleteClientFournisseur(id) {
     return ApiBackEnd({
-      method: 'delete',
+      method: "delete",
       url: `/client-fournisseurs/${id}`,
-    })
+    });
   },
-
 
   getOperation() {
     return ApiBackEnd({
@@ -68,8 +86,6 @@ const AxiosCenter = {
     });
   },
 };
-
-
 
 export default AxiosCenter;
 

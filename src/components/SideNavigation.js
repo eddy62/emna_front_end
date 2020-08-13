@@ -6,8 +6,32 @@ import {
   MDBSideNav,
   MDBIcon,
 } from "mdbreact";
+import AxiosCenter from "../shared/services/AxiosCenter";
+import UserService from "./../shared/services/UserService";
 
 class SideNavigation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      societes: [],
+    };
+  }
+  componentDidMount() {
+    if (UserService.getRole() === "ROLE_ACCOUNTANT") {
+      AxiosCenter.getComptableByUser(UserService.getUserId()).then(
+        (response) => {
+          AxiosCenter.getAllSocietesByComptable(response.data.id).then(
+            (response) => {
+              this.setState({
+                societes: response.data,
+              });
+              console.log(this.state.societes);
+            }
+          );
+        }
+      );
+    }
+  }
   // render MDBSideNav Link
   rSNL(to, text) {
     return (
@@ -22,8 +46,8 @@ class SideNavigation extends React.Component {
     return (
       <div className="white-skin">
         <MDBSideNav
-          logo="https://mdbootstrap.com/img/Marketing/general/logo/medium/mdb-react.png"
-          bg="https://mdbootstrap.com/img/Photos/Others/sidenav4.jpg"
+          logo="https://cdn.discordapp.com/attachments/649887310447509524/742351581931896923/logo.png"
+          bg="https://mdbootstrap.com/img/Photos/Others/sigdenav4.jpg"
           mask="strong"
           fixed
           breakWidth={this.props.breakWidth}
@@ -31,6 +55,15 @@ class SideNavigation extends React.Component {
           style={{ transition: "padding-left .3s" }}
           href="/"
         >
+          {UserService.getRole() === "ROLE_ACCOUNTANT" ? (
+            <div>
+              <select className="browser-default custom-select">
+                {this.state.societes.map((societe) => (
+                  <option value="1">{societe.civilite}</option>
+                ))}
+              </select>
+            </div>
+          ) : null}
           <form role="search" className="search-form">
             <div className="form-group md-form mt-0 pt-1 ripple-parent">
               <input
