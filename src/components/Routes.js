@@ -50,6 +50,12 @@ import ComptabiliteMenu from "./navigation/ComptabiliteMenu";
 import JuridiqueMenu from "./navigation/JuridiqueMenu";
 // finGestionUserRoutesImports
 
+//GestionProduits
+import ListeProduits from "./produits/listeProduits/listeProduits";
+import DetailsProduit from "./produits/detailsProduits/detailsProduit";
+import AddProduit from "./produits/addProduits/addProduit";
+//finGestionProduits
+
 export default class Routes extends Component {
   render() {
     return (
@@ -108,8 +114,8 @@ export default class Routes extends Component {
         <PrivateRoute path="/historiquereleve/:id" component={ListeReleves} />
         <PrivateRoute path="/detailsreleve/:id" component={DetailsReleve} />
         <PrivateRoute path="/releveencours" component={ReleveEnCours} />
-        {/* gestionClientFournisseur */}
 
+        {/* gestionClientFournisseur */}
         <PrivateRoute
           path="/client-fournisseur"
           component={MenuClientFournisseur}
@@ -131,10 +137,15 @@ export default class Routes extends Component {
           path="/clientFournisseur/detail/:id"
           component={DetailsClient}
         />
-        <PrivateRoute component={NotFound} />
         {/* finGestionClientFournisseur */}
+        {/* GestionProduit */}
+        <PrivateRoute path="/produits" component={ListeProduits} />
+        <PrivateRoute path="/produit/detail/:id" component={DetailsProduit} />
+        <PrivateRoute path="/produit/creer" component={AddProduit} />
 
-        <Route component={NotFound} />
+
+        {/* <Route component={NotFound} /> */}
+        <PrivateRoute component={NotFound} />
       </Switch>
     );
   }

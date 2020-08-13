@@ -16,6 +16,7 @@ const AxiosCenter = {
     });
   },
 
+  //gestion clientFournisseur
   getAllClientFournisseurBySociete(id) {
     return ApiBackEnd({
       method: "get",
@@ -56,6 +57,7 @@ const AxiosCenter = {
       url: `/client-fournisseurs/nom/${nom}`,
     });
   },
+  //fin clientFournisseur
 
   //Gestion Social
   getAllWrapperEmployesBySociety(id) {
@@ -199,6 +201,29 @@ const AxiosCenter = {
   //Fin Gestion Comptable
 
   //Fin Gestion Utilisatuer, Comptable et Société.
+
+  //Gestion Produits
+  getProduit() {
+    return ApiBackEnd({
+      method: "get",
+      url: "/produits"
+    })
+  },
+  getProduitById(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/produits/${id}`,
+    })
+  },
+
+  createProduit(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: "/produits",
+      data: values,
+    })
+  }
+  // fin getion produits
 };
 
 export default AxiosCenter;

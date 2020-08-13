@@ -1,20 +1,34 @@
 import React from 'react';
-import { MDBDataTable, MDBCardHeader, MDBCardTitle, MDBContainer } from 'mdbreact';
+import { MDBDataTable, MDBCardHeader, MDBCardTitle, MDBContainer, MDBBtn } from 'mdbreact';
 import AxiosCenter from '../../../shared/services/AxiosCenter';
+import { Link } from "react-router-dom";
 
 class ListeProduits extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            columns: [],
-            rows: [],
             listeProduits: [],
             loaded: false,
-            data: { columns: [], rows: [] }
+            data: {}
         }
     }
 
     componentDidMount() {
+        AxiosCenter.getCurrentUser()
+            .then((response) => {
+                const idUser = response.data.id
+                const roleUser = response.data.authorities
+
+                console.log("data " + response.data)
+                this.setState({
+                    idUser: idUser,
+                    roleUser: roleUser
+                });
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
         AxiosCenter.getProduit()
             .then((response) => {
                 const columns = [
@@ -42,11 +56,6 @@ class ListeProduits extends React.Component {
                         label: 'Unite',
                         field: 'unite',
                         sort: 'asc',
-                    },
-                    {
-                        label: 'Quantite',
-                        field: 'quantite',
-                        sort: 'asc',
                     }
                 ];
 
@@ -59,20 +68,18 @@ class ListeProduits extends React.Component {
                         tva: element.tva,
                         prix: element.prix,
                         unite: element.unite,
-                        quantite: element.quantite
+                        // quantite: element.quantite,
+                        clickEvent: () => {
+                            this.props.history.push("/produit/detail/" + element.id);
+                        },
                     };
                     rows.push(produits);
                 });
-                console.log(response.data)
                 this.setState({
                     listeProduits: listeProduits,
-                    columns: columns,
-                    rows: rows,
                     data: { columns, rows },
                     loaded: true,
                 });
-
-                console.log(this.this.state.data)
             })
             .catch((error) => {
                 console.log(error);
@@ -80,7 +87,6 @@ class ListeProduits extends React.Component {
     }
 
     render() {
-
         return (
             <MDBContainer>
                 <div>
@@ -92,6 +98,13 @@ class ListeProduits extends React.Component {
                         hover
                         data={this.state.data}
                     />
+                </div>
+                <div className="justify-content-center align-items-center">
+                    <Link to="/client-fournisseur">
+                        <MDBBtn rounded color="teal accent-3">
+                            Retour
+                      </MDBBtn>
+                    </Link>
                 </div>
             </MDBContainer>);
     }
