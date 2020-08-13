@@ -11,6 +11,8 @@ import {
     MDBCardBody,
 } from "mdbreact";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
+import Style from "../../clientFournisseur/ClientFournisseur.module.css"
+import StyleProduit from "../styleProduit.scss"
 
 class DetailsProduit extends Component {
     constructor(props) {
@@ -40,47 +42,48 @@ class DetailsProduit extends Component {
 
         return (
 
-            <div className="">
-                <MDBContainer>
-                    <div>
-                        <MDBCardHeader color="default-color">
-                            <MDBCardTitle tag="h3">Gestion Produit</MDBCardTitle>
+            <div className={StyleProduit.appProduit}>
+                <div className={StyleProduit.DetailsProduit}>
+                    <MDBContainer>
+                        <div>
+                            <MDBCardHeader color="default-color">
+                                <MDBCardTitle tag="h3">Gestion Produit</MDBCardTitle>
+                            </MDBCardHeader>
+                        </div>
+                        <div>
+                            <hr></hr>
+                        </div>
+                        <MDBCardHeader tag="h5" color="light" text="black">
+                            Details Du Produit:   {this.state.produit.nom}
                         </MDBCardHeader>
-                    </div>
-                    <div>
-                        <hr></hr>
-                    </div>
-                    <MDBCardHeader tag="h5" color="teal lighten-5" text="black">
-                        Details Du Produit:   {this.state.produit.nom}
-                    </MDBCardHeader>
 
-                    <div>
-                        <MDBRow>
-                            <MDBCardBody>
-                                <MDBCard>
-                                    <br />
-                                    <div color="teal lighten-5" >
+                        <div>
+                            <MDBRow>
+                                <MDBCardBody>
+                                    <MDBCard>
+                                        <br />
+                                        <div color="teal lighten-5" >
 
-                                        <dl>
-                                            <dt>Nom</dt>
-                                            <dd>{this.state.produit.nom}.</dd>
-                                            <dt>Reference</dt>
-                                            <dd>{this.state.produit.reference}.</dd>
-                                            <dt>Tva</dt>
-                                            <dd>{this.state.produit.tva + "%"}.</dd>
-                                            <dt>Unité</dt>
-                                            <dd>{this.state.produit.unite}.</dd>
-                                            <dt>Prix</dt>
-                                            <dd>{this.state.produit.prix + "€"}</dd>
-                                            <dt>Description</dt>
-                                            <dd>{this.state.produit.description}</dd>
-                                        </dl>
-                                    </div>
-                                </MDBCard>
-                            </MDBCardBody>
-                        </MDBRow>
-                    </div>
-                    <div className="justify-content-center align-items-center">
+                                            <dl className={Style.dl}>
+                                                <dt className={Style.dt}>Nom</dt>
+                                                <dd className={Style.dd}>{this.state.produit.nom}.</dd>
+                                                <dt className={Style.dt}>Reference</dt>
+                                                <dd className={Style.dd}>{this.state.produit.reference}.</dd>
+                                                <dt className={Style.dt}>Tva</dt>
+                                                <dd className={Style.dd}>{this.state.produit.tva + "%"}.</dd>
+                                                <dt className={Style.dt}>Unité</dt>
+                                                <dd className={Style.dd}>{this.state.produit.unite}.</dd>
+                                                <dt className={Style.dt}>Prix</dt>
+                                                <dd className={Style.dd}>{this.state.produit.prix + "€"}</dd>
+                                                <dt className={Style.dt}>Description</dt>
+                                                <dd className={Style.dd}>{this.state.produit.description}</dd>
+                                            </dl>
+                                        </div>
+                                    </MDBCard>
+                                </MDBCardBody>
+                            </MDBRow>
+                        </div>
+
                         <Link to={`/produits/modifier/${this.state.produit.id}`} >
                             <MDBBtn rounded color="primary">
                                 <span className="d-none d-md-inline">
@@ -94,8 +97,8 @@ class DetailsProduit extends Component {
                                 Retour
                       </MDBBtn>
                         </Link>
-                    </div>
-                </MDBContainer>
+                    </MDBContainer>
+                </div>
             </div>
         );
     }

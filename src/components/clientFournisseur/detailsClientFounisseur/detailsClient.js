@@ -40,8 +40,8 @@ class Details extends React.Component {
     render() {
 
         return (
-            <div className="App1">
-                <div className="employes">
+            <div className="">
+                <div className="">
                     <MDBContainer>
                         <div>
                             <MDBCardHeader color="default-color">

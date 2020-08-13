@@ -7,6 +7,9 @@ class ListeProduits extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            userId: null,
+            societeId: null,
+            roleUser: null,
             listeProduits: [],
             loaded: false,
             data: {}
@@ -16,14 +19,18 @@ class ListeProduits extends React.Component {
     componentDidMount() {
         AxiosCenter.getCurrentUser()
             .then((response) => {
-                const idUser = response.data.id
+                const userId = response.data.id
                 const roleUser = response.data.authorities
-
+                const societeId = response.data.societeId
                 console.log("data " + response.data)
                 this.setState({
-                    idUser: idUser,
-                    roleUser: roleUser
+                    userId: userId,
+                    roleUser: roleUser,
+                    societeId: societeId,
                 });
+
+                console.log("id societe " + this.state.societeId)
+                console.log("role " + this.state.roleUser)
             })
             .catch((error) => {
                 console.log(error);
