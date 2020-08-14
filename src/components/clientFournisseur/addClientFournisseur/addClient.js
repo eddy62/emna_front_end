@@ -5,8 +5,6 @@ import AxiosCenter from "../../../shared/services/AxiosCenter";
 import { Link } from "react-router-dom";
 import { MDBBtn } from "mdbreact";
 
-
-
 const ComposantErreur = (props) => (
   <div className="text-danger">{props.children}</div>
 );
@@ -19,7 +17,6 @@ const ComposantInput = ({ field, form: { touched, errors }, ...props }) => (
 );
 
 class AddClientFournisseur extends React.Component {
-
   submit = (values, actions) => {
     AxiosCenter.createClientFournisseur(values)
       .then((response) => {
@@ -33,22 +30,30 @@ class AddClientFournisseur extends React.Component {
   };
 
   userSchema = Yup.object().shape({
-    nom: Yup.string("String").min(2, "Trop court").max(20, "Trop long").required("Le champ est obligatoire"),
-    siren: Yup.number("Entres des chiffre").required("Le champ est obligatoire"),
-    email: Yup.string().email("L'email doit être valide").required("Le champ est obligatoire"),
+    nom: Yup.string("String")
+      .min(2, "Trop court")
+      .max(20, "Trop long")
+      .required("Le champ est obligatoire"),
+    siren: Yup.number("Entres des chiffre").required(
+      "Le champ est obligatoire"
+    ),
+    email: Yup.string()
+      .email("L'email doit être valide")
+      .required("Le champ est obligatoire"),
     telephone: Yup.number().min(9, "Trop court"),
     numeroRue: Yup.string().required("Le champ est obligatoire"),
     nomRue: Yup.string().required("Le champ est obligatoire"),
-    codePostal: Yup.string().max(5, "Trop court").required("Le champ est obligatoire"),
+    codePostal: Yup.string()
+      .max(5, "Trop court")
+      .required("Le champ est obligatoire"),
     ville: Yup.string().required("Le champ est obligatoire"),
     pays: Yup.string().required("Le champ est obligatoire"),
   });
 
   render() {
     return (
-
       <div className="container-fluid ">
-        <h1 >Ajouter un client fournisseur</h1>
+        <h1>Ajouter un client fournisseur</h1>
         <Formik
           onSubmit={this.submit}
           initialValues={{
@@ -67,8 +72,7 @@ class AddClientFournisseur extends React.Component {
               onSubmit={handleSubmit}
               className="container-fluid p-5 teal lighten-5 justify-content-center align-items-center"
             >
-              <div className=" row p-2"
-              >
+              <div className=" row p-2">
                 <Field
                   name="nom"
                   label="Nom de la Société"
@@ -135,7 +139,7 @@ class AddClientFournisseur extends React.Component {
               <div className="container-fluid  justify-content-center ">
                 <MDBBtn rounded type="submit" color="primary">
                   Sauvegarder
-              </MDBBtn>
+                </MDBBtn>
                 <Link to="/client-fournisseur">
                   <MDBBtn rounded color="teal accent-3">
                     Retour
@@ -145,7 +149,7 @@ class AddClientFournisseur extends React.Component {
             </form>
           )}
         </Formik>
-      </div >
+      </div>
     );
   }
 }

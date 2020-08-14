@@ -141,7 +141,6 @@ class ListEmployes extends React.Component {
               <div>
                 <hr></hr>
               </div>
-              {/* <Link to="/newEmploye"> */}
               <MDBBtn
                 color="teal accent-3"
                 rounded
@@ -154,12 +153,18 @@ class ListEmployes extends React.Component {
               >
                 Enregistrer un Employe
               </MDBBtn>
-              {/* </Link> */}
-              <Link to="/socialHome">
-                <MDBBtn color="teal accent-3" rounded size="sm">
-                  Retour
-                </MDBBtn>
-              </Link>
+              <MDBBtn
+                color="teal accent-3"
+                rounded
+                size="sm"
+                onClick={() => {
+                  this.props.history.push(
+                    "/socialHome/" + this.state.societe.id
+                  );
+                }}
+              >
+                Retour
+              </MDBBtn>
             </MDBContainer>
           </div>
         </div>

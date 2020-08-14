@@ -58,9 +58,9 @@ export default class Routes extends Component {
         <PrivateRoute path="/menu/comptabilite" component={ComptabiliteMenu} />
         <PrivateRoute path="/menu/juridique" component={JuridiqueMenu} />
         {/* Gestion Social */}
-        <PrivateRoute path="/socialHome" component={AccueilSocial} />
+        <PrivateRoute path="/socialHome/:id" component={AccueilSocial} />
         <PrivateRoute path="/listEmployes/:id" component={ListEmployes} />
-        <PrivateRoute path="/detailEmploye" component={DetailEmploye} />
+        <PrivateRoute path="/detailEmploye/:id" component={DetailEmploye} />
         <PrivateRoute path="/newEmploye/:id" component={NewEmploye} />
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
         {/* Gestion des Contrats*/}
