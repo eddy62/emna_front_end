@@ -15,12 +15,12 @@ const UserService = {
     return localStorage.getItem("userId");
   },
 
-  setRoleId(id) {
-    localStorage.setItem("roleId", id);
+  setSocietyId(id) {
+    localStorage.setItem("societyId", id);
   },
 
-  getRoleId() {
-    return localStorage.getItem("roleId");
+  getSocietyId() {
+    return localStorage.getItem("societyId");
   },
 };
 

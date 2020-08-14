@@ -45,7 +45,7 @@ export class Login extends React.Component {
           if (UserService.getRole() === "ROLE_SOCIETY") {
             AxiosCenter.getSocieteByUser(UserService.getUserId()).then(
               (response) => {
-                UserService.setRoleId(response.data.id);
+                UserService.setSocietyId(response.data.id);
               }
             );
           }
