@@ -11,7 +11,7 @@ import {
   MDBBtn,
   MDBCol,
 } from "mdbreact";
-export default class ListeReleves extends React.Component {
+export default class ListeRelevesArchives extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,8 +19,9 @@ export default class ListeReleves extends React.Component {
       releves: [],
     };
   }
+
   componentDidMount() {
-    AxiosCenter.getReleveBySocieteId(3)
+    AxiosCenter.getReleveByEtatAndSociety(3, 3)
       .then((res) => {
         const releves = res.data;
         this.setState({ releves, loaded: true });
@@ -49,7 +50,7 @@ export default class ListeReleves extends React.Component {
           <div>
             <MDBCardHeader color="default-color">
               <MDBCardTitle>
-                <h1> Historique de vos relevés</h1>
+                <h1>Historique de vos relevés bancaire</h1>
               </MDBCardTitle>
               <br />
             </MDBCardHeader>

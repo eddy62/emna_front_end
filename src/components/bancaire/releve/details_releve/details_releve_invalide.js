@@ -13,7 +13,7 @@ import {
   MDBCol,
 } from "mdbreact";
 
-export class DetailsReleve extends React.Component {
+export class DetailsReleveInvalide extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,8 +42,7 @@ export class DetailsReleve extends React.Component {
           <div>
             <MDBCardHeader color="default-color">
               <MDBCardTitle>
-                <h1>Détail de votre relevé</h1>
-                <h3>Ce relevé intègre les opérations comptabilisées</h3>
+                <h1>Détail de votre relevé invalidé</h1>
               </MDBCardTitle>
               <br />
             </MDBCardHeader>
@@ -109,7 +108,7 @@ export class DetailsReleve extends React.Component {
                     </div>
                     <p>
                       <Link
-                        to={"/historiquereleve/" + this.props.match.params.id}
+                        to={"/releveinvalide/" + this.props.match.params.id}
                       >
                         <MDBBtn
                           className="boutton"
@@ -118,6 +117,18 @@ export class DetailsReleve extends React.Component {
                           size="sm"
                         >
                           <span id="color-button"> Retour</span>
+                        </MDBBtn>
+                      </Link>
+                      <Link
+                        to={"/releveinvalide/" + this.props.match.params.id}
+                      >
+                        <MDBBtn
+                          className="boutton"
+                          color=" teal lighten-2"
+                          rounded
+                          size="sm"
+                        >
+                          <span id="color-button"> Ajouter une opération</span>
                         </MDBBtn>
                       </Link>
                     </p>
@@ -133,4 +144,4 @@ export class DetailsReleve extends React.Component {
     }
   }
 }
-export default DetailsReleve;
+export default DetailsReleveInvalide;

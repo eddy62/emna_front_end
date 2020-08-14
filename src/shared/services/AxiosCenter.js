@@ -119,6 +119,12 @@ const AxiosCenter = {
       url: "/releves",
     });
   },
+  getReleveByEtatAndSociety(idEtat, idSociete) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/releve/etat/${idEtat}/societe/${idSociete}`,
+    });
+  },
 
   getReleveBySocieteId(id) {
     return ApiBackEnd({
@@ -134,6 +140,12 @@ const AxiosCenter = {
     });
   },
 
+  getOperationById(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/operations/${id}`,
+    });
+  },
   //gestion Societe
   getWrapperSociete(id) {
     return ApiBackEnd({
@@ -142,13 +154,6 @@ const AxiosCenter = {
     });
   },
   //Fin Gestion Société
-
-  getOperation() {
-    return ApiBackEnd({
-      method: "get",
-      url: "/operations",
-    });
-  },
 
   getOperationByReleveId(id) {
     return ApiBackEnd({
@@ -163,7 +168,13 @@ const AxiosCenter = {
       data: values,
     });
   },
-
+  postReleve(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: "/releves",
+      data: values,
+    });
+  },
   //Gestion Utilisateur, Comptable et Société.
 
   //Gestion User
@@ -183,6 +194,12 @@ const AxiosCenter = {
     });
   },
 
+  deleteReleve(id) {
+    return ApiBackEnd({
+      method: "delete",
+      url: `/releves/${id}`,
+    });
+  },
   getUser(values) {
     return ApiBackEnd({
       method: "get",
