@@ -8,6 +8,7 @@ import {
     MDBCardHeader,
     MDBContainer,
 } from "mdbreact";
+import UserService from '../../../shared/services/UserService';
 
 
 
@@ -55,6 +56,7 @@ class AddProduit extends React.Component {
             });
 
         actions.setSubmitting(true);
+
     };
 
     userSchema = Yup.object().shape({
@@ -84,7 +86,7 @@ class AddProduit extends React.Component {
                             prix: "",
                             unite: "",
                             description: "",
-                            societeId: 1,
+                            societeId: UserService.getSocietyId(),
                             id: null,
                         }}
                         validationSchema={this.userSchema}

@@ -257,10 +257,10 @@ const AxiosCenter = {
   //Fin Gestion Utilisatuer, Comptable et Société.
 
   //Gestion Produits
-  getProduit() {
+  getProduit(id) {
     return ApiBackEnd({
       method: "get",
-      url: "/produits",
+      url: `/produits/societe/${id}`,
     });
   },
   getProduitById(id) {
@@ -269,7 +269,6 @@ const AxiosCenter = {
       url: `/produits/${id}`,
     });
   },
-
   createProduit(values) {
     return ApiBackEnd({
       method: "post",
@@ -278,6 +277,22 @@ const AxiosCenter = {
     });
   },
   // fin getion produits
+
+  // get societe by id
+  getSocieteById(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/societes/${id}`,
+    });
+  },
+
+  //get infoEntreprise by id 
+  getInfoEntrepriseById(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/info-entreprises/${id}`,
+    });
+  }
 };
 
 export default AxiosCenter;

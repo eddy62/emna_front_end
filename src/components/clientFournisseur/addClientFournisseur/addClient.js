@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import { Link } from "react-router-dom";
 import { MDBBtn } from "mdbreact";
+import UserService from '../../../shared/services/UserService';
 
 
 
@@ -30,6 +31,7 @@ class AddClientFournisseur extends React.Component {
       });
 
     actions.setSubmitting(true);
+    this.props.history.push("/client-fournisseur");
   };
 
   userSchema = Yup.object().shape({
@@ -57,7 +59,7 @@ class AddClientFournisseur extends React.Component {
             telephone: "",
             codePostal: "",
             ville: "",
-            idSociete: 1,
+            idSociete: UserService.getSocietyId(),
             id: null,
           }}
           validationSchema={this.userSchema}
