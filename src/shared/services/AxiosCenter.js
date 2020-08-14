@@ -57,6 +57,12 @@ const AxiosCenter = {
       url: "/releves",
     });
   },
+  getReleveByEtatAndSociety(idEtat, idSociete) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/releve/etat/${idEtat}/societe/${idSociete}`,
+    });
+  },
 
   getReleveBySocieteId(id) {
     return ApiBackEnd({
@@ -72,10 +78,10 @@ const AxiosCenter = {
     });
   },
 
-  getOperation() {
+  getOperationById(id) {
     return ApiBackEnd({
       method: "get",
-      url: "/operations",
+      url: `/operations/${id}`,
     });
   },
 
@@ -90,6 +96,20 @@ const AxiosCenter = {
       method: "post",
       url: "/operations",
       data: values,
+    });
+  },
+  postReleve(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: "/releves",
+      data: values,
+    });
+  },
+
+  deleteReleve(id) {
+    return ApiBackEnd({
+      method: "delete",
+      url: `/releves/${id}`,
     });
   },
 };

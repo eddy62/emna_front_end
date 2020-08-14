@@ -11,7 +11,7 @@ import {
   MDBCol,
 } from "mdbreact";
 
-export class Releve extends React.Component {
+export class MenuReleveNon extends React.Component {
   render() {
     return (
       <div className="containerReleve">
@@ -34,13 +34,13 @@ export class Releve extends React.Component {
                   <MDBCardBody>
                     <MDBCardTitle className="MDBCardTitle">
                       {" "}
-                      Création d'un relevé
+                      Releve non signé
                     </MDBCardTitle>
                     <br />
 
                     <br />
                     <div className="boutton">
-                      <Link to="/creationreleve">
+                      <Link to="/releveinvalide/4">
                         <MDBBtn
                           className="boutton"
                           color=" teal lighten-2"
@@ -59,38 +59,13 @@ export class Releve extends React.Component {
                 <MDBCard>
                   <MDBCardBody>
                     <MDBCardTitle className="MDBCardTitle">
-                      Gestion des relevés en cours
+                      Rapprochement bancaire
                     </MDBCardTitle>
                     <br />
 
                     <br />
                     <div className="boutton">
-                      <Link to="/menurelevenon">
-                        <MDBBtn
-                          className="boutton"
-                          color=" teal lighten-2"
-                          rounded
-                          size="sm"
-                        >
-                          <span id="color-button"> GERER</span>
-                        </MDBBtn>
-                      </Link>
-                    </div>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-
-              <MDBCol>
-                <MDBCard>
-                  <MDBCardBody>
-                    <MDBCardTitle className="MDBCardTitle">
-                      Historique des relevés
-                    </MDBCardTitle>
-                    <br />
-
-                    <br />
-                    <div className="boutton">
-                      <Link to="/historiquereleve/3">
+                      <Link to="/menu/juridique">
                         <MDBBtn
                           className="boutton"
                           color=" teal lighten-2"
@@ -112,4 +87,4 @@ export class Releve extends React.Component {
     );
   }
 }
-export default Releve;
+export default MenuReleveNon;
