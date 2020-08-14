@@ -117,6 +117,13 @@ const AxiosCenter = {
     });
   },
 
+  deleteWrapperEmploye(id) {
+    return ApiBackEnd({
+      method: "delete",
+      url: `/wrapperemployes/society/${id}`,
+    });
+  },
+
   //fin Gestion Social
 
   getReleve() {
