@@ -1,13 +1,14 @@
 import React from "react";
 import { Formik } from "formik";
-import { BrowserRouter as Link } from "react-router-dom";
-import AxiosCenter from "../../../../shared/services/AxiosCenter";
+import { Link } from "react-router-dom";
 
-class CreationOperation extends React.Component {
+import AxiosCenter from "../../../../shared/services/AxiosCenter";
+import { MDBBtn } from "mdbreact";
+class CreationReleve extends React.Component {
   submit = (values) => {
-    AxiosCenter.postOperation(values)
+    AxiosCenter.postReleve(values)
       .then(() => {
-        this.props.history.push("/indexoperation");
+        this.props.history.push("/menureleve");
       })
       .catch((err) => console.log(err));
   };
@@ -32,54 +33,39 @@ class CreationOperation extends React.Component {
               className="bg-white border p-5 d-flex flex-column"
             >
               <div className="form-group">
-                <label>Date:</label>
+                <label>Date de début:</label>
                 <input
                   type="Date"
-                  name="date"
+                  name="dateDebut"
                   className="form-control"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.date}
+                  value={values.dateDebut}
                 />
               </div>
               <div className="form-group">
-                <label>Description</label>
+                <label>Date de Fin:</label>
+                <input
+                  type="Date"
+                  name="dateFin"
+                  className="form-control"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.dateFin}
+                />
+              </div>
+              <div className="form-group">
+                <label>Banque</label>
                 <input
                   type="text"
-                  name="description"
+                  name="banque"
                   className="form-control"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.description}
+                  value={values.banque}
                 />
-              </div>
-              <div className="form-group">
-                <label>Type</label>
-                <select
-                  type="text"
-                  name="type"
-                  className="form-control"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.type}
-                >
-                  <option value="" label="Selectionner le type"></option>
-                  <option value="credit" label="Crédit"></option>
-                  <option value="debit" label="Débit"></option>
-                </select>
               </div>
 
-              <div className="form-group">
-                <label>Solde</label>
-                <input
-                  type="text"
-                  name="solde"
-                  className="form-control"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.solde}
-                />
-              </div>
               <button
                 type="submit"
                 className="btn btn-primary"
@@ -90,9 +76,13 @@ class CreationOperation extends React.Component {
             </form>
           )}
         </Formik>
-        <Link to="/indexoperation">Retour</Link>
+        <Link to={"/menureleve"}>
+          <MDBBtn className="boutton" color=" teal lighten-2" rounded size="sm">
+            <span id="color-button"> Retour</span>
+          </MDBBtn>
+        </Link>
       </div>
     );
   }
 }
-export default CreationOperation;
+export default CreationReleve;

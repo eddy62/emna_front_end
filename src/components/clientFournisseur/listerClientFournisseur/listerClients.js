@@ -11,9 +11,9 @@ class ListerClientFournisseur extends Component {
     super(props);
     this.state = {
       clients: [],
-      // idUser: null,
-      // roleUser: '',
-      // nomUser: '',
+      idUser: null,
+      roleUser: '',
+      nomUser: '',
 
     };
   }

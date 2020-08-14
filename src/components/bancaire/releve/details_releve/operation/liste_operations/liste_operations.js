@@ -35,7 +35,10 @@ export default class ListeOperations extends React.Component {
           <td> {operation.type}</td>
           <td> {operation.solde}</td>
           <td>
-            <Link to={"/detailsreleve/" + operation.id}> voir le détail</Link>
+            <Link to={"/detailsoperation/" + operation.id}>
+              {" "}
+              voir le détail
+            </Link>
           </td>
         </tr>
       );

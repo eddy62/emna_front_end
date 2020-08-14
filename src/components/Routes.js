@@ -19,18 +19,22 @@ import MenuClientFournisseur from "./clientFournisseur/menuClientFournisseur";
 import ListerClients from "./clientFournisseur/listerClientFournisseur/listerClients";
 import AddClient from "./clientFournisseur/addClientFournisseur/addClient";
 import ModifierClient from "./clientFournisseur/modifierCLientFournisseur/modifierClient";
-
 import SupprimerClient from "./clientFournisseur/supprimerClientFounisseur/supprimerClient";
 import DetailsClient from "./clientFournisseur/detailsClientFounisseur/detailsClient";
+
 //gestionBancaire
 import Bancaire from "./bancaire/index";
 import CreationOperation from "./bancaire/releve/details_releve/operation/creation_operation/creationOperation";
-import IndexOperation from "./bancaire/operation/index";
-import ListeOperations from "./bancaire/operation/listeOperations/listeOperations";
 import Releve from "./bancaire/releve/releve";
-import ListeReleves from "./bancaire/releve/historique_releves/liste_releves";
+import ListeReleves from "./bancaire/releve/historique_releves/liste_releves_archive";
 import DetailsReleve from "./bancaire/releve/details_releve/details_releve";
-import ReleveEnCours from "./bancaire/releve/details_releve/releve_en_cours";
+import DetailsReleveInvalide from "./bancaire/releve/details_releve/details_releve_invalide";
+import DetailsReleveNonArchive from "./bancaire/releve/details_releve/details_releve_non_archive";
+import CreationReleve from "./bancaire/releve/creation_releve/creation_releve";
+import DetailsOperation from "./bancaire/releve/details_releve/operation/details_operation/details_operation";
+import MenuReleveNon from "./bancaire/releve/historique_releves/menu_releve_non";
+import ListeRelevesInvalide from "./bancaire/releve/historique_releves/liste_releves_invalide";
+import ListeRelevesNonArchive from "./bancaire/releve/historique_releves/liste_releves_non_archive";
 
 // gestionUserRoutesImports
 import Users from "./users/Users";
@@ -50,6 +54,12 @@ import ComptabiliteMenu from "./navigation/ComptabiliteMenu";
 import JuridiqueMenu from "./navigation/JuridiqueMenu";
 // finGestionUserRoutesImports
 
+//GestionProduits
+import ListeProduits from "./produits/listeProduits/listeProduits";
+import DetailsProduit from "./produits/detailsProduits/detailsProduit";
+import AddProduit from "./produits/addProduits/addProduit";
+//finGestionProduits
+
 export default class Routes extends Component {
   render() {
     return (
@@ -59,10 +69,11 @@ export default class Routes extends Component {
         <PrivateRoute path="/menu/juridique" component={JuridiqueMenu} />
         {/* Gestion Social */}
         <PrivateRoute path="/socialHome" component={AccueilSocial} />
-        <PrivateRoute path="/listEmployes" component={ListEmployes} />
+        <PrivateRoute path="/listEmployes/:id" component={ListEmployes} />
         <PrivateRoute path="/detailEmploye" component={DetailEmploye} />
-        <PrivateRoute path="/newEmploye" component={NewEmploye} />
+        <PrivateRoute path="/newEmploye/:id" component={NewEmploye} />
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
+        {/* Gestion des Contrats*/}
         <PrivateRoute path="/listcontrat" component={ListeContrat} />
         <PrivateRoute path="/contrat" component={Contrat} />
         <PrivateRoute path="/detailcontrat/:id" component={DetailContrat} />
@@ -102,14 +113,32 @@ export default class Routes extends Component {
         {/* finGestionUserRoutes */}
         <PrivateRoute path="/bancaire" component={Bancaire} />
         <PrivateRoute path="/creationoperation" component={CreationOperation} />
-        <PrivateRoute path="/indexoperation" component={IndexOperation} />
-        <PrivateRoute path="/listeoperations" component={ListeOperations} />
         <PrivateRoute path="/menureleve" component={Releve} />
         <PrivateRoute path="/historiquereleve/:id" component={ListeReleves} />
         <PrivateRoute path="/detailsreleve/:id" component={DetailsReleve} />
-        <PrivateRoute path="/releveencours" component={ReleveEnCours} />
+        <PrivateRoute
+          path="/detailsreleveinvalide/:id"
+          component={DetailsReleveInvalide}
+        />
+        <PrivateRoute
+          path="/detailsrelevenonarchive/:id"
+          component={DetailsReleveNonArchive}
+        />
+        <PrivateRoute path="/creationreleve" component={CreationReleve} />
+        <PrivateRoute
+          path="/detailsoperation/:id"
+          component={DetailsOperation}
+        />
+        <PrivateRoute path="/menurelevenon" component={MenuReleveNon} />
+        <PrivateRoute
+          path="/releveinvalide/:id"
+          component={ListeRelevesInvalide}
+        />
+        <PrivateRoute
+          path="/relevenonarchive/:id"
+          component={ListeRelevesNonArchive}
+        />
         {/* gestionClientFournisseur */}
-
         <PrivateRoute
           path="/client-fournisseur"
           component={MenuClientFournisseur}
@@ -131,10 +160,14 @@ export default class Routes extends Component {
           path="/clientFournisseur/detail/:id"
           component={DetailsClient}
         />
-        <PrivateRoute component={NotFound} />
         {/* finGestionClientFournisseur */}
+        {/* GestionProduit */}
+        <PrivateRoute path="/produits" component={ListeProduits} />
+        <PrivateRoute path="/produit/detail/:id" component={DetailsProduit} />
+        <PrivateRoute path="/produit/creer" component={AddProduit} />
 
-        <Route component={NotFound} />
+        {/* <Route component={NotFound} /> */}
+        <PrivateRoute component={NotFound} />
       </Switch>
     );
   }

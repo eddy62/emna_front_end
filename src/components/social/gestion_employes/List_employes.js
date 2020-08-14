@@ -18,6 +18,7 @@ class ListEmployes extends React.Component {
     super(props);
     this.state = {
       loaded: false,
+      societe: {},
       listeEmployes: [],
     };
   }
@@ -25,6 +26,15 @@ class ListEmployes extends React.Component {
   componentDidMount() {
     const idSociete = this.props.match.params.id;
     console.log(idSociete);
+    AxiosCenter.getWrapperSociete(idSociete)
+      .then((response) => {
+        const societe = response.data;
+        console.log(societe);
+        this.setState({ societe: societe });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     AxiosCenter.getAllWrapperEmployesBySociety(idSociete)
       .then((response) => {
         const columns = [
@@ -93,7 +103,7 @@ class ListEmployes extends React.Component {
   render() {
     const title = "Gestion Social";
     const title1 = "Liste des Employes";
-    const entreprise = "JAKARTA SARL";
+    const entreprise = this.state.societe.raisonSociale;
     if (this.state.loaded) {
       return (
         <div className="App">
@@ -131,11 +141,20 @@ class ListEmployes extends React.Component {
               <div>
                 <hr></hr>
               </div>
-              <Link to="/newEmploye">
-                <MDBBtn color="teal accent-3" rounded size="sm">
-                  Enregistrer un Employe
-                </MDBBtn>
-              </Link>
+              {/* <Link to="/newEmploye"> */}
+              <MDBBtn
+                color="teal accent-3"
+                rounded
+                size="sm"
+                onClick={() => {
+                  this.props.history.push(
+                    "/newEmploye/" + this.state.societe.id
+                  );
+                }}
+              >
+                Enregistrer un Employe
+              </MDBBtn>
+              {/* </Link> */}
               <Link to="/socialHome">
                 <MDBBtn color="teal accent-3" rounded size="sm">
                   Retour

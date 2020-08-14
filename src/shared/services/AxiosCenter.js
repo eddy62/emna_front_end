@@ -16,10 +16,32 @@ const AxiosCenter = {
     });
   },
 
+  //gestion clientFournisseur
   getAllClientFournisseurBySociete(id) {
     return ApiBackEnd({
       method: "get",
       url: `/client-fournisseurs/societe/${id}`,
+    });
+  },
+
+  getAllSocietesByComptable(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/societes/comptable/${id}`,
+    });
+  },
+
+  getSocieteByUser(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/societes/user/${id}`,
+    });
+  },
+
+  getComptableByUser(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/comptables/user/${id}`,
     });
   },
 
@@ -56,6 +78,7 @@ const AxiosCenter = {
       url: `/client-fournisseurs/nom/${nom}`,
     });
   },
+  //fin clientFournisseur
 
   //Gestion Social
   getAllWrapperEmployesBySociety(id) {
@@ -72,12 +95,34 @@ const AxiosCenter = {
     });
   },
 
+  createWrapperEmploye(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: `/wrapperemployes`,
+      data: values,
+    });
+  },
+
+  updateWrapperEmploye(values) {
+    return ApiBackEnd({
+      method: "put",
+      url: `/wrapperemployes`,
+      data: values,
+    });
+  },
+
   //fin Gestion Social
 
   getReleve() {
     return ApiBackEnd({
       method: "get",
       url: "/releves",
+    });
+  },
+  getReleveByEtatAndSociety(idEtat, idSociete) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/releve/etat/${idEtat}/societe/${idSociete}`,
     });
   },
 
@@ -95,6 +140,12 @@ const AxiosCenter = {
     });
   },
 
+  getOperationById(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/operations/${id}`,
+    });
+  },
   //gestion Societe
   getWrapperSociete(id) {
     return ApiBackEnd({
@@ -103,13 +154,6 @@ const AxiosCenter = {
     });
   },
   //Fin Gestion Société
-
-  getOperation() {
-    return ApiBackEnd({
-      method: "get",
-      url: "/operations",
-    });
-  },
 
   getOperationByReleveId(id) {
     return ApiBackEnd({
@@ -124,7 +168,13 @@ const AxiosCenter = {
       data: values,
     });
   },
-
+  postReleve(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: "/releves",
+      data: values,
+    });
+  },
   //Gestion Utilisateur, Comptable et Société.
 
   //Gestion User
@@ -144,6 +194,12 @@ const AxiosCenter = {
     });
   },
 
+  deleteReleve(id) {
+    return ApiBackEnd({
+      method: "delete",
+      url: `/releves/${id}`,
+    });
+  },
   getUser(values) {
     return ApiBackEnd({
       method: "get",
@@ -199,6 +255,29 @@ const AxiosCenter = {
   //Fin Gestion Comptable
 
   //Fin Gestion Utilisatuer, Comptable et Société.
+
+  //Gestion Produits
+  getProduit() {
+    return ApiBackEnd({
+      method: "get",
+      url: "/produits",
+    });
+  },
+  getProduitById(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/produits/${id}`,
+    });
+  },
+
+  createProduit(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: "/produits",
+      data: values,
+    });
+  },
+  // fin getion produits
 };
 
 export default AxiosCenter;
