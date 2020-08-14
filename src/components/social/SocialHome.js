@@ -1,6 +1,7 @@
 import React from "react";
 import "./style1.scss";
 import { Link } from "react-router-dom";
+import AxiosCenter from "../../shared/services/AxiosCenter";
 import {
   MDBCard,
   MDBCardBody,
@@ -17,35 +18,24 @@ class AccueilSocial extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      societe: {
-        id: 1,
-        civilite: "Monsieur",
-        userId: 1,
-        comptableId: 1,
-        idInfoEntreprise: 1,
-        dateDeCreation: "2020-07-27",
-        description: "sociéte de de vente de logiciels Java",
-        domaineDactivite: "Commerciales",
-        email: "jakarta@gmail.com",
-        fax: "0954389764",
-        formeJuridique: "SARL",
-        raisonSociale: "JAKARTA SARL",
-        siren: "111 222 333",
-        siret: "111 222 333 00444",
-        telephone: "0954389765",
-        idAdresse: 1,
-        boitePostale: "1700",
-        codePostal: "59000",
-        nomRue: "Avenue des Developpeurs",
-        numeroRue: "104",
-        ville: "Lille",
-        listeEmployes: [{}, {}],
-      },
+      societe: {},
       isLogginActive: true,
     };
   }
 
-  handleEmploye() {}
+  componentDidMount() {
+    const idSociete = this.props.match.params.id;
+    console.log(idSociete);
+    AxiosCenter.getWrapperSociete(idSociete)
+      .then((response) => {
+        const societe = response.data;
+        console.log(societe);
+        this.setState({ societe: societe });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   render() {
     const title = "Gestion Social";
@@ -53,11 +43,11 @@ class AccueilSocial extends React.Component {
     const title2 = "Validation Comptable";
     const title3 = "Gestion des Variables de Paie";
     const title4 = "Gestion des Fiches de Paie";
-    const title5 = "Déclaration d'Embauche";
-    const entreprise = this.state.societe.raisonSociale;
+    const title5 = "Déclaration Embauche";
+    const entreprise = "JAKARTA SARL";
 
     return (
-      <div className="App1">
+      <div className="App">
         <div className="social">
           <div>
             <MDBContainer>
@@ -69,106 +59,128 @@ class AccueilSocial extends React.Component {
                 </MDBCardHeader>
               </div>
               <div className="titre">
-                <hr></hr>
+                <hr />
               </div>
               <div className="menu">
-                <MDBRow>
-                  <MDBCard className="cadre1">
-                    <MDBCardBody>
-                      <MDBCardTitle tag="h4">{title1}</MDBCardTitle>
-                      <br />
-                      <MDBCardText>
-                        Enregistrement, Consultation et Modification des données
-                        des Employés de la Sociéte
-                      </MDBCardText>
-                      <br />
-                      <div>
-                        <Link to="/listEmployes">
-                          <MDBBtn rounded size="sm" color="teal accent-3">
+                <MDBRow around between>
+                  <MDBCol md="3" className="mb-3">
+                    <MDBCard className="cadre1">
+                      <MDBCardBody>
+                        <MDBCardTitle tag="h4">{title1}</MDBCardTitle>
+                        <br />
+                        <MDBCardText>
+                          Enregistrement, Consultation et Modification des
+                          données des Employés de la Sociéte
+                        </MDBCardText>
+                        <br />
+                        <div>
+                          <MDBBtn
+                            rounded
+                            size="sm"
+                            color="teal accent-3"
+                            onClick={() => {
+                              this.props.history.push("/listEmployes/" + 1);
+                            }}
+                          >
                             Gerer
                           </MDBBtn>
-                        </Link>
-                      </div>
-                    </MDBCardBody>
-                  </MDBCard>
-
-                  <MDBCard className="cadre1">
-                    <MDBCardBody>
-                      <MDBCardTitle tag="h4">{title5}</MDBCardTitle>
-                      <br />
-                      <MDBCardText>
-                        Déclaration d'Embauche en ligne et télechargement
-                        Attestation d'Embauche{" "}
-                      </MDBCardText>
-                      <br />
-                      <div>
-                        <Link to="/listEmployes">
-                          <MDBBtn rounded size="sm" color="teal accent-3">
-                            Gerer
-                          </MDBBtn>
-                        </Link>
-                      </div>
-                    </MDBCardBody>
-                  </MDBCard>
-
-                  <MDBCard className="cadre1">
-                    <MDBCardBody>
-                      <MDBCardTitle tag="h4">{title2}</MDBCardTitle>
-                      <br />
-                      <MDBCardText>
-                        Validation Comptables des variables de Paie des Employés
-                      </MDBCardText>
-                      <br />
-                      <div className="boutton">
-                        <Link to="/listEmployes">
-                          <MDBBtn color="teal accent-3" rounded size="sm">
-                            Gerer
-                          </MDBBtn>
-                        </Link>
-                      </div>
-                    </MDBCardBody>
-                  </MDBCard>
-                  {/* </MDBRow>
+                        </div>
+                      </MDBCardBody>
+                    </MDBCard>
+                  </MDBCol>
+                  <MDBCol md="3" className="mb-3">
+                    <MDBCard className="cadre1">
+                      <MDBCardBody>
+                        <MDBCardTitle tag="h4">{title5}</MDBCardTitle>
+                        <br />
+                        <MDBCardText>
+                          Déclaration d'Embauche en ligne et Télechargement
+                          Attestation d'Embauche
+                        </MDBCardText>
+                        <br />
+                        <div>
+                          <Link to="/listEmployes">
+                            <MDBBtn rounded size="sm" color="teal accent-3">
+                              Gerer
+                            </MDBBtn>
+                          </Link>
+                        </div>
+                      </MDBCardBody>
+                    </MDBCard>
+                  </MDBCol>
+                  <MDBCol md="3" className="mb-3">
+                    <MDBCard className="cadre1">
+                      <MDBCardBody>
+                        <MDBCardTitle tag="h4">{title2}</MDBCardTitle>
+                        <br />
+                        <MDBCardText>
+                          Validation Comptables des variables de Paie des
+                          Employés et pièces comptables
+                        </MDBCardText>
+                        <br />
+                        <div className="boutton">
+                          <Link to="/listEmployes">
+                            <MDBBtn color="teal accent-3" rounded size="sm">
+                              Gerer
+                            </MDBBtn>
+                          </Link>
+                        </div>
+                      </MDBCardBody>
+                    </MDBCard>
+                  </MDBCol>
+                </MDBRow>
                 <br />
-                <MDBRow> */}
-                  <MDBCard className="cadre1">
-                    <MDBCardBody>
-                      <MDBCardTitle tag="h4">{title3}</MDBCardTitle>
-                      <br />
-                      <MDBCardText>
-                        Enregistrement et modification des variables de paies
-                        des Employés
-                      </MDBCardText>
-                      <br />
-                      <div className="boutton">
-                        <Link to="/listEmployes">
-                          <MDBBtn color="teal accent-3" rounded size="sm">
-                            Gerer
-                          </MDBBtn>
-                        </Link>
-                      </div>
-                    </MDBCardBody>
-                  </MDBCard>
-                  <MDBCard className="cadre1">
-                    <MDBCardBody>
-                      <MDBCardTitle tag="h4">{title4}</MDBCardTitle>
-                      <br />
-                      <MDBCardText>
-                        Consultation et Téléchargement des Fiches de Paie des
-                        Employés
-                      </MDBCardText>
-                      <br />
-                      <div className="boutton">
-                        <Link to="/listEmployes">
-                          <MDBBtn color="teal accent-3" rounded size="sm">
-                            Gerer
-                          </MDBBtn>
-                        </Link>
-                      </div>
-                    </MDBCardBody>
-                  </MDBCard>
+                <MDBRow around between>
+                  <MDBCol md="3" className="mb-3">
+                    <MDBCard className="cadre1">
+                      <MDBCardBody>
+                        <MDBCardTitle tag="h4">{title3}</MDBCardTitle>
+                        <br />
+                        <MDBCardText>
+                          Enregistrement et modification des variables de paies
+                          des Employés
+                        </MDBCardText>
+                        <br />
+                        <div className="boutton">
+                          <Link to="/listEmployes">
+                            <MDBBtn color="teal accent-3" rounded size="sm">
+                              Gerer
+                            </MDBBtn>
+                          </Link>
+                        </div>
+                      </MDBCardBody>
+                    </MDBCard>
+                  </MDBCol>
+                  <MDBCol md="3" className="mb-3">
+                    <MDBCard className="cadre1">
+                      <MDBCardBody>
+                        <MDBCardTitle tag="h4">{title4}</MDBCardTitle>
+                        <br />
+                        <MDBCardText>
+                          Consultation et Téléchargement des Fiches de Paie des
+                          Employés
+                        </MDBCardText>
+                        <br />
+                        <div className="boutton">
+                          <Link to="/listEmployes">
+                            <MDBBtn color="teal accent-3" rounded size="sm">
+                              Gerer
+                            </MDBBtn>
+                          </Link>
+                        </div>
+                      </MDBCardBody>
+                    </MDBCard>
+                  </MDBCol>
                 </MDBRow>
               </div>
+              <div className="titre">
+                <hr />
+              </div>
+              <Link to="/">
+                <MDBBtn color="teal accent-3" rounded size="sm">
+                  Retour à l'Acceuil
+                </MDBBtn>
+              </Link>
             </MDBContainer>
           </div>
         </div>

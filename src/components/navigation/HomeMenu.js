@@ -12,21 +12,20 @@ import {
   MDBCol,
 } from "mdbreact";
 import "./style.scss";
-import AxiosCenter from "./../../shared/services/AxiosCenter";
+import UserService from "../../shared/services/UserService";
+import AxiosCenter from "../../shared/services/AxiosCenter";
+import Loading from "./../../shared/component/Loading";
 
 class HomeMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userRole: "",
+      loaded: false,
     };
   }
   componentDidMount() {
-    AxiosCenter.getCurrentUser().then((response) => {
-      this.setState({
-        userRole: response.data.authorities[0],
-      });
-      console.log(this.state.userRole);
+    this.setState({
+      loaded: true,
     });
   }
   render() {
@@ -35,93 +34,71 @@ class HomeMenu extends React.Component {
     const title3 = "Juridique";
     const title4 = "Social";
     const title5 = "Interface Admin";
-    return (
-      <div className="App">
-        <MDBContainer>
-          <div>
-            <MDBCardHeader color="default-color">
-              <MDBCardTitle>
-                <h1>{title}</h1>
-              </MDBCardTitle>
-              <br />
-              <MDBCardTitle>
-                <h3>Accueil</h3>
-              </MDBCardTitle>
-            </MDBCardHeader>
-          </div>
-          <div>
-            <hr></hr>
-          </div>
-          <div>
-            <MDBRow>
-              <MDBCol>
-                <MDBCard>
-                  <MDBCardBody>
-                    <MDBCardTitle className="MDBCardTitle">
-                      {title2}
-                    </MDBCardTitle>
-                    <br />
-
-                    <br />
-                    <div className="boutton">
-                      <Link to="/menu/comptabilite">
-                        <MDBBtn className="boutton" rounded size="sm">
-                          Gerer
-                        </MDBBtn>
-                      </Link>
-                    </div>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-
-              <MDBCol>
-                <MDBCard>
-                  <MDBCardBody>
-                    <MDBCardTitle className="MDBCardTitle">
-                      {title3}
-                    </MDBCardTitle>
-                    <br />
-
-                    <br />
-                    <div className="boutton">
-                      <Link to="/menu/juridique">
-                        <MDBBtn className="boutton" rounded size="sm">
-                          Gerer
-                        </MDBBtn>
-                      </Link>
-                    </div>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-
-              <MDBCol>
-                <MDBCard>
-                  <MDBCardBody>
-                    <MDBCardTitle className="MDBCardTitle">
-                      {title4}
-                    </MDBCardTitle>
-                    <br />
-
-                    <br />
-                    <div className="boutton">
-                      <Link to="/socialHome">
-                        <MDBBtn className="boutton" rounded size="sm">
-                          Gerer
-                        </MDBBtn>
-                      </Link>
-                    </div>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-            </MDBRow>
-            <br />
-            {this.state.userRole === "ROLE_ADMIN" ? (
+    if (this.state.loaded) {
+      return (
+        <div className="App">
+          <MDBContainer>
+            <div>
+              <MDBCardHeader color="default-color">
+                <MDBCardTitle>
+                  <h1>{title}</h1>
+                </MDBCardTitle>
+                <br />
+                <MDBCardTitle>
+                  <h3>Accueil</h3>
+                </MDBCardTitle>
+              </MDBCardHeader>
+            </div>
+            <div>
+              <hr></hr>
+            </div>
+            <div>
               <MDBRow>
                 <MDBCol>
                   <MDBCard>
                     <MDBCardBody>
                       <MDBCardTitle className="MDBCardTitle">
-                        {title5}
+                        {title2}
+                      </MDBCardTitle>
+                      <br />
+
+                      <br />
+                      <div className="boutton">
+                        <Link to="/menu/comptabilite">
+                          <MDBBtn className="boutton" rounded size="sm">
+                            Gerer
+                          </MDBBtn>
+                        </Link>
+                      </div>
+                    </MDBCardBody>
+                  </MDBCard>
+                </MDBCol>
+
+                <MDBCol>
+                  <MDBCard>
+                    <MDBCardBody>
+                      <MDBCardTitle className="MDBCardTitle">
+                        {title3}
+                      </MDBCardTitle>
+                      <br />
+
+                      <br />
+                      <div className="boutton">
+                        <Link to="/menu/juridique">
+                          <MDBBtn className="boutton" rounded size="sm">
+                            Gerer
+                          </MDBBtn>
+                        </Link>
+                      </div>
+                    </MDBCardBody>
+                  </MDBCard>
+                </MDBCol>
+
+                <MDBCol>
+                  <MDBCard>
+                    <MDBCardBody>
+                      <MDBCardTitle className="MDBCardTitle">
+                        {title4}
                       </MDBCardTitle>
                       <br />
 
@@ -137,11 +114,37 @@ class HomeMenu extends React.Component {
                   </MDBCard>
                 </MDBCol>
               </MDBRow>
-            ) : null}
-          </div>
-        </MDBContainer>
-      </div>
-    );
+              <br />
+              {UserService.getRole() === "ROLE_ADMIN" ? (
+                <MDBRow>
+                  <MDBCol>
+                    <MDBCard>
+                      <MDBCardBody>
+                        <MDBCardTitle className="MDBCardTitle">
+                          {title5}
+                        </MDBCardTitle>
+                        <br />
+
+                        <br />
+                        <div className="boutton">
+                          <Link to="/users">
+                            <MDBBtn className="boutton" rounded size="sm">
+                              Gerer
+                            </MDBBtn>
+                          </Link>
+                        </div>
+                      </MDBCardBody>
+                    </MDBCard>
+                  </MDBCol>
+                </MDBRow>
+              ) : null}
+            </div>
+          </MDBContainer>
+        </div>
+      );
+    } else {
+      return <Loading />;
+    }
   }
 }
 export default HomeMenu;

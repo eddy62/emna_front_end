@@ -18,8 +18,10 @@ import CreerContrat from "./contrat/creerContrat/CreerContrat";
 import MenuClientFournisseur from "./clientFournisseur/menuClientFournisseur";
 import ListerClients from "./clientFournisseur/listerClientFournisseur/listerClients";
 import AddClient from "./clientFournisseur/addClientFournisseur/addClient";
-//import ModifierClient from "./clientFournisseur/modifierClientFournisseur/modifierClient";
+import ModifierClient from "./clientFournisseur/modifierCLientFournisseur/modifierClient";
 import SupprimerClient from "./clientFournisseur/supprimerClientFounisseur/supprimerClient";
+import DetailsClient from "./clientFournisseur/detailsClientFounisseur/detailsClient";
+
 //gestionBancaire
 import Bancaire from "./bancaire/index";
 import CreationOperation from "./bancaire/releve/details_releve/operation/creation_operation/creationOperation";
@@ -52,6 +54,12 @@ import ComptabiliteMenu from "./navigation/ComptabiliteMenu";
 import JuridiqueMenu from "./navigation/JuridiqueMenu";
 // finGestionUserRoutesImports
 
+//GestionProduits
+import ListeProduits from "./produits/listeProduits/listeProduits";
+import DetailsProduit from "./produits/detailsProduits/detailsProduit";
+import AddProduit from "./produits/addProduits/addProduit";
+//finGestionProduits
+
 export default class Routes extends Component {
   render() {
     return (
@@ -61,10 +69,11 @@ export default class Routes extends Component {
         <PrivateRoute path="/menu/juridique" component={JuridiqueMenu} />
         {/* Gestion Social */}
         <PrivateRoute path="/socialHome" component={AccueilSocial} />
-        <PrivateRoute path="/listEmployes" component={ListEmployes} />
+        <PrivateRoute path="/listEmployes/:id" component={ListEmployes} />
         <PrivateRoute path="/detailEmploye" component={DetailEmploye} />
-        <PrivateRoute path="/newEmploye" component={NewEmploye} />
+        <PrivateRoute path="/newEmploye/:id" component={NewEmploye} />
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
+        {/* Gestion des Contrats*/}
         <PrivateRoute path="/listcontrat" component={ListeContrat} />
         <PrivateRoute path="/contrat" component={Contrat} />
         <PrivateRoute path="/detailcontrat/:id" component={DetailContrat} />
@@ -134,10 +143,10 @@ export default class Routes extends Component {
           path="/client-fournisseur"
           component={MenuClientFournisseur}
         />
-        {/* <PrivateRoute
+        <PrivateRoute
           path="/clientFournisseur/modifier/:id"
           component={ModifierClient}
-        /> */}
+        />
         <PrivateRoute
           path="/clientFournisseur/liste"
           component={ListerClients}
@@ -147,8 +156,18 @@ export default class Routes extends Component {
           path="/clientFournisseur/delete/:id"
           component={SupprimerClient}
         />
+        <PrivateRoute
+          path="/clientFournisseur/detail/:id"
+          component={DetailsClient}
+        />
+        {/* finGestionClientFournisseur */}
+        {/* GestionProduit */}
+        <PrivateRoute path="/produits" component={ListeProduits} />
+        <PrivateRoute path="/produit/detail/:id" component={DetailsProduit} />
+        <PrivateRoute path="/produit/creer" component={AddProduit} />
+
+        {/* <Route component={NotFound} /> */}
         <PrivateRoute component={NotFound} />
-        <Route component={NotFound} />
       </Switch>
     );
   }

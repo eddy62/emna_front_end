@@ -16,10 +16,32 @@ const AxiosCenter = {
     });
   },
 
+  //gestion clientFournisseur
   getAllClientFournisseurBySociete(id) {
     return ApiBackEnd({
       method: "get",
       url: `/client-fournisseurs/societe/${id}`,
+    });
+  },
+
+  getAllSocietesByComptable(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/societes/comptable/${id}`,
+    });
+  },
+
+  getSocieteByUser(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/societes/user/${id}`,
+    });
+  },
+
+  getComptableByUser(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/comptables/user/${id}`,
     });
   },
 
@@ -50,6 +72,46 @@ const AxiosCenter = {
       url: `/client-fournisseurs/${id}`,
     });
   },
+  getClientFournisseurByNom(nom) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/client-fournisseurs/nom/${nom}`,
+    });
+  },
+  //fin clientFournisseur
+
+  //Gestion Social
+  getAllWrapperEmployesBySociety(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/wrapperemployes/society/${id}`,
+    });
+  },
+
+  getWrapperEmploye(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/wrapperemployes/${id}`,
+    });
+  },
+
+  createWrapperEmploye(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: `/wrapperemployes`,
+      data: values,
+    });
+  },
+
+  updateWrapperEmploye(values) {
+    return ApiBackEnd({
+      method: "put",
+      url: `/wrapperemployes`,
+      data: values,
+    });
+  },
+
+  //fin Gestion Social
 
   getReleve() {
     return ApiBackEnd({
@@ -84,6 +146,14 @@ const AxiosCenter = {
       url: `/operations/${id}`,
     });
   },
+  //gestion Societe
+  getWrapperSociete(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/wrappersociete/${id}`,
+    });
+  },
+  //Fin Gestion Société
 
   getOperationByReleveId(id) {
     return ApiBackEnd({
@@ -105,6 +175,24 @@ const AxiosCenter = {
       data: values,
     });
   },
+  //Gestion Utilisateur, Comptable et Société.
+
+  //Gestion User
+  addUser(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: "/users/add",
+      data: values,
+    });
+  },
+
+  editUser(values) {
+    return ApiBackEnd({
+      method: "put",
+      url: "/users/edit",
+      data: values,
+    });
+  },
 
   deleteReleve(id) {
     return ApiBackEnd({
@@ -112,6 +200,84 @@ const AxiosCenter = {
       url: `/releves/${id}`,
     });
   },
+  getUser(values) {
+    return ApiBackEnd({
+      method: "get",
+      url: "/users/" + values,
+    });
+  },
+
+  getAllUsers(values) {
+    return ApiBackEnd({
+      method: "get",
+      url: "/users/all",
+    });
+  },
+
+  deleteUser(values) {
+    return ApiBackEnd({
+      method: "delete",
+      url: "/users/" + values,
+    });
+  },
+  //Fin Gestion User
+
+  //Gestion Comptable
+  addComptable(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: "/comptables/add",
+      data: values,
+    });
+  },
+
+  getComptable(values) {
+    return ApiBackEnd({
+      method: "get",
+      url: "/comptables/" + values,
+    });
+  },
+
+  getComptableId(values) {
+    return ApiBackEnd({
+      method: "get",
+      url: "/comptables/refuser/" + values,
+    });
+  },
+
+  editComptable(values) {
+    return ApiBackEnd({
+      method: "put",
+      url: "/comptables/edit",
+      data: values,
+    });
+  },
+  //Fin Gestion Comptable
+
+  //Fin Gestion Utilisatuer, Comptable et Société.
+
+  //Gestion Produits
+  getProduit() {
+    return ApiBackEnd({
+      method: "get",
+      url: "/produits",
+    });
+  },
+  getProduitById(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/produits/${id}`,
+    });
+  },
+
+  createProduit(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: "/produits",
+      data: values,
+    });
+  },
+  // fin getion produits
 };
 
 export default AxiosCenter;

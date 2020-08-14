@@ -1,6 +1,6 @@
 import React from "react";
 import "./style2.scss";
-import { Link } from "react-router-dom";
+import AxiosCenter from "../../../shared/services/AxiosCenter";
 import {
   MDBContainer,
   MDBCardHeader,
@@ -10,43 +10,14 @@ import {
   MDBCardBody,
   MDBCard,
   MDBInput,
-  MDBSelect,
-  MDBDatePicker,
-  MDBSelectInput,
-  MDBSelectOption,
-  MDBSelectOptions,
   MDBCol,
 } from "mdbreact";
-import { Form } from "formik";
 
 class UpdateEmploye extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      societe: {
-        id: 1,
-        civilite: "Monsieur",
-        userId: 1,
-        comptableId: 1,
-        idInfoEntreprise: 1,
-        dateDeCreation: "2020-07-27",
-        description: "sociéte de de vente de logiciels Java",
-        domaineDactivite: "Commerciales",
-        email: "jakarta@gmail.com",
-        fax: "0954389764",
-        formeJuridique: "SARL",
-        raisonSociale: "JAKARTA SARL",
-        siren: "111 222 333",
-        siret: "111 222 333 00444",
-        telephone: "0954389765",
-        idAdresse: 1,
-        boitePostale: "1700",
-        codePostal: "59000",
-        nomRue: "Avenue des Developpeurs",
-        numeroRue: "104",
-        ville: "Lille",
-        listeEmployes: [{}, {}],
-      },
+      employe: {},
 
       valide: {
         value: "",
@@ -55,10 +26,25 @@ class UpdateEmploye extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const idEmploye = this.props.match.params.id;
+    console.log(idEmploye);
+    AxiosCenter.getWrapperEmploye(idEmploye)
+      .then((response) => {
+        const employe = response.data;
+        console.log(employe);
+        this.setState({ employe: employe });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   render() {
     const title = "Gestion Social";
     const title1 = "Editer un Employé";
-    const entreprise = this.state.societe.raisonSociale;
+    const employe = this.state.employe;
+    const entreprise = employe.raisonSociale;
     return (
       <div className="App">
         <div className="newEmp">
@@ -73,7 +59,9 @@ class UpdateEmploye extends React.Component {
             <div>
               <hr></hr>
             </div>
-            <MDBCardTitle tag="h4">{title1}</MDBCardTitle>
+            <MDBCardHeader tag="h4" color="teal lighten-5" text="black">
+              {title1}
+            </MDBCardHeader>
             <div>
               <hr></hr>
             </div>
@@ -213,7 +201,7 @@ class UpdateEmploye extends React.Component {
                         label="Sociéte"
                         outline
                         type="text"
-                        value={this.state.societe.raisonSociale}
+                        value={employe.raisonSociale}
                         disabled="false"
                       />
                       <MDBInput outline label="Date Embauche" type="date" />
@@ -284,15 +272,20 @@ class UpdateEmploye extends React.Component {
                 <hr></hr>
               </div>
 
-              <MDBBtn color="default" rounded size="sm" type="submit">
+              <MDBBtn color="teal accent-3" rounded size="sm" type="submit">
                 EDITER
               </MDBBtn>
 
-              <Link to="/listEmployes">
-                <MDBBtn color="default" rounded size="sm">
-                  Retour
-                </MDBBtn>
-              </Link>
+              <MDBBtn
+                color="teal accent-3"
+                rounded
+                size="sm"
+                onClick={() => {
+                  this.props.history.push("/listEmployes/" + employe.societeId);
+                }}
+              >
+                Retour
+              </MDBBtn>
             </form>
           </MDBContainer>
         </div>
