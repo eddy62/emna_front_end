@@ -31,6 +31,12 @@ const AxiosCenter = {
     });
   },
 
+  getAllSocietes() {
+    return ApiBackEnd({
+      method: "get",
+      url: `/societes`,
+    });
+  },
   getSocieteByUser(id) {
     return ApiBackEnd({
       method: "get",
