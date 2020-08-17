@@ -12,7 +12,8 @@ import {
   MDBBtn,
   MDBCol,
 } from "mdbreact";
-export class ReleveEnCours extends React.Component {
+
+export class DetailsReleveNonArchive extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,8 +21,9 @@ export class ReleveEnCours extends React.Component {
       releve: [],
     };
   }
+
   componentDidMount() {
-    AxiosCenter.getReleveById(1)
+    AxiosCenter.getReleveById(this.props.match.params.id)
       .then((res) => {
         const releve = res.data;
         this.setState({
@@ -98,46 +100,27 @@ export class ReleveEnCours extends React.Component {
                     <div>
                       <this.detailsReleve detailsreleve={this.state.releve} />
                     </div>
+
                     <div className="row">
-                      <div className="col-3"></div>
-                      <div className="col-6">
+                      <div className="col-12">
                         {" "}
-                        <ListeOperations
-                          operations={this.state.operations}
-                          releveId={this.state.releveId}
-                        />
+                        <ListeOperations releveId={this.state.releveId} />
                       </div>
-                      <div className="col-3"></div>
                     </div>
-                    <div className="row">
-                      <p>
-                        <Link to={"/bancaire"}>
-                          <MDBBtn
-                            className="boutton"
-                            color=" teal lighten-2"
-                            rounded
-                            size="sm"
-                          >
-                            <span id="color-button"> Retour</span>
-                          </MDBBtn>
-                        </Link>
-                      </p>
-                      <p>
-                        <Link to={"/creationoperation"}>
-                          <MDBBtn
-                            className="boutton"
-                            color=" teal lighten-2"
-                            rounded
-                            size="sm"
-                          >
-                            <span id="color-button">
-                              {" "}
-                              Ajouter une opération
-                            </span>
-                          </MDBBtn>
-                        </Link>
-                      </p>
-                    </div>
+                    <p>
+                      <Link
+                        to={"/historiquereleve/" + this.props.match.params.id}
+                      >
+                        <MDBBtn
+                          className="boutton"
+                          color=" teal lighten-2"
+                          rounded
+                          size="sm"
+                        >
+                          <span id="color-button"> Retour</span>
+                        </MDBBtn>
+                      </Link>
+                    </p>
                   </MDBCardTitle>
                 </MDBCardBody>
               </MDBCard>
@@ -150,4 +133,4 @@ export class ReleveEnCours extends React.Component {
     }
   }
 }
-export default ReleveEnCours;
+export default DetailsReleveNonArchive;

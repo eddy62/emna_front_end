@@ -10,17 +10,44 @@ import {
   MDBCol
 } from "mdbreact";
 import AxiosCenter from "../../shared/services/AxiosCenter";
-
-
+import UserService from '../../shared/services/UserService';
 
 
 class MenuClientFournisseur extends Component {
 
-  state = {
-    clientFournisseur: {},
-    loading: false,
-    value: ''
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      clientFournisseur: {},
+      loading: false,
+      value: '',
+      societeId: UserService.getSocietyId(),
+      roleUser: UserService.getRole(),
+      societeNom: '',
+    };
+  }
+
+  componentDidMount() {
+    if (this.state.roleUser === "ROLE_SOCIETY") {
+      AxiosCenter.getSocieteById(this.state.societeId)
+        .then((response) => {
+          const infoEntrepriseId = response.data.infoEntrepriseId;
+          AxiosCenter.getInfoEntrepriseById(infoEntrepriseId)
+            .then((response) => {
+              const societeNom = response.data.raisonSociale
+              this.setState({ societeNom: societeNom });
+              console.log(" nom societe " + this.state.societeNom)
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+    }
+  }
 
   search = async val => {
     this.setState({ loading: true });
@@ -31,7 +58,6 @@ class MenuClientFournisseur extends Component {
           clientFournisseur: clientFournisseur,
           loaded: true,
         });
-        console.log(" nom societe " + this.state.clientFournisseur.nom)
       })
       .catch((error) => {
         console.log(error);
@@ -49,7 +75,7 @@ class MenuClientFournisseur extends Component {
       <MDBContainer>
         <div className="justify-content-center align-items-center container-fluid p-5 ">
           <MDBCardHeader color="default-color">
-            <MDBCardTitle tag="h2">Recherchez parmi toutes les entreprises</MDBCardTitle>
+            <MDBCardTitle tag="h2">Recherchez parmi toutes les entreprises {this.state.societeNom} </MDBCardTitle>
             <br></br>
             <div className="justify-content-center container-fluid align-items-center">
               <form className="form-inline ">

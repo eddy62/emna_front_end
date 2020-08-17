@@ -2,95 +2,79 @@ import React from 'react';
 import { MDBDataTable, MDBCardHeader, MDBCardTitle, MDBContainer, MDBBtn } from 'mdbreact';
 import AxiosCenter from '../../../shared/services/AxiosCenter';
 import { Link } from "react-router-dom";
-
+import UserService from '../../../shared/services/UserService';
 class ListeProduits extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userId: null,
-            societeId: null,
-            roleUser: null,
+            societeId: UserService.getSocietyId(),
+            roleUser: UserService.getRole(),
+            nomSociete: this.props.societeNom,
             listeProduits: [],
             loaded: false,
-            data: {}
+            data: {},
+
         }
     }
 
     componentDidMount() {
-        AxiosCenter.getCurrentUser()
-            .then((response) => {
-                const userId = response.data.id
-                const roleUser = response.data.authorities
-                const societeId = response.data.societeId
-                console.log("data " + response.data)
-                this.setState({
-                    userId: userId,
-                    roleUser: roleUser,
-                    societeId: societeId,
-                });
-
-                console.log("id societe " + this.state.societeId)
-                console.log("role " + this.state.roleUser)
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-
-        AxiosCenter.getProduit()
-            .then((response) => {
-                const columns = [
-                    {
-                        label: 'Nom',
-                        field: 'nom',
-                        sort: 'asc',
-                    },
-                    {
-                        label: 'Reference',
-                        field: 'reference',
-                        sort: 'asc',
-                    },
-                    {
-                        label: 'Tva',
-                        field: 'tva',
-                        sort: 'asc',
-                    },
-                    {
-                        label: 'Prix',
-                        field: 'prix',
-                        sort: 'asc',
-                    },
-                    {
-                        label: 'Unite',
-                        field: 'unite',
-                        sort: 'asc',
-                    }
-                ];
-
-                let rows = [];
-                const listeProduits = response.data;
-                response.data.forEach(element => {
-                    const produits = {
-                        nom: element.nom,
-                        reference: element.reference,
-                        tva: element.tva,
-                        prix: element.prix,
-                        unite: element.unite,
-                        // quantite: element.quantite,
-                        clickEvent: () => {
-                            this.props.history.push("/produit/detail/" + element.id);
+        if (this.state.roleUser === "ROLE_SOCIETY") {
+            AxiosCenter.getProduit(this.state.societeId)
+                .then((response) => {
+                    const columns = [
+                        {
+                            label: 'Nom',
+                            field: 'nom',
+                            sort: 'asc',
                         },
-                    };
-                    rows.push(produits);
+                        {
+                            label: 'Reference',
+                            field: 'reference',
+                            sort: 'asc',
+                        },
+                        {
+                            label: 'Tva',
+                            field: 'tva',
+                            sort: 'asc',
+                        },
+                        {
+                            label: 'Prix',
+                            field: 'prix',
+                            sort: 'asc',
+                        },
+                        {
+                            label: 'Unite',
+                            field: 'unite',
+                            sort: 'asc',
+                        }
+                    ];
+
+                    let rows = [];
+                    const listeProduits = response.data;
+                    response.data.forEach(element => {
+                        const produits = {
+                            nom: element.nom,
+                            reference: element.reference,
+                            tva: element.tva,
+                            prix: element.prix,
+                            unite: element.unite,
+                            // quantite: element.quantite,
+                            clickEvent: () => {
+                                this.props.history.push("/produit/detail/" + element.id);
+                            },
+                        };
+                        rows.push(produits);
+                    });
+                    this.setState({
+                        listeProduits: listeProduits,
+                        data: { columns, rows },
+                        loaded: true,
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
                 });
-                this.setState({
-                    listeProduits: listeProduits,
-                    data: { columns, rows },
-                    loaded: true,
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        }
     }
 
     render() {
@@ -98,7 +82,7 @@ class ListeProduits extends React.Component {
             <MDBContainer>
                 <div>
                     <MDBCardHeader color="default-color">La Liste Des Produits</MDBCardHeader>
-                    <MDBCardTitle tag="h1">Société Nom: </MDBCardTitle>
+                    <MDBCardTitle tag="h1">Société Nom: {this.state.nomSociete} </MDBCardTitle>
                     <MDBDataTable
                         striped
                         bordered

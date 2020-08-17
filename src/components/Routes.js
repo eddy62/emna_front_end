@@ -25,12 +25,16 @@ import DetailsClient from "./clientFournisseur/detailsClientFounisseur/detailsCl
 //gestionBancaire
 import Bancaire from "./bancaire/index";
 import CreationOperation from "./bancaire/releve/details_releve/operation/creation_operation/creationOperation";
-import IndexOperation from "./bancaire/operation/index";
-import ListeOperations from "./bancaire/operation/listeOperations/listeOperations";
 import Releve from "./bancaire/releve/releve";
-import ListeReleves from "./bancaire/releve/historique_releves/liste_releves";
+import ListeReleves from "./bancaire/releve/historique_releves/liste_releves_archive";
 import DetailsReleve from "./bancaire/releve/details_releve/details_releve";
-import ReleveEnCours from "./bancaire/releve/details_releve/releve_en_cours";
+import DetailsReleveInvalide from "./bancaire/releve/details_releve/details_releve_invalide";
+import DetailsReleveNonArchive from "./bancaire/releve/details_releve/details_releve_non_archive";
+import CreationReleve from "./bancaire/releve/creation_releve/creation_releve";
+import DetailsOperation from "./bancaire/releve/details_releve/operation/details_operation/details_operation";
+import MenuReleveNon from "./bancaire/releve/historique_releves/menu_releve_non";
+import ListeRelevesInvalide from "./bancaire/releve/historique_releves/liste_releves_invalide";
+import ListeRelevesNonArchive from "./bancaire/releve/historique_releves/liste_releves_non_archive";
 
 // gestionUserRoutesImports
 import Users from "./users/Users";
@@ -64,9 +68,9 @@ export default class Routes extends Component {
         <PrivateRoute path="/menu/comptabilite" component={ComptabiliteMenu} />
         <PrivateRoute path="/menu/juridique" component={JuridiqueMenu} />
         {/* Gestion Social */}
-        <PrivateRoute path="/socialHome" component={AccueilSocial} />
+        <PrivateRoute path="/socialHome/:id" component={AccueilSocial} />
         <PrivateRoute path="/listEmployes/:id" component={ListEmployes} />
-        <PrivateRoute path="/detailEmploye" component={DetailEmploye} />
+        <PrivateRoute path="/detailEmploye/:id" component={DetailEmploye} />
         <PrivateRoute path="/newEmploye/:id" component={NewEmploye} />
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
         {/* Gestion des Contrats*/}
@@ -109,13 +113,31 @@ export default class Routes extends Component {
         {/* finGestionUserRoutes */}
         <PrivateRoute path="/bancaire" component={Bancaire} />
         <PrivateRoute path="/creationoperation" component={CreationOperation} />
-        <PrivateRoute path="/indexoperation" component={IndexOperation} />
-        <PrivateRoute path="/listeoperations" component={ListeOperations} />
         <PrivateRoute path="/menureleve" component={Releve} />
         <PrivateRoute path="/historiquereleve/:id" component={ListeReleves} />
         <PrivateRoute path="/detailsreleve/:id" component={DetailsReleve} />
-        <PrivateRoute path="/releveencours" component={ReleveEnCours} />
-
+        <PrivateRoute
+          path="/detailsreleveinvalide/:id"
+          component={DetailsReleveInvalide}
+        />
+        <PrivateRoute
+          path="/detailsrelevenonarchive/:id"
+          component={DetailsReleveNonArchive}
+        />
+        <PrivateRoute path="/creationreleve" component={CreationReleve} />
+        <PrivateRoute
+          path="/detailsoperation/:id"
+          component={DetailsOperation}
+        />
+        <PrivateRoute path="/menurelevenon" component={MenuReleveNon} />
+        <PrivateRoute
+          path="/releveinvalide/:id"
+          component={ListeRelevesInvalide}
+        />
+        <PrivateRoute
+          path="/relevenonarchive/:id"
+          component={ListeRelevesNonArchive}
+        />
         {/* gestionClientFournisseur */}
         <PrivateRoute
           path="/client-fournisseur"
@@ -143,7 +165,6 @@ export default class Routes extends Component {
         <PrivateRoute path="/produits" component={ListeProduits} />
         <PrivateRoute path="/produit/detail/:id" component={DetailsProduit} />
         <PrivateRoute path="/produit/creer" component={AddProduit} />
-
 
         {/* <Route component={NotFound} /> */}
         <PrivateRoute component={NotFound} />
