@@ -2,6 +2,7 @@ import React from "react";
 import "./style2.scss";
 import { Link } from "react-router-dom";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
+import UserService from "../../../shared/services/UserService";
 import {
   MDBCardTitle,
   MDBCardHeader,
@@ -27,7 +28,7 @@ class ListEmployes extends React.Component {
   componentDidMount() {
     const idSociete = this.props.match.params.id;
     console.log(idSociete);
-    AxiosCenter.getWrapperSociete(idSociete)
+    AxiosCenter.getSociete(idSociete)
       .then((response) => {
         const societe = response.data;
         console.log(societe);

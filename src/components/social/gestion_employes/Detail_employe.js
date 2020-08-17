@@ -17,7 +17,6 @@ class DetailEmploye extends React.Component {
     super(props);
     this.state = {
       employe: {},
-      isLogginActive: true,
     };
   }
 
@@ -40,6 +39,7 @@ class DetailEmploye extends React.Component {
     const title1 = "Information Employé";
     const employe = this.state.employe;
     const entreprise = employe.raisonSociale;
+    const idSociete = employe.idSociete;
     return (
       <div className="App">
         <div className="employes">

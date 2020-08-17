@@ -10,6 +10,7 @@ import {
   MDBModalHeader,
   MDBIcon,
   MDBModalFooter,
+  MDBRow,
 } from "mdbreact";
 
 class SupprimerEmploye extends Component {
@@ -21,7 +22,9 @@ class SupprimerEmploye extends Component {
     AxiosCenter.deleteWrapperEmploye(idEmploye)
       .then((response) => {
         console.log(response);
-        this.props.history.push("/listEmployes/" + idSociete);
+        this.setState({
+          modal: !this.state.modal,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -43,6 +46,7 @@ class ModalPage extends Component {
     employe: this.props.employe,
   };
   toggle = () => {
+    const idSociete = UserService.getSocietyId;
     this.setState({
       modal: !this.state.modal,
     });
@@ -66,29 +70,30 @@ class ModalPage extends Component {
           <MDBModalBody>
             <span>Voulez-vous supprimer l'Employé ?</span>
           </MDBModalBody>
-          <MDBModalFooter>
-            <MDBBtn
-              rounded
-              type="button"
-              circle="true"
-              size="sm"
-              color="teal accent-3"
-              onClick={this.toggle}
-            >
-              Annuler
-            </MDBBtn>
-            <div onClick={(e) => e.stopPropagation()}>
+          <MDBModalFooter between around>
+            <MDBRow>
               <MDBBtn
                 rounded
-                toggle={this.toggle}
-                color="teal accent-3"
-                onClick={this.props.confirme}
+                type="button"
                 circle="true"
                 size="sm"
+                color="teal accent-3"
+                onClick={this.toggle}
               >
-                Supprimer
+                Terminer
               </MDBBtn>
-            </div>
+              <div onClick={(e) => e.stopPropagation()}>
+                <MDBBtn
+                  rounded
+                  color="teal accent-3"
+                  onClick={this.props.confirme}
+                  circle="true"
+                  size="sm"
+                >
+                  Supprimer
+                </MDBBtn>
+              </div>
+            </MDBRow>
           </MDBModalFooter>
         </MDBModal>
       </MDBContainer>

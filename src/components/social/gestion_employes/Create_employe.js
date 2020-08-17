@@ -185,7 +185,7 @@ class NewEmploye extends React.Component {
                 telephonePortable: "",
                 fax: "",
                 societeId: 1,
-                raisonSociale: "JAKARTA SARL",
+                raisonSociale: "JAKARTA SARL", //TO DO recupère le nom de la société
                 dateEmbauche: "",
                 dateSortie: "",
                 typeContrat: "",
