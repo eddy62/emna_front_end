@@ -4,49 +4,24 @@ import {
   MDBCard,
   MDBCardBody,
   MDBCardTitle,
-  MDBCardText,
   MDBCardHeader,
   MDBBtn,
   MDBContainer,
   MDBRow,
   MDBCol,
 } from "mdbreact";
-import "./style.scss";
 import UserService from "../../shared/services/UserService";
-import AxiosCenter from "../../shared/services/AxiosCenter";
-import Loading from "./../../shared/component/Loading";
+const SelectToViewUser = () => {
 
-class HomeMenu extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loaded: false,
-    };
-  }
-  componentDidMount() {
-    this.setState({
-      loaded: true,
-    });
-  }
-  render() {
-    const title = "Bienvenue sur EMNA";
-    const title2 = "Comptabilité";
-    const title3 = "Juridique";
-    const title4 = "Social";
-    const title5 = "Interface Admin";
-    if (this.state.loaded) {
-      return (
+    return (
         <div className="App">
           <MDBContainer>
             <div>
               <MDBCardHeader color="default-color">
                 <MDBCardTitle>
-                  <h1>{title}</h1>
+                  <h1>Gestion Des Utilisateurs</h1>
                 </MDBCardTitle>
                 <br />
-                <MDBCardTitle>
-                  <h3>Accueil</h3>
-                </MDBCardTitle>
               </MDBCardHeader>
             </div>
             <div>
@@ -58,13 +33,13 @@ class HomeMenu extends React.Component {
                   <MDBCard>
                     <MDBCardBody>
                       <MDBCardTitle className="MDBCardTitle">
-                        {title2}
+                        <div>Comptables</div>
                       </MDBCardTitle>
                       <br />
 
                       <br />
                       <div className="boutton">
-                        <Link to="/menu/comptabilite">
+                        <Link to="/users/stvu/comptables">
                           <MDBBtn className="boutton" rounded size="sm">
                             Gerer
                           </MDBBtn>
@@ -78,13 +53,13 @@ class HomeMenu extends React.Component {
                   <MDBCard>
                     <MDBCardBody>
                       <MDBCardTitle className="MDBCardTitle">
-                        {title3}
+                       <div>Sociétés</div>
                       </MDBCardTitle>
                       <br />
 
                       <br />
                       <div className="boutton">
-                        <Link to="/menu/juridique">
+                        <Link to="/users/stvu/societe">
                           <MDBBtn className="boutton" rounded size="sm">
                             Gerer
                           </MDBBtn>
@@ -98,41 +73,35 @@ class HomeMenu extends React.Component {
                   <MDBCard>
                     <MDBCardBody>
                       <MDBCardTitle className="MDBCardTitle">
-                        {title4}
+                       <div>Admins</div>
                       </MDBCardTitle>
                       <br />
 
                       <br />
                       <div className="boutton">
-                        <MDBBtn
-                          className="boutton"
-                          rounded
-                          size="sm"
-                          onClick={() => {
-                            this.props.history.push("/socialHome/" + 1);
-                          }}
-                        >
-                          Gerer
-                        </MDBBtn>
+                        <Link to="/users/stvu/users">
+                          <MDBBtn className="boutton" rounded size="sm">
+                            Gerer
+                          </MDBBtn>
+                        </Link>
                       </div>
                     </MDBCardBody>
                   </MDBCard>
                 </MDBCol>
               </MDBRow>
               <br />
-              {UserService.getRole() === "ROLE_ADMIN" ? (
                 <MDBRow>
                   <MDBCol>
                     <MDBCard>
                       <MDBCardBody>
                         <MDBCardTitle className="MDBCardTitle">
-                          {title5}
+                        <div>Tous Les Utilisateurs</div>
                         </MDBCardTitle>
                         <br />
 
                         <br />
                         <div className="boutton">
-                          <Link to="/users/stvu">
+                          <Link to="/users/stvu/all">
                             <MDBBtn className="boutton" rounded size="sm">
                               Gerer
                             </MDBBtn>
@@ -142,14 +111,10 @@ class HomeMenu extends React.Component {
                     </MDBCard>
                   </MDBCol>
                 </MDBRow>
-              ) : null}
             </div>
           </MDBContainer>
         </div>
       );
-    } else {
-      return <Loading />;
-    }
   }
-}
-export default HomeMenu;
+
+export default SelectToViewUser;
