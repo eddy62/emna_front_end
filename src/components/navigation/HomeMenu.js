@@ -103,11 +103,16 @@ class HomeMenu extends React.Component {
 
                       <br />
                       <div className="boutton">
-                        <Link to="/socialHome">
-                          <MDBBtn className="boutton" rounded size="sm">
-                            Gerer
-                          </MDBBtn>
-                        </Link>
+                        <MDBBtn
+                          className="boutton"
+                          rounded
+                          size="sm"
+                          onClick={() => {
+                            this.props.history.push("/socialHome/" + 1);
+                          }}
+                        >
+                          Gerer
+                        </MDBBtn>
                       </div>
                     </MDBCardBody>
                   </MDBCard>

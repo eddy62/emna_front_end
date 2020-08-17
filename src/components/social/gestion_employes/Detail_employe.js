@@ -27,12 +27,27 @@ class DetailEmploye extends React.Component {
       .then((response) => {
         const employe = response.data;
         console.log(employe);
-        this.setState({ employe: response.data });
+        this.setState({ employe: employe });
       })
       .catch((error) => {
         console.log(error);
       });
   }
+
+  delete = () => {
+    const idEmploye = this.state.employe.id;
+    console.log(idEmploye);
+    const idSociete = this.state.employe.societeId;
+    console.log(idSociete);
+    AxiosCenter.deleteWrapperEmploye(idEmploye)
+      .then((response) => {
+        console.log(response);
+        this.props.history.push("/listEmployes/" + idSociete);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   render() {
     const title = "Gestion Social";
@@ -116,7 +131,7 @@ class DetailEmploye extends React.Component {
                       </p>
                       <p className="elt">
                         <label className="gras">Enfants à charge :</label>
-                        &nbsp;{employe.nombreEnfants}
+                        &nbsp;{employe.enfantsACharge}
                       </p>
                     </div>
                   </MDBCard>
@@ -233,7 +248,13 @@ class DetailEmploye extends React.Component {
               Mise à jour
             </MDBBtn>
 
-            <MDBBtn color="default" rounded size="sm" color="teal accent-3">
+            <MDBBtn
+              color="default"
+              rounded
+              size="sm"
+              color="teal accent-3"
+              onClick={this.delete()}
+            >
               Supprimer
             </MDBBtn>
 

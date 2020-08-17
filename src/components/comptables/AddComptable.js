@@ -33,6 +33,7 @@ const AddComptable = () => {
         nomRue: "",
         ville: "",
         boitePostale: "",
+        pays: "",
 
 
         //informations professionnel
@@ -75,6 +76,7 @@ const AddComptable = () => {
         codePostal,
         nomRue,
         ville,
+        pays,
 
         //informations professionnel
         emailPro,
@@ -133,6 +135,7 @@ const AddComptable = () => {
     const optionsLangue = [
         { value: 'Fr', label: 'Français' },
         { value: 'An', label: 'Anglais' },
+        { value: 'ar-ly', label: 'العربية' }
     ];
 
 
@@ -267,7 +270,10 @@ const AddComptable = () => {
                             <label for="inputVille"><span class="font-weight-bold"> Ville</span></label>
                             <input type="text" className="form-control" pattern="[A-Za-zàâéêèìôùûç]{2,30}" value={ville} onChange={e => onInputChange(e)} name="ville" id="ville" required></input>
                         </div>
-
+                        <div className="form-group col-md-4">
+                            <label for="inputPays"><span class="font-weight-bold">Pays</span></label>
+                            <input type="text" className="form-control" value={pays} onChange={e => onInputChange(e)} name="pays" id="pays" required></input>
+                        </div>
                         <div className="form-group col-md-4">
                             <label for="inputCodePostal"><span class="font-weight-bold"> Code postal </span></label>
                             <input type="text" className="form-control" pattern="[0-9]{5,6}" value={codePostal} onChange={e => onInputChange(e)} name="codePostal" id="codePostal" required></input>

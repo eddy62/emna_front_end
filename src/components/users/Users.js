@@ -118,10 +118,10 @@ const Users = () => {
                                     <td>{user.authorities[0]}</td>
                                     <td>
                                         <Link class="btn btn-primary mr-2 btn-md center-block" to={(user.authorities[0] + "").trim() === "ROLE_ACCOUNTANT".trim() ? `/users/view/comptable/${user.id}` :
-                                            (user.authorities[0] + "").trim() === "ROLE_SOCIETE".trim() ? `/users/view/societe/${user.id}`
+                                            (user.authorities[0] + "").trim() === "ROLE_SOCIETY".trim() ? `/users/view/societe/${user.id}`
                                                 : `/users/view/${user.id}`} > Détails</Link>
                                         <Link class="btn btn-outline-primary mr-2 btn-md center-block" to={(user.authorities[0] + "").trim() === "ROLE_ACCOUNTANT".trim() ? `/users/edit/comptable/${user.id}`
-                                            : (user.authorities[0] + "").trim() === "ROLE_SOCIETE".trim() ? `/users/edit/societe/${user.id}`
+                                            : (user.authorities[0] + "").trim() === "ROLE_SOCIETY".trim() ? `/users/edit/societe/${user.id}`
                                                 : `/users/edit/${user.id}`} >Modifier</Link>
                                         <Link class="btn btn-danger  btn-md center-block" onClick={() => handleDeleteUser(user.login)} >Supprimer</Link>
 

@@ -44,7 +44,7 @@ class AccueilSocial extends React.Component {
     const title3 = "Gestion des Variables de Paie";
     const title4 = "Gestion des Fiches de Paie";
     const title5 = "Déclaration Embauche";
-    const entreprise = "JAKARTA SARL";
+    const entreprise = this.state.societe.raisonSociale;
 
     return (
       <div className="App">
@@ -79,7 +79,9 @@ class AccueilSocial extends React.Component {
                             size="sm"
                             color="teal accent-3"
                             onClick={() => {
-                              this.props.history.push("/listEmployes/" + 1);
+                              this.props.history.push(
+                                "/listEmployes/" + this.state.societe.id
+                              );
                             }}
                           >
                             Gerer
