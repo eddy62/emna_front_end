@@ -22,7 +22,6 @@ class AccueilSocial extends React.Component {
       isLogginActive: true,
     };
   }
-
   componentDidMount() {
     const idSociete = this.props.match.params.id;
     console.log(idSociete);

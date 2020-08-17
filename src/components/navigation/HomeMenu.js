@@ -109,7 +109,9 @@ class HomeMenu extends React.Component {
                           rounded
                           size="sm"
                           onClick={() => {
-                            this.props.history.push("/socialHome/" + 1);
+                            this.props.history.push(
+                              "/socialHome/" + UserService.getSocietyId()
+                            );
                           }}
                         >
                           Gerer

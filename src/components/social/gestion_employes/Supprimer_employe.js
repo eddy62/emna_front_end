@@ -1,20 +1,27 @@
 import React, { Component } from "react";
+import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
+import UserService from "../../../shared/services/UserService";
 import {
   MDBContainer,
   MDBBtn,
   MDBModal,
   MDBModalBody,
   MDBModalHeader,
+  MDBIcon,
   MDBModalFooter,
 } from "mdbreact";
 
-class SupprimerClient extends Component {
-  supprimerClient = () => {
-    AxiosCenter.deleteClientFournisseur(this.props.client.id)
+class SupprimerEmploye extends Component {
+  delete = () => {
+    const idEmploye = this.props.employe.id;
+    console.log(idEmploye);
+    const idSociete = UserService.getSocietyId;
+    console.log(idSociete);
+    AxiosCenter.deleteWrapperEmploye(idEmploye)
       .then((response) => {
         console.log(response);
-        this.props.history.push("/clientFournisseur/liste");
+        this.props.history.push("/listEmployes/" + idSociete);
       })
       .catch((error) => {
         console.log(error);
@@ -24,7 +31,7 @@ class SupprimerClient extends Component {
   render() {
     return (
       <div>
-        <ModalPage suppressionConfirme={this.supprimerClient} />
+        <ModalPage confirme={this.delete} />
       </div>
     );
   }
@@ -33,7 +40,7 @@ class SupprimerClient extends Component {
 class ModalPage extends Component {
   state = {
     modal: false,
-    client: this.props.client,
+    employe: this.props.employe,
   };
   toggle = () => {
     this.setState({
@@ -44,7 +51,7 @@ class ModalPage extends Component {
     return (
       <MDBContainer>
         <MDBBtn
-          color="secondary"
+          color="teal accent-3"
           rounded
           circle="true"
           size="sm"
@@ -54,12 +61,10 @@ class ModalPage extends Component {
         </MDBBtn>
         <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
           <MDBModalHeader toggle={this.toggle}>
-            Confirmation de suppression{" "}
+            <MDBIcon icon="exclamation-triangle" color="red" />
           </MDBModalHeader>
           <MDBModalBody>
-            <span>
-              Etez-vous certain de vouloir supprimer le client fournisseur?{" "}
-            </span>
+            <span>Voulez-vous supprimer l'Employé ?</span>
           </MDBModalBody>
           <MDBModalFooter>
             <MDBBtn
@@ -67,6 +72,7 @@ class ModalPage extends Component {
               type="button"
               circle="true"
               size="sm"
+              color="teal accent-3"
               onClick={this.toggle}
             >
               Annuler
@@ -75,8 +81,8 @@ class ModalPage extends Component {
               <MDBBtn
                 rounded
                 toggle={this.toggle}
-                color="secondary"
-                onClick={this.props.suppressionConfirme}
+                color="teal accent-3"
+                onClick={this.props.confirme}
                 circle="true"
                 size="sm"
               >
@@ -89,4 +95,4 @@ class ModalPage extends Component {
     );
   }
 }
-export default SupprimerClient;
+export default SupprimerEmploye;

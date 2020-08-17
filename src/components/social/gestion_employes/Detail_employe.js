@@ -1,6 +1,7 @@
 import React from "react";
 import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
+import SupprimerEmploye from "./Supprimer_employe";
 import {
   MDBCardTitle,
   MDBCardHeader,
@@ -33,21 +34,6 @@ class DetailEmploye extends React.Component {
         console.log(error);
       });
   }
-
-  delete = () => {
-    const idEmploye = this.state.employe.id;
-    console.log(idEmploye);
-    const idSociete = this.state.employe.societeId;
-    console.log(idSociete);
-    AxiosCenter.deleteWrapperEmploye(idEmploye)
-      .then((response) => {
-        console.log(response);
-        this.props.history.push("/listEmployes/" + idSociete);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   render() {
     const title = "Gestion Social";
@@ -236,39 +222,31 @@ class DetailEmploye extends React.Component {
             <div>
               <hr></hr>
             </div>
-            <MDBBtn
-              color="default"
-              rounded
-              size="sm"
-              color="teal accent-3"
-              onClick={() => {
-                this.props.history.push("/updateEmploye/" + employe.id);
-              }}
-            >
-              Mise à jour
-            </MDBBtn>
+            <MDBRow around between>
+              <MDBBtn
+                rounded
+                size="sm"
+                color="teal accent-3"
+                onClick={() => {
+                  this.props.history.push("/updateEmploye/" + employe.id);
+                }}
+              >
+                Mise à jour
+              </MDBBtn>
 
-            <MDBBtn
-              color="default"
-              rounded
-              size="sm"
-              color="teal accent-3"
-              onClick={this.delete()}
-            >
-              Supprimer
-            </MDBBtn>
+              <SupprimerEmploye employe={employe} />
 
-            <MDBBtn
-              color="default"
-              rounded
-              size="sm"
-              color="teal accent-3"
-              onClick={() => {
-                this.props.history.push("/listEmployes/" + employe.societeId);
-              }}
-            >
-              Retour
-            </MDBBtn>
+              <MDBBtn
+                rounded
+                size="sm"
+                color="teal accent-3"
+                onClick={() => {
+                  this.props.history.push("/listEmployes/" + employe.societeId);
+                }}
+              >
+                Retour
+              </MDBBtn>
+            </MDBRow>
           </MDBContainer>
         </div>
       </div>

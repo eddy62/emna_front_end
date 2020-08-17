@@ -11,6 +11,7 @@ import {
   MDBTableBody,
   MDBTableHead,
   MDBIcon,
+  MDBRow,
 } from "mdbreact";
 
 class ListEmployes extends React.Component {
@@ -141,30 +142,32 @@ class ListEmployes extends React.Component {
               <div>
                 <hr></hr>
               </div>
-              <MDBBtn
-                color="teal accent-3"
-                rounded
-                size="sm"
-                onClick={() => {
-                  this.props.history.push(
-                    "/newEmploye/" + this.state.societe.id
-                  );
-                }}
-              >
-                Enregistrer un Employe
-              </MDBBtn>
-              <MDBBtn
-                color="teal accent-3"
-                rounded
-                size="sm"
-                onClick={() => {
-                  this.props.history.push(
-                    "/socialHome/" + this.state.societe.id
-                  );
-                }}
-              >
-                Retour
-              </MDBBtn>
+              <MDBRow around between>
+                <MDBBtn
+                  color="teal accent-3"
+                  rounded
+                  size="sm"
+                  onClick={() => {
+                    this.props.history.push(
+                      "/newEmploye/" + this.state.societe.id
+                    );
+                  }}
+                >
+                  Enregistrer un Employe
+                </MDBBtn>
+                <MDBBtn
+                  color="teal accent-3"
+                  rounded
+                  size="sm"
+                  onClick={() => {
+                    this.props.history.push(
+                      "/socialHome/" + this.state.societe.id
+                    );
+                  }}
+                >
+                  Retour
+                </MDBBtn>
+              </MDBRow>
             </MDBContainer>
           </div>
         </div>

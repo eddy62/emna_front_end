@@ -120,7 +120,7 @@ const AxiosCenter = {
   deleteWrapperEmploye(id) {
     return ApiBackEnd({
       method: "delete",
-      url: `/wrapperemployes/society/${id}`,
+      url: `/wrapperemployes/${id}`,
     });
   },
 
@@ -299,13 +299,13 @@ const AxiosCenter = {
     });
   },
 
-  //get infoEntreprise by id 
+  //get infoEntreprise by id
   getInfoEntrepriseById(id) {
     return ApiBackEnd({
       method: "get",
       url: `/info-entreprises/${id}`,
     });
-  }
+  },
 };
 
 export default AxiosCenter;
