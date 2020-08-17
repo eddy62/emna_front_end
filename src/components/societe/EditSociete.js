@@ -530,7 +530,7 @@ const EditSociete = () => {
     }
    
     const loadUser= () => {
-        const comptableId = getSocieteID(id).then( async (res) => {
+        const societeId = getSocieteID(id).then( async (res) => {
             const result = await AxiosCenter.getSociete(res.id)
             setUser(result.data)
         });   
@@ -541,7 +541,7 @@ const EditSociete = () => {
         try {
             e.preventDefault();
             console.log(user)
-            await AxiosCenter.editComptable(user);
+            await AxiosCenter.editSociete(user);
             history.push("/users")
         } catch (err) {
             console.log(err)

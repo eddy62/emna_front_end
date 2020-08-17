@@ -35,25 +35,16 @@ const AddUser = () => {
 
     }
 
-    let emailTaken = "";
-    let loginTaken = "";
 
     const onSubmit = async (e) => {
-      
+
+        try {
             e.preventDefault();
-            await AxiosCenter.addUser(user).catch(function (error) {
-                if (error.response) {
-                    if(error.response.data.title === "Email is already in use!"){
-                       console.log("Email est déja pris!")
-                    }
-                    if(error.response.data.title === "Login name already used!"){
-                       console.log("Login est déja pris!")
-                    }
-                }else{
-                    history.push("/users")
-                }
-            })
-        
+            await AxiosCenter.addUser(user);
+            history.push("/users")
+        } catch (error) {
+            console.log("Error is : ",error.response.data.title)
+        }  
     }
 
    
