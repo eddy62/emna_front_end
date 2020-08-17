@@ -331,13 +331,14 @@ const AxiosCenter = {
     });
   },
 
-  editComptable(values) {
+  editSociete(values) {
     return ApiBackEnd({
       method: "put",
-      url: "/wrappercomptable/edit",
+      url: "/wrappersociete/edit",
       data: values,
     });
   }
+  //Fin gestion societe
 
 };
 
@@ -345,7 +346,7 @@ export default AxiosCenter;
 
 
 
-//Fin gestion societe
+
 /*
 
 AxiosCenter.getCurrentUser().then(response => {
