@@ -1,26 +1,29 @@
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
+
 const UserService = {
   setRole(role) {
-    localStorage.setItem("userRole", role);
+    cookies.set("userRole", role, { path: "/" });
   },
 
   getRole() {
-    return localStorage.getItem("userRole");
+    return cookies.get("userRole");
   },
 
   setUserId(id) {
-    localStorage.setItem("userId", id);
+    cookies.set("userId", id, { path: "/" });
   },
 
   getUserId() {
-    return localStorage.getItem("userId");
+    return cookies.get("userId");
   },
 
   setSocietyId(id) {
-    localStorage.setItem("societyId", id);
+    cookies.set("societyId", id, { path: "/" });
   },
 
   getSocietyId() {
-    return localStorage.getItem("societyId");
+    return cookies.get("societyId");
   },
 };
 

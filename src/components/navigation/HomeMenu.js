@@ -13,7 +13,6 @@ import {
 } from "mdbreact";
 import "./style.scss";
 import UserService from "../../shared/services/UserService";
-import AxiosCenter from "../../shared/services/AxiosCenter";
 import Loading from "./../../shared/component/Loading";
 
 class HomeMenu extends React.Component {
