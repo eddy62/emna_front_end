@@ -35,7 +35,7 @@ const SelectToAddUser = () => {
                             <div className="card-body">
                                 <h5 className="card-title">Utilisateur Société</h5>
                                 <p className="card-text">En sachant qu'un Utilisateur <strong>SOCIÉTÉ</strong> ne peut créer ni des comptables ni des sociétés.</p>
-                                <Link className="btn btn-primary" to="/users/add/comptable">Créez Société</Link>
+                                <Link className="btn btn-primary" to="/users/add/societe">Créez Société</Link>
 
                             </div>
                         </div>

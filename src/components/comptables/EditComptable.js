@@ -35,6 +35,7 @@ const EditComptable = () => {
         nomRue: "",
         ville: "",
         boitePostale: "",
+        pays: "",
 
         //informations professionnel
         emailPro: "",
@@ -67,6 +68,7 @@ const EditComptable = () => {
         codePostal,
         nomRue,
         ville,
+        pays,
 
 
         //informations professionnel
@@ -124,6 +126,7 @@ const EditComptable = () => {
     const optionsLangue = [
         { value: 'Fr', label: 'Français' },
         { value: 'An', label: 'Anglais' },
+        { value: 'ar-ly', label: 'العربية' }
       ];
 
     
@@ -173,7 +176,7 @@ const EditComptable = () => {
 
     //methode to find comptable by user before calling! Otherwise it'll show only the user.
     const getComptableID = async (id) => {
-        const result =  await AxiosCenter.getComptableId(id)
+        const result =  await AxiosCenter.getComptableByUser(id)
         return result.data;
     }
    
@@ -297,6 +300,11 @@ const EditComptable = () => {
                         </div>
 
                         <div className="form-group col-md-4">
+                            <label for="inputPays"><span class="font-weight-bold"> Pays</span></label>
+                            <input type="text" className="form-control" pattern="[A-Za-zàâéêèìôùûç]{2,30}" value={pays} onChange={e => onInputChange(e)} name="pays" id="pays" required></input>
+                        </div>
+                        
+                        <div className="form-group col-md-4">
                             <label for="inputCodePostal"><span class="font-weight-bold"> Code postal </span></label>
                             <input type="text" className="form-control" pattern="[0-9]{5,6}" value={codePostal} onChange={e => onInputChange(e)} name="codePostal" id="codePostal" required></input>
                         </div>
@@ -365,7 +373,7 @@ const EditComptable = () => {
                         </div>
                     </div>
 
-                    <Link className="btn btn-outline-danger" to="/users/stau">Annulez</Link>
+                    <Link className="btn btn-outline-danger" to="/users">Annulez</Link>
                     <button type="submit" href="/users" className="btn btn-primary"> Modifier </button>
 
                 </div>

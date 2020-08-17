@@ -209,7 +209,7 @@ const AxiosCenter = {
   addComptable(values) {
     return ApiBackEnd({
       method: "post",
-      url: "/comptables/add",
+      url: "/wrappercomptable/add",
       data: values,
     });
   },
@@ -217,53 +217,86 @@ const AxiosCenter = {
   getComptable(values) {
     return ApiBackEnd({
       method: "get",
-      url: "/comptables/" + values,
+      url: "/wrappercomptable/" + values,
     });
   },
 
-  getComptableId(values) {
+  getComptableByUserId(values) {
     return ApiBackEnd({
       method: "get",
-      url: "/comptables/refuser/" + values,
+      url: "/comptables/user/" + values,
     });
   },
 
   editComptable(values) {
     return ApiBackEnd({
       method: "put",
-      url: "/comptables/edit",
+      url: "/wrappercomptable/edit",
       data: values,
     });
   },
   //Fin Gestion Comptable
 
-  //Fin Gestion Utilisatuer, Comptable et Société.
 
-  //Gestion Produits
-  getProduit() {
-    return ApiBackEnd({
-      method: "get",
-      url: "/produits",
-    });
-  },
-  getProduitById(id) {
-    return ApiBackEnd({
-      method: "get",
-      url: `/produits/${id}`,
-    });
-  },
-
-  createProduit(values) {
+  //Gestion societe
+  addSociete(values) {
     return ApiBackEnd({
       method: "post",
-      url: "/produits",
+      url: "/wrappersociete/add",
       data: values,
     });
   },
-  // fin getion produits
-};
 
-export default AxiosCenter;
+  getSociete(values) {
+    return ApiBackEnd({
+      method: "get",
+      url: "/wrappersociete/" + values,
+    });
+  },
+
+  getSocietyByUserId(values) {
+    return ApiBackEnd({
+      method: "get",
+      url: "/societes/user/" + values,
+    });
+  },
+
+  editComptable(values) {
+    return ApiBackEnd({
+      method: "put",
+      url: "/wrappercomptable/edit",
+      data: values,
+    });
+  },
+    //Fin gestion societe
+
+    //Fin Gestion Utilisatuer, Comptable et Société.
+
+    //Gestion Produits
+    getProduit() {
+      return ApiBackEnd({
+        method: "get",
+        url: "/produits",
+      });
+    },
+    getProduitById(id) {
+      return ApiBackEnd({
+        method: "get",
+        url: `/produits/${id}`,
+      });
+    },
+
+    createProduit(values) {
+      return ApiBackEnd({
+        method: "post",
+        url: "/produits",
+        data: values,
+      });
+    },
+    // fin getion produits
+  };
+
+  export default AxiosCenter;
 
 /*
 
