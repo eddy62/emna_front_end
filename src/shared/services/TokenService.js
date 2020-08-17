@@ -1,18 +1,21 @@
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 const TokenService = {
   connexion(token) {
-    localStorage.setItem("authToken", token);
+    // localStorage.setItem("authToken", token);
+    cookies.set("authToken", token, { path: "/" });
   },
 
   getToken() {
-    return localStorage.getItem("authToken");
+    return cookies.get("authToken");
   },
 
   deconnexion() {
-    localStorage.removeItem("authToken");
+    cookies.remove("authToken");
   },
 
   isAuthenticated() {
-    return localStorage.getItem("authToken") ? true : false;
+    return cookies.get("authToken") ? true : false;
   },
 };
 
