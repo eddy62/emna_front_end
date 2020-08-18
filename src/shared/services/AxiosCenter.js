@@ -120,7 +120,7 @@ const AxiosCenter = {
   deleteWrapperEmploye(id) {
     return ApiBackEnd({
       method: "delete",
-      url: `/wrapperemployes/society/${id}`,
+      url: `/wrapperemployes/${id}`,
     });
   },
 
@@ -267,7 +267,6 @@ const AxiosCenter = {
   },
   //Fin Gestion Comptable
 
-
   //Gestion Produits
   getProduit(id) {
     return ApiBackEnd({
@@ -275,38 +274,25 @@ const AxiosCenter = {
       url: `/produits/societe/${id}`,
     });
   },
-
-  getSocietyByUserId(values) {
+  getProduitById(id) {
     return ApiBackEnd({
       method: "get",
-      url: "/societes/user/" + values,
+      url: `/produits/${id}`,
     });
   },
   createProduit(values) {
     return ApiBackEnd({
-      method: "put",
-      url: "/wrappercomptable/edit",
+      method: "post",
+      url: "/produits",
       data: values,
     });
   },
-  // fin getion produits
-
-  // get societe by id
-  getSocieteById(id) {
+  deleteProduit(id) {
     return ApiBackEnd({
-      method: "get",
-      url: `/societes/${id}`,
+      method: "delete",
+      url: `/produits/${id}`,
     });
   },
-
-  //get infoEntreprise by id 
-  getInfoEntrepriseById(id) {
-    return ApiBackEnd({
-      method: "get",
-      url: `/info-entreprises/${id}`,
-    });
-  },
-
 
   //Gestion societe
   addSociete(values) {
@@ -337,15 +323,11 @@ const AxiosCenter = {
       url: "/wrappersociete/edit",
       data: values,
     });
-  }
+  },
   //Fin gestion societe
-
 };
 
 export default AxiosCenter;
-
-
-
 
 /*
 

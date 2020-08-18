@@ -140,7 +140,7 @@ class NewEmploye extends React.Component {
     return (
       <div className="App">
         <div className="newEmp">
-          <MDBContainer>
+          <MDBContainer responsive>
             <div>
               <MDBCardHeader color="default-color">
                 <MDBCardTitle tag="h1">{title}</MDBCardTitle>
@@ -185,7 +185,7 @@ class NewEmploye extends React.Component {
                 telephonePortable: "",
                 fax: "",
                 societeId: 1,
-                raisonSociale: "JAKARTA SARL",
+                raisonSociale: "JAKARTA SARL", //TO DO recupère le nom de la société
                 dateEmbauche: "",
                 dateSortie: "",
                 typeContrat: "",
@@ -703,38 +703,40 @@ class NewEmploye extends React.Component {
                     <hr></hr>
                   </div>
                   <div>
-                    <MDBBtn
-                      color="teal accent-3"
-                      rounded
-                      size="sm"
-                      type="submit"
-                    >
-                      Enregistrer
-                    </MDBBtn>
+                    <MDBRow around between>
+                      <MDBBtn
+                        color="teal accent-3"
+                        rounded
+                        size="sm"
+                        type="submit"
+                      >
+                        Enregistrer
+                      </MDBBtn>
 
-                    <MDBBtn
-                      color="teal accent-3"
-                      rounded
-                      size="sm"
-                      type="reset"
-                      onClick={handleReset}
-                      disabled={!dirty || isSubmitting}
-                    >
-                      RESET
-                    </MDBBtn>
+                      <MDBBtn
+                        color="teal accent-3"
+                        rounded
+                        size="sm"
+                        type="reset"
+                        onClick={handleReset}
+                        disabled={!dirty || isSubmitting}
+                      >
+                        INITIALISER
+                      </MDBBtn>
 
-                    <MDBBtn
-                      color="teal accent-3"
-                      rounded
-                      size="sm"
-                      onClick={() => {
-                        this.props.history.push(
-                          "/listEmployes/" + this.state.societe.id
-                        );
-                      }}
-                    >
-                      Retour
-                    </MDBBtn>
+                      <MDBBtn
+                        color="teal accent-3"
+                        rounded
+                        size="sm"
+                        onClick={() => {
+                          this.props.history.push(
+                            "/listEmployes/" + this.state.societe.id
+                          );
+                        }}
+                      >
+                        ANNULER
+                      </MDBBtn>
+                    </MDBRow>
                   </div>
                 </Form>
               )}

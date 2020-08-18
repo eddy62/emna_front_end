@@ -40,62 +40,60 @@ class Details extends React.Component {
     render() {
 
         return (
-            <div className="">
-                <div className="">
-                    <MDBContainer>
-                        <div>
-                            <MDBCardHeader color="default-color">
-                                <MDBCardTitle tag="h3">Gestion Client Fournisseur</MDBCardTitle>
-                            </MDBCardHeader>
-                        </div>
-                        <div>
-                            <hr></hr>
-                        </div>
-                        <MDBCardHeader tag="h5" color="teal lighten-5" text="black">
-                            Details: Du Client   {this.state.client.nom}
-                        </MDBCardHeader>
 
-                        <div>
-                            <MDBRow>
-                                <MDBCardBody>
-                                    <MDBCard>
-                                        <br />
-                                        <div color="teal lighten-5" >
-
-                                            <dl>
-                                                <dt>Raison sociale</dt>
-                                                <dd>{this.state.client.nom}.</dd>
-                                                <dt>SIREN</dt>
-                                                <dd>{this.state.client.siren}.</dd>
-                                                <dt>Email</dt>
-                                                <dd>{this.state.client.email}.</dd>
-                                                <dt>Téléphone</dt>
-                                                <dd>{this.state.client.telephone}.</dd>
-                                                <dt>Adresse</dt>
-                                                <dd>{this.state.client.numeroRue + " "}{this.state.client.nomRue + "  "}{this.state.client.codePostal + " "}{this.state.client.ville}.</dd>
-                                            </dl>
-                                        </div>
-                                    </MDBCard>
-                                </MDBCardBody>
-                            </MDBRow>
-                        </div>
-
-                        <Link to={`/clientFournisseur/modifier/${this.state.client.id}`} >
-                            <MDBBtn rounded color="primary">
-                                <span className="d-none d-md-inline">
-                                    Modifier </span>
-                            </MDBBtn>
-                        </Link>
-
-
-                        <Link to="/client-fournisseur">
-                            <MDBBtn rounded color="teal accent-3">
-                                Retour
-                      </MDBBtn>
-                        </Link>
-                    </MDBContainer>
+            <MDBContainer>
+                <div>
+                    <MDBCardHeader color="default-color">
+                        <MDBCardTitle tag="h3">Gestion Client Fournisseur</MDBCardTitle>
+                    </MDBCardHeader>
                 </div>
-            </div>
+                <div>
+                    <hr></hr>
+                </div>
+                <MDBCardHeader tag="h5" color="teal lighten-5" text="black">
+                    Details: Du Client   {this.state.client.nom}
+                </MDBCardHeader>
+
+                <div>
+                    <MDBRow>
+                        <MDBCardBody>
+                            <MDBCard>
+                                <br />
+                                <div color="teal lighten-5" >
+
+                                    <dl>
+                                        <dt>Raison sociale</dt>
+                                        <dd>{this.state.client.nom}.</dd>
+                                        <dt>SIREN</dt>
+                                        <dd>{this.state.client.siren}.</dd>
+                                        <dt>Email</dt>
+                                        <dd>{this.state.client.email}.</dd>
+                                        <dt>Téléphone</dt>
+                                        <dd>{this.state.client.telephone}.</dd>
+                                        <dt>Adresse</dt>
+                                        <dd>{this.state.client.numeroRue + " "}{this.state.client.nomRue + "  "}{this.state.client.codePostal + " "}{this.state.client.ville}.</dd>
+                                    </dl>
+                                </div>
+                            </MDBCard>
+                        </MDBCardBody>
+                    </MDBRow>
+                </div>
+
+                <Link to={`/clientFournisseur/modifier/${this.state.client.id}`} >
+                    <MDBBtn rounded color="primary">
+                        <span className="d-none d-md-inline">
+                            Modifier </span>
+                    </MDBBtn>
+                </Link>
+
+
+                <Link to="/client-fournisseur">
+                    <MDBBtn rounded color="teal accent-3">
+                        Retour
+                      </MDBBtn>
+                </Link>
+            </MDBContainer>
+
         );
     }
 }

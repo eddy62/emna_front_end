@@ -138,7 +138,7 @@ class AddClientFournisseur extends React.Component {
                 <ErrorMessage name="pays" component={ComposantErreur} />
               </div>
 
-              <div className="container-fluid  justify-content-center ">
+              <div className="row d-flex justify-content-center ">
                 <MDBBtn rounded type="submit" color="primary">
                   Sauvegarder
                 </MDBBtn>

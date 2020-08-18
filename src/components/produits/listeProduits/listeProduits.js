@@ -82,7 +82,7 @@ class ListeProduits extends React.Component {
             <MDBContainer>
                 <div>
                     <MDBCardHeader color="default-color">La Liste Des Produits</MDBCardHeader>
-                    <MDBCardTitle tag="h1">Société Nom: {this.state.nomSociete} </MDBCardTitle>
+                    <MDBCardTitle tag="h1"> {this.state.nomSociete} </MDBCardTitle>
                     <MDBDataTable
                         striped
                         bordered
@@ -90,7 +90,7 @@ class ListeProduits extends React.Component {
                         data={this.state.data}
                     />
                 </div>
-                <div className="justify-content-center align-items-center">
+                <div className="row d-flex justify-content-center">
                     <Link to="/client-fournisseur">
                         <MDBBtn rounded color="teal accent-3">
                             Retour

@@ -8,6 +8,7 @@ import ListEmployes from "./social/gestion_employes/List_employes";
 import DetailEmploye from "./social/gestion_employes/Detail_employe";
 import NewEmploye from "./social/gestion_employes/Create_employe";
 import UpdateEmploye from "./social/gestion_employes/Update_employe";
+import SupprimerEmploye from "./social/gestion_employes/Supprimer_employe";
 
 import ListeContrat from "./contrat/listeContrat/ListeContrat";
 import Contrat from "./contrat/Contrat";
@@ -42,13 +43,18 @@ import NotFound from "./pages/NotFound";
 import EditUser from "./users/EditUser";
 import AddUser from "./users/AddUser";
 import ViewUser from "./users/ViewUser";
+import ListUser from "./users/ListUser";
+import ListAllUsers from "./users/allUsers/ListAllUsers";
 import AddComptable from "./comptables/AddComptable";
 import ViewComptable from "./comptables/ViewComptable";
 import EditComptable from "./comptables/EditComptable";
+import ListComptable from "./comptables/ListComptable";
 import SelectToAddUser from "./pages/SelectToAddUser";
+import selectToViewUser from "./pages/SelectToViewUser";
 import AddSociete from "./societe/AddSociete";
 import ViewSociete from "./societe/ViewSociete";
 import EditSociete from "./societe/EditSociete";
+import ListSociete from "./societe/ListSociete";
 import HomeMenu from "./navigation/HomeMenu";
 import ComptabiliteMenu from "./navigation/ComptabiliteMenu";
 import JuridiqueMenu from "./navigation/JuridiqueMenu";
@@ -74,6 +80,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/detailEmploye/:id" component={DetailEmploye} />
         <PrivateRoute path="/newEmploye/:id" component={NewEmploye} />
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
+        <PrivateRoute path="/deleteEmploye/:id" component={SupprimerEmploye} />
         {/* Gestion des Contrats*/}
         <PrivateRoute path="/listcontrat" component={ListeContrat} />
         <PrivateRoute path="/contrat" component={Contrat} />
@@ -84,6 +91,11 @@ export default class Routes extends Component {
         <PrivateRoute exact path="/users/add" component={AddUser} />
         <PrivateRoute exact path="/users/edit/:id" component={EditUser} />
         <PrivateRoute exact path="/users/view/:id" component={ViewUser} />
+        <PrivateRoute exact path="/users/stvu/users" component={ListUser} />
+        <PrivateRoute exact path="/users/stvu/all" component={ListAllUsers} />
+        <PrivateRoute exact path="/users/stvu" component={selectToViewUser} /> {/*stvu stands for : Select to view user*/}
+        <PrivateRoute exact path="/users/stvu/comptables" component={ListComptable} /> 
+        <PrivateRoute exact path="/users/stvu/societe" component={ListSociete} /> 
         <PrivateRoute
           exact
           path="/users/add/comptable"
@@ -110,7 +122,7 @@ export default class Routes extends Component {
           path="/users/edit/societe/:id"
           component={EditSociete}
         />
-        <PrivateRoute exact path="/users/stau" component={SelectToAddUser} />
+        <PrivateRoute exact path="/users/stau" component={SelectToAddUser} /> {/*stau stands for : Select to add user*/}
         {/* finGestionUserRoutes */}
         <PrivateRoute path="/bancaire" component={Bancaire} />
         <PrivateRoute path="/creationoperation" component={CreationOperation} />

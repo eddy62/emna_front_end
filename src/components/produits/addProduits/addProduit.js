@@ -32,8 +32,8 @@ const ComposantTextarea = ({ field, form: { touched, errors }, ...props }) => (
 const ComposantSelect = ({ field, form: { touched, errors }, ...props }) => (
     <div >
         <label> {props.label} </label>
-        <select name="unite"  {...props} className="form-control" {...field} >
-            <option value="pc">PC</option>
+        <select className=" form-control browser-default custom-select" name="unite"  {...props} {...field} >
+            {/* <option value="pc">PC</option> */}
             <option value="h">H</option>
             <option value="j">J</option>
             <option value="m">M</option>
@@ -73,9 +73,9 @@ class AddProduit extends React.Component {
 
             <MDBContainer>
                 <div>
-                    <MDBCardHeader color="default-color">Société Nom</MDBCardHeader>
+                    <MDBCardHeader color="default-color">Société {this.props.name} </MDBCardHeader>
                     <br></br>
-                    <MDBCardTitle tag="h1">Ajouter Un Produit </MDBCardTitle>
+                    <MDBCardTitle tag="h1">Enregister un Nouveau Produit </MDBCardTitle>
                     <hr></hr>
                     <Formik
                         onSubmit={this.submit}
@@ -118,8 +118,8 @@ class AddProduit extends React.Component {
                                         type="numbre"
                                         component={ComposantErreur}
                                     />
-                                    <Field name="unite" label="Unité" component={ComposantInput} />
-                                    <ErrorMessage name="unite" type="number" component={ComposantErreur} />
+                                    <Field name="unite" label="Unité" component={ComposantSelect} />
+                                    <ErrorMessage name="unite" component={ComposantErreur} />
 
                                     <Field name="prix" label="Prix" component={ComposantInput} />
                                     <ErrorMessage name="prix" type="number" component={ComposantErreur} />
@@ -128,12 +128,10 @@ class AddProduit extends React.Component {
                                         rows="2" />
                                     <ErrorMessage name="description" component={ComposantErreur} />
 
-                                    <Field name="unite" component={ComposantSelect} />
-                                    <ErrorMessage name="unite" component={ComposantErreur} />
+
                                 </div>
                                 <br></br>
-
-                                <div className="center align-items-center ">
+                                <div className="row d-flex justify-content-center ">
                                     <MDBBtn rounded type="submit" color="primary">
                                         Sauvegarder
               </MDBBtn>
