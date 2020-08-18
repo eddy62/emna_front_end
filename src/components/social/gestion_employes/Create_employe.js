@@ -140,7 +140,7 @@ class NewEmploye extends React.Component {
     return (
       <div className="App">
         <div className="newEmp">
-          <MDBContainer>
+          <MDBContainer responsive>
             <div>
               <MDBCardHeader color="default-color">
                 <MDBCardTitle tag="h1">{title}</MDBCardTitle>

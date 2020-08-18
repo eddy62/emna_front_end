@@ -13,7 +13,14 @@ import {
   MDBTableHead,
   MDBIcon,
   MDBRow,
+  MDBSpinner,
+  MDBCol,
+  MDBSelectInput,
+  MDBSelectOptions,
+  MDBSelectOption,
+  MDBSelect,
 } from "mdbreact";
+import { Formik, Form } from "formik";
 
 class ListEmployes extends React.Component {
   constructor(props) {
@@ -79,7 +86,7 @@ class ListEmployes extends React.Component {
             nom: employe.nomUsage,
             prenom: employe.prenom,
             dateEmbauche: employe.dateEmbauche,
-            dateSortie: employe.dateFinContrat,
+            dateSortie: employe.dateSortie,
             typeContrat: employe.typeContrat,
             clickEvent: () => {
               this.props.history.push("/detailEmploye/" + employe.id);
@@ -101,6 +108,9 @@ class ListEmployes extends React.Component {
         console.log(error);
       });
   }
+  getValueOfSelectOne = (value) => {
+    console.log(value);
+  };
 
   render() {
     const title = "Gestion Social";
@@ -128,15 +138,37 @@ class ListEmployes extends React.Component {
                 <hr></hr>
               </div>
               <div>
+                <MDBCol md="6">
+                  <MDBSelect
+                    getValue={(value) => this.getValueOfSelectOne(value)}
+                  >
+                    <MDBSelectInput selected="Tous les Employés" />
+                    <MDBSelectOptions search>
+                      <MDBSelectOption>Tous les Employés</MDBSelectOption>
+                      <MDBSelectOption>Employés sortis</MDBSelectOption>
+                      <MDBSelectOption>Employés en CDD</MDBSelectOption>
+                      <MDBSelectOption>Employés en CDI</MDBSelectOption>
+                      <MDBSelectOption>Promesses d'Embauche</MDBSelectOption>
+                      <MDBSelectOption>Option nr 5</MDBSelectOption>
+                    </MDBSelectOptions>
+                  </MDBSelect>
+                </MDBCol>
+              </div>
+              <div>
                 <MDBTable
+                  responsive
                   theadColor="dark"
                   striped
                   hover
                   btn
+                  bordered
                   scrollY
                   maxHeight="300px"
                 >
-                  <MDBTableHead columns={this.state.columns} />
+                  <MDBTableHead
+                    columns={this.state.columns}
+                    color="teal lighten-5"
+                  />
                   <MDBTableBody rows={this.state.rows} />
                 </MDBTable>
               </div>
@@ -144,18 +176,20 @@ class ListEmployes extends React.Component {
                 <hr></hr>
               </div>
               <MDBRow around between>
-                <MDBBtn
-                  color="teal accent-3"
-                  rounded
-                  size="sm"
-                  onClick={() => {
-                    this.props.history.push(
-                      "/newEmploye/" + this.state.societe.id
-                    );
-                  }}
-                >
-                  Enregistrer un Employe
-                </MDBBtn>
+                {UserService.getRole() === "ROLE_SOCIETY" ? (
+                  <MDBBtn
+                    color="teal accent-3"
+                    rounded
+                    size="sm"
+                    onClick={() => {
+                      this.props.history.push(
+                        "/newEmploye/" + this.state.societe.id
+                      );
+                    }}
+                  >
+                    Enregistrer un Employe
+                  </MDBBtn>
+                ) : null}
                 <MDBBtn
                   color="teal accent-3"
                   rounded
@@ -175,10 +209,18 @@ class ListEmployes extends React.Component {
       );
     } else {
       return (
-        <div>
-          <MDBIcon icon="spinner" pulse size="3x" fixed />
-          <span className="sr-only">Loading...</span>
-        </div>
+        <>
+          <div className="spinner-grow text-success" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+          <div>
+            <MDBSpinner green crazy big />
+            <span className="sr-only">Loading...</span>
+          </div>
+          <div className="spinner-grow text-success" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        </>
       );
     }
   }

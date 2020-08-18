@@ -2,6 +2,7 @@ import React from "react";
 import "./style1.scss";
 import { Link } from "react-router-dom";
 import AxiosCenter from "../../shared/services/AxiosCenter";
+import UserService from "../../shared/services/UserService";
 import {
   MDBCard,
   MDBCardBody,
@@ -89,90 +90,97 @@ class AccueilSocial extends React.Component {
                       </MDBCardBody>
                     </MDBCard>
                   </MDBCol>
-                  <MDBCol md="3" className="mb-3">
-                    <MDBCard className="cadre1">
-                      <MDBCardBody>
-                        <MDBCardTitle tag="h4">{title5}</MDBCardTitle>
-                        <br />
-                        <MDBCardText>
-                          Déclaration d'Embauche en ligne et Télechargement
-                          Attestation d'Embauche
-                        </MDBCardText>
-                        <br />
-                        <div>
-                          <Link to="/listEmployes">
-                            <MDBBtn rounded size="sm" color="teal accent-3">
-                              Gerer
-                            </MDBBtn>
-                          </Link>
-                        </div>
-                      </MDBCardBody>
-                    </MDBCard>
-                  </MDBCol>
-                  <MDBCol md="3" className="mb-3">
-                    <MDBCard className="cadre1">
-                      <MDBCardBody>
-                        <MDBCardTitle tag="h4">{title2}</MDBCardTitle>
-                        <br />
-                        <MDBCardText>
-                          Validation Comptables des variables de Paie des
-                          Employés et pièces comptables
-                        </MDBCardText>
-                        <br />
-                        <div className="boutton">
-                          <Link to="/listEmployes">
-                            <MDBBtn color="teal accent-3" rounded size="sm">
-                              Gerer
-                            </MDBBtn>
-                          </Link>
-                        </div>
-                      </MDBCardBody>
-                    </MDBCard>
-                  </MDBCol>
+                  {UserService.getRole() === "ROLE_SOCIETY" ? (
+                    <MDBCol md="3" className="mb-3">
+                      <MDBCard className="cadre1">
+                        <MDBCardBody>
+                          <MDBCardTitle tag="h4">{title5}</MDBCardTitle>
+                          <br />
+                          <MDBCardText>
+                            Déclaration d'Embauche en ligne et Télechargement
+                            Attestation d'Embauche
+                          </MDBCardText>
+                          <br />
+                          <div>
+                            <Link to="/listEmployes">
+                              <MDBBtn rounded size="sm" color="teal accent-3">
+                                Gerer
+                              </MDBBtn>
+                            </Link>
+                          </div>
+                        </MDBCardBody>
+                      </MDBCard>
+                    </MDBCol>
+                  ) : null}
+                  {UserService.getRole() === "ROLE_ACCOUNTANT" ? (
+                    <MDBCol md="3" className="mb-3">
+                      <MDBCard className="cadre1">
+                        <MDBCardBody>
+                          <MDBCardTitle tag="h4">{title2}</MDBCardTitle>
+                          <br />
+                          <MDBCardText>
+                            Validation Comptables des variables de Paie des
+                            Employés et pièces comptables
+                          </MDBCardText>
+                          <br />
+                          <div className="boutton">
+                            <Link to="/listEmployes">
+                              <MDBBtn color="teal accent-3" rounded size="sm">
+                                Gerer
+                              </MDBBtn>
+                            </Link>
+                          </div>
+                        </MDBCardBody>
+                      </MDBCard>
+                    </MDBCol>
+                  ) : null}
                 </MDBRow>
                 <br />
-                <MDBRow around between>
-                  <MDBCol md="3" className="mb-3">
-                    <MDBCard className="cadre1">
-                      <MDBCardBody>
-                        <MDBCardTitle tag="h4">{title3}</MDBCardTitle>
-                        <br />
-                        <MDBCardText>
-                          Enregistrement et modification des variables de paies
-                          des Employés
-                        </MDBCardText>
-                        <br />
-                        <div className="boutton">
-                          <Link to="/listEmployes">
-                            <MDBBtn color="teal accent-3" rounded size="sm">
-                              Gerer
-                            </MDBBtn>
-                          </Link>
-                        </div>
-                      </MDBCardBody>
-                    </MDBCard>
-                  </MDBCol>
-                  <MDBCol md="3" className="mb-3">
-                    <MDBCard className="cadre1">
-                      <MDBCardBody>
-                        <MDBCardTitle tag="h4">{title4}</MDBCardTitle>
-                        <br />
-                        <MDBCardText>
-                          Consultation et Téléchargement des Fiches de Paie des
-                          Employés
-                        </MDBCardText>
-                        <br />
-                        <div className="boutton">
-                          <Link to="/listEmployes">
-                            <MDBBtn color="teal accent-3" rounded size="sm">
-                              Gerer
-                            </MDBBtn>
-                          </Link>
-                        </div>
-                      </MDBCardBody>
-                    </MDBCard>
-                  </MDBCol>
-                </MDBRow>
+                {(UserService.getRole() === "ROLE_SOCIETY") |
+                (UserService.getRole() === "ROLE_ACCOUNTANT") ? (
+                  <MDBRow around between>
+                    <MDBCol md="3" className="mb-3">
+                      <MDBCard className="cadre1">
+                        <MDBCardBody>
+                          <MDBCardTitle tag="h4">{title3}</MDBCardTitle>
+                          <br />
+                          <MDBCardText>
+                            Enregistrement et modification des variables de
+                            paies des Employés
+                          </MDBCardText>
+                          <br />
+                          <div className="boutton">
+                            <Link to="/listEmployes">
+                              <MDBBtn color="teal accent-3" rounded size="sm">
+                                Gerer
+                              </MDBBtn>
+                            </Link>
+                          </div>
+                        </MDBCardBody>
+                      </MDBCard>
+                    </MDBCol>
+                    <MDBCol md="3" className="mb-3">
+                      <MDBCard className="cadre1">
+                        <MDBCardBody>
+                          <MDBCardTitle tag="h4">{title4}</MDBCardTitle>
+                          <br />
+                          <MDBCardText>
+                            Consultation et Téléchargement des Fiches de Paie
+                            des Employés
+                          </MDBCardText>
+                          <br />
+                          <div className="boutton">
+                            <Link to="/listEmployes">
+                              <MDBBtn color="teal accent-3" rounded size="sm">
+                                Gerer
+                              </MDBBtn>
+                            </Link>
+                          </div>
+                        </MDBCardBody>
+                      </MDBCard>
+                    </MDBCol>
+                  </MDBRow>
+                ) : null}
               </div>
               <div className="titre">
                 <hr />
