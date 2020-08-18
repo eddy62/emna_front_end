@@ -280,17 +280,10 @@ const AxiosCenter = {
       url: `/produits/${id}`,
     });
   },
-
-  getSocietyByUserId(values) {
-    return ApiBackEnd({
-      method: "get",
-      url: "/societes/user/" + values,
-    });
-  },
   createProduit(values) {
     return ApiBackEnd({
       method: "put",
-      url: "/wrappercomptable/edit",
+      url: "/produits",
       data: values,
     });
   },
