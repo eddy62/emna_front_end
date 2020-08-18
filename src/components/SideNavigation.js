@@ -25,7 +25,7 @@ class SideNavigation extends React.Component {
               this.setState({
                 societes: response.data,
               });
-              console.log(this.state.societes);
+              UserService.setSocietyId(response.data[0].id);
             }
           );
         }
@@ -35,6 +35,7 @@ class SideNavigation extends React.Component {
         this.setState({
           societes: response.data,
         });
+        UserService.setSocietyId(response.data[0].id);
       });
     }
   }
