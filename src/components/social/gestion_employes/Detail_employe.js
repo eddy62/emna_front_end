@@ -2,6 +2,7 @@ import React from "react";
 import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import SupprimerEmploye from "./Supprimer_employe";
+import UserService from "../../../shared/services/UserService";
 import {
   MDBCardTitle,
   MDBCardHeader,
@@ -16,6 +17,7 @@ class DetailEmploye extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      idSociete: UserService.getSocietyId,
       employe: {},
     };
   }
@@ -39,7 +41,6 @@ class DetailEmploye extends React.Component {
     const title1 = "Information Employé";
     const employe = this.state.employe;
     const entreprise = employe.raisonSociale;
-    const idSociete = employe.idSociete;
     return (
       <div className="App">
         <div className="employes">
@@ -129,7 +130,10 @@ class DetailEmploye extends React.Component {
                     <br />
                     <div className="ligne1">
                       <p className="elt1">
-                        <label className="gras">Adresse : N° </label>&nbsp;
+                        <label className="gras">
+                          Adresse : &nbsp;&nbsp;&nbsp; N°
+                        </label>
+                        &nbsp;
                         {employe.numeroRue}
                       </p>
                       <p className="elt">
@@ -178,22 +182,27 @@ class DetailEmploye extends React.Component {
                     <br />
                     <div className="ligne1">
                       <p className="elt1">
+                        <label className="gras">Société : </label>&nbsp;
+                        {entreprise}
+                      </p>
+                      <p className="elt">
                         <label className="gras">Date Embauche : </label>&nbsp;
                         {employe.dateEmbauche}
                       </p>
                       <p className="elt">
-                        <label className="gras">Type Contrat : </label>&nbsp;
-                        {employe.typeContrat}
-                      </p>
-                      <p className="elt">
-                        <label className="gras">Société : </label>&nbsp;
-                        {entreprise}
+                        <label className="gras">Date Fin Contrat : </label>
+                        &nbsp;
+                        {employe.dateSortie}
                       </p>
                     </div>
                     <div className="ligne2">
                       <p className="elt1">
+                        <label className="gras">Type Contrat : </label>&nbsp;
+                        {employe.typeContrat}
+                      </p>
+                      <p className="elt">
                         <label className="gras">Poste :</label>&nbsp;
-                        {employe.statut}
+                        {employe.poste}
                       </p>
                       <p className="elt">
                         <label className="gras">Categorie : </label>&nbsp;
@@ -222,19 +231,23 @@ class DetailEmploye extends React.Component {
             <div>
               <hr></hr>
             </div>
-            <MDBRow around between>
-              <MDBBtn
-                rounded
-                size="sm"
-                color="teal accent-3"
-                onClick={() => {
-                  this.props.history.push("/updateEmploye/" + employe.id);
-                }}
-              >
-                Mise à jour
-              </MDBBtn>
 
-              <SupprimerEmploye employe={employe} />
+            <MDBRow around between>
+              {UserService.getRole() === "ROLE_SOCIETY" ? (
+                <MDBBtn
+                  rounded
+                  size="sm"
+                  color="teal accent-3"
+                  onClick={() => {
+                    this.props.history.push("/updateEmploye/" + employe.id);
+                  }}
+                >
+                  Mise à jour
+                </MDBBtn>
+              ) : null}
+              {UserService.getRole() === "ROLE_SOCIETY" ? (
+                <SupprimerEmploye employe={employe} />
+              ) : null}
 
               <MDBBtn
                 rounded
