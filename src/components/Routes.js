@@ -58,6 +58,7 @@ import JuridiqueMenu from "./navigation/JuridiqueMenu";
 import ListeProduits from "./produits/listeProduits/listeProduits";
 import DetailsProduit from "./produits/detailsProduits/detailsProduit";
 import AddProduit from "./produits/addProduits/addProduit";
+import Referentiels from "./referentiels/Referentiels";
 //finGestionProduits
 
 export default class Routes extends Component {
@@ -165,6 +166,9 @@ export default class Routes extends Component {
         <PrivateRoute path="/produits" component={ListeProduits} />
         <PrivateRoute path="/produit/detail/:id" component={DetailsProduit} />
         <PrivateRoute path="/produit/creer" component={AddProduit} />
+
+        {/* Gestion Referentiels */}
+        <PrivateRoute path="/ref" component={Referentiels} />
 
         {/* <Route component={NotFound} /> */}
         <PrivateRoute component={NotFound} />

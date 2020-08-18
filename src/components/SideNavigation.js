@@ -37,6 +37,10 @@ class SideNavigation extends React.Component {
         });
         UserService.setSocietyId(response.data[0].id);
       });
+    } else if (UserService.getRole() === "ROLE_SOCIETY") {
+      AxiosCenter.getSocieteByUser(UserService.getUserId()).then((response) => {
+        UserService.setSocietyId(response.data.id);
+      });
     }
   }
   // render MDBSideNav Link
