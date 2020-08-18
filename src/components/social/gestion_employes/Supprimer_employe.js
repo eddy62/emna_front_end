@@ -19,22 +19,17 @@ class SupprimerEmploye extends Component {
     console.log(idEmploye);
     const idSociete = UserService.getSocietyId;
     console.log(idSociete);
-    const roleUser = UserService.getRole;
-    console.log(roleUser);
-    if (roleUser === "ROLE_SOCIETY") {
-      AxiosCenter.deleteWrapperEmploye(idEmploye)
-        .then((response) => {
-          console.log(response);
-          this.setState({
-            modal: !this.state.modal,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
+
+    AxiosCenter.deleteWrapperEmploye(idEmploye)
+      .then((response) => {
+        console.log(response);
+        this.setState({
+          modal: !this.state.modal,
         });
-    } else {
-      alert("NON AUTORISE !");
-    }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   render() {
