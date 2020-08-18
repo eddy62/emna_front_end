@@ -123,7 +123,7 @@ class UpdateEmploye extends React.Component {
     return (
       <div className="App">
         <div className="newEmp">
-          <MDBContainer>
+          <MDBContainer responsive>
             <div>
               <MDBCardHeader color="default-color">
                 <MDBCardTitle tag="h1">{title}</MDBCardTitle>
@@ -576,7 +576,7 @@ class UpdateEmploye extends React.Component {
                               <select
                                 className="browser-default custom-select"
                                 name="codeRef"
-                                value={values.libelle}
+                                value={values.codeRef}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                               >
