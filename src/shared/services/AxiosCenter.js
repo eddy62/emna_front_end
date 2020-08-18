@@ -274,6 +274,12 @@ const AxiosCenter = {
       url: `/produits/societe/${id}`,
     });
   },
+  getProduitById(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/produits/${id}`,
+    });
+  },
 
   getSocietyByUserId(values) {
     return ApiBackEnd({
