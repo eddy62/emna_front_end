@@ -282,21 +282,10 @@ const AxiosCenter = {
       data: values,
     });
   },
-  // fin getion produits
-
-  // get societe by id
-  getSocieteById(id) {
+  deleteProduit(id) {
     return ApiBackEnd({
-      method: "get",
-      url: `/societes/${id}`,
-    });
-  },
-
-  //get infoEntreprise by id 
-  getInfoEntrepriseById(id) {
-    return ApiBackEnd({
-      method: "get",
-      url: `/info-entreprises/${id}`,
+      method: "delete",
+      url: `/produits/${id}`,
     });
   }
 };

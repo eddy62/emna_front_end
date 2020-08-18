@@ -76,11 +76,13 @@ class ListerClientFournisseur extends Component {
             </table>
           </div>
         </div>
-        <Link to="/client-fournisseur">
-          <MDBBtn rounded color="teal accent-3">
-            Retour
+        <div className="row d-flex justify-content-center">
+          <Link to="/client-fournisseur">
+            <MDBBtn rounded color="teal accent-3">
+              Retour
                   </MDBBtn>
-        </Link>
+          </Link>
+        </div>
       </div>
     );
   }
