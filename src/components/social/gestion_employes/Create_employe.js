@@ -46,7 +46,7 @@ const employeSchema = Yup.object().shape({
     .max(20, "Trop long")
     .required("Champ obligatoire"),
   situationFamiliale: Yup.string("String").required("Champ Obligatoire"),
-  enfantsACharge: Yup.string("String").required("Champ Obligatoire"),
+  enfantsACharge: Yup.string("String").min(2).required("Champ Obligatoire"),
   //Coordonnées
   numeroRue: Yup.string().max(5, "Trop long"),
   nomRue: Yup.string()
