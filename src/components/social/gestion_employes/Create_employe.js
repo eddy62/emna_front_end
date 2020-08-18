@@ -46,7 +46,7 @@ const employeSchema = Yup.object().shape({
     .max(20, "Trop long")
     .required("Champ obligatoire"),
   situationFamiliale: Yup.string("String").required("Champ Obligatoire"),
-  enfantsACharge: Yup.string("String").min(2).required("Champ Obligatoire"),
+  enfantsACharge: Yup.string("String").required("Champ Obligatoire"),
   //Coordonnées
   numeroRue: Yup.string().max(5, "Trop long"),
   nomRue: Yup.string()
@@ -94,7 +94,14 @@ const ComposantDate = ({ field, form: { touched, errors }, ...props }) => (
   <MDBInput label={props.label} outline type="date" {...props} {...field} />
 );
 const ComposantNumber = ({ field, form: { touched, errors }, ...props }) => (
-  <MDBInput label={props.label} outline type="number" {...props} {...field} />
+  <MDBInput
+    label={props.label}
+    min="0"
+    outline
+    type="number"
+    {...props}
+    {...field}
+  />
 );
 
 class NewEmploye extends React.Component {

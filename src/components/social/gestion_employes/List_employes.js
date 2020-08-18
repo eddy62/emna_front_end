@@ -145,11 +145,11 @@ class ListEmployes extends React.Component {
                     <MDBSelectInput selected="Tous les Employés" />
                     <MDBSelectOptions search>
                       <MDBSelectOption>Tous les Employés</MDBSelectOption>
+                      <MDBSelectOption>Employés Embauchés</MDBSelectOption>
                       <MDBSelectOption>Employés sortis</MDBSelectOption>
                       <MDBSelectOption>Employés en CDD</MDBSelectOption>
                       <MDBSelectOption>Employés en CDI</MDBSelectOption>
                       <MDBSelectOption>Promesses d'Embauche</MDBSelectOption>
-                      <MDBSelectOption>Option nr 5</MDBSelectOption>
                     </MDBSelectOptions>
                   </MDBSelect>
                 </MDBCol>

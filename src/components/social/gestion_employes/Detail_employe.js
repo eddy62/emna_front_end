@@ -233,32 +233,42 @@ class DetailEmploye extends React.Component {
             </div>
 
             <MDBRow around between>
-              {UserService.getRole() === "ROLE_SOCIETY" ? (
+              <div>
+                {UserService.getRole() === "ROLE_SOCIETY" ? (
+                  <MDBBtn
+                    rounded
+                    size="sm"
+                    color="teal accent-3"
+                    onClick={() => {
+                      this.props.history.push("/updateEmploye/" + employe.id);
+                    }}
+                  >
+                    Mise à jour
+                  </MDBBtn>
+                ) : null}
+              </div>
+              <div>
+                {UserService.getRole() === "ROLE_SOCIETY"
+                  ? ((<SupprimerEmploye employe={employe} />),
+                    this.props.history.push(
+                      "/listEmployes/" + employe.societeId
+                    ))
+                  : null}
+              </div>
+              <div>
                 <MDBBtn
                   rounded
                   size="sm"
                   color="teal accent-3"
                   onClick={() => {
-                    this.props.history.push("/updateEmploye/" + employe.id);
+                    this.props.history.push(
+                      "/listEmployes/" + employe.societeId
+                    );
                   }}
                 >
-                  Mise à jour
+                  Retour
                 </MDBBtn>
-              ) : null}
-              {UserService.getRole() === "ROLE_SOCIETY" ? (
-                <SupprimerEmploye employe={employe} />
-              ) : null}
-
-              <MDBBtn
-                rounded
-                size="sm"
-                color="teal accent-3"
-                onClick={() => {
-                  this.props.history.push("/listEmployes/" + employe.societeId);
-                }}
-              >
-                Retour
-              </MDBBtn>
+              </div>
             </MDBRow>
           </MDBContainer>
         </div>
