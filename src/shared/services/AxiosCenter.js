@@ -282,7 +282,7 @@ const AxiosCenter = {
   },
   createProduit(values) {
     return ApiBackEnd({
-      method: "put",
+      method: "post",
       url: "/produits",
       data: values,
     });
