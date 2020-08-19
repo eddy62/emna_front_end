@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
+import Loading from "../../../shared/component/Loading";
 import {
   MDBContainer,
   MDBBtn,
@@ -14,18 +15,28 @@ import {
 } from "mdbreact";
 
 class SupprimerEmploye extends Component {
+  state = {
+    modal: false,
+    loaded: false,
+  };
+
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal,
+    });
+  };
+
   delete = () => {
     const idEmploye = this.props.employe.id;
     console.log(idEmploye);
-    const idSociete = UserService.getSocietyId;
-    console.log(idSociete);
-
     AxiosCenter.deleteWrapperEmploye(idEmploye)
       .then((response) => {
         console.log(response);
         this.setState({
           modal: !this.state.modal,
+          loaded: true,
         });
+        this.props.history.push("/listEmployes/" + UserService.getSocietyId);
       })
       .catch((error) => {
         console.log(error);
@@ -33,26 +44,7 @@ class SupprimerEmploye extends Component {
   };
 
   render() {
-    return (
-      <div>
-        <ModalPage confirme={this.delete} />
-      </div>
-    );
-  }
-}
-
-class ModalPage extends Component {
-  state = {
-    modal: false,
-    employe: this.props.employe,
-  };
-  toggle = () => {
-    const idSociete = UserService.getSocietyId;
-    this.setState({
-      modal: !this.state.modal,
-    });
-  };
-  render() {
+    if (!this.state.loaded) return <Loading />;
     return (
       <MDBContainer>
         <MDBBtn
@@ -81,19 +73,18 @@ class ModalPage extends Component {
                 color="teal accent-3"
                 onClick={this.toggle}
               >
-                Terminer
+                Annuler
               </MDBBtn>
-              <div onClick={(e) => e.stopPropagation()}>
-                <MDBBtn
-                  rounded
-                  color="teal accent-3"
-                  onClick={this.props.confirme}
-                  circle="true"
-                  size="sm"
-                >
-                  Supprimer
-                </MDBBtn>
-              </div>
+              <MDBBtn
+                rounded
+                toggle={this.toggle}
+                color="teal accent-3"
+                onClick={this.delete}
+                circle="true"
+                size="sm"
+              >
+                Supprimer
+              </MDBBtn>
             </MDBRow>
           </MDBModalFooter>
         </MDBModal>
@@ -101,4 +92,5 @@ class ModalPage extends Component {
     );
   }
 }
+
 export default SupprimerEmploye;

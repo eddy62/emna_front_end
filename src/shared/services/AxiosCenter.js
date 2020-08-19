@@ -124,6 +124,19 @@ const AxiosCenter = {
     });
   },
 
+  getAllWrapperEmployesBySocietyAndTypeContrat(id, type) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/wrapperemployes/society/${id}/typecontrat/${type}`,
+    });
+  },
+
+  getAllWrapperEmployesBySocietyAndSatutEmploye(id, codestatut) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/wrapperemployes/society/${id}/statutemploye/${codestatut}`,
+    });
+  },
   //fin Gestion Social
 
   getReleve() {
@@ -159,14 +172,6 @@ const AxiosCenter = {
       url: `/operations/${id}`,
     });
   },
-  //gestion Societe
-  getWrapperSociete(id) {
-    return ApiBackEnd({
-      method: "get",
-      url: `/wrappersociete/${id}`,
-    });
-  },
-  //Fin Gestion Société
 
   getOperationByReleveId(id) {
     return ApiBackEnd({
@@ -322,6 +327,13 @@ const AxiosCenter = {
       method: "put",
       url: "/wrappersociete/edit",
       data: values,
+    });
+  },
+
+  getWrapperSociete(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/wrappersociete/${id}`,
     });
   },
   //Fin gestion societe

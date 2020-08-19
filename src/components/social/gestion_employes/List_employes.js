@@ -1,8 +1,8 @@
 import React from "react";
 import "./style2.scss";
-import { Link } from "react-router-dom";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
+import Loading from "../../../shared/component/Loading";
 import {
   MDBCardTitle,
   MDBCardHeader,
@@ -11,16 +11,9 @@ import {
   MDBTable,
   MDBTableBody,
   MDBTableHead,
-  MDBIcon,
   MDBRow,
-  MDBSpinner,
   MDBCol,
-  MDBSelectInput,
-  MDBSelectOptions,
-  MDBSelectOption,
-  MDBSelect,
 } from "mdbreact";
-import { Formik, Form } from "formik";
 
 class ListEmployes extends React.Component {
   constructor(props) {
@@ -28,8 +21,10 @@ class ListEmployes extends React.Component {
     this.state = {
       loaded: false,
       societe: {},
+      choice: "",
       listeEmployes: [],
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -108,9 +103,106 @@ class ListEmployes extends React.Component {
         console.log(error);
       });
   }
-  getValueOfSelectOne = (value) => {
-    console.log(value);
+
+  getSelectedList = (option) => {
+    console.log(option);
+    const idSociete = this.state.societe.id;
+    const liste = [];
+    let axios = null;
+    if (option === "ALL") {
+      axios = AxiosCenter.getAllWrapperEmployesBySociety(idSociete);
+    }
+    if (option === "EMPEMB") {
+      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndSatutEmploye(
+        idSociete,
+        option
+      );
+    }
+    if (option === "EMPEND") {
+      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndSatutEmploye(
+        idSociete,
+        option
+      );
+    }
+    if (option === "EMPNEMB") {
+      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndSatutEmploye(
+        idSociete,
+        option
+      );
+    }
+    if (option === "CDD") {
+      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndTypeContrat(
+        idSociete,
+        option
+      );
+    }
+    if (option === "CDI") {
+      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndTypeContrat(
+        idSociete,
+        option
+      );
+    }
+    if (option === "CDDTP") {
+      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndTypeContrat(
+        idSociete,
+        option
+      );
+    }
+    if (option === "CDITP") {
+      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndTypeContrat(
+        idSociete,
+        option
+      );
+    }
+    if (option === "ALTER") {
+      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndTypeContrat(
+        idSociete,
+        option
+      );
+    }
+    if (option === "STAGE") {
+      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndTypeContrat(
+        idSociete,
+        option
+      );
+    }
+    console.log(axios);
+    axios
+      .then((response) => {
+        const rows = [];
+        response.data.forEach((employe) => {
+          rows.push({
+            matricule: employe.matricule,
+            nom: employe.nomUsage,
+            prenom: employe.prenom,
+            dateEmbauche: employe.dateEmbauche,
+            dateSortie: employe.dateSortie,
+            typeContrat: employe.typeContrat,
+            clickEvent: () => {
+              this.props.history.push("/detailEmploye/" + employe.id);
+            },
+          });
+          liste.push(employe);
+        });
+        this.setState({
+          listeEmployes: liste,
+          rows: rows,
+          loaded: true,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
+
+  handleChange(event) {
+    console.log(event.target.value);
+    this.setState({ choice: event.target.value }, () => {
+      const choix = this.state.choice;
+      console.log(choix);
+      this.getSelectedList(choix);
+    });
+  }
 
   render() {
     const title = "Gestion Social";
@@ -129,7 +221,7 @@ class ListEmployes extends React.Component {
                 </MDBCardHeader>
               </div>
               <div>
-                <hr></hr>
+                <hr />
               </div>
               <MDBCardHeader tag="h4" color="teal lighten-5" text="black">
                 {title1}
@@ -139,21 +231,27 @@ class ListEmployes extends React.Component {
               </div>
               <div>
                 <MDBCol md="6">
-                  <MDBSelect
-                    getValue={(value) => this.getValueOfSelectOne(value)}
-                  >
-                    <MDBSelectInput selected="Tous les Employés" />
-                    <MDBSelectOptions search>
-                      <MDBSelectOption>Tous les Employés</MDBSelectOption>
-                      <MDBSelectOption>Employés sortis</MDBSelectOption>
-                      <MDBSelectOption>Employés en CDD</MDBSelectOption>
-                      <MDBSelectOption>Employés en CDI</MDBSelectOption>
-                      <MDBSelectOption>Promesses d'Embauche</MDBSelectOption>
-                      <MDBSelectOption>Option nr 5</MDBSelectOption>
-                    </MDBSelectOptions>
-                  </MDBSelect>
+                  <form>
+                    <select
+                      className="browser-default custom-select"
+                      value={this.state.value}
+                      onChange={this.handleChange}
+                    >
+                      <option value="ALL">Tous les Employés</option>
+                      <option value="EMPEMB">Employés Embauchés</option>
+                      <option value="EMPEND"> Employés Sortis</option>
+                      <option value="EMPNEMB"> Promesses d'Embauche</option>
+                      <option value="CDD">Employés en CDD</option>
+                      <option value="CDI">Employés en CDI</option>
+                      <option value="CDDTP">Employés en CDD Partiel</option>
+                      <option value="CDITP">Employés en CDI Partiel</option>
+                      <option value="ALTER">Employés en Alternance</option>
+                      <option value="STAGE">Stage</option>
+                    </select>
+                  </form>
                 </MDBCol>
               </div>
+              <br />
               <div>
                 <MDBTable
                   responsive
@@ -208,20 +306,7 @@ class ListEmployes extends React.Component {
         </div>
       );
     } else {
-      return (
-        <>
-          <div className="spinner-grow text-success" role="status">
-            <span className="sr-only">Loading...</span>
-          </div>
-          <div>
-            <MDBSpinner green crazy big />
-            <span className="sr-only">Loading...</span>
-          </div>
-          <div className="spinner-grow text-success" role="status">
-            <span className="sr-only">Loading...</span>
-          </div>
-        </>
-      );
+      return <Loading />;
     }
   }
 }
