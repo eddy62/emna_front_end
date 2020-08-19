@@ -18,9 +18,7 @@ export class Releve extends React.Component {
         <MDBContainer>
           <div>
             <MDBCardHeader color="default-color">
-              <MDBCardTitle>
-                <h1>Gestion de vos relevés bancaires</h1>
-              </MDBCardTitle>
+              <MDBCardTitle>Gestion de vos relevés bancaires</MDBCardTitle>
               <br />
             </MDBCardHeader>
           </div>
