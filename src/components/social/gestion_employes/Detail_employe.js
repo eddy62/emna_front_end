@@ -248,12 +248,9 @@ class DetailEmploye extends React.Component {
                 ) : null}
               </div>
               <div>
-                {UserService.getRole() === "ROLE_SOCIETY"
-                  ? ((<SupprimerEmploye employe={employe} />),
-                    this.props.history.push(
-                      "/listEmployes/" + employe.societeId
-                    ))
-                  : null}
+                {UserService.getRole() === "ROLE_SOCIETY" ? (
+                  <SupprimerEmploye employe={employe} />
+                ) : null}
               </div>
               <div>
                 <MDBBtn

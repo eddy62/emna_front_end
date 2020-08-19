@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
+import Loading from "../../../shared/component/Loading";
 import {
   MDBContainer,
   MDBBtn,
@@ -16,6 +17,7 @@ import {
 class SupprimerEmploye extends Component {
   state = {
     modal: false,
+    loaded: false,
   };
 
   toggle = () => {
@@ -32,7 +34,9 @@ class SupprimerEmploye extends Component {
         console.log(response);
         this.setState({
           modal: !this.state.modal,
+          loaded: true,
         });
+        this.props.history.push("/listEmployes/" + UserService.getSocietyId);
       })
       .catch((error) => {
         console.log(error);
@@ -40,6 +44,7 @@ class SupprimerEmploye extends Component {
   };
 
   render() {
+    if (!this.state.loaded) return <Loading />;
     return (
       <MDBContainer>
         <MDBBtn

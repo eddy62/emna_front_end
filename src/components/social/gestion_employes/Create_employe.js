@@ -3,6 +3,7 @@ import "./style2.scss";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
+import Loading from "../../../shared/component/Loading";
 
 import {
   MDBContainer,
@@ -109,6 +110,7 @@ class NewEmploye extends React.Component {
     super(props);
     this.state = {
       societe: {},
+      loaded: false,
     };
   }
 
@@ -119,7 +121,7 @@ class NewEmploye extends React.Component {
       .then((response) => {
         const societe = response.data;
         console.log(societe);
-        this.setState({ societe: societe });
+        this.setState({ societe: societe, loaded: true });
       })
       .catch((error) => {
         console.log(error);
@@ -141,13 +143,16 @@ class NewEmploye extends React.Component {
   };
 
   render() {
+    if (!this.state.loaded) return <Loading />;
     const title = "Gestion Social";
     const title1 = "Enregister un Nouvel Employé";
     const entreprise = this.state.societe.raisonSociale;
+    console.log(typeof entreprise);
+
     return (
       <div className="App">
         <div className="newEmp">
-          <MDBContainer responsive>
+          <MDBContainer>
             <div>
               <MDBCardHeader color="default-color">
                 <MDBCardTitle tag="h1">{title}</MDBCardTitle>
@@ -192,7 +197,7 @@ class NewEmploye extends React.Component {
                 telephonePortable: "",
                 fax: "",
                 societeId: 1,
-                raisonSociale: "JAKARTA SARL", //TO DO recupère le nom de la société
+                raisonSociale: entreprise, //TO DO recupère le nom de la société
                 dateEmbauche: "",
                 dateSortie: "",
                 typeContrat: "",
@@ -261,8 +266,8 @@ class NewEmploye extends React.Component {
                                 onBlur={handleBlur}
                               >
                                 <option value="">Civilité*</option>
-                                <option value="Monsieur">Monsieur</option>
-                                <option value="Madame">Madame</option>
+                                <option value="Mr">Monsieur</option>
+                                <option value="Mme">Madame</option>
                               </select>
                               {errors.civilite && touched.civilite && (
                                 <div className="text-danger">
@@ -365,10 +370,10 @@ class NewEmploye extends React.Component {
                                 onBlur={handleBlur}
                               >
                                 <option value="">Situation Familiale*</option>
-                                <option value="Célibataire">Célibataire</option>
-                                <option value="Marié(e)">Marié(e)</option>
-                                <option value="Divorcé(e)">Divorcé(e)</option>
-                                <option value="Veuf(ve)">Veuf(ve)</option>
+                                <option value="C">Célibataire</option>
+                                <option value="M">Marié(e)</option>
+                                <option value="D">Divorcé(e)</option>
+                                <option value="V">Veuf(ve)</option>
                               </select>
                               {errors.civilite && touched.civilite && (
                                 <div className="text-danger">
@@ -576,21 +581,14 @@ class NewEmploye extends React.Component {
                                 onBlur={handleBlur}
                               >
                                 <option value="">Type Contrat*</option>
-                                <option value="CDD Tps Plein">
-                                  CDD Tps Plein
-                                </option>
-                                <option value="CDD Tps Partiel2">
-                                  CDD Tps Partiel
-                                </option>
-                                <option value="CDI Tps Plein">
-                                  CDI Tps Plein
-                                </option>
-                                <option value="CDI Tps Partie">
-                                  CDI Tps Partiel
-                                </option>
-                                <option value="Contrat Pro/Alternance">
+                                <option value="CDD">CDD Tps Plein</option>
+                                <option value="CDDTP">CDD Tps Partiel</option>
+                                <option value="CDI">CDI Tps Plein</option>
+                                <option value="CDITP">CDI Tps Partiel</option>
+                                <option value="ALTER">
                                   Contrat Pro/Alternance
                                 </option>
+                                <option value="STAGE">STAGE</option>
                               </select>
                               {errors.typeContrat && touched.typeContrat && (
                                 <div className="text-danger">
@@ -610,15 +608,11 @@ class NewEmploye extends React.Component {
                                 onBlur={handleBlur}
                               >
                                 <option value="">Catégorie*</option>
-                                <option value="Employé">Employé</option>
-                                <option value="Agent de Maitrise">
-                                  Agent de Maitrise
-                                </option>
-                                <option value="Assimilé Cadre">
-                                  Assimilé Cadre
-                                </option>
-                                <option value="Cadre">Cadre</option>
-                                <option value="Stagiaire">Stagiaire</option>
+                                <option value="EMP">Employé</option>
+                                <option value="AM">Agent de Maitrise</option>
+                                <option value="AC">Assimilé Cadre</option>
+                                <option value="C">Cadre</option>
+                                <option value="STG">Stagiaire</option>
                               </select>
                               {errors.typeContrat && touched.typeContrat && (
                                 <div className="text-danger">

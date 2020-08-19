@@ -1,12 +1,21 @@
 import React from "react";
-import { MDBSpinner } from 'mdbreact';
+import { MDBSpinner } from "mdbreact";
 
 const Loading = () => {
-    return (
-        <>
-            <MDBSpinner />
-        </>
-    );
-}
+  return (
+    <>
+      <div className="spinner-grow text-success" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+      <div>
+        <MDBSpinner green crazy big />
+        <span className="sr-only">Loading...</span>
+      </div>
+      <div className="spinner-grow text-success" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+    </>
+  );
+};
 
 export default Loading;
