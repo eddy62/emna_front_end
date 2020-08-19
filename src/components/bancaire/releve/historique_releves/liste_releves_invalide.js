@@ -30,7 +30,6 @@ export default class ListeRelevesInvalide extends React.Component {
 
   deleteReleve = (id) => {
     AxiosCenter.deleteReleve(id).then((res) => this.componentDidMount());
-    console.log(id);
   };
 
   listerLesReleves(props) {
@@ -49,8 +48,8 @@ export default class ListeRelevesInvalide extends React.Component {
           </td>
           <td>
             <button
-              className="btn btn-small btn-danger"
-              onClick={() => this.deleteReleve(releve.id)}
+              //className="btn btn-small btn-danger"
+              onClick={() => props.deleteReleve(releve.id)}
             >
               X
             </button>
@@ -68,42 +67,36 @@ export default class ListeRelevesInvalide extends React.Component {
               <br />
             </MDBCardHeader>
           </div>
-          <div>
-            <hr></hr>
-          </div>
+          <div></div>
           <div>
             <MDBCol>
               <MDBCard>
                 <MDBCardBody>
-                  <MDBCardTitle className="MDBCardTitle">
-                    <div>
-                      <table className="table table-striped">
-                        <thead>
-                          <tr>
-                            <th scope="col">Date de création</th>
-                            <th scope="col">Date de fin</th>
-                            <th scope="col">Solde</th>
-                            <th scope="col">Banque</th>
-                          </tr>
-                        </thead>
-                        <tbody>{Releves}</tbody>
-                      </table>
+                  <table className="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Date de création</th>
+                        <th scope="col">Date de fin</th>
+                        <th scope="col">Solde</th>
+                        <th scope="col">Banque</th>
+                      </tr>
+                    </thead>
+                    <tbody>{Releves}</tbody>
+                  </table>
 
-                      <p>
-                        <Link to={"/menureleve"}>
-                          {" "}
-                          <MDBBtn
-                            className="boutton"
-                            color=" teal lighten-2"
-                            rounded
-                            size="sm"
-                          >
-                            <span id="color-button"> Retour</span>
-                          </MDBBtn>
-                        </Link>
-                      </p>
-                    </div>
-                  </MDBCardTitle>
+                  <p>
+                    <Link to={"/menureleve"}>
+                      {" "}
+                      <MDBBtn
+                        className="boutton"
+                        color=" teal lighten-2"
+                        rounded
+                        size="sm"
+                      >
+                        <span id="color-button"> Retour</span>
+                      </MDBBtn>
+                    </Link>
+                  </p>
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
@@ -116,7 +109,12 @@ export default class ListeRelevesInvalide extends React.Component {
 
   render() {
     if (this.state.loaded) {
-      return <this.listerLesReleves releves={this.state.releves} />;
+      return (
+        <this.listerLesReleves
+          deleteReleve={this.deleteReleve}
+          releves={this.state.releves}
+        />
+      );
     } else {
       return <Loading />;
     }

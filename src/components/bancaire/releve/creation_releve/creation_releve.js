@@ -19,7 +19,7 @@ class CreationReleve extends React.Component {
         className="container-fluid p-5 bg-light
         d-flex flex-column justify-content-center align-items-center"
       >
-        <h1>Création d'opération</h1>
+        <h1>Création Relevé</h1>
         <Formik onSubmit={this.submit} initialValues={{}}>
           {({
             values,

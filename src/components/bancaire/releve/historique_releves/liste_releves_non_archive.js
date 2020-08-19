@@ -19,6 +19,7 @@ export default class ListeRelevesNonArchive extends React.Component {
       releves: [],
     };
   }
+
   componentDidMount() {
     AxiosCenter.getReleveBySocieteId(3)
       .then((res) => {
