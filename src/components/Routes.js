@@ -64,8 +64,11 @@ import JuridiqueMenu from "./navigation/JuridiqueMenu";
 import ListeProduits from "./produits/listeProduits/listeProduits";
 import DetailsProduit from "./produits/detailsProduits/detailsProduit";
 import AddProduit from "./produits/addProduits/addProduit";
-import Referentiels from "./referentiels/Referentiels";
+import UpdateProduit from "./produits/updateProduit/updateProduit";
 //finGestionProduits
+
+//GestionReferentiels
+import Referentiels from "./referentiels/Referentiels";
 
 export default class Routes extends Component {
   render() {
@@ -94,8 +97,8 @@ export default class Routes extends Component {
         <PrivateRoute exact path="/users/stvu/users" component={ListUser} />
         <PrivateRoute exact path="/users/stvu/all" component={ListAllUsers} />
         <PrivateRoute exact path="/users/stvu" component={selectToViewUser} /> {/*stvu stands for : Select to view user*/}
-        <PrivateRoute exact path="/users/stvu/comptables" component={ListComptable} /> 
-        <PrivateRoute exact path="/users/stvu/societe" component={ListSociete} /> 
+        <PrivateRoute exact path="/users/stvu/comptables" component={ListComptable} />
+        <PrivateRoute exact path="/users/stvu/societe" component={ListSociete} />
         <PrivateRoute
           exact
           path="/users/add/comptable"
@@ -178,6 +181,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/produits" component={ListeProduits} />
         <PrivateRoute path="/produit/detail/:id" component={DetailsProduit} />
         <PrivateRoute path="/produit/creer" component={AddProduit} />
+        <PrivateRoute path="/produit/update" component={UpdateProduit} />
 
         {/* Gestion Referentiels */}
         <PrivateRoute path="/ref" component={Referentiels} />
