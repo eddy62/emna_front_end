@@ -103,6 +103,8 @@ export default class Routes extends Component {
         <PrivateRoute exact path="/users/stvu" component={selectToViewUser} /> {/*stvu stands for : Select to view user*/}
         <PrivateRoute exact path="/users/stvu/comptables" component={ListComptable} />
         <PrivateRoute exact path="/users/stvu/societe" component={ListSociete} />
+        <PrivateRoute exact path="/users/stvu/comptables" component={ListComptable} /> 
+        <PrivateRoute exact path="/users/stvu/societes" component={ListSociete} /> 
         <PrivateRoute
           exact
           path="/users/stvu/comptables/add"
