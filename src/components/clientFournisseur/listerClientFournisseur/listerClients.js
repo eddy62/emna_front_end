@@ -4,6 +4,7 @@ import Style from "./../ClientFournisseur.module.css";
 import SupprimerClientFournisseur from "../supprimerClientFounisseur/supprimerClient";
 import { MDBBtn } from 'mdbreact';
 import { Link } from "react-router-dom";
+import UserService from '../../../shared/services/UserService';
 
 
 class ListerClientFournisseur extends Component {
@@ -11,40 +12,24 @@ class ListerClientFournisseur extends Component {
     super(props);
     this.state = {
       clients: [],
-      idUser: null,
-      roleUser: '',
-      nomUser: '',
+      societeId: UserService.getSocietyId(),
+      roleUser: UserService.getRole(),
+      nomSociete: this.props.societeNom,
 
     };
   }
 
   componentDidMount() {
-
-    // AxiosCenter.getCurrentUser()
-    //   .then((response) => {
-    //     const idUser = response.data.id
-    //     const roleUser = response.data.authorities
-
-    //     console.log("data " + response.data)
-    //     this.setState({
-    //       idUser: idUser,
-    //       roleUser: roleUser
-    //     });
-    //     console.log("role " + this.state.roleUser)
-    //     console.log("id " + this.state.idUser)
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-
-    AxiosCenter.getAllClientFournisseurBySociete(1)
-      .then((response) => {
-        const clients = response.data;
-        this.setState({ clients });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (this.state.roleUser === "ROLE_SOCIETY") {
+      AxiosCenter.getAllClientFournisseurBySociete(this.state.societeId)
+        .then((response) => {
+          const clients = response.data;
+          this.setState({ clients });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
 
@@ -91,11 +76,13 @@ class ListerClientFournisseur extends Component {
             </table>
           </div>
         </div>
-        <Link to="/client-fournisseur">
-          <MDBBtn rounded color="teal accent-3">
-            Retour
+        <div className="row d-flex justify-content-center">
+          <Link to="/client-fournisseur">
+            <MDBBtn rounded color="teal accent-3">
+              Retour
                   </MDBBtn>
-        </Link>
+          </Link>
+        </div>
       </div>
     );
   }

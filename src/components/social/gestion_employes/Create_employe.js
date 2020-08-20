@@ -1,8 +1,9 @@
 import React from "react";
 import "./style2.scss";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
+import Loading from "../../../shared/component/Loading";
 
 import {
   MDBContainer,
@@ -16,11 +17,100 @@ import {
   MDBCol,
 } from "mdbreact";
 
+const employeSchema = Yup.object().shape({
+  //Identitée
+  matricule: Yup.string()
+    .min(6, "Trop court")
+    .max(8, "Trop long")
+    .required("Champ obligatoire"),
+  numeroSecuriteSociale: Yup.string("String")
+    .min(15, "Numero non Conforme")
+    .max(15, "Numero non Conforme")
+    .required("Champ obligatoire"),
+  civilite: Yup.string().required("Champ obligatoire"),
+  nomNaissance: Yup.string().min(2, "Trop court").max(20, "Trop long"),
+  nomUsage: Yup.string()
+    .min(2, "Trop court")
+    .max(20, "Trop long")
+    .required("Champ obligatoire"),
+  prenom: Yup.string().min(2, "Trop court").max(20, "Trop long"),
+  dateNaissance: Yup.date().required("Champ obligatoire"),
+  villeNaissance: Yup.string()
+    .min(2, "Trop court")
+    .max(20, "Trop long")
+    .required("Champ obligatoire"),
+  departementNaissance: Yup.string("String")
+    .min(2, "Trop court")
+    .max(20, "Trop long"),
+  paysNaisance: Yup.string("String")
+    .min(2, "Trop court")
+    .max(20, "Trop long")
+    .required("Champ obligatoire"),
+  situationFamiliale: Yup.string("String").required("Champ Obligatoire"),
+  enfantsACharge: Yup.string("String").required("Champ Obligatoire"),
+  //Coordonnées
+  numeroRue: Yup.string().max(5, "Trop long"),
+  nomRue: Yup.string()
+    .min(2, "Trop court")
+    .max(100, "Trop long")
+    .required("Champ obligatoire"),
+  boitePostale: Yup.string("String").min(2, "Trop court").max(100, "Trop long"), //complement adresse
+  codePostal: Yup.number(),
+  ville: Yup.string("String")
+    .min(2, "Trop court")
+    .max(20, "Trop long")
+    .required("Champ obligatoire"),
+  pays: Yup.string("String")
+    .min(2, "Trop court")
+    .max(20, "Trop long")
+    .required("Champ obligatoire"),
+  email: Yup.string()
+    .email("L'email doit être valide")
+    .required("Le champ est obligatoire"),
+  telephoneFix: Yup.number().min(9, "Trop court"),
+  telephonePortable: Yup.number().min(9, "Trop court"),
+  fax: Yup.number().min(9, "Trop court"),
+  //Informations Emploi
+  raisonSociale: Yup.string("String").max(20, "Trop long"),
+  dateEmbauche: Yup.date().required("Champ Obligatoire"),
+  dateSortie: Yup.date().required("Champ Obligatoire"),
+  typeContrat: Yup.string("String").required("Champ Obligatoire"),
+  categorie: Yup.string("String").required("Champ Obligatoire"),
+  poste: Yup.string("String").required("Champ Obligatoire"),
+  codeRef: Yup.string("String").required("Champ obligatoire"), //StatutEmploye
+  salaireHoraire: Yup.number().required("Champ Obligatoire"),
+  salaireBrutMensuelle: Yup.number().required("Champ Obligatoire"),
+  heuresMensuelle: Yup.string("String").required("Champ Obligatoire"),
+});
+
+const ComposantErreur = (props) => (
+  <div className="text-danger">{props.children}</div>
+);
+
+const ComposantInput = ({ field, form: { touched, errors }, ...props }) => (
+  <MDBInput label={props.label} outline type="text" {...props} {...field} />
+);
+
+const ComposantDate = ({ field, form: { touched, errors }, ...props }) => (
+  <MDBInput label={props.label} outline type="date" {...props} {...field} />
+);
+const ComposantNumber = ({ field, form: { touched, errors }, ...props }) => (
+  <MDBInput
+    label={props.label}
+    min="0"
+    outline
+    type="number"
+    {...props}
+    {...field}
+  />
+);
+
 class NewEmploye extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       societe: {},
+      loaded: false,
     };
   }
 
@@ -31,7 +121,7 @@ class NewEmploye extends React.Component {
       .then((response) => {
         const societe = response.data;
         console.log(societe);
-        this.setState({ societe: societe });
+        this.setState({ societe: societe, loaded: true });
       })
       .catch((error) => {
         console.log(error);
@@ -39,9 +129,12 @@ class NewEmploye extends React.Component {
   }
 
   submit = (values, actions) => {
+    console.log(values);
     AxiosCenter.createWrapperEmploye(values)
       .then((response) => {
-        console.log(response.data);
+        const employe = response.data;
+        console.log(employe);
+        this.props.history.push("/detailEmploye/" + employe.id);
       })
       .catch((error) => {
         console.log(error);
@@ -49,79 +142,13 @@ class NewEmploye extends React.Component {
     actions.setSubmitting(true);
   };
 
-  employeSchema = Yup.object().shape({
-    //Identitée
-    matricule: Yup.string()
-      .min(6, "Trop court")
-      .max(8, "Trop long")
-      .required("Champ obligatoire"),
-    numeroSecuriteSociale: Yup.string("String")
-      .min(15, "Numero non Conforme")
-      .max(15, "Numero non Conforme")
-      .required("Champ obligatoire"),
-    civilite: Yup.string().required("Champ obligatoire"),
-    nomNaissance: Yup.string().min(2, "Trop court").max(20, "Trop long"),
-    nomUsage: Yup.string()
-      .min(2, "Trop court")
-      .max(20, "Trop long")
-      .required("Champ obligatoire"),
-    prenom: Yup.string().min(2, "Trop court").max(20, "Trop long"),
-    dateNaissance: Yup.date().required("Champ obligatoire"),
-    villeNaissance: Yup.string()
-      .min(2, "Trop court")
-      .max(20, "Trop long")
-      .required("Champ obligatoire"),
-    departementNaissance: Yup.string("String")
-      .min(2, "Trop court")
-      .max(20, "Trop long"),
-    paysNaisance: Yup.string("String")
-      .min(2, "Trop court")
-      .max(20, "Trop long")
-      .required("Champ obligatoire"),
-    situationFamiliale: Yup.string("String").required("Champ Obligatoire"),
-    enfantsACharge: Yup.string("String").required("Champ Obligatoire"),
-    //Coordonnées
-    numeroRue: Yup.string().max(5, "Trop long"),
-    nomRue: Yup.string()
-      .min(2, "Trop court")
-      .max(100, "Trop long")
-      .required("Champ obligatoire"),
-    boitePostale: Yup.string("String")
-      .min(2, "Trop court")
-      .max(100, "Trop long")
-      .required("Champ obligatoire"), //complement adresse
-    codePostal: Yup.number(),
-    ville: Yup.string("String")
-      .min(2, "Trop court")
-      .max(20, "Trop long")
-      .required("Champ obligatoire"),
-    pays: Yup.string("String")
-      .min(2, "Trop court")
-      .max(20, "Trop long")
-      .required("Champ obligatoire"),
-    email: Yup.string()
-      .email("L'email doit être valide")
-      .required("Le champ est obligatoire"),
-    telephoneFix: Yup.number().min(9, "Trop court"),
-    telephonePortable: Yup.number().min(9, "Trop court"),
-    fax: Yup.number().min(9, "Trop court"),
-    //Informations Emploi
-    raisonSociale: Yup.string("String").max(20, "Trop long"),
-    dateEmbauche: Yup.date().required("Champ Obligatoire"),
-    dateSortie: Yup.date().required("Champ Obligatoire"),
-    typeContrat: Yup.string("String").required("Champ Obligatoire"),
-    categorie: Yup.string("String").required("Champ Obligatoire"),
-    poste: Yup.string("String").required("Champ Obligatoire"),
-    libelle: Yup.string("String").required("Champ obligatoire"), //StatutEmploye
-    salaireHoraire: Yup.number().required("Champ Obligatoire"),
-    salaireBrutMensuelle: Yup.number().required("Champ Obligatoire"),
-    heuresMensuelle: Yup.string("String").required("Champ Obligatoire"),
-  });
-
   render() {
+    if (!this.state.loaded) return <Loading />;
     const title = "Gestion Social";
     const title1 = "Enregister un Nouvel Employé";
     const entreprise = this.state.societe.raisonSociale;
+    console.log(typeof entreprise);
+
     return (
       <div className="App">
         <div className="newEmp">
@@ -145,10 +172,55 @@ class NewEmploye extends React.Component {
             {/* formulaire */}
             <Formik
               onSubmit={this.submit}
-              initialValues={{}}
-              validationSchema={this.employeSchema}
+              initialValues={{
+                id: null,
+                matricule: "",
+                numeroSecuriteSociale: "",
+                civilite: "",
+                nomNaissance: "",
+                nomUsage: "",
+                prenom: "",
+                dateNaissance: "",
+                villeNaissance: "",
+                departementNaissance: "",
+                paysNaisance: "",
+                situationFamiliale: "",
+                enfantsACharge: "",
+                numeroRue: "",
+                nomRue: "",
+                boitePostale: "",
+                codePostal: "",
+                ville: "",
+                pays: "",
+                email: "",
+                telephoneFix: "",
+                telephonePortable: "",
+                fax: "",
+                societeId: 1,
+                raisonSociale: entreprise, //TO DO recupère le nom de la société
+                dateEmbauche: "",
+                dateSortie: "",
+                typeContrat: "",
+                categorie: "",
+                poste: "",
+                codeRef: "",
+                salaireHoraire: "",
+                salaireBrutMensuelle: "",
+                heuresMensuelle: "",
+              }}
+              validationSchema={employeSchema}
             >
-              {({ handleSubmit, handleChange, handleBlur, isSubmitting }) => (
+              {({
+                values,
+                errors,
+                touched,
+                dirty,
+                isSubmitting,
+                handleSubmit,
+                handleChange,
+                handleBlur,
+                handleReset,
+              }) => (
                 <Form onSubmit={handleSubmit}>
                   <div>
                     <MDBCardBody>
@@ -159,25 +231,25 @@ class NewEmploye extends React.Component {
                         <MDBRow around between>
                           {/* ligne1 */}
                           <MDBCol md="4" className="mb-3">
-                            <MDBInput
-                              label="N° Matricule*"
-                              outline
-                              type="text"
+                            <Field
                               name="matricule"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              required
+                              label="N° Matricule*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="matricule"
+                              component={ComposantErreur}
                             />
                           </MDBCol>
                           <MDBCol md="6" className="mb-3">
-                            <MDBInput
-                              label="N° Sécurité Sociale*"
-                              outline
-                              type="text"
+                            <Field
                               name="numeroSecuriteSociale"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              required
+                              label="N° Sécurité Sociale*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="numeroSecuriteSociale"
+                              component={ComposantErreur}
                             />
                           </MDBCol>
                         </MDBRow>
@@ -189,93 +261,99 @@ class NewEmploye extends React.Component {
                               <select
                                 className="browser-default custom-select"
                                 name="civilite"
+                                value={values.civilite}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                required
                               >
-                                <option>Civilité*</option>
-                                <option value="1">Monsieur</option>
-                                <option value="2">Madame</option>
+                                <option value="">Civilité*</option>
+                                <option value="Mr">Monsieur</option>
+                                <option value="Mme">Madame</option>
                               </select>
+                              {errors.civilite && touched.civilite && (
+                                <div className="text-danger">
+                                  {errors.civilite}
+                                </div>
+                              )}
                             </div>
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
-                            <MDBInput
-                              label="Nom de Naissance"
-                              outline
-                              type="text"
+                            <Field
                               name="nomNaissance"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              required
+                              label="Nom de Naissance"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="nomNaissance"
+                              component={ComposantErreur}
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
-                            <MDBInput
-                              label="Nom d'usage*"
-                              outline
-                              type="text"
+                            <Field
                               name="nomUsage"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              required
+                              label="Nom d'usage*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="nomUsage"
+                              component={ComposantErreur}
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
-                            <MDBInput
-                              label="Prénom(s)"
-                              outline
-                              type="text"
+                            <Field
                               name="prenom"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
+                              label="Prénom(s)"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="prenom"
+                              component={ComposantErreur}
                             />
                           </MDBCol>
                         </MDBRow>
                         <MDBRow between around>
                           {/* ligne3 */}
                           <MDBCol md="3" className="mb-3">
-                            <MDBInput
-                              outline
-                              label="Date Naissance*"
-                              type="date"
+                            <Field
                               name="dateNaissance"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              required
+                              label="Date Naissance*"
+                              component={ComposantDate}
+                            />
+                            <ErrorMessage
+                              name="dateNaissance"
+                              component={ComposantErreur}
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
-                            <MDBInput
-                              label="Ville de Naissance*"
-                              outline
-                              type="text"
+                            <Field
                               name="villeNaissance"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              required
+                              label="Ville de Naissance"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="villeNaissance"
+                              component={ComposantErreur}
                             />
                           </MDBCol>
                           <MDBCol md="2" className="mb-3">
-                            <MDBInput
-                              label="Département"
-                              outline
-                              type="text"
+                            <Field
                               name="departementNaissance"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              required
+                              label="Département"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="departementNaissance"
+                              component={ComposantErreur}
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
-                            <MDBInput
-                              label="Pays*"
-                              outline
-                              type="text"
+                            <Field
                               name="paysNaisance"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              required
+                              label="Pays*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="paysNaisance"
+                              component={ComposantErreur}
                             />
                           </MDBCol>
                         </MDBRow>
@@ -286,28 +364,33 @@ class NewEmploye extends React.Component {
                               <br />
                               <select
                                 className="browser-default custom-select"
-                                type="text"
                                 name="situationFamiliale"
+                                value={values.situationFamiliale}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                required
                               >
-                                <option>Situation Familiale*</option>
-                                <option value="1">Célibataire</option>
-                                <option value="2">Marié(e)</option>
-                                <option value="2">Divorcé(e)</option>
-                                <option value="2">Veuf(ve)</option>
+                                <option value="">Situation Familiale*</option>
+                                <option value="C">Célibataire</option>
+                                <option value="M">Marié(e)</option>
+                                <option value="D">Divorcé(e)</option>
+                                <option value="V">Veuf(ve)</option>
                               </select>
+                              {errors.civilite && touched.civilite && (
+                                <div className="text-danger">
+                                  {errors.civilite}
+                                </div>
+                              )}
                             </div>
                           </MDBCol>
                           <MDBCol md="4" className="mb-3">
-                            <MDBInput
-                              label="Enfant(s) à Charge*"
-                              outline
-                              type="number"
+                            <Field
                               name="enfantsACharge"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
+                              label="Enfant(s) à Charge*"
+                              component={ComposantNumber}
+                            />
+                            <ErrorMessage
+                              name="enfantsACharge"
+                              component={ComposantErreur}
                             />
                           </MDBCol>
                         </MDBRow>
@@ -321,94 +404,123 @@ class NewEmploye extends React.Component {
                         <MDBRow around between>
                           {/* ligne1 */}
                           <MDBCol md="2" className="mb-3">
-                            <MDBInput
-                              label="N°"
-                              outline
-                              type="text"
+                            <Field
                               name="numeroRue"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
+                              label="N°"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="numeroRue"
+                              component={ComposantErreur}
                             />
                           </MDBCol>
                           <MDBCol md="9" className="mb-3">
-                            <MDBInput
-                              label="Libellé*"
-                              outline
-                              type="text"
+                            <Field
                               name="nomRue"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              required
+                              label="Libellé*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="nomRue"
+                              component={ComposantErreur}
                             />
                           </MDBCol>
                         </MDBRow>
                         <MDBRow around between>
                           {/* ligne2 */}
-                          <MDBInput
-                            label="Complément Adresse/BP"
-                            outline
-                            type="text"
-                            name="boitePostale"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            required
-                          />
-                          <MDBInput
-                            label="Code Postal*"
-                            outline
-                            type="text"
-                            name="codePostal"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            required
-                          />
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="boitePostale"
+                              label="Complément Adresse / BP"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="boitePostale"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="2" className="mb-3">
+                            <Field
+                              name="codePostal"
+                              label="Code Postal*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="codePostal"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="ville"
+                              label="Ville*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="ville"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
 
-                          <MDBInput
-                            label="Ville*"
-                            outline
-                            type="text"
-                            name="ville"
-                            required
-                          />
-                          <MDBInput
-                            label="Pays*"
-                            outline
-                            type="text"
-                            name="pays"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            required
-                          />
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="pays"
+                              label="Pays*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="pays"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
                         </MDBRow>
                         <MDBRow around between>
                           {/* ligne3 */}
-                          <MDBInput
-                            label="Email*"
-                            outline
-                            type="email"
-                            name="email"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            required
-                          />
-                          <MDBInput
-                            label="Telephone fixe"
-                            outline
-                            type="text"
-                            name="telephoneFix"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                          />
-                          <MDBInput label="Fax" outline type="text" />
-                          <MDBInput
-                            label="Portable*"
-                            outline
-                            type="text"
-                            name="telephonePortable"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            required
-                          />
+                          <MDBCol md="4" className="mb-3">
+                            <Field
+                              name="email"
+                              label="Email*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="email"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="2" className="mb-3">
+                            <Field
+                              name="telephoneFix"
+                              label="Telephone fixe"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="telephoneFix"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+
+                          <MDBCol md="2" className="mb-3">
+                            <Field
+                              name="fax"
+                              label="Fax"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="fax"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="2" className="mb-3">
+                            <Field
+                              name="telephonePortable"
+                              label="Portable*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="telephonePortable"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
                         </MDBRow>
                       </MDBCard>
                     </MDBCardBody>
@@ -420,139 +532,167 @@ class NewEmploye extends React.Component {
                         <br />
                         <MDBRow around between>
                           {/* ligne1 */}
-                          <MDBInput
-                            label="Sociéte"
-                            outline
-                            type="text"
-                            name="raisonSociale"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={this.state.societe.raisonSociale}
-                            disabled="false"
-                          />
-                          <MDBInput
-                            outline
-                            label="Date Embauche*"
-                            type="date"
-                            name="dateEmbauche"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            required
-                          />
-                          <MDBInput
-                            outline
-                            label="Date Sortie"
-                            type="date"
-                            name="dateSortie"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                          />
-
-                          <div>
-                            <br />
-                            <select
-                              className="browser-default custom-select"
-                              type="text"
-                              name="typeContrat"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              required
-                            >
-                              <option>Type Contrat*</option>
-                              <option value="1">CDD Tps Plein</option>
-                              <option value="2">CDD Tps Partiel</option>
-                              <option value="3">CDI Tps Plein</option>
-                              <option value="4">CDI Tps Partiel</option>
-                              <option value="4">Contrat Pro/Alternance</option>
-                            </select>
-                          </div>
-                        </MDBRow>
-                        <MDBRow around between>
-                          {/* ligne2 */}
-                          <MDBCol md="3" className="mb-3">
-                            <div>
-                              <br />
-                              <select
-                                className="browser-default custom-select"
-                                type="text"
-                                name="categorie"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                required
-                              >
-                                <option>Catégorie*</option>
-                                <option value="1">Employé</option>
-                                <option value="2">Agent de Maitrise</option>
-                                <option value="3">Assimilé Cadre</option>
-                                <option value="3">Cadre</option>
-                                <option value="4">Stagiaire</option>
-                              </select>
-                            </div>
-                          </MDBCol>
-                          <MDBCol md="3" className="mb-3">
-                            <MDBInput
-                              label="Poste*"
-                              outline
-                              type="text"
-                              name="poste"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              required
+                          <MDBCol md="4" className="mb-3">
+                            <Field
+                              name="raisonSociale"
+                              label="Société*"
+                              disabled
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="raisonSociale"
+                              component={ComposantErreur}
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="dateEmbauche"
+                              label="Date Embauche*"
+                              component={ComposantDate}
+                            />
+                            <ErrorMessage
+                              name="dateEmbauche"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="dateSortie"
+                              label="Date Sortie"
+                              component={ComposantDate}
+                            />
+                            <ErrorMessage
+                              name="dateSortie"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                        </MDBRow>
+
+                        <MDBRow around between>
+                          {/* ligne3 */}
+                          <MDBCol md="6" className="mb-3">
                             <div>
                               <br />
                               <select
                                 className="browser-default custom-select"
-                                type="text"
-                                name="libelle"
+                                name="typeContrat"
+                                value={values.typeContrat}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                required
                               >
-                                <option>Statut*</option>
-                                <option value="1">Non Embauche</option>
-                                <option value="2">Embauché</option>
-                                <option value="3">Stagiaire</option>
-                                <option value="4">Cadre</option>
+                                <option value="">Type Contrat*</option>
+                                <option value="CDD">CDD Tps Plein</option>
+                                <option value="CDDTP">CDD Tps Partiel</option>
+                                <option value="CDI">CDI Tps Plein</option>
+                                <option value="CDITP">CDI Tps Partiel</option>
+                                <option value="ALTER">
+                                  Contrat Pro/Alternance
+                                </option>
+                                <option value="STAGE">STAGE</option>
                               </select>
+                              {errors.typeContrat && touched.typeContrat && (
+                                <div className="text-danger">
+                                  {errors.typeContrat}
+                                </div>
+                              )}
+                            </div>
+                          </MDBCol>
+                          <MDBCol md="4" className="mb-3">
+                            <div>
+                              <br />
+                              <select
+                                className="browser-default custom-select"
+                                name="categorie"
+                                value={values.categorie}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                              >
+                                <option value="">Catégorie*</option>
+                                <option value="EMP">Employé</option>
+                                <option value="AM">Agent de Maitrise</option>
+                                <option value="AC">Assimilé Cadre</option>
+                                <option value="C">Cadre</option>
+                                <option value="STG">Stagiaire</option>
+                              </select>
+                              {errors.typeContrat && touched.typeContrat && (
+                                <div className="text-danger">
+                                  {errors.typeContrat}
+                                </div>
+                              )}
                             </div>
                           </MDBCol>
                         </MDBRow>
                         <MDBRow around between>
                           {/* ligne3 */}
+                          <MDBCol md="7" className="mb-3">
+                            <Field
+                              name="poste"
+                              label="Poste"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="poste"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
                           <MDBCol md="3" className="mb-3">
-                            <MDBInput
-                              label="Salaire Horaire*"
-                              outline
-                              type="text"
+                            <div>
+                              <br />
+                              <select
+                                className="browser-default custom-select"
+                                name="codeRef"
+                                value={values.libelle}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                              >
+                                <option value="">Statut Employé*</option>
+                                <option value="EMPNEMB">Non Embauché</option>
+                                <option value="EMPEMB">Embauché</option>
+                                <option value="EMPEND">Sorti</option>
+                                <option value="EMPOTHER">Autre</option>
+                              </select>
+                              {errors.typeContrat && touched.typeContrat && (
+                                <div className="text-danger">
+                                  {errors.typeContrat}
+                                </div>
+                              )}
+                            </div>
+                          </MDBCol>
+                        </MDBRow>
+                        <MDBRow around between>
+                          {/* ligne4 */}
+
+                          <MDBCol md="3" className="mb-3">
+                            <Field
                               name="salaireHoraire"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              required
+                              label="Salaire Horaire*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="salaireHoraire"
+                              component={ComposantErreur}
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
-                            <MDBInput
-                              label="Salaire Mensuel*"
-                              outline
-                              type="text"
+                            <Field
                               name="salaireBrutMensuelle"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              required
+                              label="Salaire Mensuel*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="salaireBrutMensuelle"
+                              component={ComposantErreur}
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
-                            <MDBInput
-                              label="Heures Mensuelles*"
-                              outline
-                              type="text"
+                            <Field
                               name="heuresMensuelle"
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              required
+                              label="Heures Mensuelles*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="heuresMensuelle"
+                              component={ComposantErreur}
                             />
                           </MDBCol>
                         </MDBRow>
@@ -564,37 +704,40 @@ class NewEmploye extends React.Component {
                     <hr></hr>
                   </div>
                   <div>
-                    <MDBBtn
-                      color="teal accent-3"
-                      rounded
-                      size="sm"
-                      type="submit"
-                      onClick={this.submit}
-                    >
-                      Enregistrer
-                    </MDBBtn>
+                    <MDBRow around between>
+                      <MDBBtn
+                        color="teal accent-3"
+                        rounded
+                        size="sm"
+                        type="submit"
+                      >
+                        Enregistrer
+                      </MDBBtn>
 
-                    <MDBBtn
-                      color="teal accent-3"
-                      rounded
-                      size="sm"
-                      type="reset"
-                    >
-                      RESET
-                    </MDBBtn>
+                      <MDBBtn
+                        color="teal accent-3"
+                        rounded
+                        size="sm"
+                        type="reset"
+                        onClick={handleReset}
+                        disabled={!dirty || isSubmitting}
+                      >
+                        INITIALISER
+                      </MDBBtn>
 
-                    <MDBBtn
-                      color="teal accent-3"
-                      rounded
-                      size="sm"
-                      onClick={() => {
-                        this.props.history.push(
-                          "/listEmployes/" + this.state.societe.id
-                        );
-                      }}
-                    >
-                      Retour
-                    </MDBBtn>
+                      <MDBBtn
+                        color="teal accent-3"
+                        rounded
+                        size="sm"
+                        onClick={() => {
+                          this.props.history.push(
+                            "/listEmployes/" + this.state.societe.id
+                          );
+                        }}
+                      >
+                        ANNULER
+                      </MDBBtn>
+                    </MDBRow>
                   </div>
                 </Form>
               )}

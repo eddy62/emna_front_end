@@ -24,12 +24,14 @@ const ViewComptable = () => {
       login: "",
       civilite: "",
 
+
       // Adresse
       numeroRue: "",
       codePostal: "",
       nomRue: "",
       ville: "",
       boitePostale: "",
+      pays: "",
 
 
       //informations professionnel
@@ -55,7 +57,7 @@ const ViewComptable = () => {
 
     //methode to find comptable by user before calling! Otherwise it'll show only the user.
     const getComptableID = async (id) => {
-        const result =  await AxiosCenter.getComptableId(id)
+        const result =  await AxiosCenter.getComptableByUserId(id)
         return result.data;
     }
    
@@ -120,6 +122,7 @@ const ViewComptable = () => {
                             <li className="list-group-item"> <span class="font-weight-bold"> Numéro De Rue :</span> {user.numeroRue}</li>
                             <li className="list-group-item"> <span class="font-weight-bold"> Nom De Rue :</span>  {user.nomRue}</li>
                             <li className="list-group-item"> <span class="font-weight-bold"> Ville :</span>  {user.ville}</li>
+                            <li className="list-group-item"> <span class="font-weight-bold"> Pays :</span>  {user.pays}</li>
                             <li className="list-group-item"> <span class="font-weight-bold"> Code Postal :</span> {user.codePostal}</li>
                             <li className="list-group-item"> <span class="font-weight-bold"> Fax : </span>  {user.fax}</li>
                         </ul>

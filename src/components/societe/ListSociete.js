@@ -11,14 +11,16 @@ import {
   MDBCol,
 } from "mdbreact";
 
-export class Releve extends React.Component {
-  render() {
+const ListSociete = () =>{
+
     return (
-      <div className="containerReleve">
+      <div className="containerGestionComptable">
         <MDBContainer>
           <div>
             <MDBCardHeader color="default-color">
-              <MDBCardTitle>Gestion de vos relevés bancaires</MDBCardTitle>
+              <MDBCardTitle>
+                <h1>Gestion Des Sociétés</h1>
+              </MDBCardTitle>
               <br />
             </MDBCardHeader>
           </div>
@@ -31,8 +33,7 @@ export class Releve extends React.Component {
                 <MDBCard>
                   <MDBCardBody>
                     <MDBCardTitle className="MDBCardTitle">
-                      {" "}
-                      Création d'un relevé
+                        <div>Sociétés Activées</div>
                     </MDBCardTitle>
                     <br />
 
@@ -57,7 +58,7 @@ export class Releve extends React.Component {
                 <MDBCard>
                   <MDBCardBody>
                     <MDBCardTitle className="MDBCardTitle">
-                      Gestion des relevés en cours
+                    <div>Sociétés Desactivées</div>
                     </MDBCardTitle>
                     <br />
 
@@ -82,7 +83,7 @@ export class Releve extends React.Component {
                 <MDBCard>
                   <MDBCardBody>
                     <MDBCardTitle className="MDBCardTitle">
-                      Historique des relevés
+                    <div>Toutes Les Sociétés</div>
                     </MDBCardTitle>
                     <br />
 
@@ -109,5 +110,6 @@ export class Releve extends React.Component {
       </div>
     );
   }
-}
-export default Releve;
+
+export default ListSociete;
+

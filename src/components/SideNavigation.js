@@ -25,11 +25,22 @@ class SideNavigation extends React.Component {
               this.setState({
                 societes: response.data,
               });
-              console.log(this.state.societes);
+              UserService.setSocietyId(response.data[0].id);
             }
           );
         }
       );
+    } else if (UserService.getRole() === "ROLE_ADMIN") {
+      AxiosCenter.getAllSocietes().then((response) => {
+        this.setState({
+          societes: response.data,
+        });
+        UserService.setSocietyId(response.data[0].id);
+      });
+    } else if (UserService.getRole() === "ROLE_SOCIETY") {
+      AxiosCenter.getSocieteByUser(UserService.getUserId()).then((response) => {
+        UserService.setSocietyId(response.data.id);
+      });
     }
   }
   // render MDBSideNav Link
@@ -39,6 +50,9 @@ class SideNavigation extends React.Component {
         {text}
       </MDBSideNavLink>
     );
+  }
+  changeSocietyId() {
+    UserService.setSocietyId(document.getElementById("mySelect").value);
   }
 
   render() {
@@ -55,11 +69,16 @@ class SideNavigation extends React.Component {
           style={{ transition: "padding-left .3s" }}
           href="/"
         >
-          {UserService.getRole() === "ROLE_ACCOUNTANT" ? (
+          {(UserService.getRole() === "ROLE_ACCOUNTANT") |
+          (UserService.getRole() === "ROLE_ADMIN") ? (
             <div>
-              <select className="browser-default custom-select">
+              <select
+                id="mySelect"
+                className="browser-default custom-select"
+                onChange={() => this.changeSocietyId()}
+              >
                 {this.state.societes.map((societe) => (
-                  <option value="1">{societe.civilite}</option>
+                  <option value={societe.id}>{societe.civilite}</option>
                 ))}
               </select>
             </div>

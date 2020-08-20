@@ -1,6 +1,9 @@
 import React from "react";
 import "./style2.scss";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
+import Loading from "../../../shared/component/Loading";
 import {
   MDBContainer,
   MDBCardHeader,
@@ -13,18 +16,78 @@ import {
   MDBCol,
 } from "mdbreact";
 
+const employeSchema = Yup.object().shape({
+  //Identitée
+  civilite: Yup.string().required("Champ obligatoire"),
+  nomUsage: Yup.string()
+    .min(2, "Trop court")
+    .max(20, "Trop long")
+    .required("Champ obligatoire"),
+  prenom: Yup.string().min(2, "Trop court").max(20, "Trop long"),
+  situationFamiliale: Yup.string("String").required("Champ Obligatoire"),
+  enfantsACharge: Yup.string("String").required("Champ Obligatoire"),
+  //Coordonnées
+  numeroRue: Yup.string().max(5, "Trop long"),
+  nomRue: Yup.string()
+    .min(2, "Trop court")
+    .max(100, "Trop long")
+    .required("Champ obligatoire"),
+  boitePostale: Yup.string("String").min(2, "Trop court").max(100, "Trop long"), //complement adresse
+  codePostal: Yup.number(),
+  ville: Yup.string("String")
+    .min(2, "Trop court")
+    .max(20, "Trop long")
+    .required("Champ obligatoire"),
+  pays: Yup.string("String")
+    .min(2, "Trop court")
+    .max(20, "Trop long")
+    .required("Champ obligatoire"),
+  email: Yup.string()
+    .email("L'email doit être valide")
+    .required("Le champ est obligatoire"),
+  telephoneFix: Yup.number().min(9, "Trop court"),
+  telephonePortable: Yup.number().min(9, "Trop court"),
+  fax: Yup.number().min(9, "Trop court"),
+  //Informations Emploi
+  raisonSociale: Yup.string("String").max(20, "Trop long"),
+  dateEmbauche: Yup.date().required("Champ Obligatoire"),
+  dateSortie: Yup.date().required("Champ Obligatoire"),
+  typeContrat: Yup.string("String").required("Champ Obligatoire"),
+  categorie: Yup.string("String").required("Champ Obligatoire"),
+  poste: Yup.string("String").required("Champ Obligatoire"),
+  codeRef: Yup.string("String").required("Champ obligatoire"), //StatutEmploye
+  salaireHoraire: Yup.number().required("Champ Obligatoire"),
+  salaireBrutMensuelle: Yup.number().required("Champ Obligatoire"),
+  heuresMensuelle: Yup.string("String").required("Champ Obligatoire"),
+});
+
+const ComposantErreur = (props) => (
+  <div className="text-danger">{props.children}</div>
+);
+
+const ComposantInput = ({ field, form: { touched, errors }, ...props }) => (
+  <MDBInput label={props.label} outline type="text" {...props} {...field} />
+);
+
+const ComposantDate = ({ field, form: { touched, errors }, ...props }) => (
+  <MDBInput label={props.label} outline type="date" {...props} {...field} />
+);
+const ComposantNumber = ({ field, form: { touched, errors }, ...props }) => (
+  <MDBInput label={props.label} outline type="number" {...props} {...field} />
+);
+
 class UpdateEmploye extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       employe: {},
-
-      valide: {
-        value: "",
-        valid: false,
-      },
+      loaded: false,
     };
   }
+
+  getInitialValues = () => {
+    return this.state.employe;
+  };
 
   componentDidMount() {
     const idEmploye = this.props.match.params.id;
@@ -33,22 +96,36 @@ class UpdateEmploye extends React.Component {
       .then((response) => {
         const employe = response.data;
         console.log(employe);
-        this.setState({ employe: employe });
+        this.setState({ employe: employe, loaded: true });
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
+  submit = (values, actions) => {
+    console.log(values);
+    AxiosCenter.updateWrapperEmploye(values)
+      .then((response) => {
+        const employe = response.data;
+        console.log(employe);
+        this.props.history.push("/detailEmploye/" + employe.id);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    actions.setSubmitting(true);
+  };
+
   render() {
+    if (!this.state.loaded) return <Loading />;
     const title = "Gestion Social";
-    const title1 = "Editer un Employé";
-    const employe = this.state.employe;
-    const entreprise = employe.raisonSociale;
+    const title1 = "Enregister un Nouvel Employé";
+    const entreprise = this.state.employe.raisonSociale;
     return (
       <div className="App">
         <div className="newEmp">
-          <MDBContainer>
+          <MDBContainer responsive>
             <div>
               <MDBCardHeader color="default-color">
                 <MDBCardTitle tag="h1">{title}</MDBCardTitle>
@@ -66,227 +143,529 @@ class UpdateEmploye extends React.Component {
               <hr></hr>
             </div>
             {/* formulaire */}
-            {/* formulaire */}
-            <form>
-              <div>
-                <MDBCardBody>
-                  <MDBCardTitle className="text" tag="h5">
-                    Identitée
-                  </MDBCardTitle>
-                  <MDBCard>
-                    <MDBRow around between>
-                      {/* ligne1 */}
-                      <MDBCol md="2" className="mb-3">
-                        <MDBInput label="N° ID" outline type="text" />
-                      </MDBCol>
-                      <MDBCol md="3" className="mb-3">
-                        <MDBInput label="N° Matricule" outline type="text" />
-                      </MDBCol>
-                      <MDBCol md="6" className="mb-3">
-                        <MDBInput
-                          label="N° Sécurité Sociale"
-                          outline
-                          type="text"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow between around>
-                      {/* ligne2 */}
-                      <MDBCol md="2" className="mb-3">
-                        <div>
-                          <br />
-                          <select className="browser-default custom-select">
-                            <option>Civilité</option>
-                            <option value="1">Monsieur</option>
-                            <option value="2">Madame</option>
-                          </select>
-                        </div>
-                      </MDBCol>
-                      <MDBCol md="3" className="mb-3">
-                        <MDBInput
-                          label="Nom de Naissance"
-                          outline
-                          type="text"
-                        />
-                      </MDBCol>
-                      <MDBCol md="3" className="mb-3">
-                        <MDBInput label="Nom d'usage" outline type="text" />
-                      </MDBCol>
-                      <MDBCol md="3" className="mb-3">
-                        <MDBInput label="Prénom" outline type="text" />
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow between around>
-                      {/* ligne3 */}
-                      <MDBCol md="2" className="mb-3">
-                        <MDBInput outline label="Date Naissance" type="date" />
-                      </MDBCol>
-                      <MDBCol md="3" className="mb-3">
-                        <MDBInput
-                          label="Ville de Naissance"
-                          outline
-                          type="text"
-                        />
-                      </MDBCol>
-                      <MDBCol md="3" className="mb-3">
-                        <MDBInput label="Département" outline type="text" />
-                      </MDBCol>
-                      <MDBCol md="3" className="mb-3">
-                        <MDBInput label="Pays" outline type="text" />
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow between around>
-                      {/* ligne4 */}
-                      <MDBCol md="4" className="mb-3">
-                        <div>
-                          <br />
-                          <select className="browser-default custom-select">
-                            <option>Situation Familiale</option>
-                            <option value="1">Célibataire</option>
-                            <option value="2">Marié(e)</option>
-                            <option value="2">Veuf(ve)</option>
-                          </select>
-                        </div>
-                      </MDBCol>
-                      <MDBCol md="4" className="mb-3">
-                        <MDBInput
-                          label="Enfant(s) à Charge"
-                          outline
-                          type="number"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                  </MDBCard>
-                </MDBCardBody>
-                <MDBCardBody>
-                  <MDBCardTitle className="text" tag="h5">
-                    Coordonnées
-                  </MDBCardTitle>
-                  <MDBCard size>
-                    <MDBRow around between>
-                      {/* ligne1 */}
-                      <MDBCol md="2" className="mb-3">
-                        <MDBInput label="N°" outline type="text" />
-                      </MDBCol>
-                      <MDBCol md="9" className="mb-3">
-                        <MDBInput label="Libellé" outline type="text" />
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow around between>
-                      {/* ligne2 */}
-                      <MDBInput label="Complément" outline type="text" />
-                      <MDBInput label="Code Postal" outline type="text" />
+            <Formik
+              onSubmit={this.submit}
+              initialValues={this.getInitialValues()}
+              validationSchema={employeSchema}
+              enableReinitialize={true}
+            >
+              {({
+                values,
+                errors,
+                touched,
+                dirty,
+                isSubmitting,
+                handleSubmit,
+                handleChange,
+                handleBlur,
+                handleReset,
+              }) => (
+                <Form onSubmit={handleSubmit}>
+                  <div>
+                    <MDBCardBody>
+                      <MDBCardTitle className="text" tag="h5">
+                        Identitée
+                      </MDBCardTitle>
+                      <MDBCard className="cadre">
+                        <MDBRow around between>
+                          {/* ligne1 */}
+                          <MDBCol md="2" className="mb-3">
+                            <Field
+                              name="id"
+                              label="N° ID*"
+                              disabled
+                              component={ComposantInput}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="matricule"
+                              label="N° Matricule*"
+                              disabled
+                              component={ComposantInput}
+                            />
+                          </MDBCol>
+                          <MDBCol md="6" className="mb-3">
+                            <Field
+                              name="numeroSecuriteSociale"
+                              label="N° Sécurité Sociale*"
+                              disabled
+                              component={ComposantInput}
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        <MDBRow between around>
+                          {/* ligne2 */}
+                          <MDBCol md="2" className="mb-3">
+                            <div>
+                              <br />
+                              <select
+                                className="browser-default custom-select"
+                                name="civilite"
+                                value={values.civilite}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                              >
+                                <option value="">Civilité*</option>
+                                <option value="Mr">Monsieur</option>
+                                <option value="Mme">Madame</option>
+                              </select>
+                              {errors.civilite && touched.civilite && (
+                                <div className="text-danger">
+                                  {errors.civilite}
+                                </div>
+                              )}
+                            </div>
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="nomNaissance"
+                              label="Nom de Naissance"
+                              disabled
+                              component={ComposantInput}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="nomUsage"
+                              label="Nom d'usage*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="nomUsage"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="prenom"
+                              label="Prénom(s)"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="prenom"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        <MDBRow between around>
+                          {/* ligne3 */}
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="dateNaissance"
+                              label="Date Naissance*"
+                              disabled
+                              component={ComposantDate}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="villeNaissance"
+                              label="Ville de Naissance"
+                              disabled
+                              component={ComposantInput}
+                            />
+                          </MDBCol>
+                          <MDBCol md="2" className="mb-3">
+                            <Field
+                              name="departementNaissance"
+                              label="Département"
+                              disabled
+                              component={ComposantInput}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="paysNaisance"
+                              label="Pays*"
+                              disabled
+                              component={ComposantInput}
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        <MDBRow between around>
+                          {/* ligne4 */}
+                          <MDBCol md="4" className="mb-3">
+                            <div>
+                              <br />
+                              <select
+                                className="browser-default custom-select"
+                                name="situationFamiliale"
+                                value={values.situationFamiliale}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                              >
+                                <option value="">Situation Familiale*</option>
+                                <option value="C">Célibataire</option>
+                                <option value="M">Marié(e)</option>
+                                <option value="D">Divorcé(e)</option>
+                                <option value="V">Veuf(ve)</option>
+                              </select>
+                              {errors.civilite && touched.civilite && (
+                                <div className="text-danger">
+                                  {errors.civilite}
+                                </div>
+                              )}
+                            </div>
+                          </MDBCol>
+                          <MDBCol md="4" className="mb-3">
+                            <Field
+                              name="enfantsACharge"
+                              label="Enfant(s) à Charge*"
+                              component={ComposantNumber}
+                            />
+                            <ErrorMessage
+                              name="enfantsACharge"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                      </MDBCard>
+                    </MDBCardBody>
+                    <MDBCardBody>
+                      <MDBCardTitle className="text" tag="h5">
+                        Coordonnées
+                      </MDBCardTitle>
+                      <MDBCard className="cadre">
+                        <MDBRow around between>
+                          {/* ligne1 */}
+                          <MDBCol md="2" className="mb-3">
+                            <Field
+                              name="numeroRue"
+                              label="N°"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="numeroRue"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="9" className="mb-3">
+                            <Field
+                              name="nomRue"
+                              label="Libellé*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="nomRue"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        <MDBRow around between>
+                          {/* ligne2 */}
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="boitePostale"
+                              label="Complément Adresse / BP"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="boitePostale"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="2" className="mb-3">
+                            <Field
+                              name="codePostal"
+                              label="Code Postal*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="codePostal"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="ville"
+                              label="Ville*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="ville"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
 
-                      <MDBInput label="Ville" outline type="text" />
-                      <MDBInput label="Pays" outline type="text" />
-                    </MDBRow>
-                    <MDBRow around between>
-                      {/* ligne3 */}
-                      <MDBInput label="Email" outline type="email" />
-                      <MDBInput label="Telephone fixe" outline type="text" />
-                      <MDBInput label="Fax" outline type="text" />
-                      <MDBInput label="Portable" outline type="text" />
-                    </MDBRow>
-                  </MDBCard>
-                </MDBCardBody>
-                <MDBCardBody>
-                  <MDBCardTitle className="text" tag="h5">
-                    Informations Emploi
-                  </MDBCardTitle>
-                  <MDBCard>
-                    <br />
-                    <MDBRow around between>
-                      {/* ligne1 */}
-                      <MDBInput
-                        label="Sociéte"
-                        outline
-                        type="text"
-                        value={employe.raisonSociale}
-                        disabled="false"
-                      />
-                      <MDBInput outline label="Date Embauche" type="date" />
-                      <MDBInput outline label="Date Sortie" type="date" />
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="pays"
+                              label="Pays*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="pays"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                        <MDBRow around between>
+                          {/* ligne3 */}
+                          <MDBCol md="4" className="mb-3">
+                            <Field
+                              name="email"
+                              label="Email*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="email"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="2" className="mb-3">
+                            <Field
+                              name="telephoneFix"
+                              label="Telephone fixe"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="telephoneFix"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
 
-                      <div>
+                          <MDBCol md="2" className="mb-3">
+                            <Field
+                              name="fax"
+                              label="Fax"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="fax"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="2" className="mb-3">
+                            <Field
+                              name="telephonePortable"
+                              label="Portable*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="telephonePortable"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                      </MDBCard>
+                    </MDBCardBody>
+                    <MDBCardBody>
+                      <MDBCardTitle className="text" tag="h5">
+                        Informations Emploi
+                      </MDBCardTitle>
+                      <MDBCard className="cadre">
                         <br />
-                        <select className="browser-default custom-select">
-                          <option>Type Contrat</option>
-                          <option value="1">CDD Tps Plein</option>
-                          <option value="2">CDD Tps Partiel</option>
-                          <option value="3">CDI Tps Plein</option>
-                          <option value="4">CDI Tps Partiel</option>
-                          <option value="4">Contrat Pro/Alternance</option>
-                        </select>
-                      </div>
-                    </MDBRow>
-                    <MDBRow around between>
-                      {/* ligne2 */}
-                      <MDBCol md="3" className="mb-3">
-                        <div>
-                          <br />
-                          <select className="browser-default custom-select">
-                            <option>Catégorie</option>
-                            <option value="1">Employé</option>
-                            <option value="2">Agent de Maitrise</option>
-                            <option value="3">Assimilé Cadre</option>
-                            <option value="4">Stagiaire</option>
-                          </select>
-                        </div>
-                      </MDBCol>
-                      <MDBCol md="3" className="mb-3">
-                        <MDBInput label="Poste" outline type="text" />
-                      </MDBCol>
-                      <MDBCol md="3" className="mb-3">
-                        <div>
-                          <br />
-                          <select className="browser-default custom-select">
-                            <option>Statut</option>
-                            <option value="1">Non Embauche</option>
-                            <option value="2">Embauché</option>
-                            <option value="3">Stagiaire</option>
-                            <option value="4">Cadre</option>
-                          </select>
-                        </div>
-                      </MDBCol>
-                    </MDBRow>
-                    <MDBRow around between>
-                      {/* ligne3 */}
-                      <MDBCol md="3" className="mb-3">
-                        <MDBInput label="Salaire Horaire" outline type="text" />
-                      </MDBCol>
-                      <MDBCol md="3" className="mb-3">
-                        <MDBInput label="Salaire Mensuel" outline type="text" />
-                      </MDBCol>
-                      <MDBCol md="3" className="mb-3">
-                        <MDBInput
-                          label="Heures Mensuelles"
-                          outline
-                          type="text"
-                        />
-                      </MDBCol>
-                    </MDBRow>
-                  </MDBCard>
-                </MDBCardBody>
-              </div>
-              <div>
-                <hr></hr>
-              </div>
+                        <MDBRow around between>
+                          {/* ligne1 */}
+                          <MDBCol md="4" className="mb-3">
+                            <Field
+                              name="raisonSociale"
+                              label="Société*"
+                              disabled
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="raisonSociale"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="dateEmbauche"
+                              label="Date Embauche*"
+                              component={ComposantDate}
+                            />
+                            <ErrorMessage
+                              name="dateEmbauche"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="dateSortie"
+                              label="Date Sortie"
+                              component={ComposantDate}
+                            />
+                            <ErrorMessage
+                              name="dateSortie"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                        </MDBRow>
 
-              <MDBBtn color="teal accent-3" rounded size="sm" type="submit">
-                EDITER
-              </MDBBtn>
+                        <MDBRow around between>
+                          {/* ligne3 */}
+                          <MDBCol md="6" className="mb-3">
+                            <div>
+                              <br />
+                              <select
+                                className="browser-default custom-select"
+                                name="typeContrat"
+                                value={values.typeContrat}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                              >
+                                <option value="">Type Contrat*</option>
+                                <option value="CDD">CDD Tps Plein</option>
+                                <option value="CDDTP">CDD Tps Partiel</option>
+                                <option value="CDI">CDI Tps Plein</option>
+                                <option value="CDITP">CDI Tps Partiel</option>
+                                <option value="ALTER">
+                                  Contrat Pro/Alternance
+                                </option>
+                                <option value="STAGE">STAGE</option>
+                              </select>
+                              {errors.typeContrat && touched.typeContrat && (
+                                <div className="text-danger">
+                                  {errors.typeContrat}
+                                </div>
+                              )}
+                            </div>
+                          </MDBCol>
+                          <MDBCol md="4" className="mb-3">
+                            <div>
+                              <br />
+                              <select
+                                className="browser-default custom-select"
+                                name="categorie"
+                                value={values.categorie}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                              >
+                                <option value="">Catégorie*</option>
+                                <option value="EMP">Employé</option>
+                                <option value="AM">Agent de Maitrise</option>
+                                <option value="AC">Assimilé Cadre</option>
+                                <option value="C">Cadre</option>
+                                <option value="STG">Stagiaire</option>
+                              </select>
+                              {errors.typeContrat && touched.typeContrat && (
+                                <div className="text-danger">
+                                  {errors.typeContrat}
+                                </div>
+                              )}
+                            </div>
+                          </MDBCol>
+                        </MDBRow>
+                        <MDBRow around between>
+                          {/* ligne3 */}
+                          <MDBCol md="7" className="mb-3">
+                            <Field
+                              name="poste"
+                              label="Poste"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="poste"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                            <div>
+                              <br />
+                              <select
+                                className="browser-default custom-select"
+                                name="codeRef"
+                                value={values.codeRef}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                              >
+                                <option value="">Statut Employé*</option>
+                                <option value="EMPNEMB">Non Embauché</option>
+                                <option value="EMPEMB">Embauché</option>
+                                <option value="EMPEND">Sorti</option>
+                                <option value="EMPOTHER">Autre</option>
+                              </select>
+                              {errors.typeContrat && touched.typeContrat && (
+                                <div className="text-danger">
+                                  {errors.typeContrat}
+                                </div>
+                              )}
+                            </div>
+                          </MDBCol>
+                        </MDBRow>
+                        <MDBRow around between>
+                          {/* ligne4 */}
 
-              <MDBBtn
-                color="teal accent-3"
-                rounded
-                size="sm"
-                onClick={() => {
-                  this.props.history.push("/listEmployes/" + employe.societeId);
-                }}
-              >
-                Retour
-              </MDBBtn>
-            </form>
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="salaireHoraire"
+                              label="Salaire Horaire*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="salaireHoraire"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="salaireBrutMensuelle"
+                              label="Salaire Mensuel*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="salaireBrutMensuelle"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="heuresMensuelle"
+                              label="Heures Mensuelles*"
+                              component={ComposantInput}
+                            />
+                            <ErrorMessage
+                              name="heuresMensuelle"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                        </MDBRow>
+                      </MDBCard>
+                    </MDBCardBody>
+                  </div>
+                  <p className="small">* Mention Obligatoire</p>
+                  <div>
+                    <hr></hr>
+                  </div>
+                  <div>
+                    <MDBBtn
+                      color="teal accent-3"
+                      rounded
+                      size="sm"
+                      type="submit"
+                    >
+                      Enregistrer
+                    </MDBBtn>
+
+                    <MDBBtn
+                      color="teal accent-3"
+                      rounded
+                      size="sm"
+                      type="reset"
+                      onClick={handleReset}
+                      disabled={!dirty || isSubmitting}
+                    >
+                      RESET
+                    </MDBBtn>
+
+                    <MDBBtn
+                      color="teal accent-3"
+                      rounded
+                      size="sm"
+                      onClick={() => {
+                        this.props.history.push(
+                          "/listEmployes/" + this.state.employe.societeId
+                        );
+                      }}
+                    >
+                      Retour
+                    </MDBBtn>
+                  </div>
+                </Form>
+              )}
+            </Formik>
           </MDBContainer>
         </div>
       </div>
