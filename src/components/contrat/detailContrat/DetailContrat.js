@@ -1,7 +1,6 @@
 import React from "react";
 import ContratService from "../service/ContratService";
 import Loading from "../../../shared/component/Loading";
-import PDFViewer from 'pdf-viewer-reactjs';
 
 
 export default class DetailContrat extends React.Component {
@@ -33,11 +32,7 @@ export default class DetailContrat extends React.Component {
   detailContrats(props) {
     console.log(props);
     return (
-        <PDFViewer
-            document={{
-              url: 'https://arxiv.org/pdf/quant-ph/0410100.pdf',
-            }}
-        />
+       <div>coucou</div>
 
     );
   }
