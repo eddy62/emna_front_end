@@ -1,6 +1,5 @@
 import React from 'react';
 import {Form, Formik} from 'formik';
-import * as Yup from 'yup';
 import ContratService from "../service/ContratService";
 import Loading from "../../../shared/component/Loading";
 import {Link} from "react-router-dom";
@@ -11,7 +10,7 @@ export default class CreerContrat extends React.Component {
         this.state = {
             loaded: false,
             employes: [],
-            title: "CDI TEMPS PLEIN",
+            title: "CONTRAT A DUREE INDETERMINEE A TEMPS PLEIN",
             employerID: "",
         };
 
@@ -50,12 +49,44 @@ export default class CreerContrat extends React.Component {
                 )
             })
         const Articles = props.employe.map((employe, index) => {
+            console.log("COUCOU")
+            console.log(props)
+            console.log(props.employe)
+            console.log(props.employe.employerNom)
+            console.log(employe.employerNom)
+            console.log(employe.listArticles)
+
+            const Article = employe.listArticles.map((article, index) =>{
+                console.log("Dans Article")
+                console.log(article.listClauses)
+
+                const Clause = article.listClauses.map((clause, index) => {
+                    return (
+                        <div>
+                            <div className="form-group">
+                                <div id="feedback">
+                                    <div className="form-check">
+                                        {clause.clauseReference} <br/>
+                                        <input type="checkbox" className="form-check-input" name="channel[]"
+                                               id={clause.clauseId} value="nl"/>
+                                        <label htmlFor={clause.clauseId}
+                                               className="form-check-label">{clause.clauseDesciption}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })
+                return (
+                    <div>
+                        <h5>{article.articleTitre} : {article.articleDescription}</h5>
+                        {Clause}
+                    </div>
+                )
+            })
+
             return (
-                <div className="form-group">
-                    <h5>{employe.articleTitre} :</h5>
-                    {employe.clauseReference} <input type="text" className="form-control"/>
-                    <button type="button" className="btn btn-light-green">Ajouter une clause</button>
-                </div>
+                <div>{Article}</div>
 
             )
         })
@@ -84,14 +115,12 @@ export default class CreerContrat extends React.Component {
                                     <label htmlFor="exampleFormControlSelect1"><h5>Type de contrat :</h5></label>
                                     <select name="titre" className="browser-default custom-select form-control"
                                             id="exampleFormControlSelect1" onChange={(event)=>this.handleOnChange(event)}>
-                                        <option value="CDI TEMPS PLEIN">CDI TEMPS PLEIN</option>
-                                        <option value="CDI TEMPS PARTIEL">CDI TEMPS PARTIEL</option>
-                                        <option value="CDD TEMPS PLEIN">CDD TEMPS PLEIN</option>
-                                        <option value="CDD TEMPS PARTIEL">CDD TEMPS PARTIEL</option>
+                                        <option value="CONTRAT A DUREE INDETERMINEE A TEMPS PLEIN">CONTRAT A DUREE INDETERMINEE A TEMPS PLEIN</option>
+                                        <option value="CONTRAT A DUREE INDETERMINEE A TEMPS PARTIEL">CONTRAT A DUREE INDETERMINEE A TEMPS PARTIEL</option>
+                                        <option value="CONTRAT A DUREE DETERMINEE A TEMPS PLEIN">CONTRAT A DUREE DETERMINEE A TEMPS PLEIN</option>
+                                        <option value="CONTRAT A DUREE DETERMINEE A TEMPS PARTIEL">CONTRAT A DUREE DETERMINEE A TEMPS PARTIEL</option>
                                     </select>
                                 </div>
-
-                                {console.log(Employes)}
                                 <div className="form-group">
                                     <label htmlFor="exampleFormControlSelect1"><h5>L'employé :</h5></label>
 
@@ -102,6 +131,7 @@ export default class CreerContrat extends React.Component {
                                 </div>
                                     {Articles}
                                 <hr/><hr/><hr/>
+                                <button type="button" className="btn btn-light-green float-left" >Ajouter une clause</button>
                                 <button type="button" className="btn btn-light-green float-left">Ajouter un article</button>
                                 <hr/><hr/><hr/><hr/><hr/>
                                 <div className="clearfix">
@@ -114,8 +144,6 @@ export default class CreerContrat extends React.Component {
                                 </div>
                                 <hr/>
                             </Form>
-
-
                         )}
 
                     />

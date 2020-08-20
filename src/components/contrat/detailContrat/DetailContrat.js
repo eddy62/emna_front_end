@@ -1,6 +1,8 @@
 import React from "react";
 import ContratService from "../service/ContratService";
 import Loading from "../../../shared/component/Loading";
+import PDFViewer from 'pdf-viewer-reactjs';
+
 
 export default class DetailContrat extends React.Component {
   constructor(props) {
@@ -20,10 +22,8 @@ export default class DetailContrat extends React.Component {
     ContratService.getContratDetail(this.props.match.params.id)
       .then((resultat) => {
         const contrats = resultat.data;
-        console.log(contrats.clauseEtArticleList[0].titreArticle);
         this.setState({
           contrat: contrats,
-          clauseEtArticle: contrats.clauseEtArticleList,
           loaded: true,
         });
       })
@@ -33,50 +33,12 @@ export default class DetailContrat extends React.Component {
   detailContrats(props) {
     console.log(props);
     return (
-      <div>
+        <PDFViewer
+            document={{
+              url: 'https://arxiv.org/pdf/quant-ph/0410100.pdf',
+            }}
+        />
 
-
-        <p>Crée le : {props.contrats.contratDateCreation}</p>
-        <h1>{props.contrats.contratTitre}</h1>
-        <p>
-          {props.contrats.infoSocieteRaisonSociale} <br />
-          {props.contrats.infoSocieteTelephone} <br />
-          {props.contrats.infoSocieterFax} <br />
-          {props.contrats.infoSocieterFormeJuridique} <br />
-          {props.contrats.infoSocieterSiren} <br />
-          {props.contrats.infoSocieterSiret} <br />
-          {props.contrats.infoSocieterEmail} <br />
-          {props.contrats.infoSocieterAdresseBoitePostale} <br />
-          {props.contrats.infoSocieterAdresseCodePostale} <br />
-          {props.contrats.infoSocieterAdresseNomRue} <br />
-          {props.contrats.infoSocieterAdresseNumeroRue} <br />
-          {props.contrats.infoSocieterAdresseVille} <br />
-        </p>
-        <p>
-          {props.contrats.employerMatricule} <br />
-          {props.contrats.employerCivilite} <br />
-          {props.contrats.employerNomNaissance} <br />
-          {props.contrats.employerNomUsage} <br />
-          {props.contrats.employerPrenom} <br />
-          {props.contrats.employerDateNaissance} <br />
-          {props.contrats.employerVilleNaissance} <br />
-          {props.contrats.employerDepartementNaissance} <br />
-          {props.contrats.employerPaysNaissance} <br />
-          {props.contrats.employerNumeroSecuriteSociale} <br />
-          {props.contrats.employerEmail} <br />
-          {props.contrats.employerTelephonFixe} <br />
-          {props.contrats.employerTelephonePortable} <br />
-          {props.contrats.employerFax} <br />
-          {props.contrats.employerAdresseBoitePostale} <br />
-          {props.contrats.employerAdresseCodePostal} <br />
-          {props.contrats.employerAdresseNomRue} <br />
-          {props.contrats.employerAdresseNumeroRue} <br />
-          {props.contrats.employerAdresseVille} <br />
-        </p>
-          {props.contrats.clauseEtArticleList.map((c, index) => (
-              <p key={index}>{c.titreArticle} : <br />{c.descriptionClause}</p>
-          ))}
-      </div>
     );
   }
 
