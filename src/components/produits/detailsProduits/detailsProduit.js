@@ -87,7 +87,7 @@ class DetailsProduit extends Component {
                             Retour
                       </MDBBtn>
                     </Link>
-                    <Link to={`/produit/modifier/${this.state.produit.id}`} >
+                    <Link to={`/produit/update/${this.state.produit.id}`} >
                         <MDBBtn size="sm" rounded color="primary">
                             <span className="d-none d-md-inline">
                                 Modifier </span>

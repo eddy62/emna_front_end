@@ -299,6 +299,14 @@ const AxiosCenter = {
     });
   },
 
+  updateProduit(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/produits`,
+      data: values,
+    })
+  },
+
   //Gestion societe
   addSociete(values) {
     return ApiBackEnd({
