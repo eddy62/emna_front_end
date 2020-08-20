@@ -337,8 +337,17 @@ const AxiosCenter = {
       url: "/wrappersociete/edit",
       data: values,
     });
-  }
+  },
   //Fin gestion societe
+
+  //comptable
+  getAllComptables () {
+    return ApiBackEnd({
+      method: "get",
+      url: "/comptables/all",
+    });
+  }
+  //fin comptable
 
 };
 
