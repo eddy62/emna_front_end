@@ -8,6 +8,7 @@ import ListEmployes from "./social/gestion_employes/List_employes";
 import DetailEmploye from "./social/gestion_employes/Detail_employe";
 import NewEmploye from "./social/gestion_employes/Create_employe";
 import UpdateEmploye from "./social/gestion_employes/Update_employe";
+import SupprimerEmploye from "./social/gestion_employes/Supprimer_employe";
 
 import ListeContrat from "./contrat/listeContrat/ListeContrat";
 import Contrat from "./contrat/Contrat";
@@ -63,7 +64,11 @@ import JuridiqueMenu from "./navigation/JuridiqueMenu";
 import ListeProduits from "./produits/listeProduits/listeProduits";
 import DetailsProduit from "./produits/detailsProduits/detailsProduit";
 import AddProduit from "./produits/addProduits/addProduit";
+import UpdateProduit from "./produits/updateProduit/updateProduit";
 //finGestionProduits
+
+//GestionReferentiels
+import Referentiels from "./referentiels/Referentiels";
 
 export default class Routes extends Component {
   render() {
@@ -78,6 +83,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/detailEmploye/:id" component={DetailEmploye} />
         <PrivateRoute path="/newEmploye/:id" component={NewEmploye} />
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
+        <PrivateRoute path="/deleteEmploye/:id" component={SupprimerEmploye} />
         {/* Gestion des Contrats*/}
         <PrivateRoute path="/listcontrat" component={ListeContrat} />
         <PrivateRoute path="/contrat" component={Contrat} />
@@ -91,8 +97,8 @@ export default class Routes extends Component {
         <PrivateRoute exact path="/users/stvu/users" component={ListUser} />
         <PrivateRoute exact path="/users/stvu/all" component={ListAllUsers} />
         <PrivateRoute exact path="/users/stvu" component={selectToViewUser} /> {/*stvu stands for : Select to view user*/}
-        <PrivateRoute exact path="/users/stvu/comptables" component={ListComptable} /> 
-        <PrivateRoute exact path="/users/stvu/societe" component={ListSociete} /> 
+        <PrivateRoute exact path="/users/stvu/comptables" component={ListComptable} />
+        <PrivateRoute exact path="/users/stvu/societe" component={ListSociete} />
         <PrivateRoute
           exact
           path="/users/add/comptable"
@@ -175,6 +181,10 @@ export default class Routes extends Component {
         <PrivateRoute path="/produits" component={ListeProduits} />
         <PrivateRoute path="/produit/detail/:id" component={DetailsProduit} />
         <PrivateRoute path="/produit/creer" component={AddProduit} />
+        <PrivateRoute path="/produit/update/:id" component={UpdateProduit} />
+
+        {/* Gestion Referentiels */}
+        <PrivateRoute path="/ref" component={Referentiels} />
 
         {/* <Route component={NotFound} /> */}
         <PrivateRoute component={NotFound} />

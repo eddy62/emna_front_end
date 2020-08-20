@@ -29,18 +29,11 @@ class MenuClientFournisseur extends Component {
 
   componentDidMount() {
     if (this.state.roleUser === "ROLE_SOCIETY") {
-      AxiosCenter.getSocieteById(this.state.societeId)
+      AxiosCenter.getWrapperSociete(this.state.societeId)
         .then((response) => {
-          const infoEntrepriseId = response.data.infoEntrepriseId;
-          AxiosCenter.getInfoEntrepriseById(infoEntrepriseId)
-            .then((response) => {
-              const societeNom = response.data.raisonSociale
-              this.setState({ societeNom: societeNom });
-              console.log(" nom societe " + this.state.societeNom)
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+          const societeNom = response.data.raisonSociale
+          this.setState({ societeNom: societeNom });
+          console.log(" nom societe " + this.state.societeNom)
         })
         .catch((error) => {
           console.log(error);
@@ -75,7 +68,7 @@ class MenuClientFournisseur extends Component {
       <MDBContainer>
         <div className="justify-content-center align-items-center container-fluid p-5 ">
           <MDBCardHeader color="default-color">
-            <MDBCardTitle tag="h2">Recherchez parmi toutes les entreprises {this.state.societeNom} </MDBCardTitle>
+            <MDBCardTitle tag="h2"> Société {this.state.societeNom} </MDBCardTitle>
             <br></br>
             <div className="justify-content-center container-fluid align-items-center">
               <form className="form-inline ">
@@ -98,73 +91,71 @@ class MenuClientFournisseur extends Component {
 
           <br></br>
         </div>
-        <div className="justify-content-center align-items-center">
-          <MDBRow>
-            <MDBCol>
-              <MDBCard >
-                <MDBCardBody>
-                  <MDBCardTitle tag="h4">Lister mes associes</MDBCardTitle>
-                  <br />
-                  <MDBCardText>
-                    Consultation et Modification des données
-                    des mes associes
+        <MDBRow>
+          <MDBCol>
+            <MDBCard >
+              <MDBCardBody>
+                <MDBCardTitle tag="h4">Client Fournisseur</MDBCardTitle>
+                <br />
+                <MDBCardText>
+                  Consultation, Enregistrement et Modification des données
+                  des mes associes
                       </MDBCardText>
-                  <br />
-                  <div>
-                    <Link to="/clientFournisseur/liste">
-                      <MDBBtn rounded size="sm" color="teal accent-3">
-                        Voir
+                <br />
+                <div>
+                  <Link to="/clientFournisseur/liste">
+                    <MDBBtn rounded size="sm" color="teal accent-3">
+                      Voir La Liste
                           </MDBBtn>
-                    </Link>
-                  </div>
-                </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
-            <MDBCol>
-              <MDBCard >
-                <MDBCardBody>
-                  <MDBCardTitle tag="h4">Ajouter un nouveau client founisseur</MDBCardTitle>
-                  <br />
-                  <MDBCardText>
-                    Enregistrement des données des mes associes
+                  </Link>
+                  <Link to="/clientFournisseur/creer">
+                    <MDBBtn color="teal accent-3" rounded size="sm">
+                      +Ajouter
+                          </MDBBtn>
+                  </Link>
+                </div>
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+          <MDBCol>
+            <MDBCard >
+              <MDBCardBody>
+                <MDBCardTitle tag="h4">Produits</MDBCardTitle>
+                <br />
+                <MDBCardText>
+                  Consultation, Enregistrement et Modification des données
+                  des mes produits
                       </MDBCardText>
-                  <br />
-                  <div className="boutton">
-                    <Link to="/clientFournisseur/creer">
-                      <MDBBtn color="teal accent-3" rounded size="sm">
-                        +Ajouter
+                <br />
+                <div className="boutton">
+                  <Link to="/produits">
+                    <MDBBtn color="teal accent-3" rounded size="sm">
+                      Voir La Liste
                           </MDBBtn>
-                    </Link>
-                  </div>
-                </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
-            <MDBCol>
-              <MDBCard >
-                <MDBCardBody>
-                  <MDBCardTitle tag="h4">Produits</MDBCardTitle>
-                  <br />
-                  <MDBCardText>
-                    Enregistrement,Consultation et Modification mes produits
-                      </MDBCardText>
-                  <br />
-                  <div className="boutton">
-                    <Link to="/produits">
-                      <MDBBtn color="teal accent-3" rounded size="sm">
-                        produits
+                  </Link>
+                  <Link name={this.state.societeNom} to="/produit/creer">
+                    <MDBBtn color="teal accent-3" rounded size="sm" >
+                      +Ajouter
                           </MDBBtn>
-                    </Link>
-                    <Link to="/produit/creer">
-                      <MDBBtn color="teal accent-3" rounded size="sm">
-                        +Ajouter
-                          </MDBBtn>
-                    </Link>
-                  </div>
-                </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
-          </MDBRow>
-        </div>
+                  </Link>
+                </div>
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
+
+        <MDBRow>
+          <MDBCol>
+            <br></br>
+            <div className="row d-flex justify-content-center">
+              <Link to="/">
+                <MDBBtn color="teal accent-3" rounded size="sm">
+                  Retour à l'Acceuil
+                </MDBBtn>
+              </Link>
+            </div>
+          </MDBCol>
+        </MDBRow>
       </MDBContainer>
 
 

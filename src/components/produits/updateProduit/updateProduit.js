@@ -1,17 +1,13 @@
-import React from "react";
+import React, { Component } from 'react';
 import { Formik, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import * as Yup from "yup"
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import {
     MDBBtn, MDBCardTitle,
     MDBCardHeader,
     MDBContainer,
 } from "mdbreact";
-import UserService from '../../../shared/services/UserService';
-
-
-
 
 const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
@@ -44,20 +40,51 @@ const ComposantSelect = ({ field, form: { touched, errors }, ...props }) => (
     </div>
 );
 
-class AddProduit extends React.Component {
-    submit = (values, actions) => {
-        AxiosCenter.createProduit(values)
+class UpdateProduit extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            UpdateProduit: {},
+            loaded: false,
+            IdEntity: this.props.match.params.id,
+        };
+    }
+
+
+    componentDidMount() {
+        AxiosCenter.getProduitById(this.state.IdEntity)
             .then((response) => {
-                console.log(response.data);
-                this.props.history.push("/client-fournisseur");
+                const produit = response.data;
+                console.log(response.data)
+                this.setState({
+                    UpdateProduit: produit,
+                    loaded: true,
+                });
             })
             .catch((error) => {
                 console.log(error);
             });
+    }
 
+
+    getInitialValues = () => {
+        return this.state.UpdateProduit;
+    }
+
+
+    submit = (values, actions) => {
+        AxiosCenter.updateProduit(values)
+            .then((response) => {
+                this.props.history.push("/produit/detail/" + response.data.id);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
         actions.setSubmitting(true);
+    }
 
-    };
+
 
     userSchema = Yup.object().shape({
         nom: Yup.string().required("Le champ est obligatoire"),
@@ -67,34 +94,26 @@ class AddProduit extends React.Component {
         description: Yup.string().required("Le champ est obligatoire"),
         unite: Yup.string().required("Le champ est obligatoire"),
     });
-
     render() {
+
         return (
 
             <MDBContainer>
                 <div>
                     <MDBCardHeader color="default-color">Société {this.props.name} </MDBCardHeader>
                     <br></br>
-                    <MDBCardTitle tag="h1">Enregister un Nouveau Produit </MDBCardTitle>
+                    <MDBCardTitle tag="h1">Edite Produit {this.state.UpdateProduit.nom} </MDBCardTitle>
                     <hr></hr>
                     <Formik
+                        initialValues={this.getInitialValues()}
                         onSubmit={this.submit}
-                        initialValues={{
-                            nom: "",
-                            reference: "",
-                            tva: "",
-                            prix: "",
-                            unite: "",
-                            description: "",
-                            societeId: UserService.getSocietyId(),
-                            id: null,
-                        }}
+                        enableReinitialize={true}
                         validationSchema={this.userSchema}
                     >
-                        {({ handleSubmit, isSubmitting }) => (
+                        {({ handleSubmit }) => (
                             <form
                                 onSubmit={handleSubmit}
-                                className="container-fluid p-5  lighten-5 justify-content-center align-items-center"
+                                className=" container-fluid p-5 lighten-5 justify-content-center align-items-center"
                             >
                                 <div >
                                     <Field
@@ -128,14 +147,13 @@ class AddProduit extends React.Component {
                                         rows="2" />
                                     <ErrorMessage name="description" component={ComposantErreur} />
 
-
                                 </div>
                                 <br></br>
                                 <div className="row d-flex justify-content-center ">
                                     <MDBBtn rounded type="submit" color="primary">
                                         Sauvegarder
               </MDBBtn>
-                                    <Link to="/client-fournisseur">
+                                    <Link to={`/produit/detail/${this.state.UpdateProduit.id}`}>
                                         <MDBBtn rounded color="teal accent-3">
                                             Retour
                   </MDBBtn>
@@ -146,8 +164,8 @@ class AddProduit extends React.Component {
                     </Formik>
                 </div >
             </MDBContainer >
+
         );
     }
 }
-
-export default AddProduit;
+export default UpdateProduit;

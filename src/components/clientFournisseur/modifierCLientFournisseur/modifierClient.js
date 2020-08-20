@@ -72,7 +72,7 @@ class ModifierClient extends Component {
         telephone: Yup.number().min(9, "Trop court"),
         numeroRue: Yup.string().required("Le champ est obligatoire"),
         nomRue: Yup.string().required("Le champ est obligatoire"),
-        codePostal: Yup.string().max(5, "Trop court").required("Le champ est obligatoire"),
+        codePostal: Yup.string().required("Le champ est obligatoire"),
         ville: Yup.string().required("Le champ est obligatoire"),
         pays: Yup.string().required("Le champ est obligatoire"),
     });
