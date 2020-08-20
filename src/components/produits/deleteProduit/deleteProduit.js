@@ -18,7 +18,6 @@ class DeleteProduit extends Component {
         AxiosCenter.deleteProduit(this.props.produit.id)
             .then((response) => {
                 console.log(response.data)
-                this.toggle();
                 this.props.history.push("/produits");
 
 

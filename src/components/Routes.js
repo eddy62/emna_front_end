@@ -181,7 +181,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/produits" component={ListeProduits} />
         <PrivateRoute path="/produit/detail/:id" component={DetailsProduit} />
         <PrivateRoute path="/produit/creer" component={AddProduit} />
-        <PrivateRoute path="/produit/update" component={UpdateProduit} />
+        <PrivateRoute path="/produit/update/:id" component={UpdateProduit} />
 
         {/* Gestion Referentiels */}
         <PrivateRoute path="/ref" component={Referentiels} />

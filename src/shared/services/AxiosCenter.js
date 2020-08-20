@@ -292,17 +292,17 @@ const AxiosCenter = {
       data: values,
     });
   },
-  deleteProduit(id) {
+  deleteProduit(produitId, userId) {
     return ApiBackEnd({
       method: "delete",
-      url: `/produits/${id}`,
+      url: `/produits/delete/${produitId}/user/${userId}`,
     });
   },
 
   updateProduit(values) {
     return ApiBackEnd({
       method: "PUT",
-      url: `/produits`,
+      url: `/produits/update`,
       data: values,
     })
   },
