@@ -345,6 +345,17 @@ const AxiosCenter = {
     });
   },
   //Fin gestion societe
+  //Fin gestion societe
+
+  //comptable
+  getAllComptables () {
+    return ApiBackEnd({
+      method: "get",
+      url: "/comptables/all",
+    });
+  }
+  //fin comptable
+
 };
 
 export default AxiosCenter;

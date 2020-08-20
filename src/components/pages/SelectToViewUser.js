@@ -10,8 +10,8 @@ import {
   MDBRow,
   MDBCol,
 } from "mdbreact";
-import UserService from "../../shared/services/UserService";
 const SelectToViewUser = () => {
+
 
     return (
         <div className="App">
@@ -59,7 +59,7 @@ const SelectToViewUser = () => {
 
                       <br />
                       <div className="boutton">
-                        <Link to="/users/stvu/societe">
+                        <Link to="/users/stvu/societes">
                           <MDBBtn className="boutton" rounded size="sm">
                             Gerer
                           </MDBBtn>
@@ -79,7 +79,7 @@ const SelectToViewUser = () => {
 
                       <br />
                       <div className="boutton">
-                        <Link to="/users/stvu/users">
+                        <Link to="/users/stvu/admins">
                           <MDBBtn className="boutton" rounded size="sm">
                             Gerer
                           </MDBBtn>
@@ -111,7 +111,10 @@ const SelectToViewUser = () => {
                     </MDBCard>
                   </MDBCol>
                 </MDBRow>
-            </div>
+            </div> 
+            <Link to="/" className="btn btn-outline-success mt-5">
+              <span >Retourner</span>
+          </Link>
           </MDBContainer>
         </div>
       );

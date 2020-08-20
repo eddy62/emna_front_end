@@ -69,12 +69,14 @@ const ViewComptable = () => {
     }
     
 
+    const goBack = () => {
+        window.history.back();
+     }
 
     return (
         <div className="container-fluid">
             <div className="w-75 mx-auto shadow p-4">
-                <Link className="btn btn-primary" to="/users">Retournez à l'acceuil</Link>
-                
+            <button className="btn btn-primary" onClick={goBack}>Retourner</button>
                 <h2 className="text-center mb-4"><span class="font-weight-bold">Détails D'un Comptable</span></h2>
 
                 <hr />

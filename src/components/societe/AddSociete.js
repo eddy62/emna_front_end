@@ -57,7 +57,12 @@ const AddSociete = () => {
         try {
             e.preventDefault();
             await AxiosCenter.addSociete(user);
-            history.push("/users")
+            if(user.activated){
+                history.push("/users/stvu/societes/active")
+            }
+            else{
+                history.push("/users/stvu/societes/desactive")
+            }
         } catch (err) {
             console.log(err)
         }
@@ -346,9 +351,8 @@ const AddSociete = () => {
                         </div>
                     </div>
 
-                    <Link className="btn btn-outline-danger" to="/users/stau">Annulez</Link>
-                    <button type="submit" href="/users" className="btn btn-primary"> Créez </button>
-
+                    <Link className="btn btn-outline-danger" to="/users/stvu/societes">Annulez</Link>
+                    <button type="submit" href={user.activated ? "/users/stvu/societes/active" : "/users/stvu/societes/desactive"} className="btn btn-success"> Créez </button>
                 </div>
             </form>
         </div>
