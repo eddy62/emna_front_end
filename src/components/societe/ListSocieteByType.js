@@ -31,6 +31,7 @@ const ListSocieteByType = (props) => {
 
 
 
+    //Handle activation
     //debut desactivation utilisateur
     const isActivePage = (props.location.pathname.trim() === "/users/stvu/societes/active");
     const handleDesactiveUser = (id) => {

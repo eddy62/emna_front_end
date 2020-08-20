@@ -32,6 +32,7 @@ const ListAdminByType = (props) => {
     console.log("Allusers : ", users)
 
 
+    //Handle activation
     //debut desactivation utilisateur
     const isActivePage = (props.location.pathname.trim() === "/users/stvu/admins/active");
     const handleDesactiveUser = (id) => {
@@ -147,7 +148,7 @@ const ListAdminByType = (props) => {
 
     let activeAdmins = [];
     if (toShow != null) {
-        activeAdmins = currrentPosts.filter(admin => (admin.activated == toShow) && (admin.authorities[0] === "ROLE_ADMIN"));
+        activeAdmins = currrentPosts.filter(admin => (admin.activated === toShow) && (admin.authorities[0] === "ROLE_ADMIN"));
 
     }
     if (toShow === "all") {

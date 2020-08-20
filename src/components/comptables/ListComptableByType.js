@@ -32,6 +32,7 @@ const ListComptableByType = (props) => {
 
   
 
+    //handle activation
     //debut desactivation utilisateur
     const isActivePage = (props.location.pathname.trim() === "/users/stvu/comptables/active");
     const handleDesactiveUser = (id) => {
