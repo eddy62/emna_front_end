@@ -353,9 +353,49 @@ const AxiosCenter = {
       method: "get",
       url: "/comptables/all",
     });
-  }
+  },
   //fin comptable
+  uploadFacture(facture, files) {
+    let formData = new FormData();
+    formData.append("numfact", facture.numfact);
+    formData.append("message", facture.message);
+    formData.append("date", facture.date);
+    formData.append("dateEcheance", facture.echeance);
+    formData.append("prixHT", facture.prixHT);
+    formData.append("prixTTC", facture.prixTTC);
+    formData.append("tva", facture.tva);
+    formData.append("moyenDePaiement", facture.moyenDePaiement);
+    formData.append("societeId", 1);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("listeFiles", files.item(i));
+    }
 
+    // for (let i = 0; i < facture.produits.length; i++) {
+    //   let produitToAppend = JSON.stringify(facture.produits[i]);
+    //   formData.append("produits", produitToAppend);
+    // }
+    
+    return ApiBackEnd({
+      method: "POST",
+      url: "/facture/new",
+      mode: "no-cors",
+      data: formData,
+    });
+  },
+
+  deleteFacture(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/factures/${id}`,
+    });
+  },
+
+  getFactureBySociete(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `factures/societe/${id}`,
+    });
+  }
 };
 
 export default AxiosCenter;
