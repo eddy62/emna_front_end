@@ -1,8 +1,8 @@
 import React, { Component } from "react";
+import { Redirect, useHistory } from "react-router-dom";
 import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
-import Loading from "../../../shared/component/Loading";
 import {
   MDBContainer,
   MDBBtn,
@@ -15,10 +15,15 @@ import {
 } from "mdbreact";
 
 class SupprimerEmploye extends Component {
-  state = {
-    modal: false,
-    loaded: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      redirect: false,
+      modal: false,
+      societeId: UserService.getSocietyId(),
+    };
+  }
 
   toggle = () => {
     this.setState({
@@ -29,22 +34,23 @@ class SupprimerEmploye extends Component {
   delete = () => {
     const idEmploye = this.props.employe.id;
     console.log(idEmploye);
+
     AxiosCenter.deleteWrapperEmploye(idEmploye)
       .then((response) => {
         console.log(response);
         this.setState({
           modal: !this.state.modal,
-          loaded: true,
+          redirect: true,
         });
-        this.props.history.push("/listEmployes/" + UserService.getSocietyId);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
+  redirection = () => this.setState({ redirect: true });
   render() {
-    if (!this.state.loaded) return <Loading />;
+    const societeId = this.state.societeId;
+
     return (
       <MDBContainer>
         <MDBBtn
@@ -85,6 +91,9 @@ class SupprimerEmploye extends Component {
               >
                 Supprimer
               </MDBBtn>
+              {this.state.redirect && (
+                <Redirect to={"/listEmployes/" + societeId} />
+              )}
             </MDBRow>
           </MDBModalFooter>
         </MDBModal>
