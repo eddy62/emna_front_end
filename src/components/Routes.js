@@ -73,6 +73,12 @@ import UpdateProduit from "./produits/updateProduit/updateProduit";
 //GestionReferentiels
 import Referentiels from "./referentiels/Referentiels";
 
+//GestionFactures
+import AccueilFacture from "./gestion_factures/accueilFactures"
+import CreerFacture from "./gestion_factures/creerFacture"
+import CreerDepense from "./gestion_factures/creerDepense"
+import DetailFacture from "./gestion_factures/detailFacture"
+
 export default class Routes extends Component {
   render() {
     return (
@@ -87,6 +93,12 @@ export default class Routes extends Component {
         <PrivateRoute path="/newEmploye/:id" component={NewEmploye} />
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
         <PrivateRoute path="/deleteEmploye/:id" component={SupprimerEmploye} />
+		{/* Gestion Facture */}
+        <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
+        <PrivateRoute path="/newfacture" component={CreerFacture} />
+        <PrivateRoute path="/detailfacture" component={DetailFacture} />
+        <PrivateRoute path="/newfacture" component={CreerFacture} />
+        <PrivateRoute path="/newdepense" component={CreerDepense} />
         {/* Gestion des Contrats*/}
         <PrivateRoute path="/listcontrat" component={ListeContrat} />
         <PrivateRoute path="/contrat" component={Contrat} />
