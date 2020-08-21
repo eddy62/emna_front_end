@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import { PrivateRoute } from "../helpers/PrivateRoute";
 
 //Gestion Social import
@@ -100,11 +100,18 @@ export default class Routes extends Component {
         <PrivateRoute exact path="/users/stvu/admins" component={ListUser} />
         <PrivateRoute exact path="/users/stvu/users/add" component={AddUser} />
         <PrivateRoute exact path="/users/stvu/all" component={ListAllUsers} />
-        <PrivateRoute exact path="/users/stvu" component={selectToViewUser} /> {/*stvu stands for : Select to view user*/}
-        <PrivateRoute exact path="/users/stvu/comptables" component={ListComptable} />
-        <PrivateRoute exact path="/users/stvu/societe" component={ListSociete} />
-        <PrivateRoute exact path="/users/stvu/comptables" component={ListComptable} /> 
-        <PrivateRoute exact path="/users/stvu/societes" component={ListSociete} /> 
+        <PrivateRoute exact path="/users/stvu" component={selectToViewUser} />
+        {/*stvu stands for : Select to view user*/}
+        <PrivateRoute
+          exact
+          path="/users/stvu/comptables"
+          component={ListComptable}
+        />
+        <PrivateRoute
+          exact
+          path="/users/stvu/societes"
+          component={ListSociete}
+        />
         <PrivateRoute
           exact
           path="/users/stvu/comptables/add"
@@ -120,7 +127,7 @@ export default class Routes extends Component {
           path="/users/edit/comptable/:id"
           component={EditComptable}
         />
-         <PrivateRoute
+        <PrivateRoute
           exact
           path="/users/stvu/comptables/active"
           component={ListComptableByType}
@@ -135,17 +142,17 @@ export default class Routes extends Component {
           path="/users/stvu/comptables/all"
           component={ListComptableByType}
         />
-         <PrivateRoute
+        <PrivateRoute
           exact
           path="/users/stvu/admins/all"
           component={ListAdminByType}
         />
-         <PrivateRoute
+        <PrivateRoute
           exact
           path="/users/stvu/admins/active"
           component={ListAdminByType}
         />
-         <PrivateRoute
+        <PrivateRoute
           exact
           path="/users/stvu/admins/desactive"
           component={ListAdminByType}
@@ -165,7 +172,11 @@ export default class Routes extends Component {
           path="/users/stvu/societes/desactive"
           component={ListSocieteByType}
         />
-        <PrivateRoute exact path="/users/stvu/societes/add" component={AddSociete} />
+        <PrivateRoute
+          exact
+          path="/users/stvu/societes/add"
+          component={AddSociete}
+        />
         <PrivateRoute
           exact
           path="/users/view/societe/:id"
@@ -176,7 +187,8 @@ export default class Routes extends Component {
           path="/users/edit/societe/:id"
           component={EditSociete}
         />
-        <PrivateRoute exact path="/users/stau" component={SelectToAddUser} /> {/*stau stands for : Select to add user*/}
+        <PrivateRoute exact path="/users/stau" component={SelectToAddUser} />{" "}
+        {/*stau stands for : Select to add user*/}
         {/* finGestionUserRoutes */}
         <PrivateRoute path="/bancaire" component={Bancaire} />
         <PrivateRoute path="/creationoperation" component={CreationOperation} />
@@ -233,10 +245,8 @@ export default class Routes extends Component {
         <PrivateRoute path="/produit/detail/:id" component={DetailsProduit} />
         <PrivateRoute path="/produit/creer" component={AddProduit} />
         <PrivateRoute path="/produit/update/:id" component={UpdateProduit} />
-
         {/* Gestion Referentiels */}
         <PrivateRoute path="/ref" component={Referentiels} />
-
         {/* <Route component={NotFound} /> */}
         <PrivateRoute component={NotFound} />
       </Switch>
