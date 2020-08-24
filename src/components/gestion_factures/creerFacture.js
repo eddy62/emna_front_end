@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
-import axioscenter from "../../shared/services/AxiosCenter"
+import axioscenter from "../../shared/services/AxiosCenter";
+import UserService from "../../shared/services/UserService";
 
 class CreerFacture extends React.Component {
   state = {
@@ -8,16 +9,21 @@ class CreerFacture extends React.Component {
     tva: 0,
   };
   submit = (values) => {
-    let documents = values.documents
-    values.documents = null
-    values.prixTTC = this.state.prixtotal
-    values.tva = this.state.tva
-    values.prixHT = this.state.prixtotal-this.state.tva
-    values.moyenDePaiement = "CHEQUE"
-    console.log(values.produits)
-    axioscenter.uploadFacture(values, documents)
+    let documents = values.documents;
+    values.documents = null;
+    values.prixTTC = this.state.prixtotal;
+    values.tva = this.state.tva;
+    values.prixHT = this.state.prixtotal - this.state.tva;
+    values.moyenDePaiement = "CHEQUE";
+    axioscenter.uploadFacture(values, documents).then(res => {
+      for (let i = 0; i < values.produits.length; i++) {
+        let produitToUpload = values.produits[i];
+        produitToUpload.factureId = res.data.id;
+        axioscenter.createProduit(produitToUpload);
+      }
+    });
   };
-
+ 
   updatePrix = (ev, index, produits, setFieldValue, remove) => {
     var prixtotal = 0;
     setFieldValue(
@@ -62,7 +68,9 @@ class CreerFacture extends React.Component {
       <div
         className="container-fluid p-5 bg-light
         d-flex flex-column justify-content-center"
-      > <h1>Nouvelle Facture</h1>
+      >
+        {" "}
+        <h1>Nouvelle Facture</h1>
         <Formik onSubmit={this.submit} initialValues={initialValues}>
           {({
             values,
@@ -310,12 +318,9 @@ class CreerFacture extends React.Component {
                 <input
                   type="file"
                   className="form-control-file"
-                  onChange={
-                    (
-                    (ev) => {
-                      values.documents = ev.target.files
-                    })
-                  }
+                  onChange={(ev) => {
+                    values.documents = ev.target.files;
+                  }}
                   multiple
                 />
               </div>

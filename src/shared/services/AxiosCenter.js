@@ -369,11 +369,6 @@ const AxiosCenter = {
     for (let i = 0; i < files.length; i++) {
       formData.append("listeFiles", files.item(i));
     }
-
-    // for (let i = 0; i < facture.produits.length; i++) {
-    //   let produitToAppend = JSON.stringify(facture.produits[i]);
-    //   formData.append("produits", produitToAppend);
-    // }
     
     return ApiBackEnd({
       method: "POST",

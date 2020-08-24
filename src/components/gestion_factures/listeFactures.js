@@ -17,8 +17,8 @@ class ListeFactures extends React.Component {
     const index = factures.findIndex(function(facture){
       return facture.id === id
     });
-    factures.splice(index,1)
-    //factures = factures.splice(1, 0, facture);
+    factures.splice(index,1);
+    Axios.deleteFacture(id);
     this.setState({factures:factures});
   }
 
@@ -36,8 +36,7 @@ class ListeFactures extends React.Component {
         <Table responsive="sm">
           <thead>
             <tr>
-              <th>Type</th>
-              <th>Num Facture</th>
+              <th>Num. Facture</th>
               <th>Client/Fournisseur</th>
               <th>Date</th>
               <th>Echéance</th>

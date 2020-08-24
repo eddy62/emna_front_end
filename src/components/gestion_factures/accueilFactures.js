@@ -28,7 +28,7 @@ class AccueilFacture extends React.Component {
               <Link to="/newdepense">Depense</Link>
             </Dropdown.Item>
             <Dropdown.Item>
-              <Link to="newdevis">Devis</Link>
+              <Link to="/newdevis">Devis</Link>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
