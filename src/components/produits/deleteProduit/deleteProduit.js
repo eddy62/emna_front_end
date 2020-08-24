@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
 import AxiosCenter from "../../../shared/services/AxiosCenter";
+import UserService from "../../../shared/services/UserService";
 
 class DeleteProduit extends Component {
     state = {
         modal: false,
+        userId: UserService.getUserId(),
 
     }
 
@@ -15,12 +17,11 @@ class DeleteProduit extends Component {
     }
 
     supprimerProduit = () => {
-        AxiosCenter.deleteProduit(this.props.produit.id)
+        AxiosCenter.deleteProduit(this.props.produit.id, this.state.userId)
             .then((response) => {
                 console.log(response.data)
+                this.toggle()
                 this.props.history.push("/produits");
-
-
             })
             .catch((error) => {
                 console.log(error);

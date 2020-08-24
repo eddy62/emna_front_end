@@ -72,10 +72,10 @@ const AxiosCenter = {
       data: values,
     });
   },
-  deleteClientFournisseur(id) {
+  deleteClientFournisseur(clientId, userId) {
     return ApiBackEnd({
       method: "delete",
-      url: `/client-fournisseurs/${id}`,
+      url: `/client-fournisseurs/${clientId}/user/${userId}`,
     });
   },
   getClientFournisseurByNom(nom) {
@@ -295,7 +295,7 @@ const AxiosCenter = {
   deleteProduit(produitId, userId) {
     return ApiBackEnd({
       method: "delete",
-      url: `/produits/delete/${produitId}/user/${userId}`,
+      url: `/produits/${produitId}/user/${userId}`,
     });
   },
 

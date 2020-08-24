@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import Style from "./../ClientFournisseur.module.css";
 import SupprimerClientFournisseur from "../supprimerClientFounisseur/supprimerClient";
-import { MDBBtn } from 'mdbreact';
+import { MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer } from 'mdbreact';
 import { Link } from "react-router-dom";
 import UserService from '../../../shared/services/UserService';
 
@@ -35,46 +34,47 @@ class ListerClientFournisseur extends Component {
 
   render() {
     return (
-      <div>
-
-        <div className="container-fluid container-fluid p-5  justify-content-center align-items-center ">
-          <h1 className={Style.h2}>Liste de clients de société </h1>
+      <MDBContainer>
+        <div>
+          <MDBCardHeader color="default-color">Liste Des Clients Founisseurs</MDBCardHeader>
+          <MDBCardTitle tag="h1"> {this.state.nomSociete} </MDBCardTitle>
           <div>
-            <table className="table table-striped table-bordered table-hover table-sm">
-              <caption>La liste des clients fournisseurs</caption>
-              <thead className={Style.add}>
-                <tr>
-                  <th scope="col">Nom</th>
-                  <th scope="col">SIREN</th>
-                  <th scope="col">Email</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.clients && this.state.clients.length ? (
-                  this.state.clients.map((c, index) => (
-                    <tr key={index}>
-                      <td >{c.nom}</td>
-                      <td >{c.siren}</td>
-                      <td>{c.email}</td>
-                      <td>
-                        <div size="sm" className="btn-group flex-btn-group-container">
-                          <MDBBtn color="info" rounded circle="true" size="sm">
-                            <Link to={`/clientFournisseur/detail/${c.id}`}>
-                              <span>Detail</span>
-                            </Link>
-                          </MDBBtn>
-                          <SupprimerClientFournisseur client={c} />
-                        </div>
-
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                    <h1 className="text-center"> Pas des Client ... </h1>
-                  )}
-              </tbody>
-            </table>
+            <br></br>
           </div>
+          <table className="table table-striped table-bordered  table-sm">
+            <caption>La liste des clients fournisseurs</caption>
+            <thead color="teal accent-3">
+              <tr className=" bg-info">
+                <th scope="col">Nom</th>
+                <th scope="col">SIREN</th>
+                <th scope="col">Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.clients && this.state.clients.length ? (
+                this.state.clients.map((c, index) => (
+                  <tr key={index}>
+                    <td >{c.nom}</td>
+                    <td >{c.siren}</td>
+                    <td>{c.email}</td>
+                    <td>
+                      <div className="btn-group flex-btn-group-container">
+                        <Link to={`/clientFournisseur/detail/${c.id}`}>
+                          <MDBBtn color="info" rounded circle="true" size="sm">
+                            <span>Detail</span>
+                          </MDBBtn>
+                        </Link>
+                        <SupprimerClientFournisseur client={c} />
+                      </div>
+
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                  <h1 className="text-center"> Pas des Client ... </h1>
+                )}
+            </tbody>
+          </table>
         </div>
         <div className="row d-flex justify-content-center">
           <Link to="/client-fournisseur">
@@ -83,8 +83,7 @@ class ListerClientFournisseur extends Component {
                   </MDBBtn>
           </Link>
         </div>
-      </div>
-    );
+      </MDBContainer >);
   }
 }
 
