@@ -32,7 +32,6 @@ class ModifierClient extends Component {
 
 
     componentDidMount() {
-        console.log(" id " + this.state.IdEntity)
         AxiosCenter.getClientFournisseur(this.state.IdEntity)
             .then((response) => {
                 const client = response.data;
@@ -55,7 +54,7 @@ class ModifierClient extends Component {
     submit = (values, actions) => {
         AxiosCenter.updateClientFournisseur(values)
             .then((response) => {
-                console.log(response.data);
+                this.props.history.push("/clientFournisseur/detail/" + response.data.id);
             })
             .catch((error) => {
                 console.log(error);

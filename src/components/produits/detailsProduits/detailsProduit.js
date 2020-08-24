@@ -12,7 +12,7 @@ import {
 } from "mdbreact";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import DeleteProduit from "../deleteProduit/deleteProduit";
-import UserService from "../../../shared/services/UserService";
+
 
 class DetailsProduit extends Component {
     constructor(props) {
@@ -21,13 +21,11 @@ class DetailsProduit extends Component {
             produit: {},
             loaded: false,
             idProduit: this.props.match.params.id,
-            userId: UserService.getUserId(),
         };
     }
 
     componentDidMount() {
-        console.log("userid " + this.state.userId)
-        AxiosCenter.getProduitById(this.state.idProduit, this.state.userId)
+        AxiosCenter.getProduitById(this.state.idProduit)
             .then((response) => {
                 const produit = response.data;
                 this.setState({
