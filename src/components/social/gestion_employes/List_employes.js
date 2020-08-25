@@ -204,110 +204,110 @@ class ListEmployes extends React.Component {
     });
   }
 
+  maListe = (props) => {
+    return (
+      <MDBTable
+        responsive
+        theadColor="dark"
+        striped
+        hover
+        btn
+        bordered
+        scrollY
+        maxHeight="300px"
+      >
+        <MDBTableHead columns={this.state.columns} color="teal lighten-5" />
+        <MDBTableBody rows={this.state.rows} />
+      </MDBTable>
+    );
+  };
+
   render() {
     const title = "Gestion Social";
     const title1 = "Liste des Employes";
     const entreprise = this.state.societe.raisonSociale;
-    if (this.state.loaded) {
-      return (
-        <div className="App">
-          <div className="employes">
-            <MDBContainer>
-              <div>
-                <MDBCardHeader color="default-color">
-                  <MDBCardTitle tag="h1">{title}</MDBCardTitle>
+    if (!this.state.loaded) return <Loading />;
+    return (
+      <div className="App">
+        <div className="employes">
+          <MDBContainer>
+            <div>
+              <MDBCardHeader color="default-color">
+                <MDBCardTitle tag="h1">{title}</MDBCardTitle>
 
-                  <MDBCardTitle tag="h3">{entreprise}</MDBCardTitle>
-                </MDBCardHeader>
-              </div>
-              <div>
-                <hr />
-              </div>
-              <MDBCardHeader tag="h4" color="teal lighten-5" text="black">
-                {title1}
+                <MDBCardTitle tag="h3">{entreprise}</MDBCardTitle>
               </MDBCardHeader>
-              <div>
-                <hr></hr>
-              </div>
-              <div>
-                <MDBCol md="6">
-                  <form>
-                    <select
-                      className="browser-default custom-select"
-                      value={this.state.value}
-                      onChange={this.handleChange}
-                    >
-                      <option value="ALL">Tous les Employés</option>
-                      <option value="EMPEMB">Employés Embauchés</option>
-                      <option value="EMPEND"> Employés Sortis</option>
-                      <option value="EMPNEMB"> Promesses d'Embauche</option>
-                      <option value="CDD">Employés en CDD</option>
-                      <option value="CDI">Employés en CDI</option>
-                      <option value="CDDTP">Employés en CDD Partiel</option>
-                      <option value="CDITP">Employés en CDI Partiel</option>
-                      <option value="ALTER">Employés en Alternance</option>
-                      <option value="STAGE">Stage</option>
-                    </select>
-                  </form>
-                </MDBCol>
-              </div>
-              <br />
-              <div>
-                <MDBTable
-                  responsive
-                  theadColor="dark"
-                  striped
-                  hover
-                  btn
-                  bordered
-                  scrollY
-                  maxHeight="300px"
-                >
-                  <MDBTableHead
-                    columns={this.state.columns}
-                    color="teal lighten-5"
-                  />
-                  <MDBTableBody rows={this.state.rows} />
-                </MDBTable>
-              </div>
-              <div>
-                <hr></hr>
-              </div>
-              <MDBRow around between>
-                {UserService.getRole() === "ROLE_SOCIETY" ? (
-                  <MDBBtn
-                    color="teal accent-3"
-                    rounded
-                    size="sm"
-                    onClick={() => {
-                      this.props.history.push(
-                        "/newEmploye/" + this.state.societe.id
-                      );
-                    }}
+            </div>
+            <div>
+              <hr />
+            </div>
+            <MDBCardHeader tag="h4" color="teal lighten-5" text="black">
+              {title1}
+            </MDBCardHeader>
+            <div>
+              <hr></hr>
+            </div>
+            <div>
+              <MDBCol md="6">
+                <form>
+                  <select
+                    className="browser-default custom-select"
+                    value={this.state.value}
+                    onChange={this.handleChange}
                   >
-                    Enregistrer un Employe
-                  </MDBBtn>
-                ) : null}
+                    <option value="ALL">Tous les Employés</option>
+                    <option value="EMPEMB">Employés Embauchés</option>
+                    <option value="EMPEND"> Employés Sortis</option>
+                    <option value="EMPNEMB"> Promesses d'Embauche</option>
+                    <option value="CDD">Employés en CDD</option>
+                    <option value="CDI">Employés en CDI</option>
+                    <option value="CDDTP">Employés en CDD Partiel</option>
+                    <option value="CDITP">Employés en CDI Partiel</option>
+                    <option value="ALTER">Employés en Alternance</option>
+                    <option value="STAGE">Stage</option>
+                  </select>
+                </form>
+              </MDBCol>
+            </div>
+            <br />
+            <div>
+              <this.maListe maListe={this.state.listeEmployes} />
+            </div>
+            <div>
+              <hr></hr>
+            </div>
+            <MDBRow around between>
+              {UserService.getRole() === "ROLE_SOCIETY" ? (
                 <MDBBtn
                   color="teal accent-3"
                   rounded
                   size="sm"
                   onClick={() => {
                     this.props.history.push(
-                      "/socialHome/" + this.state.societe.id
+                      "/newEmploye/" + this.state.societe.id
                     );
                   }}
                 >
-                  Retour
+                  Enregistrer un Employe
                 </MDBBtn>
-              </MDBRow>
-            </MDBContainer>
-          </div>
+              ) : null}
+              <MDBBtn
+                color="teal accent-3"
+                rounded
+                size="sm"
+                onClick={() => {
+                  this.props.history.push(
+                    "/socialHome/" + this.state.societe.id
+                  );
+                }}
+              >
+                Retour
+              </MDBBtn>
+            </MDBRow>
+          </MDBContainer>
         </div>
-      );
-    } else {
-      return <Loading />;
-    }
+      </div>
+    );
   }
 }
 

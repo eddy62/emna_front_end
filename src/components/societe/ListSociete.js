@@ -13,6 +13,7 @@ import {
 
 const ListSociete = () =>{
 
+
     return (
       <div className="containerGestionComptable">
         <MDBContainer>
@@ -39,7 +40,7 @@ const ListSociete = () =>{
 
                     <br />
                     <div className="boutton">
-                      <Link to="/creationreleve">
+                      <Link to="/users/stvu/societes/active">
                         <MDBBtn
                           className="boutton"
                           color=" teal lighten-2"
@@ -64,7 +65,7 @@ const ListSociete = () =>{
 
                     <br />
                     <div className="boutton">
-                      <Link to="/menurelevenon">
+                      <Link to="/users/stvu/societes/desactive">
                         <MDBBtn
                           className="boutton"
                           color=" teal lighten-2"
@@ -89,7 +90,7 @@ const ListSociete = () =>{
 
                     <br />
                     <div className="boutton">
-                      <Link to="/historiquereleve/3">
+                      <Link to="/users/stvu/societes/all">
                         <MDBBtn
                           className="boutton"
                           color=" teal lighten-2"
@@ -103,9 +104,37 @@ const ListSociete = () =>{
                   </MDBCardBody>
                 </MDBCard>
               </MDBCol>
+
+              <MDBCol className="col-12 mt-4">
+                <MDBCard>
+                  <MDBCardBody>
+                    <MDBCardTitle className="MDBCardTitle" style={{ textAlign: 'center' }}>
+                    <div>Créer Une Société</div>
+                    </MDBCardTitle>
+                    <br />
+
+                    <br />
+                    <div className="boutton text-center">
+                      <Link to="/users/stvu/societes/add">
+                        <MDBBtn
+                          className="boutton "
+                          color=" teal lighten-2"
+                          rounded
+                          size="sm"
+                        >
+                          <span id="color-button">CREER</span>
+                        </MDBBtn>
+                      </Link>
+                    </div>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
             </MDBRow>
             <br />
           </div>
+          <Link to="/users/stvu" className="btn btn-outline-success mt-5">
+              <span >Retourner</span>
+          </Link>
         </MDBContainer>
       </div>
     );

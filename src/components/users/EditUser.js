@@ -33,7 +33,12 @@ const EditUser = () => {
         try{
             e.preventDefault(); 
             await AxiosCenter.editUser(user);
-            history.push("/users")
+            if(user.activated){
+                history.push("/users/stvu/admins/active")
+            }
+            else{
+                history.push("/users/stvu/admins/desactive")
+            }
         } catch(err) {
             console.log(err)
         }
@@ -134,8 +139,8 @@ const EditUser = () => {
                         </div>
 
                     </div>
-                    <Link className="btn btn-outline-danger" to="/users/stau">Annulez</Link>
-                    <button type="submit" href="/users" className="btn btn-primary"> Modifiez </button>
+                    <Link className="btn btn-outline-danger" to="/users/stvu/admins">Annulez</Link>
+                    <button type="submit" href={user.activated ? "/users/stvu/admins/active" : "/users/stvu/admins/desactive"} className="btn btn-primary"> Modifiez </button>
 
 
                 </div>

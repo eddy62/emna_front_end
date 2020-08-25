@@ -13,13 +13,14 @@ import {
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import DeleteProduit from "../deleteProduit/deleteProduit";
 
+
 class DetailsProduit extends Component {
     constructor(props) {
         super(props);
         this.state = {
             produit: {},
             loaded: false,
-            idProduit: this.props.match.params.id
+            idProduit: this.props.match.params.id,
         };
     }
 

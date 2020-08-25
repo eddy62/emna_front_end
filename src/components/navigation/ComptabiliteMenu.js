@@ -50,7 +50,7 @@ class ComptabiliteMenu extends React.Component {
                     </MDBCardText>
                     <br />
                     <div className="boutton">
-                      <Link to="/facture">
+                      <Link to="/accueilfactures">
                         <MDBBtn className="boutton" rounded size="sm">
                           Gerer
                         </MDBBtn>
