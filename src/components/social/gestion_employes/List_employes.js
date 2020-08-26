@@ -77,7 +77,12 @@ class ListEmployes extends React.Component {
         ];
 
         let rows = [];
-        if (!liste === []) {
+        if (liste.length === 0) {
+          this.setState({
+            columns: columns,
+            loaded: true,
+          });
+        } else {
           liste.forEach((employe) => {
             let addemploye = {
               matricule: employe.matricule,
@@ -98,11 +103,6 @@ class ListEmployes extends React.Component {
               rows: rows,
               loaded: true,
             });
-          });
-        } else {
-          this.setState({
-            columns: columns,
-            loaded: true,
           });
         }
       })
