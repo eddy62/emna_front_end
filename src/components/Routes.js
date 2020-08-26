@@ -81,7 +81,6 @@ import DetailFacture from "./gestion_factures/detailFacture";
 
 //gestion Variables de paie
 
-
 export default class Routes extends Component {
   render() {
     return (

@@ -41,6 +41,8 @@ class ListEmployes extends React.Component {
       });
     AxiosCenter.getAllWrapperEmployesBySociety(idSociete)
       .then((response) => {
+        const liste = response.data;
+        console.log(liste);
         const columns = [
           {
             label: "Matricule",
@@ -75,29 +77,34 @@ class ListEmployes extends React.Component {
         ];
 
         let rows = [];
-        response.data.forEach((employe) => {
-          let addemploye = {
-            matricule: employe.matricule,
-            nom: employe.nomUsage,
-            prenom: employe.prenom,
-            dateEmbauche: employe.dateEmbauche,
-            dateSortie: employe.dateSortie,
-            typeContrat: employe.typeContrat,
-            clickEvent: () => {
-              this.props.history.push("/detailEmploye/" + employe.id);
-            },
-          };
-          console.log(addemploye);
-          rows.push(addemploye);
-          const listeEmployes = response.data;
-          console.log(listeEmployes);
+        if (!liste === []) {
+          liste.forEach((employe) => {
+            let addemploye = {
+              matricule: employe.matricule,
+              nom: employe.nomUsage,
+              prenom: employe.prenom,
+              dateEmbauche: employe.dateEmbauche,
+              dateSortie: employe.dateSortie,
+              typeContrat: employe.codeTypeContrat,
+              clickEvent: () => {
+                this.props.history.push("/detailEmploye/" + employe.id);
+              },
+            };
+            console.log(addemploye);
+            rows.push(addemploye);
+            this.setState({
+              listeEmployes: liste,
+              columns: columns,
+              rows: rows,
+              loaded: true,
+            });
+          });
+        } else {
           this.setState({
-            listeEmployes: listeEmployes,
             columns: columns,
-            rows: rows,
             loaded: true,
           });
-        });
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -177,7 +184,7 @@ class ListEmployes extends React.Component {
             prenom: employe.prenom,
             dateEmbauche: employe.dateEmbauche,
             dateSortie: employe.dateSortie,
-            typeContrat: employe.typeContrat,
+            typeContrat: employe.intituleTypeContrat,
             clickEvent: () => {
               this.props.history.push("/detailEmploye/" + employe.id);
             },
