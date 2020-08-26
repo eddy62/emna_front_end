@@ -196,7 +196,12 @@ const EditComptable = () => {
             e.preventDefault();
             console.log(user)
             await AxiosCenter.editComptable(user);
-            history.push("/users")
+            if(user.activated){
+                history.push("/users/stvu/comptables/active")
+            }
+            else{
+                history.push("/users/stvu/comptables/desactive")
+            }
         } catch (err) {
             console.log(err)
         }
@@ -373,8 +378,8 @@ const EditComptable = () => {
                         </div>
                     </div>
 
-                    <Link className="btn btn-outline-danger" to="/users">Annulez</Link>
-                    <button type="submit" href="/users" className="btn btn-primary"> Modifier </button>
+                    <Link className="btn btn-outline-danger" to="/users/stvu/comptables">Annulez</Link>
+                    <button type="submit" href={user.activated ? "/users/stvu/comptables/active" : "/users/stvu/comptables/desactive"} className="btn btn-success"> Modifiez </button>
 
                 </div>
             </form>

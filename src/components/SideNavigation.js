@@ -99,8 +99,8 @@ class SideNavigation extends React.Component {
               id="dashboard-cat"
               icon="tachometer-alt"
             >
-              {this.rSNL("/TODO", "Facture")}
-              {this.rSNL("/TODO", "Devis")}
+              {this.rSNL("/accueilfactures", "Facture")}
+              {this.rSNL("/devis", "Devis")}
               {this.rSNL("/bancaire", "Relevé Bancaire")}
             </MDBSideNavCat>
 

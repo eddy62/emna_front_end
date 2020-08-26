@@ -32,7 +32,6 @@ class ModifierClient extends Component {
 
 
     componentDidMount() {
-        console.log(" id " + this.state.IdEntity)
         AxiosCenter.getClientFournisseur(this.state.IdEntity)
             .then((response) => {
                 const client = response.data;
@@ -55,7 +54,7 @@ class ModifierClient extends Component {
     submit = (values, actions) => {
         AxiosCenter.updateClientFournisseur(values)
             .then((response) => {
-                console.log(response.data);
+                this.props.history.push("/clientFournisseur/detail/" + response.data.id);
             })
             .catch((error) => {
                 console.log(error);
@@ -72,7 +71,7 @@ class ModifierClient extends Component {
         telephone: Yup.number().min(9, "Trop court"),
         numeroRue: Yup.string().required("Le champ est obligatoire"),
         nomRue: Yup.string().required("Le champ est obligatoire"),
-        codePostal: Yup.string().max(5, "Trop court").required("Le champ est obligatoire"),
+        codePostal: Yup.string().required("Le champ est obligatoire"),
         ville: Yup.string().required("Le champ est obligatoire"),
         pays: Yup.string().required("Le champ est obligatoire"),
     });

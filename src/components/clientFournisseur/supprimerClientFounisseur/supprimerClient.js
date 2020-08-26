@@ -1,92 +1,54 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
+import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import {
-  MDBContainer,
-  MDBBtn,
-  MDBModal,
-  MDBModalBody,
-  MDBModalHeader,
-  MDBModalFooter,
-} from "mdbreact";
+import UserService from "../../../shared/services/UserService";
 
 class SupprimerClient extends Component {
-  supprimerClient = () => {
-    AxiosCenter.deleteClientFournisseur(this.props.client.id)
+  state = {
+    modal: false,
+    userId: UserService.getUserId(),
+
+  }
+
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  supprimerProduit = () => {
+    AxiosCenter.deleteClientFournisseur(this.props.client.id, this.state.userId)
       .then((response) => {
-        console.log(response);
+        console.log(response.data)
+        this.toggle()
         this.props.history.push("/clientFournisseur/liste");
       })
       .catch((error) => {
         console.log(error);
       });
-  };
 
-  render() {
-    return (
-      <div>
-        <ModalPage suppressionConfirme={this.supprimerClient} />
-      </div>
-    );
   }
-}
 
-class ModalPage extends Component {
-  state = {
-    modal: false,
-    client: this.props.client,
-  };
-  toggle = () => {
-    this.setState({
-      modal: !this.state.modal,
-    });
-  };
   render() {
     return (
       <MDBContainer>
-        <MDBBtn
-          color="secondary"
-          rounded
-          circle="true"
-          size="sm"
-          onClick={this.toggle}
-        >
-          Supprimer
-        </MDBBtn>
+        <MDBBtn onClick={this.toggle} rounded size="sm" color="secondary">Supprimer</MDBBtn>
         <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
-          <MDBModalHeader toggle={this.toggle}>
-            Confirmation de suppression{" "}
-          </MDBModalHeader>
+          <MDBModalHeader toggle={this.toggle}>Confirmation de suppression
+</MDBModalHeader>
           <MDBModalBody>
-            <span>
-              Etez-vous certain de vouloir supprimer le client fournisseur?{" "}
-            </span>
-          </MDBModalBody>
+            Etes-vous certain de vouloir supprimer le client {this.props.client.nom} ?
+        </MDBModalBody>
           <MDBModalFooter>
-            <MDBBtn
-              rounded
-              type="button"
-              circle="true"
-              size="sm"
-              onClick={this.toggle}
-            >
-              Annuler
-            </MDBBtn>
-            <div onClick={(e) => e.stopPropagation()}>
-              <MDBBtn
-                rounded
-                toggle={this.toggle}
-                color="secondary"
-                onClick={this.props.suppressionConfirme}
-                circle="true"
-                size="sm"
-              >
-                Supprimer
-              </MDBBtn>
-            </div>
+            <MDBBtn rounded type="button" circle="true" size="sm" onClick={this.toggle}>Annuler</MDBBtn>
+            <MDBBtn rounded toggle={this.toggle} color="secondary" onClick={() => this.supprimerProduit()} circle="true" size="sm" >
+              Supprimer</MDBBtn>
+
           </MDBModalFooter>
         </MDBModal>
       </MDBContainer>
     );
   }
 }
+
 export default SupprimerClient;

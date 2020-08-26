@@ -73,10 +73,10 @@ const AxiosCenter = {
       data: values,
     });
   },
-  deleteClientFournisseur(id) {
+  deleteClientFournisseur(clientId, userId) {
     return ApiBackEnd({
       method: "delete",
-      url: `/client-fournisseurs/${id}`,
+      url: `/client-fournisseurs/${clientId}/user/${userId}`,
     });
   },
   getClientFournisseurByNom(nom) {
@@ -293,17 +293,17 @@ const AxiosCenter = {
       data: values,
     });
   },
-  deleteProduit(id) {
+  deleteProduit(produitId, userId) {
     return ApiBackEnd({
       method: "delete",
-      url: `/produits/${id}`,
+      url: `/produits/${produitId}/user/${userId}`,
     });
   },
 
   updateProduit(values) {
     return ApiBackEnd({
       method: "PUT",
-      url: `/produits`,
+      url: `/produits/update`,
       data: values,
     });
   },
@@ -346,6 +346,7 @@ const AxiosCenter = {
     });
   },
   //Fin gestion societe
+<<<<<<< HEAD
   requestPasswordReset(value) {
     return ApiBackEnd({
       method: "post",
@@ -355,6 +356,54 @@ const AxiosCenter = {
       },
     });
   },
+=======
+  //Fin gestion societe
+
+  //comptable
+  getAllComptables () {
+    return ApiBackEnd({
+      method: "get",
+      url: "/comptables/all",
+    });
+  },
+  //fin comptable
+  uploadFacture(facture, files) {
+    let formData = new FormData();
+    formData.append("numfact", facture.numfact);
+    formData.append("message", facture.message);
+    formData.append("date", facture.date);
+    formData.append("dateEcheance", facture.echeance);
+    formData.append("prixHT", facture.prixHT);
+    formData.append("prixTTC", facture.prixTTC);
+    formData.append("tva", facture.tva);
+    formData.append("moyenDePaiement", facture.moyenDePaiement);
+    formData.append("societeId", 1);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("listeFiles", files.item(i));
+    }
+    
+    return ApiBackEnd({
+      method: "POST",
+      url: "/facture/new",
+      mode: "no-cors",
+      data: formData,
+    });
+  },
+
+  deleteFacture(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/factures/${id}`,
+    });
+  },
+
+  getFactureBySociete(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `factures/societe/${id}`,
+    });
+  }
+>>>>>>> ee91e7a04d89e890dbca42ec264b6a5e40b6c735
 };
 
 export default AxiosCenter;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import { PrivateRoute } from "../helpers/PrivateRoute";
 
 //Gestion Social import
@@ -44,15 +44,18 @@ import EditUser from "./users/EditUser";
 import AddUser from "./users/AddUser";
 import ViewUser from "./users/ViewUser";
 import ListUser from "./users/ListUser";
+import ListAdminByType from "./users/ListAdminByType";
 import ListAllUsers from "./users/allUsers/ListAllUsers";
 import AddComptable from "./comptables/AddComptable";
 import ViewComptable from "./comptables/ViewComptable";
 import EditComptable from "./comptables/EditComptable";
 import ListComptable from "./comptables/ListComptable";
+import ListComptableByType from "./comptables/ListComptableByType";
 import SelectToAddUser from "./pages/SelectToAddUser";
 import selectToViewUser from "./pages/SelectToViewUser";
 import AddSociete from "./societe/AddSociete";
 import ViewSociete from "./societe/ViewSociete";
+import ListSocieteByType from "./societe/ListSocieteByType";
 import EditSociete from "./societe/EditSociete";
 import ListSociete from "./societe/ListSociete";
 import HomeMenu from "./navigation/HomeMenu";
@@ -70,6 +73,12 @@ import UpdateProduit from "./produits/updateProduit/updateProduit";
 //GestionReferentiels
 import Referentiels from "./referentiels/Referentiels";
 
+//GestionFactures
+import AccueilFacture from "./gestion_factures/accueilFactures"
+import CreerFacture from "./gestion_factures/creerFacture"
+import CreerDepense from "./gestion_factures/creerDepense"
+import DetailFacture from "./gestion_factures/detailFacture"
+
 export default class Routes extends Component {
   render() {
     return (
@@ -84,6 +93,12 @@ export default class Routes extends Component {
         <PrivateRoute path="/newEmploye/:id" component={NewEmploye} />
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
         <PrivateRoute path="/deleteEmploye/:id" component={SupprimerEmploye} />
+		{/* Gestion Facture */}
+        <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
+        <PrivateRoute path="/newfacture" component={CreerFacture} />
+        <PrivateRoute path="/detailfacture" component={DetailFacture} />
+        <PrivateRoute path="/newfacture" component={CreerFacture} />
+        <PrivateRoute path="/newdepense" component={CreerDepense} />
         {/* Gestion des Contrats*/}
         <PrivateRoute path="/listcontrat" component={ListeContrat} />
         <PrivateRoute path="/contrat" component={Contrat} />
@@ -94,13 +109,18 @@ export default class Routes extends Component {
         <PrivateRoute exact path="/users/add" component={AddUser} />
         <PrivateRoute exact path="/users/edit/:id" component={EditUser} />
         <PrivateRoute exact path="/users/view/:id" component={ViewUser} />
-        <PrivateRoute exact path="/users/stvu/users" component={ListUser} />
+        <PrivateRoute exact path="/users/stvu/admins" component={ListUser} />
+        <PrivateRoute exact path="/users/stvu/users/add" component={AddUser} />
         <PrivateRoute exact path="/users/stvu/all" component={ListAllUsers} />
+<<<<<<< HEAD
         <PrivateRoute
           exact
           path="/users/stvu"
           component={selectToViewUser}
         />{" "}
+=======
+        <PrivateRoute exact path="/users/stvu" component={selectToViewUser} />
+>>>>>>> ee91e7a04d89e890dbca42ec264b6a5e40b6c735
         {/*stvu stands for : Select to view user*/}
         <PrivateRoute
           exact
@@ -109,12 +129,16 @@ export default class Routes extends Component {
         />
         <PrivateRoute
           exact
+<<<<<<< HEAD
           path="/users/stvu/societe"
+=======
+          path="/users/stvu/societes"
+>>>>>>> ee91e7a04d89e890dbca42ec264b6a5e40b6c735
           component={ListSociete}
         />
         <PrivateRoute
           exact
-          path="/users/add/comptable"
+          path="/users/stvu/comptables/add"
           component={AddComptable}
         />
         <PrivateRoute
@@ -127,7 +151,56 @@ export default class Routes extends Component {
           path="/users/edit/comptable/:id"
           component={EditComptable}
         />
-        <PrivateRoute exact path="/users/add/societe" component={AddSociete} />
+        <PrivateRoute
+          exact
+          path="/users/stvu/comptables/active"
+          component={ListComptableByType}
+        />
+        <PrivateRoute
+          exact
+          path="/users/stvu/comptables/desactive"
+          component={ListComptableByType}
+        />
+        <PrivateRoute
+          exact
+          path="/users/stvu/comptables/all"
+          component={ListComptableByType}
+        />
+        <PrivateRoute
+          exact
+          path="/users/stvu/admins/all"
+          component={ListAdminByType}
+        />
+        <PrivateRoute
+          exact
+          path="/users/stvu/admins/active"
+          component={ListAdminByType}
+        />
+        <PrivateRoute
+          exact
+          path="/users/stvu/admins/desactive"
+          component={ListAdminByType}
+        />
+        <PrivateRoute
+          exact
+          path="/users/stvu/societes/all"
+          component={ListSocieteByType}
+        />
+        <PrivateRoute
+          exact
+          path="/users/stvu/societes/active"
+          component={ListSocieteByType}
+        />
+        <PrivateRoute
+          exact
+          path="/users/stvu/societes/desactive"
+          component={ListSocieteByType}
+        />
+        <PrivateRoute
+          exact
+          path="/users/stvu/societes/add"
+          component={AddSociete}
+        />
         <PrivateRoute
           exact
           path="/users/view/societe/:id"
@@ -195,7 +268,11 @@ export default class Routes extends Component {
         <PrivateRoute path="/produits" component={ListeProduits} />
         <PrivateRoute path="/produit/detail/:id" component={DetailsProduit} />
         <PrivateRoute path="/produit/creer" component={AddProduit} />
+<<<<<<< HEAD
         <PrivateRoute path="/produit/update" component={UpdateProduit} />
+=======
+        <PrivateRoute path="/produit/update/:id" component={UpdateProduit} />
+>>>>>>> ee91e7a04d89e890dbca42ec264b6a5e40b6c735
         {/* Gestion Referentiels */}
         <PrivateRoute path="/ref" component={Referentiels} />
         {/* <Route component={NotFound} /> */}
