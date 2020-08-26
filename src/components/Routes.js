@@ -78,11 +78,8 @@ import AccueilFacture from "./gestion_factures/accueilFactures";
 import CreerFacture from "./gestion_factures/creerFacture";
 import CreerDepense from "./gestion_factures/creerDepense";
 import DetailFacture from "./gestion_factures/detailFacture";
-<<<<<<< HEAD
 
 //gestion Variables de paie
-=======
->>>>>>> 365c61837dd906e1c4cd912cfa3d387d19597e27
 
 export default class Routes extends Component {
   render() {
