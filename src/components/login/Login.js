@@ -17,6 +17,8 @@ import {
 } from "mdbreact";
 import * as Yup from "yup";
 import UserService from "../../shared/services/UserService";
+import ErrorMessForm from "./../../shared/component/ErrorMessForm";
+import { Link } from "react-router-dom";
 
 const SignupSchema = Yup.object().shape({
   username: Yup.string().required("Veuillez renseigner votre Login"),
@@ -48,7 +50,6 @@ export class Login extends React.Component {
         this.setState({
           connexionMessage: "Login et/ou Mot de passe incorrect",
         });
-        console.log(this.state.connexionMessage);
       });
   };
 
@@ -93,9 +94,11 @@ export class Login extends React.Component {
                           onBlur={handleBlur}
                           value={values.username}
                         >
-                          {errors.username && touched.username ? (
-                            <div>{errors.username}</div>
-                          ) : null}
+                          <ErrorMessForm
+                            error={errors.username}
+                            touched={touched.username}
+                            right
+                          />
                         </MDBInput>
                         <MDBInput
                           label="Votre mot de passe"
@@ -108,14 +111,18 @@ export class Login extends React.Component {
                           onBlur={handleBlur}
                           value={values.password}
                         >
-                          {errors.password && touched.password ? (
-                            <div>{errors.password}</div>
-                          ) : null}
+                          <ErrorMessForm
+                            error={errors.password}
+                            touched={touched.password}
+                            right
+                          />
                         </MDBInput>
                         <p className="font-small blue-text d-flex justify-content-end pb-3">
-                          <a href="#!" className="blue-text ml-1">
-                            Mot de passe oublié ?
-                          </a>
+                          <Link to="/forgot/password">
+                            <p className="blue-text ml-1">
+                              Mot de passe oublié ?
+                            </p>
+                          </Link>
                         </p>
                         <div className="text-center mb-3">
                           <MDBBtn
@@ -127,14 +134,16 @@ export class Login extends React.Component {
                             Se connecter
                           </MDBBtn>
                         </div>
-                        <strong>{this.state.connexionMessage}</strong>
+                        <strong style={{ color: "red" }}>
+                          {this.state.connexionMessage}
+                        </strong>
                       </MDBCardBody>
                       <MDBModalFooter className="mx-5 pt-3 mb-1">
                         <p className="font-small grey-text d-flex justify-content-end">
                           Pas encore de compte chez nous ?
-                          <a href="#!" className="blue-text ml-1">
-                            Créer un compte
-                          </a>
+                          <Link to="/register">
+                            <p className="blue-text ml-1">Créer un compte</p>
+                          </Link>
                         </p>
                       </MDBModalFooter>
                     </MDBCard>
