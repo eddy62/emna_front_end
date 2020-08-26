@@ -29,10 +29,10 @@ export class ForgotPassword extends React.Component {
     this.state = { creationMessage: "" };
   }
 
-  submit = (value) => {
-    AxiosCenter.requestPasswordReset(value.email)
+  submit = (values) => {
+    AxiosCenter.requestPasswordReset(values)
       .then((response) => {
-        console.log(value.email);
+        console.log(values);
       })
       .catch((error) => {
         console.log("Raté..");

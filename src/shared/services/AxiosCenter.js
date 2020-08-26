@@ -346,13 +346,11 @@ const AxiosCenter = {
     });
   },
   //Fin gestion societe
-  requestPasswordReset(value) {
+  requestPasswordReset(values) {
     return ApiBackEnd({
       method: "post",
       url: `/account/reset-password/init`,
-      data: {
-        MailVM: value,
-      },
+      data: values,
     });
   },
 
