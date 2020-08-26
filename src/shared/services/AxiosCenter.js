@@ -346,7 +346,6 @@ const AxiosCenter = {
     });
   },
   //Fin gestion societe
-<<<<<<< HEAD
   requestPasswordReset(value) {
     return ApiBackEnd({
       method: "post",
@@ -356,11 +355,9 @@ const AxiosCenter = {
       },
     });
   },
-=======
-  //Fin gestion societe
 
   //comptable
-  getAllComptables () {
+  getAllComptables() {
     return ApiBackEnd({
       method: "get",
       url: "/comptables/all",
@@ -381,7 +378,7 @@ const AxiosCenter = {
     for (let i = 0; i < files.length; i++) {
       formData.append("listeFiles", files.item(i));
     }
-    
+
     return ApiBackEnd({
       method: "POST",
       url: "/facture/new",
@@ -402,8 +399,7 @@ const AxiosCenter = {
       method: "GET",
       url: `factures/societe/${id}`,
     });
-  }
->>>>>>> ee91e7a04d89e890dbca42ec264b6a5e40b6c735
+  },
 };
 
 export default AxiosCenter;
