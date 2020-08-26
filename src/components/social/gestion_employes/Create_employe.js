@@ -110,6 +110,8 @@ class NewEmploye extends React.Component {
     super(props);
     this.state = {
       societe: {},
+      listeTypeContrat: [],
+      listeStatutEmploye: [],
       loaded: false,
     };
   }
@@ -117,6 +119,24 @@ class NewEmploye extends React.Component {
   componentDidMount() {
     const idSociete = this.props.match.params.id;
     console.log(idSociete);
+    AxiosCenter.getAllTypeContrats()
+      .then((response) => {
+        const listeTypeContrat = response.data;
+        console.log(listeTypeContrat);
+        this.setState({ listeTypeContrat: listeTypeContrat });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    AxiosCenter.getAllStatutEmployes()
+      .then((response) => {
+        const listeStatutEmploye = response.data;
+        console.log(listeStatutEmploye);
+        this.setState({ listeStatutEmploye: listeStatutEmploye });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     AxiosCenter.getWrapperSociete(idSociete)
       .then((response) => {
         const societe = response.data;
@@ -265,9 +285,11 @@ class NewEmploye extends React.Component {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                               >
-                                <option value="">Civilité*</option>
-                                <option value="Mr">Monsieur</option>
-                                <option value="Mme">Madame</option>
+                                <option value="" disabled selected>
+                                  Civilité*
+                                </option>
+                                <option value="M">Monsieur</option>
+                                <option value="F">Madame</option>
                               </select>
                               {errors.civilite && touched.civilite && (
                                 <div className="text-danger">
@@ -369,7 +391,9 @@ class NewEmploye extends React.Component {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                               >
-                                <option value="">Situation Familiale*</option>
+                                <option value="" disabled selected>
+                                  Situation Familiale*
+                                </option>
                                 <option value="C">Célibataire</option>
                                 <option value="M">Marié(e)</option>
                                 <option value="D">Divorcé(e)</option>
@@ -580,15 +604,16 @@ class NewEmploye extends React.Component {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                               >
-                                <option value="">Type Contrat*</option>
-                                <option value="CDD">CDD Tps Plein</option>
-                                <option value="CDDTP">CDD Tps Partiel</option>
-                                <option value="CDI">CDI Tps Plein</option>
-                                <option value="CDITP">CDI Tps Partiel</option>
-                                <option value="ALTER">
-                                  Contrat Pro/Alternance
+                                <option value="" disabled selected>
+                                  Type Contrat*
                                 </option>
-                                <option value="STAGE">STAGE</option>
+                                {this.state.listeTypeContrat.map(
+                                  (typeContrat) => (
+                                    <option value={typeContrat.codeRef}>
+                                      {typeContrat.intitule}
+                                    </option>
+                                  )
+                                )}
                               </select>
                               {errors.typeContrat && touched.typeContrat && (
                                 <div className="text-danger">
@@ -607,7 +632,9 @@ class NewEmploye extends React.Component {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                               >
-                                <option value="">Catégorie*</option>
+                                <option value="" disabled selected>
+                                  Catégorie*
+                                </option>
                                 <option value="EMP">Employé</option>
                                 <option value="AM">Agent de Maitrise</option>
                                 <option value="AC">Assimilé Cadre</option>
@@ -645,11 +672,14 @@ class NewEmploye extends React.Component {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                               >
-                                <option value="">Statut Employé*</option>
-                                <option value="EMPNEMB">Non Embauché</option>
-                                <option value="EMPEMB">Embauché</option>
-                                <option value="EMPEND">Sorti</option>
-                                <option value="EMPOTHER">Autre</option>
+                                <option value="" disabled selected>
+                                  Statut Employé*
+                                </option>
+                                {this.state.listeStatutEmploye.map((statut) => (
+                                  <option value={statut.codeRef}>
+                                    {statut.libelle}
+                                  </option>
+                                ))}
                               </select>
                               {errors.typeContrat && touched.typeContrat && (
                                 <div className="text-danger">

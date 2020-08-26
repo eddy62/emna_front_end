@@ -74,10 +74,12 @@ import UpdateProduit from "./produits/updateProduit/updateProduit";
 import Referentiels from "./referentiels/Referentiels";
 
 //GestionFactures
-import AccueilFacture from "./gestion_factures/accueilFactures"
-import CreerFacture from "./gestion_factures/creerFacture"
-import CreerDepense from "./gestion_factures/creerDepense"
-import DetailFacture from "./gestion_factures/detailFacture"
+import AccueilFacture from "./gestion_factures/accueilFactures";
+import CreerFacture from "./gestion_factures/creerFacture";
+import CreerDepense from "./gestion_factures/creerDepense";
+import DetailFacture from "./gestion_factures/detailFacture";
+
+//gestion Variables de paie
 
 export default class Routes extends Component {
   render() {
@@ -93,7 +95,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/newEmploye/:id" component={NewEmploye} />
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
         <PrivateRoute path="/deleteEmploye/:id" component={SupprimerEmploye} />
-		{/* Gestion Facture */}
+        {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />
         <PrivateRoute path="/detailfacture" component={DetailFacture} />
@@ -261,6 +263,8 @@ export default class Routes extends Component {
         <PrivateRoute path="/ref" component={Referentiels} />
         {/* <Route component={NotFound} /> */}
         <PrivateRoute component={NotFound} />
+        {/* Gestion des variables de paie */}
+        {/* fin Gestion des variables de paie */}
       </Switch>
     );
   }

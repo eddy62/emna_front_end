@@ -137,6 +137,20 @@ const AxiosCenter = {
       url: `/wrapperemployes/society/${id}/statutemploye/${codestatut}`,
     });
   },
+
+  getAllTypeContrats() {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/type-contrats`,
+    });
+  },
+
+  getAllStatutEmployes() {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/statut-employes`,
+    });
+  },
   //fin Gestion Social
 
   getReleve() {
@@ -304,7 +318,7 @@ const AxiosCenter = {
       method: "PUT",
       url: `/produits/update`,
       data: values,
-    })
+    });
   },
 
   //Gestion societe
@@ -348,7 +362,7 @@ const AxiosCenter = {
   //Fin gestion societe
 
   //comptable
-  getAllComptables () {
+  getAllComptables() {
     return ApiBackEnd({
       method: "get",
       url: "/comptables/all",
@@ -369,7 +383,7 @@ const AxiosCenter = {
     for (let i = 0; i < files.length; i++) {
       formData.append("listeFiles", files.item(i));
     }
-    
+
     return ApiBackEnd({
       method: "POST",
       url: "/facture/new",
@@ -390,7 +404,7 @@ const AxiosCenter = {
       method: "GET",
       url: `factures/societe/${id}`,
     });
-  }
+  },
 };
 
 export default AxiosCenter;
