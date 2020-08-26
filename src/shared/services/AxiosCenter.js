@@ -1,4 +1,5 @@
 import ApiBackEnd from "./../config/ApiBackEnd";
+import { MDBCardTitle } from "mdbreact";
 
 const AxiosCenter = {
   authenticate(values) {
@@ -304,7 +305,7 @@ const AxiosCenter = {
       method: "PUT",
       url: `/produits`,
       data: values,
-    })
+    });
   },
 
   //Gestion societe
@@ -345,6 +346,15 @@ const AxiosCenter = {
     });
   },
   //Fin gestion societe
+  requestPasswordReset(value) {
+    return ApiBackEnd({
+      method: "post",
+      url: `/account/reset-password/init`,
+      data: {
+        MailVM: value,
+      },
+    });
+  },
 };
 
 export default AxiosCenter;

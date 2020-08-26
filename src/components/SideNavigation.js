@@ -8,6 +8,7 @@ import {
 } from "mdbreact";
 import AxiosCenter from "../shared/services/AxiosCenter";
 import UserService from "./../shared/services/UserService";
+import "./style.scss";
 
 class SideNavigation extends React.Component {
   constructor(props) {
@@ -69,6 +70,15 @@ class SideNavigation extends React.Component {
           style={{ transition: "padding-left .3s" }}
           href="/"
         >
+          <form role="search" className="search-form">
+            <div className="form-group md-form mt-0 pt-1 ripple-parent">
+              <input
+                type="text"
+                placeholder="Rechercher"
+                className="form-control"
+              />
+            </div>
+          </form>
           {(UserService.getRole() === "ROLE_ACCOUNTANT") |
           (UserService.getRole() === "ROLE_ADMIN") ? (
             <div>
@@ -83,15 +93,6 @@ class SideNavigation extends React.Component {
               </select>
             </div>
           ) : null}
-          <form role="search" className="search-form">
-            <div className="form-group md-form mt-0 pt-1 ripple-parent">
-              <input
-                type="text"
-                placeholder="Rechercher"
-                className="form-control"
-              />
-            </div>
-          </form>
           <MDBSideNavNav>
             <MDBSideNavCat
               name="Comptabilité"

@@ -96,9 +96,22 @@ export default class Routes extends Component {
         <PrivateRoute exact path="/users/view/:id" component={ViewUser} />
         <PrivateRoute exact path="/users/stvu/users" component={ListUser} />
         <PrivateRoute exact path="/users/stvu/all" component={ListAllUsers} />
-        <PrivateRoute exact path="/users/stvu" component={selectToViewUser} /> {/*stvu stands for : Select to view user*/}
-        <PrivateRoute exact path="/users/stvu/comptables" component={ListComptable} />
-        <PrivateRoute exact path="/users/stvu/societe" component={ListSociete} />
+        <PrivateRoute
+          exact
+          path="/users/stvu"
+          component={selectToViewUser}
+        />{" "}
+        {/*stvu stands for : Select to view user*/}
+        <PrivateRoute
+          exact
+          path="/users/stvu/comptables"
+          component={ListComptable}
+        />
+        <PrivateRoute
+          exact
+          path="/users/stvu/societe"
+          component={ListSociete}
+        />
         <PrivateRoute
           exact
           path="/users/add/comptable"
@@ -125,7 +138,8 @@ export default class Routes extends Component {
           path="/users/edit/societe/:id"
           component={EditSociete}
         />
-        <PrivateRoute exact path="/users/stau" component={SelectToAddUser} /> {/*stau stands for : Select to add user*/}
+        <PrivateRoute exact path="/users/stau" component={SelectToAddUser} />{" "}
+        {/*stau stands for : Select to add user*/}
         {/* finGestionUserRoutes */}
         <PrivateRoute path="/bancaire" component={Bancaire} />
         <PrivateRoute path="/creationoperation" component={CreationOperation} />
@@ -182,10 +196,8 @@ export default class Routes extends Component {
         <PrivateRoute path="/produit/detail/:id" component={DetailsProduit} />
         <PrivateRoute path="/produit/creer" component={AddProduit} />
         <PrivateRoute path="/produit/update" component={UpdateProduit} />
-
         {/* Gestion Referentiels */}
         <PrivateRoute path="/ref" component={Referentiels} />
-
         {/* <Route component={NotFound} /> */}
         <PrivateRoute component={NotFound} />
       </Switch>
