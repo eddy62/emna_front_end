@@ -160,6 +160,14 @@ const AxiosCenter = {
       url: `/statut-employes`,
     });
   },
+
+  archiveWrapperEmploye(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/wrapperemploye/archive`,
+      data: values,
+    });
+  },
   //fin Gestion Social
 
   getReleve() {

@@ -9,6 +9,7 @@ import DetailEmploye from "./social/gestion_employes/Detail_employe";
 import NewEmploye from "./social/gestion_employes/Create_employe";
 import UpdateEmploye from "./social/gestion_employes/Update_employe";
 import SupprimerEmploye from "./social/gestion_employes/Supprimer_employe";
+import ArchiverEmploye from "./social/gestion_employes/Archive_employe";
 
 import ListeContrat from "./contrat/listeContrat/ListeContrat";
 import Contrat from "./contrat/Contrat";
@@ -95,6 +96,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/newEmploye/:id" component={NewEmploye} />
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
         <PrivateRoute path="/deleteEmploye/:id" component={SupprimerEmploye} />
+        <PrivateRoute path="/archiveEmploye/:id" component={ArchiverEmploye} />
         {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />
