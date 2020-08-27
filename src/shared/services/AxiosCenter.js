@@ -17,6 +17,14 @@ const AxiosCenter = {
     });
   },
 
+  finishPasswordReset(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: `/account/reset-password/finish`,
+      data: values,
+    });
+  },
+
   //gestion clientFournisseur
   getAllClientFournisseurBySociete(id) {
     return ApiBackEnd({
