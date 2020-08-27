@@ -263,15 +263,17 @@ class ListEmployes extends React.Component {
                     onChange={this.handleChange}
                   >
                     <option value="ALL">Tous les Employés</option>
-                    <option value="EMPEMB">Employés Embauchés</option>
-                    <option value="EMPEND"> Employés Sortis</option>
-                    <option value="EMPNEMB"> Promesses d'Embauche</option>
-                    <option value="CDD">Employés en CDD</option>
-                    <option value="CDI">Employés en CDI</option>
-                    <option value="CDDTP">Employés en CDD Partiel</option>
-                    <option value="CDITP">Employés en CDI Partiel</option>
-                    <option value="ALTER">Employés en Alternance</option>
-                    <option value="STAGE">Stage</option>
+                    <option value="EMPEMB">Les Employés Embauchés</option>
+                    <option value="EMPEND"> Les Employés Sortis</option>
+                    <option value="EMPNEMB">
+                      Les Employés en attente d'Embauche
+                    </option>
+                    <option value="CDD">Les Employés en CDD</option>
+                    <option value="CDI">Les Employés en CDI</option>
+                    <option value="CDDTP">Les Employés en CDD Partiel</option>
+                    <option value="CDITP">Les Employés en CDI Partiel</option>
+                    <option value="ALTER">Les Employés en Alternance</option>
+                    <option value="STAGE">Les Employés en Stage</option>
                   </select>
                 </form>
               </MDBCol>

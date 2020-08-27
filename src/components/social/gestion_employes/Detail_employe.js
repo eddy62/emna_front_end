@@ -2,6 +2,7 @@ import React from "react";
 import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import SupprimerEmploye from "./Supprimer_employe";
+import ArchiverEmploye from "./Archive_employe";
 import UserService from "../../../shared/services/UserService";
 import {
   MDBCardTitle,
@@ -108,10 +109,6 @@ class DetailEmploye extends React.Component {
                         {employe.departementNaissance}&nbsp; /&nbsp;{" "}
                         {employe.paysNaisance}
                       </p>
-                      {/* <p className="elt">
-                        <label className="gras">Pays : </label>&nbsp;
-                        {employe.paysNaisance}
-                      </p> */}
                     </div>
                     <div className="ligne4">
                       <p className="elt1">
@@ -260,8 +257,14 @@ class DetailEmploye extends React.Component {
                 ) : null}
               </div>
               <div>
-                {UserService.getRole() === "ROLE_SOCIETY" ? (
+                {UserService.getRole() === "ROLE_SOCIETY" &&
+                employe.codeRef === "EMPEND" ? (
                   <SupprimerEmploye employe={employe} />
+                ) : null}
+
+                {UserService.getRole() === "ROLE_SOCIETY" &&
+                employe.codeRef !== "EMPEND" ? (
+                  <ArchiverEmploye employe={employe} />
                 ) : null}
               </div>
               <div>
