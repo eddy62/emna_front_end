@@ -12,6 +12,9 @@ const TokenService = {
 
   deconnexion() {
     cookies.remove("authToken");
+    cookies.remove("userRole");
+    cookies.remove("userId");
+    cookies.remove("societyId");
   },
 
   isAuthenticated() {

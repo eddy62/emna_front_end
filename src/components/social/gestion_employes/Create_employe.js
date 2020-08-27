@@ -74,13 +74,16 @@ const employeSchema = Yup.object().shape({
   raisonSociale: Yup.string("String").max(20, "Trop long"),
   dateEmbauche: Yup.date().required("Champ Obligatoire"),
   dateSortie: Yup.date().required("Champ Obligatoire"),
-  typeContrat: Yup.string("String").required("Champ Obligatoire"),
+  codeTypeContrat: Yup.string("String").required("Champ Obligatoire"),
   categorie: Yup.string("String").required("Champ Obligatoire"),
   poste: Yup.string("String").required("Champ Obligatoire"),
   codeRef: Yup.string("String").required("Champ obligatoire"), //StatutEmploye
   salaireHoraire: Yup.number().required("Champ Obligatoire"),
   salaireBrutMensuelle: Yup.number().required("Champ Obligatoire"),
   heuresMensuelle: Yup.string("String").required("Champ Obligatoire"),
+  periodeEssai: Yup.number()
+    .max(121, "120 jours limite conventionnelle")
+    .required("Champ obligatoire"),
 });
 
 const ComposantErreur = (props) => (
@@ -110,6 +113,8 @@ class NewEmploye extends React.Component {
     super(props);
     this.state = {
       societe: {},
+      listeTypeContrat: [],
+      listeStatutEmploye: [],
       loaded: false,
     };
   }
@@ -117,6 +122,24 @@ class NewEmploye extends React.Component {
   componentDidMount() {
     const idSociete = this.props.match.params.id;
     console.log(idSociete);
+    AxiosCenter.getAllTypeContrats()
+      .then((response) => {
+        const listeTypeContrat = response.data;
+        console.log(listeTypeContrat);
+        this.setState({ listeTypeContrat: listeTypeContrat });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    AxiosCenter.getAllStatutEmployes()
+      .then((response) => {
+        const listeStatutEmploye = response.data;
+        console.log(listeStatutEmploye);
+        this.setState({ listeStatutEmploye: listeStatutEmploye });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     AxiosCenter.getWrapperSociete(idSociete)
       .then((response) => {
         const societe = response.data;
@@ -197,16 +220,18 @@ class NewEmploye extends React.Component {
                 telephonePortable: "",
                 fax: "",
                 societeId: 1,
-                raisonSociale: entreprise, //TO DO recupère le nom de la société
+                raisonSociale: entreprise,
                 dateEmbauche: "",
                 dateSortie: "",
-                typeContrat: "",
+                codeTypeContrat: "",
+
                 categorie: "",
                 poste: "",
                 codeRef: "",
                 salaireHoraire: "",
                 salaireBrutMensuelle: "",
                 heuresMensuelle: "",
+                periodeEssai: 0,
               }}
               validationSchema={employeSchema}
             >
@@ -265,9 +290,11 @@ class NewEmploye extends React.Component {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                               >
-                                <option value="">Civilité*</option>
-                                <option value="Mr">Monsieur</option>
-                                <option value="Mme">Madame</option>
+                                <option value="" disabled selected>
+                                  Civilité*
+                                </option>
+                                <option value="M">Monsieur</option>
+                                <option value="F">Madame</option>
                               </select>
                               {errors.civilite && touched.civilite && (
                                 <div className="text-danger">
@@ -369,7 +396,9 @@ class NewEmploye extends React.Component {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                               >
-                                <option value="">Situation Familiale*</option>
+                                <option value="" disabled selected>
+                                  Situation Familiale*
+                                </option>
                                 <option value="C">Célibataire</option>
                                 <option value="M">Marié(e)</option>
                                 <option value="D">Divorcé(e)</option>
@@ -575,24 +604,25 @@ class NewEmploye extends React.Component {
                               <br />
                               <select
                                 className="browser-default custom-select"
-                                name="typeContrat"
-                                value={values.typeContrat}
+                                name="codeTypeContrat"
+                                value={values.codeTypeContrat}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                               >
-                                <option value="">Type Contrat*</option>
-                                <option value="CDD">CDD Tps Plein</option>
-                                <option value="CDDTP">CDD Tps Partiel</option>
-                                <option value="CDI">CDI Tps Plein</option>
-                                <option value="CDITP">CDI Tps Partiel</option>
-                                <option value="ALTER">
-                                  Contrat Pro/Alternance
+                                <option value="" disabled selected>
+                                  Type Contrat*
                                 </option>
-                                <option value="STAGE">STAGE</option>
+                                {this.state.listeTypeContrat.map(
+                                  (typeContrat) => (
+                                    <option value={typeContrat.codeRef}>
+                                      {typeContrat.intitule}
+                                    </option>
+                                  )
+                                )}
                               </select>
                               {errors.typeContrat && touched.typeContrat && (
                                 <div className="text-danger">
-                                  {errors.typeContrat}
+                                  {errors.codeTypeContrat}
                                 </div>
                               )}
                             </div>
@@ -607,7 +637,9 @@ class NewEmploye extends React.Component {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                               >
-                                <option value="">Catégorie*</option>
+                                <option value="" disabled selected>
+                                  Catégorie*
+                                </option>
                                 <option value="EMP">Employé</option>
                                 <option value="AM">Agent de Maitrise</option>
                                 <option value="AC">Assimilé Cadre</option>
@@ -624,7 +656,7 @@ class NewEmploye extends React.Component {
                         </MDBRow>
                         <MDBRow around between>
                           {/* ligne3 */}
-                          <MDBCol md="7" className="mb-3">
+                          <MDBCol md="4" className="mb-3">
                             <Field
                               name="poste"
                               label="Poste"
@@ -632,6 +664,17 @@ class NewEmploye extends React.Component {
                             />
                             <ErrorMessage
                               name="poste"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="periodeEssai"
+                              label="Essai (Nb jours)*"
+                              component={ComposantNumber}
+                            />
+                            <ErrorMessage
+                              name="periodeEssai"
                               component={ComposantErreur}
                             />
                           </MDBCol>
@@ -645,11 +688,14 @@ class NewEmploye extends React.Component {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                               >
-                                <option value="">Statut Employé*</option>
-                                <option value="EMPNEMB">Non Embauché</option>
-                                <option value="EMPEMB">Embauché</option>
-                                <option value="EMPEND">Sorti</option>
-                                <option value="EMPOTHER">Autre</option>
+                                <option value="" disabled selected>
+                                  Statut Employé*
+                                </option>
+                                {this.state.listeStatutEmploye.map((statut) => (
+                                  <option value={statut.codeRef}>
+                                    {statut.libelle}
+                                  </option>
+                                ))}
                               </select>
                               {errors.typeContrat && touched.typeContrat && (
                                 <div className="text-danger">

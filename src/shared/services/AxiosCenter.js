@@ -17,6 +17,14 @@ const AxiosCenter = {
     });
   },
 
+  finishPasswordReset(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: `/account/reset-password/finish`,
+      data: values,
+    });
+  },
+
   //gestion clientFournisseur
   getAllClientFournisseurBySociete(id) {
     return ApiBackEnd({
@@ -136,6 +144,28 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "GET",
       url: `/wrapperemployes/society/${id}/statutemploye/${codestatut}`,
+    });
+  },
+
+  getAllTypeContrats() {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/type-contrats`,
+    });
+  },
+
+  getAllStatutEmployes() {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/statut-employes`,
+    });
+  },
+
+  archiveWrapperEmploye(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/wrapperemploye/archive`,
+      data: values,
     });
   },
   //fin Gestion Social
@@ -346,13 +376,11 @@ const AxiosCenter = {
     });
   },
   //Fin gestion societe
-  requestPasswordReset(value) {
+  requestPasswordReset(values) {
     return ApiBackEnd({
       method: "post",
       url: `/account/reset-password/init`,
-      data: {
-        MailVM: value,
-      },
+      data: values,
     });
   },
 
