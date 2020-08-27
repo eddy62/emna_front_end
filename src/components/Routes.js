@@ -36,6 +36,11 @@ import DetailsOperation from "./bancaire/releve/details_releve/operation/details
 import MenuReleveNon from "./bancaire/releve/historique_releves/menu_releve_non";
 import ListeRelevesInvalide from "./bancaire/releve/historique_releves/liste_releves_invalide";
 import ListeRelevesNonArchive from "./bancaire/releve/historique_releves/liste_releves_non_archive";
+import BankReconciliation from "./bancaire/releve/gestion_releves/rapprochement_bancaire/BankReconciliation";
+import ListOfOperations from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfOperations";
+import ListOfInvoices from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfInvoices";
+
+
 
 // gestionUserRoutesImports
 import Users from "./users/Users";
@@ -221,6 +226,13 @@ export default class Routes extends Component {
           component={DetailsOperation}
         />
         <PrivateRoute path="/menurelevenon" component={MenuReleveNon} />
+
+        {/* Rapprochement bancaire */}
+        <PrivateRoute path="/gestionReleves/rapprochementBancaire" component={BankReconciliation} />
+        <PrivateRoute path="/gestionReleves/rapprochementBancaire/listeOperations" component={ListOfOperations} />
+        <PrivateRoute path="/gestionReleves/rapprochementBancaire/listeFactures" component={ListOfInvoices} />
+
+
         <PrivateRoute
           path="/releveinvalide/:id"
           component={ListeRelevesInvalide}
@@ -261,6 +273,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/ref" component={Referentiels} />
         {/* <Route component={NotFound} /> */}
         <PrivateRoute component={NotFound} />
+
       </Switch>
     );
   }
