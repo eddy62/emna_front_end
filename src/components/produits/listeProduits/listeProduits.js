@@ -81,7 +81,7 @@ class ListeProduits extends React.Component {
         return (
             <MDBContainer>
                 <div>
-                    <MDBCardHeader color="default-color">Liste Des Produits</MDBCardHeader>
+                    <MDBCardHeader color="default-color">Gestion Produits </MDBCardHeader>
                     <MDBCardTitle tag="h1"> {this.state.nomSociete} </MDBCardTitle>
                     <MDBDataTable
                         striped

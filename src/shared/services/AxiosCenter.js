@@ -1,5 +1,4 @@
 import ApiBackEnd from "./../config/ApiBackEnd";
-import { MDBCardTitle } from "mdbreact";
 
 const AxiosCenter = {
   authenticate(values) {
@@ -14,6 +13,14 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "get",
       url: "/account",
+    });
+  },
+
+  finishPasswordReset(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: `/account/reset-password/finish`,
+      data: values,
     });
   },
 
@@ -136,6 +143,28 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "GET",
       url: `/wrapperemployes/society/${id}/statutemploye/${codestatut}`,
+    });
+  },
+
+  getAllTypeContrats() {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/type-contrats`,
+    });
+  },
+
+  getAllStatutEmployes() {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/statut-employes`,
+    });
+  },
+
+  archiveWrapperEmploye(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/wrapperemploye/archive`,
+      data: values,
     });
   },
   //fin Gestion Social
@@ -346,13 +375,11 @@ const AxiosCenter = {
     });
   },
   //Fin gestion societe
-  requestPasswordReset(value) {
+  requestPasswordReset(values) {
     return ApiBackEnd({
       method: "post",
       url: `/account/reset-password/init`,
-      data: {
-        MailVM: value,
-      },
+      data: values,
     });
   },
 
@@ -400,6 +427,13 @@ const AxiosCenter = {
       url: `factures/societe/${id}`,
     });
   },
+  createLigneProduit(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: "/ligne-produits",
+      data: values,
+    });
+  }
 };
 
 export default AxiosCenter;

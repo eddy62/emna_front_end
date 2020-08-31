@@ -3,8 +3,7 @@ import {
   MDBSideNavLink,
   MDBSideNavCat,
   MDBSideNavNav,
-  MDBSideNav,
-  MDBIcon,
+  MDBSideNav
 } from "mdbreact";
 import AxiosCenter from "../shared/services/AxiosCenter";
 import UserService from "./../shared/services/UserService";
@@ -57,7 +56,6 @@ class SideNavigation extends React.Component {
   }
 
   render() {
-    const { onLinkClick } = this.props;
     return (
       <div className="white-skin">
         <MDBSideNav
@@ -111,11 +109,26 @@ class SideNavigation extends React.Component {
             </MDBSideNavCat>
 
             <MDBSideNavCat name="Social" id="profile-cat" icon="user">
-              {this.rSNL("/listEmployes", "Employés")}
-              {this.rSNL("/TODO", "Variable Paie")}
-              {this.rSNL("/TODO", "Validation")}
-              {this.rSNL("/TODO", "Fiche de Paie")}
-              {this.rSNL("/TODO", "Déclaration d'embauche")}
+              {this.rSNL(
+                "/listEmployes/" + UserService.getSocietyId(),
+                "Employés"
+              )}
+              {this.rSNL(
+                "/socialHome/" + UserService.getSocietyId(),
+                "Variable Paie"
+              )}
+              {this.rSNL(
+                "/socialHome/" + UserService.getSocietyId(),
+                "Validation"
+              )}
+              {this.rSNL(
+                "/socialHome/" + UserService.getSocietyId(),
+                "Fiche de Paie"
+              )}
+              {this.rSNL(
+                "/socialHome/" + UserService.getSocietyId(),
+                "Déclaration d'embauche"
+              )}
             </MDBSideNavCat>
 
             {/* <MDBSideNavLink topLevel to="/alerts" onClick={onLinkClick}>

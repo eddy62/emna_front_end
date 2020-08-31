@@ -62,7 +62,7 @@ const ViewComptable = () => {
     }
    
     const loadUser= () => {
-        const comptableId = getComptableID(id).then( async (res) => {
+        getComptableID(id).then( async (res) => {
             const result = await AxiosCenter.getComptable(res.id)
             setUser(result.data)
         });   

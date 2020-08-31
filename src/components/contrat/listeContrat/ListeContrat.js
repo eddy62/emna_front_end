@@ -2,7 +2,6 @@ import React from 'react';
 import ContratService from '../service/ContratService';
 import { Link } from 'react-router-dom';
 import Loading from "../../../shared/component/Loading";
-import style from "./style.scss";
 
 export default class ListeContrat extends React.Component {
     constructor(props){
