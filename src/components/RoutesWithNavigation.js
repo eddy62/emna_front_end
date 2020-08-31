@@ -5,7 +5,6 @@ import TopNavigation from "./TopNavigation";
 import Routes from "./Routes";
 import TokenService from "../shared/services/TokenService";
 import { withRouter } from "react-router-dom";
-import AxiosCenter from "./../shared/services/AxiosCenter";
 
 class App extends Component {
   constructor(props) {
@@ -20,16 +19,11 @@ class App extends Component {
     };
   }
 
-  componentDidUpdate(prevProps, nextProps, snapshot) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
-      this.assessLocation(this.props.location.pathname);
-    }
-  }
   componentDidMount() {
     this.handleResize();
     window.addEventListener("resize", this.handleResize);
-    this.assessLocation(this.props.location.pathname);
   }
+  
   handleResize = () => {
     this.setState({
       windowWidth: window.innerWidth,
@@ -42,21 +36,6 @@ class App extends Component {
         sideNavToggled: !this.state.sideNavToggled,
       });
     }
-  };
-
-  assessLocation = (location) => {
-    let locationString;
-    switch (location) {
-      case "/contrat":
-        locationString = "Contrat";
-        break;
-      default:
-    }
-    this.setState({
-      currentPage: locationString,
-    });
-    console.log(location);
-    this.props.history.push(location);
   };
 
   logout = () => {
@@ -89,7 +68,7 @@ class App extends Component {
               className="white-skin"
             />
             <main style={{ ...dynamicLeftPadding, margin: "8rem 6% 6rem" }}>
-              <Routes onChange={() => this.assessLocation()} />
+              <Routes />
             </main>
           </div>
         </div>

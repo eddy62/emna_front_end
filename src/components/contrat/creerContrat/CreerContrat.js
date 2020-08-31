@@ -37,8 +37,6 @@ export default class CreerContrat extends React.Component {
 
     componentDidMount() {
 
-        const query = new URLSearchParams(this.props.location.search);
-        const id = query.get('id')
         ContratService.getEmploye(1).then((resultat) => {
             const employes = resultat.data;
             console.log(employes[0].employerId)
