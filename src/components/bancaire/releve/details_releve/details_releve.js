@@ -30,6 +30,7 @@ export class DetailsReleve extends React.Component {
         this.setState({
           releve,
           releveId: this.props.match.params.id,
+          loaded: true
         });
       })
       .catch((err) => console.log(err));
