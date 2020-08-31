@@ -1,9 +1,4 @@
 import React from "react";
-import "./style2.scss";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import AxiosCenter from "../../../shared/services/AxiosCenter";
-import Loading from "../../../shared/component/Loading";
 import {
   MDBContainer,
   MDBCardHeader,
@@ -15,6 +10,12 @@ import {
   MDBInput,
   MDBCol,
 } from "mdbreact";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import "./style2.scss";
+import AxiosCenter from "../../../shared/services/AxiosCenter";
+import Loading from "../../../shared/component/Loading";
+import ErrorMessForm from "../../../shared/component/ErrorMessForm";
 
 const employeSchema = Yup.object().shape({
   //Identitée
@@ -222,6 +223,11 @@ class UpdateEmploye extends React.Component {
                           <MDBCol md="2" className="mb-3">
                             <div>
                               <br />
+                              <ErrorMessForm
+                                error={errors.matricule}
+                                touched={touched.matricule}
+                                right
+                              />
                               <select
                                 className="browser-default custom-select"
                                 name="civilite"
@@ -233,11 +239,6 @@ class UpdateEmploye extends React.Component {
                                 <option value="M">Monsieur</option>
                                 <option value="F">Madame</option>
                               </select>
-                              {errors.civilite && touched.civilite && (
-                                <div className="text-danger">
-                                  {errors.civilite}
-                                </div>
-                              )}
                             </div>
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
@@ -692,7 +693,7 @@ class UpdateEmploye extends React.Component {
                         );
                       }}
                     >
-                      Retour
+                      ANNULER
                     </MDBBtn>
                   </div>
                 </Form>

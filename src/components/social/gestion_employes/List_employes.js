@@ -74,6 +74,11 @@ class ListEmployes extends React.Component {
             field: "typeContrat",
             sort: "asc",
           },
+          {
+            label: "Statut",
+            field: "libelle",
+            sort: "asc",
+          },
         ];
 
         let rows = [];
@@ -91,6 +96,7 @@ class ListEmployes extends React.Component {
               dateEmbauche: employe.dateEmbauche,
               dateSortie: employe.dateSortie,
               typeContrat: employe.codeTypeContrat,
+              libelle: employe.libelle,
               clickEvent: () => {
                 this.props.history.push("/detailEmploye/" + employe.id);
               },
