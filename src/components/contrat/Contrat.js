@@ -1,7 +1,6 @@
 import React from "react";
 //import Axios from 'axios';
 import { Link } from "react-router-dom";
-import Style from "./Style.scss";
 export default class Contrat extends React.Component {
   render() {
     return (

@@ -62,7 +62,7 @@ const ViewSociete = () => {
     }
 
     const loadUser = () => {
-        const comptableId = getSocieteID(id).then(async (res) => {
+        getSocieteID(id).then(async (res) => {
             const result = await AxiosCenter.getSociete(res.id)
             setUser(result.data)
         });
