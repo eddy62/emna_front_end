@@ -390,6 +390,13 @@ const AxiosCenter = {
       method: "GET",
       url: `factures/societe/${id}`,
     });
+  },
+  createLigneProduit(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: "/ligne-produits",
+      data: values,
+    });
   }
 };
 
