@@ -1,5 +1,4 @@
 import ApiBackEnd from "./../config/ApiBackEnd";
-import { MDBCardTitle } from "mdbreact";
 
 const AxiosCenter = {
   authenticate(values) {
@@ -434,7 +433,7 @@ const AxiosCenter = {
       url: "/ligne-produits",
       data: values,
     });
-  }
+  },
 };
 
 export default AxiosCenter;

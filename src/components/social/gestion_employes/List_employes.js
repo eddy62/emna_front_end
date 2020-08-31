@@ -23,12 +23,14 @@ class ListEmployes extends React.Component {
       societe: {},
       choice: "",
       listeEmployes: [],
+      message: "",
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
     const idSociete = this.props.match.params.id;
+    const message = this.props.match.params.message;
     console.log(idSociete);
     AxiosCenter.getSociete(idSociete)
       .then((response) => {
@@ -108,6 +110,7 @@ class ListEmployes extends React.Component {
               columns: columns,
               rows: rows,
               loaded: true,
+              message: message,
             });
           });
         }
@@ -284,6 +287,7 @@ class ListEmployes extends React.Component {
                 </form>
               </MDBCol>
             </div>
+            {this.state.message !== "" ? <div></div> : null}
             <br />
             <div>
               <this.maListe maListe={this.state.listeEmployes} />
