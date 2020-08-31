@@ -201,6 +201,15 @@ const AxiosCenter = {
       data: values,
     });
   },
+  
+  updateOperation(values) {
+    return ApiBackEnd({
+      method: "put",
+      url: `/operations`,
+      data: values,
+    });
+  },
+
   postReleve(values) {
     return ApiBackEnd({
       method: "post",

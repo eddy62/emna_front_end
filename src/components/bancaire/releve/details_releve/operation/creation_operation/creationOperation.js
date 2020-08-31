@@ -84,6 +84,7 @@ class CreationOperation extends React.Component {
                   value={values.solde}
                 />
               </div>
+              
               <button
                 type="submit"
                 className="btn btn-primary"
