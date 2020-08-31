@@ -2,7 +2,7 @@ import React from "react";
 import "./style.scss";
 import { Formik } from "formik";
 import AxiosCenter from "../../shared/services/AxiosCenter";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import TokenService from "../../shared/services/TokenService";
 import {
   MDBContainer,
@@ -18,47 +18,66 @@ import {
 import * as Yup from "yup";
 import UserService from "../../shared/services/UserService";
 import ErrorMessForm from "./../../shared/component/ErrorMessForm";
-import { Link } from "react-router-dom";
+import queryString from "query-string";
 
 const SignupSchema = Yup.object().shape({
-  username: Yup.string().required("Veuillez renseigner votre Login"),
-
-  password: Yup.string().required("Veuillez renseigner votre Mot de passe"),
+  password: Yup.string()
+    .required("Veuillez renseigner votre nouveau mot de passe")
+    .min(8, "Le mot de passe doit contenir au moins 8 caractères.")
+    .matches(
+      /[a-zA-Z0-9]/,
+      "Le mot de passe ne doit pas contenir de caractères spéciaux"
+    ),
+  confirmPassword: Yup.string()
+    .required("Veuillez confirmer votre nouveau mot de passe")
+    .test("match", "Les mots de passe ne correspondent pas.", function (
+      confirmPassword
+    ) {
+      return confirmPassword === this.parent.password;
+    }),
 });
 
-export class Login extends React.Component {
+export class ResetPassword extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      connexionMessage: "",
-    };
+    this.state = { key: "", isSubmitting: false };
+  }
+
+  componentDidMount() {
+    let params = queryString.parse(this.props.location.search);
+    this.setState({
+      key: params.key,
+    });
   }
 
   submit = (values) => {
-    AxiosCenter.authenticate(values)
-      .then((response) => {
-        if (response.status === 200) {
-          TokenService.connexion(response.data.id_token); //pour le token
-          AxiosCenter.getCurrentUser().then((response) => {
-            UserService.setUserId(response.data.id);
-            UserService.setRole(response.data.authorities[0]);
-            this.props.history.push("/");
-          });
-        }
-      })
-      .catch((error) => {
-        this.setState({
-          connexionMessage: "Login et/ou Mot de passe incorrect",
-        });
-      });
+    var myValues = {
+      key: this.state.key,
+      newPassword: values.password,
+    };
+    AxiosCenter.finishPasswordReset(myValues).then((response) => {
+      if (response.status === 200) {
+        this.props.history.push("/");
+      }
+    });
   };
 
   render() {
+    if (!this.props.location.search.includes("?key")) {
+      //this is how I tried to redirect
+      return (
+        //
+        <Redirect to="/login" />
+      );
+    }
     return (
       <div className="App">
         <Formik
           onSubmit={this.submit}
-          initialValues={{ username: "", password: "" }}
+          initialValues={{
+            password: "",
+            confirmPassword: "",
+          }}
           validationSchema={SignupSchema}
         >
           {({
@@ -78,30 +97,13 @@ export class Login extends React.Component {
                       <MDBCardBody className="mx-4">
                         <div className="text-center">
                           <h3 className="dark-grey-text mb-5">
-                            <strong>Bienvenue sur EMNA !</strong>
+                            <strong>
+                              Réinitialisation de votre mot de passe
+                            </strong>
                           </h3>
-                          <h6>Connectez-vous ici</h6>
                         </div>
                         <MDBInput
-                          label="Votre login"
-                          name="username"
-                          group
-                          type="text"
-                          validate
-                          error="wrong"
-                          success="right"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.username}
-                        >
-                          <ErrorMessForm
-                            error={errors.username}
-                            touched={touched.username}
-                            right
-                          />
-                        </MDBInput>
-                        <MDBInput
-                          label="Votre mot de passe"
+                          label="Nouveau mot de passe"
                           name="password"
                           group
                           type="password"
@@ -117,35 +119,41 @@ export class Login extends React.Component {
                             right
                           />
                         </MDBInput>
-                        <p className="font-small blue-text d-flex justify-content-end pb-3">
-                          <Link to="/forgot/password">
-                            <p className="blue-text ml-1">
-                              Mot de passe oublié ?
-                            </p>
-                          </Link>
-                        </p>
+                        <MDBInput
+                          label="Confirmation mot de passe"
+                          name="confirmPassword"
+                          group
+                          type="password"
+                          validate
+                          containerClass="mb-0"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.confirmPassword}
+                        >
+                          <ErrorMessForm
+                            error={errors.confirmPassword}
+                            touched={touched.confirmPassword}
+                            right
+                          />
+                        </MDBInput>
+
+                        <br></br>
+
                         <div className="text-center mb-3">
                           <MDBBtn
                             type="submit"
                             gradient="blue"
                             rounded
                             className="btn-block z-depth-1a"
+                            disabled={isSubmitting}
                           >
-                            Se connecter
+                            Envoyer
                           </MDBBtn>
                         </div>
                         <strong style={{ color: "red" }}>
-                          {this.state.connexionMessage}
+                          {/* {isSubmitting ? "Please wait..." : ""} */}
                         </strong>
                       </MDBCardBody>
-                      <MDBModalFooter className="mx-5 pt-3 mb-1">
-                        <p className="font-small grey-text d-flex justify-content-end">
-                          Pas encore de compte chez nous ?
-                          <Link to="/register">
-                            <p className="blue-text ml-1">Créer un compte</p>
-                          </Link>
-                        </p>
-                      </MDBModalFooter>
                     </MDBCard>
                   </MDBCol>
                 </MDBRow>
@@ -158,4 +166,4 @@ export class Login extends React.Component {
   }
 }
 
-export default withRouter(Login);
+export default withRouter(ResetPassword);

@@ -102,11 +102,18 @@ class AccueilSocial extends React.Component {
                           </MDBCardText>
                           <br />
                           <div>
-                            <Link to="/listEmployes">
-                              <MDBBtn rounded size="sm" color="teal accent-3">
-                                Gerer
-                              </MDBBtn>
-                            </Link>
+                            <MDBBtn
+                              rounded
+                              size="sm"
+                              color="teal accent-3"
+                              onClick={() => {
+                                this.props.history.push(
+                                  "/socialHome/" + this.state.societe.id
+                                );
+                              }}
+                            >
+                              Gerer
+                            </MDBBtn>
                           </div>
                         </MDBCardBody>
                       </MDBCard>
@@ -124,11 +131,18 @@ class AccueilSocial extends React.Component {
                           </MDBCardText>
                           <br />
                           <div className="boutton">
-                            <Link to="/listEmployes">
-                              <MDBBtn color="teal accent-3" rounded size="sm">
-                                Gerer
-                              </MDBBtn>
-                            </Link>
+                            <MDBBtn
+                              color="teal accent-3"
+                              rounded
+                              size="sm"
+                              onClick={() => {
+                                this.props.history.push(
+                                  "/socialHome/" + this.state.societe.id
+                                );
+                              }}
+                            >
+                              Gerer
+                            </MDBBtn>
                           </div>
                         </MDBCardBody>
                       </MDBCard>
@@ -150,11 +164,18 @@ class AccueilSocial extends React.Component {
                           </MDBCardText>
                           <br />
                           <div className="boutton">
-                            <Link to="/listEmployes">
-                              <MDBBtn color="teal accent-3" rounded size="sm">
-                                Gerer
-                              </MDBBtn>
-                            </Link>
+                            <MDBBtn
+                              color="teal accent-3"
+                              rounded
+                              size="sm"
+                              onClick={() => {
+                                this.props.history.push(
+                                  "/socialHome/" + this.state.societe.id
+                                );
+                              }}
+                            >
+                              Gerer
+                            </MDBBtn>
                           </div>
                         </MDBCardBody>
                       </MDBCard>
@@ -170,11 +191,18 @@ class AccueilSocial extends React.Component {
                           </MDBCardText>
                           <br />
                           <div className="boutton">
-                            <Link to="/listEmployes">
-                              <MDBBtn color="teal accent-3" rounded size="sm">
-                                Gerer
-                              </MDBBtn>
-                            </Link>
+                            <MDBBtn
+                              color="teal accent-3"
+                              rounded
+                              size="sm"
+                              onClick={() => {
+                                this.props.history.push(
+                                  "/socialHome/" + this.state.societe.id
+                                );
+                              }}
+                            >
+                              Gerer
+                            </MDBBtn>
                           </div>
                         </MDBCardBody>
                       </MDBCard>

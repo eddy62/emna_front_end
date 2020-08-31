@@ -2,6 +2,7 @@ import React from "react";
 import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import SupprimerEmploye from "./Supprimer_employe";
+import ArchiverEmploye from "./Archive_employe";
 import UserService from "../../../shared/services/UserService";
 import {
   MDBCardTitle,
@@ -103,11 +104,9 @@ class DetailEmploye extends React.Component {
                         {employe.villeNaissance}
                       </p>
                       <p className="elt">
-                        <label className="gras">Département :</label>&nbsp;
-                        {employe.departementNaissance}
-                      </p>
-                      <p className="elt">
-                        <label className="gras">Pays : </label>&nbsp;
+                        <label className="gras">Département / Pays :</label>
+                        &nbsp;&nbsp;&nbsp;
+                        {employe.departementNaissance}&nbsp; /&nbsp;{" "}
                         {employe.paysNaisance}
                       </p>
                     </div>
@@ -198,11 +197,7 @@ class DetailEmploye extends React.Component {
                     <div className="ligne2">
                       <p className="elt1">
                         <label className="gras">Type Contrat : </label>&nbsp;
-                        {employe.typeContrat}
-                      </p>
-                      <p className="elt">
-                        <label className="gras">Poste :</label>&nbsp;
-                        {employe.poste}
+                        {employe.intituleTypeContrat}
                       </p>
                       <p className="elt">
                         <label className="gras">Categorie : </label>&nbsp;
@@ -211,17 +206,31 @@ class DetailEmploye extends React.Component {
                     </div>
                     <div className="ligne3">
                       <p className="elt1">
+                        <label className="gras">Poste :</label>&nbsp;
+                        {employe.poste}
+                      </p>
+                      <p className="elt">
+                        <label className="gras">Essai :</label>&nbsp;
+                        {employe.periodeEssai}&nbsp;&nbsp;jr(s)
+                      </p>
+                      <p className="elt">
+                        <label className="gras">Statut Employe :</label>&nbsp;
+                        {employe.libelle}
+                      </p>
+                    </div>
+                    <div className="ligne4">
+                      <p className="elt1">
                         <label className="gras">Salaire Mensuel : </label>&nbsp;
-                        {employe.salaireBrutMensuelle}
+                        {employe.salaireBrutMensuelle}&nbsp;&nbsp;€
                       </p>
                       <p className="elt">
                         <label className="gras">Salaire Horaire :</label>&nbsp;
-                        {employe.salaireHoraire}
+                        {employe.salaireHoraire}&nbsp;&nbsp;€ / h
                       </p>
                       <p className="elt">
                         <label className="gras">Heures Mensuelles : </label>
                         &nbsp;
-                        {employe.heuresMensuelle}
+                        {employe.heuresMensuelle}&nbsp;&nbsp;h
                       </p>
                     </div>
                   </MDBCard>
@@ -248,8 +257,14 @@ class DetailEmploye extends React.Component {
                 ) : null}
               </div>
               <div>
-                {UserService.getRole() === "ROLE_SOCIETY" ? (
+                {UserService.getRole() === "ROLE_SOCIETY" &&
+                employe.codeRef === "EMPEND" ? (
                   <SupprimerEmploye employe={employe} />
+                ) : null}
+
+                {UserService.getRole() === "ROLE_SOCIETY" &&
+                employe.codeRef !== "EMPEND" ? (
+                  <ArchiverEmploye employe={employe} />
                 ) : null}
               </div>
               <div>
