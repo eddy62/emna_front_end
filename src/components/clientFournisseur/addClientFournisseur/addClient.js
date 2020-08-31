@@ -36,11 +36,9 @@ class AddClientFournisseur extends React.Component {
       .min(3, "Le nom ne peut contient moins que 3 caractères")
       .max(20, "Le nom ne peut dépasser 20 caractères ")
       .required("Le champ est obligatoire"),
-    siren: Yup.number().required(
-      "Le champ est obligatoire"
-    ),
+    siren: Yup.number().required("Le champ est obligatoire"),
     email: Yup.string()
-      .email("L'email doit être valide")
+      .email("L'adress mail doit être valide")
       .required("Le champ est obligatoire"),
     telephone: Yup.number("Format non conforme").required("Le champ est obligatoire"),
     numeroRue: Yup.string().required("Le champ est obligatoire"),
@@ -87,11 +85,10 @@ class AddClientFournisseur extends React.Component {
                   <Field name="siren" label="SIREN" component={ComposantInput} />
                   <ErrorMessage
                     name="siren"
-                    type="number"
                     component={ComposantErreur}
                   />
 
-                  <Field name="email" label="Email" component={ComposantInput} />
+                  <Field name="email" label="Adresse mail" component={ComposantInput} />
                   <ErrorMessage
                     name="email"
                     type="email"

@@ -67,10 +67,10 @@ class ModifierClient extends Component {
             .required("Le champ est obligatoire"),
         siren: Yup.number().required("Le champ est obligatoire"),
         email: Yup.string()
-            .email("L'email doit être valide")
+            .email("L'adress mail doit être valide")
             .required("Le champ est obligatoire"),
         telephone: Yup.number("Format non conforme").required("Le champ est obligatoire"),
-        numeroRue: Yup.string().required("Le champ est obligatoire"),
+        numeroRue: Yup.number().required("Le champ est obligatoire"),
         nomRue: Yup.string().required("Le champ est obligatoire"),
         codePostal: Yup.string().required("Le champ est obligatoire"),
         ville: Yup.string().required("Le champ est obligatoire"),
@@ -104,7 +104,7 @@ class ModifierClient extends Component {
                                         <Field name="siren" label="SIREN" component={ComposantInput} />
                                         <ErrorMessage name="siren" component={ComposantErreur} />
 
-                                        <Field name="email" label="Email" component={ComposantInput} />
+                                        <Field name="email" label="Adresse mail" component={ComposantInput} />
                                         <ErrorMessage name="email" component={ComposantErreur} />
 
                                         <Field name="telephone" label="Téléphone" component={ComposantInput} />
@@ -132,7 +132,7 @@ class ModifierClient extends Component {
               </MDBBtn>
                                         <Link to="/client-fournisseur">
                                             <MDBBtn rounded color="teal accent-3">
-                                                Retour
+                                                Annuler
                   </MDBBtn>
                                         </Link>
                                     </div>
