@@ -13,9 +13,9 @@ export default class CreerContrat extends React.Component {
             title: "CONTRAT A DUREE INDETERMINEE A TEMPS PLEIN",
             employeId: '',
             societeId: '1',
-            clauses: [],
+            clauses:
+                [],
         };
-
     }
 
     handleOnChange = (e) => {
@@ -30,49 +30,59 @@ export default class CreerContrat extends React.Component {
         })
     }
 
-    handleOnChangeClause = (clauseId) => {
-        this.state.clauses.push(clauseId.target.value)
+    handleOnChangeClause = (clause) => {
+        var present= false;
+        var index=0;
+        for(var i = 0; i < this.state.clauses.length; i++){
+            present=false;
+            if ( this.state.clauses[i] == clause) {
+                present=true;
+                index=i;
+                break;
+            }
+        }
+        if(present){
+            const list = this.state.clauses;
+            list.splice(index,1);
+            this.setState({clauses:list});
+
+        }else{
+            this.state.clauses.push(clause);
+        }
+
+
 
     }
 
     componentDidMount() {
 
-        const query = new URLSearchParams(this.props.location.search);
-        const id = query.get('id')
         ContratService.getEmploye(1).then((resultat) => {
             const employes = resultat.data;
-            console.log(employes[0].employerId)
             console.log(employes)
-            this.setState({employes, loaded: true, employeId: employes[0].employerId});
+            this.setState({employes, loaded: true, employeId: employes.employerVMList[0].employerId});
         })
             .catch((err) => console.log(err));
-        console.log(this.state.loaded)
     }
 
     listerLesEmployes= (props) => {
-
-            const Employes = props.employe.map((employe, index) => {
+            const Employes = props.employe.employerVMList.map((employe, index) => {
                 return (
-                    <div className="form-group">
-                        <label htmlFor="exampleFormControlSelect1"><h5>L'employé :</h5></label>
 
-                        <select name="employerID" className="browser-default custom-select form-control"
-                                id="exampleFormControlSelect1" onChange={(event)=>this.handleOnChangeEmploye(event)}>
-                        <option value={employe.employerId}>{employe.employerNom} {employe.employerPrenom}</option>
-                        </select>
-                    </div>
+                        <option key={employe.employerId} value={employe.employerId}>{employe.employerNom} {employe.employerPrenom}</option>
+
                 )
             })
-        const Articles = props.employe.map((employe, index) => {
-            const Article = employe.listArticles.map((article, index) =>{
-                const Clause = article.listClauses.map((clause, index) => {
+
+            const Article = props.employe.articleVMList.map((article, b) =>{
+                const Clause = article.listClauses.map((clause, c) => {
                     return (
-                        <div>
+                        <div key={c}>
                             <div className="form-group">
                                 <div id="feedback">
                                     <div className="form-check">
+
                                         <input type="checkbox" className="form-check-input" name="channel[]"
-                                               id={clause.clauseId} value={clause.clauseId}  onChange={(event)=>this.handleOnChangeClause(event)}/>
+                                               id={clause.clauseId} value={clause} onChange={(event)=>this.handleOnChangeClause(clause)}/>
                                         <label htmlFor={clause.clauseId}
                                                className="form-check-label">{clause.clauseDesciption}</label>
                                     </div>
@@ -82,7 +92,7 @@ export default class CreerContrat extends React.Component {
                     )
                 })
                 return (
-                    <div>
+                    <div key={b}>
                         <h5>{article.articleTitre} : {article.articleDescription}</h5>
                         {article.articleReference}
                         {Clause}
@@ -90,11 +100,7 @@ export default class CreerContrat extends React.Component {
                 )
             })
 
-            return (
-                <div>{Article}</div>
 
-            )
-        })
             return (
 
                 <div>
@@ -132,8 +138,16 @@ export default class CreerContrat extends React.Component {
                                         <option value="CONTRAT A DUREE DETERMINEE A TEMPS PARTIEL">CONTRAT A DUREE DETERMINEE A TEMPS PARTIEL</option>
                                     </select>
                                 </div>
+                                <div className="form-group">
+                                    <label htmlFor="exampleFormControlSelect1"><h5>L'employé :</h5></label>
+
+                                    <select name="employerID" className="browser-default custom-select form-control"
+                                            id="exampleFormControlSelect1" onChange={(event)=>this.handleOnChangeEmploye(event)}>
                                         {Employes}
-                                    {Articles}
+                                    </select>
+                                </div>
+
+                                        {Article}
                                 <hr/><hr/><hr/>
                                 <button type="button" className="btn btn-light-green float-left" >Ajouter une clause</button>
                                 <button type="button" className="btn btn-light-green float-left">Ajouter un article</button>
@@ -159,7 +173,6 @@ export default class CreerContrat extends React.Component {
 
 
     render() {
-        console.log(this.state.loaded)
         if (this.state.loaded) {
                 return (
                     <this.listerLesEmployes employe={this.state.employes} onChange={this.handleOnChange}/>

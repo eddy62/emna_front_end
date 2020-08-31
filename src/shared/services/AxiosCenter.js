@@ -1,5 +1,4 @@
 import ApiBackEnd from "./../config/ApiBackEnd";
-import { MDBCardTitle } from "mdbreact";
 
 const AxiosCenter = {
   authenticate(values) {
@@ -217,6 +216,14 @@ const AxiosCenter = {
       data: values,
     });
   },
+
+  deleteOperation(id) {
+    return ApiBackEnd({
+      method: "delete",
+      url: `/operations/${id}`,
+    });
+  },
+
   postReleve(values) {
     return ApiBackEnd({
       method: "post",
@@ -428,6 +435,13 @@ const AxiosCenter = {
       url: `factures/societe/${id}`,
     });
   },
+  createLigneProduit(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: "/ligne-produits",
+      data: values,
+    });
+  }
 };
 
 export default AxiosCenter;

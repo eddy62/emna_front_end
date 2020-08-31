@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import axioscenter from "../../shared/services/AxiosCenter";
-import UserService from "../../shared/services/UserService";
 
 class CreerFacture extends React.Component {
   state = {
@@ -19,7 +18,7 @@ class CreerFacture extends React.Component {
       for (let i = 0; i < values.produits.length; i++) {
         let produitToUpload = values.produits[i];
         produitToUpload.factureId = res.data.id;
-        axioscenter.createProduit(produitToUpload);
+        axioscenter.createLigneProduit(produitToUpload);
       }
     });
   };
