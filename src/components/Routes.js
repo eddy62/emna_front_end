@@ -25,7 +25,6 @@ import DetailsClient from "./clientFournisseur/detailsClientFounisseur/detailsCl
 
 //gestionBancaire
 import Bancaire from "./bancaire/index";
-import CreationOperation from "./bancaire/releve/details_releve/operation/creation_operation/creationOperation";
 import Releve from "./bancaire/releve/releve";
 import ListeReleves from "./bancaire/releve/historique_releves/liste_releves_archive";
 import DetailsReleve from "./bancaire/releve/details_releve/details_releve";
@@ -36,6 +35,7 @@ import DetailsOperation from "./bancaire/releve/details_releve/operation/details
 import MenuReleveNon from "./bancaire/releve/historique_releves/menu_releve_non";
 import ListeRelevesInvalide from "./bancaire/releve/historique_releves/liste_releves_invalide";
 import ListeRelevesNonArchive from "./bancaire/releve/historique_releves/liste_releves_non_archive";
+import PageAddOperationStatement from "./bancaire/releve/details_releve/operation/creation_operation/pageAddOperationStatement";
 
 // gestionUserRoutesImports
 import Users from "./users/Users";
@@ -203,7 +203,7 @@ export default class Routes extends Component {
         {/*stau stands for : Select to add user*/}
         {/* finGestionUserRoutes */}
         <PrivateRoute path="/bancaire" component={Bancaire} />
-        <PrivateRoute path="/creationoperation" component={CreationOperation} />
+        <PrivateRoute path="/creationoperation/:id" component={PageAddOperationStatement} />
         <PrivateRoute path="/menureleve" component={Releve} />
         <PrivateRoute path="/historiquereleve/:id" component={ListeReleves} />
         <PrivateRoute path="/detailsreleve/:id" component={DetailsReleve} />
@@ -222,7 +222,7 @@ export default class Routes extends Component {
         />
         <PrivateRoute path="/menurelevenon" component={MenuReleveNon} />
         <PrivateRoute
-          path="/releveinvalide/:id"
+          path="/releveinvalide"
           component={ListeRelevesInvalide}
         />
         <PrivateRoute
