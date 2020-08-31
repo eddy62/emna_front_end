@@ -13,6 +13,7 @@ import {
   MDBModalFooter,
   MDBRow,
 } from "mdbreact";
+import { toast } from "react-toastify";
 
 class SupprimerEmploye extends Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class SupprimerEmploye extends Component {
       redirect: false,
       modal: false,
       societeId: UserService.getSocietyId(),
+      //resultat: false,
     };
   }
 
@@ -30,6 +32,26 @@ class SupprimerEmploye extends Component {
       modal: !this.state.modal,
     });
   };
+  // notify = (type) => {
+  //   return () => {
+  //     switch (type) {
+  //       case "success":
+  //         toast.success("Success message", {
+  //           closeButton: false,
+  //         });
+  //         break;
+  //       case "error":
+  //         toast.error("Error message", {
+  //           closeButton: false,
+  //         });
+  //         break;
+  //       default:
+  //         toast.error("Error message", {
+  //           closeButton: false,
+  //         });
+  //     }
+  //   };
+  // };
 
   delete = () => {
     const idEmploye = this.props.employe.id;
@@ -38,9 +60,12 @@ class SupprimerEmploye extends Component {
     AxiosCenter.deleteWrapperEmploye(idEmploye)
       .then((response) => {
         console.log(response);
+        //const result = response.data;
+
         this.setState({
           modal: !this.state.modal,
           redirect: true,
+          //resultat: result,
         });
       })
       .catch((error) => {
@@ -94,6 +119,9 @@ class SupprimerEmploye extends Component {
               >
                 Supprimer
               </MDBBtn>
+              {/* {this.state.result === true
+                ? this.notify("success")
+                : this.notify("error")} */}
               {this.state.redirect && (
                 <Redirect to={"/listEmployes/" + societeId} />
               )}
