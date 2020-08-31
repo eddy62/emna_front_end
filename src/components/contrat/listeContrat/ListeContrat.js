@@ -17,17 +17,14 @@ export default class ListeContrat extends React.Component {
     componentDidMount(){
         const query = new URLSearchParams(this.props.location.search);
         const id = query.get('id')
-        console.log('coucou ' + id)//123
         ContratService.getContrat(1).then((resultat) => {
             const contrats = resultat.data;
-            console.log(contrats)
             this.setState({ contrats , loaded:true});
         })
             .catch((err) => console.log(err));
     }
 
     listerLesContrats(props) {
-        console.log(props)
         const Contrats = props.contrats.map((contrat, index)=>{
             if(contrat.contratSigner){
                 return(
@@ -42,8 +39,7 @@ export default class ListeContrat extends React.Component {
                 )
             }else{
                 return(
-                    <div key={contrat.employerId} className="alert alert-danger" >
-                        {console.log(contrat.contratSigner)}
+                    <div key={index} className="alert alert-danger" >
                        <h5> {contrat.contratTitre} - {contrat.employerNom} {contrat.employerPrenom}  - En attente d'une signature
                            <button type="button" className="btn btn--danger">Supprimer</button>
                         <Link to={"/detailcontrat/"+contrat.employerId}>
@@ -63,7 +59,7 @@ export default class ListeContrat extends React.Component {
         });
 
         return (
-            <div>
+            <div >
                 <h1>Liste des Contrats</h1>
                 <hr/>
                 {Contrats}

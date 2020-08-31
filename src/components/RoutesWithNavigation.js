@@ -55,7 +55,6 @@ class App extends Component {
     this.setState({
       currentPage: locationString,
     });
-    console.log(location);
     this.props.history.push(location);
   };
 
