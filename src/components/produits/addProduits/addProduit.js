@@ -7,6 +7,7 @@ import {
     MDBBtn, MDBCardTitle,
     MDBCardHeader,
     MDBContainer,
+    MDBInput,
 } from "mdbreact";
 import UserService from '../../../shared/services/UserService';
 
@@ -19,14 +20,12 @@ const ComposantErreur = (props) => (
 
 const ComposantInput = ({ field, form: { touched, errors }, ...props }) => (
     <div >
-        <label> {props.label} </label>
-        <input type="text" {...props} className="form-control" {...field} />
+        <MDBInput label={props.label} type="text" {...props} className="form-control" {...field} />
     </div>
 );
 const ComposantTextarea = ({ field, form: { touched, errors }, ...props }) => (
     <div >
-        <label> {props.label} </label>
-        <textarea rows="4" type="text" {...props} className="form-control" {...field} />
+        <MDBInput type="textarea" label={props.label} rows="4"  {...props} className="form-control" {...field} />
     </div>
 );
 const ComposantSelect = ({ field, form: { touched, errors }, ...props }) => (
@@ -73,9 +72,9 @@ class AddProduit extends React.Component {
 
             <MDBContainer>
                 <div>
-                    <MDBCardHeader color="default-color">Société {this.props.name} </MDBCardHeader>
+                    <MDBCardHeader color="default-color">Gestion Produits</MDBCardHeader>
                     <br></br>
-                    <MDBCardTitle tag="h1">Enregister un Nouveau Produit </MDBCardTitle>
+                    <MDBCardTitle tag="h3">Enregister un Nouveau Produit </MDBCardTitle>
                     <hr></hr>
                     <Formik
                         onSubmit={this.submit}
@@ -94,7 +93,7 @@ class AddProduit extends React.Component {
                         {({ handleSubmit, isSubmitting }) => (
                             <form
                                 onSubmit={handleSubmit}
-                                className="container-fluid p-5  lighten-5 justify-content-center align-items-center"
+                                className="bg-white border p-5 d-flex flex-column"
                             >
                                 <div >
                                     <Field

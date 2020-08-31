@@ -11,6 +11,7 @@ import {
   MDBRow,
   MDBCol,
 } from "mdbreact";
+import UserService from "../../shared/services/UserService";
 
 class JuridiqueMenu extends React.Component {
   render() {
@@ -57,29 +58,29 @@ class JuridiqueMenu extends React.Component {
                   </MDBCardBody>
                 </MDBCard>
               </MDBCol>
-
-              <MDBCol>
-                <MDBCard>
-                  <MDBCardBody>
-                    <MDBCardTitle className="MDBCardTitle">
-                      {title3}
-                    </MDBCardTitle>
-                    <br />
-                    <MDBCardText>
-                      Accéder à mes clients/fournisseurs
+              {UserService.getRole() === "ROLE_SOCIETY" ? (
+                <MDBCol>
+                  <MDBCard>
+                    <MDBCardBody>
+                      <MDBCardTitle className="MDBCardTitle">
+                        {title3}
+                      </MDBCardTitle>
+                      <br />
+                      <MDBCardText>
+                        Accéder à mes clients-fournisseurs/Produits
                     </MDBCardText>
-                    <br />
-                    <div className="boutton">
-                      <Link to="/client-fournisseur">
-                        <MDBBtn className="boutton" rounded size="sm">
-                          Gerer
+                      <br />
+                      <div className="boutton">
+                        <Link to="/client-fournisseur">
+                          <MDBBtn className="boutton" rounded size="sm">
+                            Gerer
                         </MDBBtn>
-                      </Link>
-                    </div>
-                  </MDBCardBody>
-                </MDBCard>
-              </MDBCol>
-
+                        </Link>
+                      </div>
+                    </MDBCardBody>
+                  </MDBCard>
+                </MDBCol>
+              ) : null}
               <MDBCol>
                 <MDBCard>
                   <MDBCardBody>

@@ -19,7 +19,7 @@ class CreerFacture extends React.Component {
       for (let i = 0; i < values.produits.length; i++) {
         let produitToUpload = values.produits[i];
         produitToUpload.factureId = res.data.id;
-        axioscenter.createProduit(produitToUpload);
+        axioscenter.createLigneProduit(produitToUpload);
       }
     });
   };

@@ -14,7 +14,7 @@ import {
   MDBRow,
 } from "mdbreact";
 
-class SupprimerEmploye extends Component {
+class ArchiverEmploye extends Component {
   constructor(props) {
     super(props);
 
@@ -22,6 +22,8 @@ class SupprimerEmploye extends Component {
       redirect: false,
       modal: false,
       societeId: UserService.getSocietyId(),
+      employe: {},
+      load: false,
     };
   }
 
@@ -31,11 +33,10 @@ class SupprimerEmploye extends Component {
     });
   };
 
-  delete = () => {
-    const idEmploye = this.props.employe.id;
-    console.log(idEmploye);
-
-    AxiosCenter.deleteWrapperEmploye(idEmploye)
+  archive = () => {
+    const employe = this.props.employe;
+    console.log(employe);
+    AxiosCenter.archiveWrapperEmploye(employe)
       .then((response) => {
         console.log(response);
         this.setState({
@@ -47,7 +48,9 @@ class SupprimerEmploye extends Component {
         console.log(error);
       });
   };
+
   redirection = () => this.setState({ redirect: true });
+
   render() {
     const societeId = this.state.societeId;
 
@@ -60,16 +63,16 @@ class SupprimerEmploye extends Component {
           size="sm"
           onClick={this.toggle}
         >
-          Supprimer
+          Archiver
         </MDBBtn>
         <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
           <MDBModalHeader toggle={this.toggle}>
             <MDBIcon icon="exclamation-triangle" className="attention" />
           </MDBModalHeader>
           <MDBModalBody>
-            <p>Voulez-vous supprimer l'Employé ?</p>
+            <p className="p">Voulez-vous archiver l'Employé ?</p>
             <span className="gras">
-              Attention, la suppression est IRREVERSIBLE !
+              Attention, l'Employé ne sera plus dans l'effectif de la Société !
             </span>
           </MDBModalBody>
           <MDBModalFooter between around>
@@ -88,11 +91,11 @@ class SupprimerEmploye extends Component {
                 rounded
                 toggle={this.toggle}
                 color="teal accent-3"
-                onClick={this.delete}
+                onClick={this.archive}
                 circle="true"
                 size="sm"
               >
-                Supprimer
+                Archiver
               </MDBBtn>
               {this.state.redirect && (
                 <Redirect to={"/listEmployes/" + societeId} />
@@ -105,4 +108,4 @@ class SupprimerEmploye extends Component {
   }
 }
 
-export default SupprimerEmploye;
+export default ArchiverEmploye;
