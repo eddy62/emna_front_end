@@ -1,4 +1,5 @@
 import ApiBackEnd from "./../config/ApiBackEnd";
+import { MDBCardTitle } from "mdbreact";
 
 const AxiosCenter = {
   authenticate(values) {
@@ -13,6 +14,14 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "get",
       url: "/account",
+    });
+  },
+
+  finishPasswordReset(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: `/account/reset-password/finish`,
+      data: values,
     });
   },
 
@@ -135,6 +144,28 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "GET",
       url: `/wrapperemployes/society/${id}/statutemploye/${codestatut}`,
+    });
+  },
+
+  getAllTypeContrats() {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/type-contrats`,
+    });
+  },
+
+  getAllStatutEmployes() {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/statut-employes`,
+    });
+  },
+
+  archiveWrapperEmploye(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/wrapperemploye/archive`,
+      data: values,
     });
   },
   //fin Gestion Social
@@ -304,7 +335,7 @@ const AxiosCenter = {
       method: "PUT",
       url: `/produits/update`,
       data: values,
-    })
+    });
   },
 
   //Gestion societe
@@ -345,10 +376,16 @@ const AxiosCenter = {
     });
   },
   //Fin gestion societe
-  //Fin gestion societe
+  requestPasswordReset(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: `/account/reset-password/init`,
+      data: values,
+    });
+  },
 
   //comptable
-  getAllComptables () {
+  getAllComptables() {
     return ApiBackEnd({
       method: "get",
       url: "/comptables/all",
@@ -369,7 +406,7 @@ const AxiosCenter = {
     for (let i = 0; i < files.length; i++) {
       formData.append("listeFiles", files.item(i));
     }
-    
+
     return ApiBackEnd({
       method: "POST",
       url: "/facture/new",

@@ -9,6 +9,7 @@ import DetailEmploye from "./social/gestion_employes/Detail_employe";
 import NewEmploye from "./social/gestion_employes/Create_employe";
 import UpdateEmploye from "./social/gestion_employes/Update_employe";
 import SupprimerEmploye from "./social/gestion_employes/Supprimer_employe";
+import ArchiverEmploye from "./social/gestion_employes/Archive_employe";
 
 import ListeContrat from "./contrat/listeContrat/ListeContrat";
 import Contrat from "./contrat/Contrat";
@@ -36,6 +37,11 @@ import DetailsOperation from "./bancaire/releve/details_releve/operation/details
 import MenuReleveNon from "./bancaire/releve/historique_releves/menu_releve_non";
 import ListeRelevesInvalide from "./bancaire/releve/historique_releves/liste_releves_invalide";
 import ListeRelevesNonArchive from "./bancaire/releve/historique_releves/liste_releves_non_archive";
+import BankReconciliation from "./bancaire/releve/gestion_releves/rapprochement_bancaire/BankReconciliation";
+import ListOfOperations from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfOperations";
+import ListOfInvoices from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfInvoices";
+
+
 
 // gestionUserRoutesImports
 import Users from "./users/Users";
@@ -74,10 +80,12 @@ import UpdateProduit from "./produits/updateProduit/updateProduit";
 import Referentiels from "./referentiels/Referentiels";
 
 //GestionFactures
-import AccueilFacture from "./gestion_factures/accueilFactures"
-import CreerFacture from "./gestion_factures/creerFacture"
-import CreerDepense from "./gestion_factures/creerDepense"
-import DetailFacture from "./gestion_factures/detailFacture"
+import AccueilFacture from "./gestion_factures/accueilFactures";
+import CreerFacture from "./gestion_factures/creerFacture";
+import CreerDepense from "./gestion_factures/creerDepense";
+import DetailFacture from "./gestion_factures/detailFacture";
+
+//gestion Variables de paie
 
 export default class Routes extends Component {
   render() {
@@ -93,7 +101,8 @@ export default class Routes extends Component {
         <PrivateRoute path="/newEmploye/:id" component={NewEmploye} />
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
         <PrivateRoute path="/deleteEmploye/:id" component={SupprimerEmploye} />
-		{/* Gestion Facture */}
+        <PrivateRoute path="/archiveEmploye/:id" component={ArchiverEmploye} />
+        {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />
         <PrivateRoute path="/detailfacture" component={DetailFacture} />
@@ -221,6 +230,13 @@ export default class Routes extends Component {
           component={DetailsOperation}
         />
         <PrivateRoute path="/menurelevenon" component={MenuReleveNon} />
+
+        {/* Rapprochement bancaire */}
+        <PrivateRoute path="/gestionReleves/rapprochementBancaire" component={BankReconciliation} />
+        <PrivateRoute path="/gestionReleves/rapprochementBancaire/listeOperations" component={ListOfOperations} />
+        <PrivateRoute path="/gestionReleves/rapprochementBancaire/listeFactures" component={ListOfInvoices} />
+
+
         <PrivateRoute
           path="/releveinvalide/:id"
           component={ListeRelevesInvalide}
