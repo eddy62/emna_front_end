@@ -60,7 +60,7 @@ export default class ListeOperations extends React.Component {
             <MDBCard>
               <MDBCardBody>
                 <MDBCardTitle className="MDBCardTitle">
-                  <h1>Opérations</h1>
+                  Opérations
                   <table className="table table-striped">
                     <thead>
                       <tr>
