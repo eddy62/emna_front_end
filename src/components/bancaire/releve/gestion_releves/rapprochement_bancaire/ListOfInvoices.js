@@ -1,81 +1,17 @@
-import React, { Component } from 'react';
-import { MDBTable, MDBTableBody, MDBTableHead, MDBCardTitle } from 'mdbreact';
+import React from 'react';
+import { MDBTable, MDBCardTitle } from 'mdbreact';
+import ListeFactures from '../../../../gestion_factures/listeFactures';
 
-class ListOfInvoices extends Component {
-  render() {
-    const data = {
-      columns: [
-        {
-          label: 'ID',                
-        },
-        {
-          label: 'Numéro',                
-        },
-        {
-          label: 'Date',               
-        }             
-      ],
-      rows: [
-        {
-          'ID': 1,
-          'Numfact': '54917',
-          'Date': '22/07/2020',
-        },
-        {
-          'ID': 1,
-          'Numfact': '54917',
-          'Date': '22/07/2020',
-        },
-        {
-          'ID': 1,
-          'Numfact': '54917',
-          'Date': '22/07/2020',
-        },
-        {
-          'ID': 1,
-          'Numfact': '54917',
-          'Date': '22/07/2020',
-        },
-        {
-          'ID': 1,
-          'Numfact': '54917',
-          'Date': '22/07/2020',
-        },
-        {
-          'ID': 1,
-          'Numfact': '54917',
-          'Date': '22/07/2020',
-        },
-        {
-          'ID': 1,
-          'Numfact': '54917',
-          'Date': '22/07/2020',
-        },
-        {
-          'ID': 1,
-          'Numfact': '54917',
-          'Date': '22/07/2020',
-        },
-        {
-          'ID': 1,
-          'Numfact': '54917',
-          'Date': '22/07/2020',
-        },              
-      ]
-    };
-      
+export default () => {
+
     return (
       <div>
         <MDBCardTitle className="card-title text-center py-2">
           Liste des factures
         </MDBCardTitle>         
         <MDBTable striped scrollY maxHeight="500px" >
-          <MDBTableHead columns={data.columns} />
-          <MDBTableBody rows={data.rows}/>
+          <ListeFactures />
         </MDBTable>
       </div>
     );
-  }
 }
-
-export default ListOfInvoices;

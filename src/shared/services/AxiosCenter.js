@@ -217,6 +217,14 @@ const AxiosCenter = {
       data: values,
     });
   },
+
+  deleteOperation(id) {
+    return ApiBackEnd({
+      method: "delete",
+      url: `/operations/${id}`,
+    });
+  },
+
   postReleve(values) {
     return ApiBackEnd({
       method: "post",

@@ -2,6 +2,8 @@ import AxiosCenter from "../../../../../../shared/services/AxiosCenter";
 import React from "react";
 import { Link } from "react-router-dom";
 import Loading from "../../../../../../shared/component/Loading";
+import DeletionConfirmationModal from "../../../../../utils/DeletionConfirmationModal";
+
 import {
   MDBCard,
   MDBCardBody,
@@ -26,6 +28,10 @@ export default class ListeOperations extends React.Component {
       .catch((err) => console.log(err));
   }
 
+  deleteOperation = (id) => {
+    AxiosCenter.deleteOperation(id).then((res) => this.componentDidMount());
+  };
+
   listerLesOperations(props) {
     const Operations = props.operations.map((operation, index) => {
       return (
@@ -39,6 +45,9 @@ export default class ListeOperations extends React.Component {
               {" "}
               voir le détail
             </Link>
+          </td>
+          <td>          
+            <DeletionConfirmationModal deleteOperation={ () => {props.deleteOperation(operation.id)} } />
           </td>
         </tr>
       );
@@ -74,7 +83,12 @@ export default class ListeOperations extends React.Component {
 
   render() {
     if (this.state.loaded) {
-      return <this.listerLesOperations operations={this.state.operations} />;
+      return (
+        <this.listerLesOperations 
+          operations={this.state.operations} 
+          deleteOperation={this.deleteOperation}
+        />
+      );  
     } else {
       return <Loading />;
     }
