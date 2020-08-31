@@ -5,6 +5,7 @@ import ListeOperations from "./operation/liste_operations/liste_operations";
 import Loading from "../../../../shared/component/Loading";
 import {MDBCard, MDBCardBody, MDBCardTitle, MDBCardHeader, MDBContainer, MDBBtn, MDBCol,} from "mdbreact";
 import UserService from '../../../../shared/services/UserService';
+import ReleveSolde from './details_releve_solde'
 
 export class DetailsReleveInvalide extends React.Component {
     constructor(props) {
@@ -22,10 +23,11 @@ export class DetailsReleveInvalide extends React.Component {
                 this.setState({
                     releve,
                     releveId: this.props.match.params.id,
-                    loaded: true,
+                    loaded: true
                 });
             })
             .catch((err) => console.log(err));
+
     }
 
     detailsReleve = (props) => {
@@ -65,10 +67,7 @@ export class DetailsReleveInvalide extends React.Component {
                                                     {props.detailsreleve.banque}
                                                 </div>
                                             </div>
-                                            <p>
-                                                Solde du compte pour ce mois :{" "}
-                                                {props.detailsreleve.solde} €
-                                            </p>
+                                            <ReleveSolde releveId={this.state.releveId} />
                                         </div>
                                     </MDBCardTitle>
                                 </MDBCardBody>
@@ -91,7 +90,7 @@ export class DetailsReleveInvalide extends React.Component {
                                 <MDBCardBody>
                                     <MDBCardTitle className="MDBCardTitle">
                                         <div>
-                                            <this.detailsReleve detailsreleve={this.state.releve}/>
+                                            <this.detailsReleve detailsreleve={this.state.releve} />
                                         </div>
 
                                         <div className="row">
