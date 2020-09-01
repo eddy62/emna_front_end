@@ -40,7 +40,7 @@ export class MenuReleveNon extends React.Component {
 
                     <br />
                     <div className="boutton">
-                      <Link to="/releveinvalide/4">
+                      <Link to="/releveinvalide/">
                         <MDBBtn
                           className="boutton"
                           color=" teal lighten-2"
@@ -65,7 +65,7 @@ export class MenuReleveNon extends React.Component {
 
                     <br />
                     <div className="boutton">
-                      <Link to="/menu/juridique">
+                      <Link to="/gestionReleves/rapprochementBancaire">
                         <MDBBtn
                           className="boutton"
                           color=" teal lighten-2"

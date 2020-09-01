@@ -1,5 +1,4 @@
 import ApiBackEnd from "./../config/ApiBackEnd";
-import { MDBCardTitle } from "mdbreact";
 
 const AxiosCenter = {
   authenticate(values) {
@@ -14,6 +13,15 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "get",
       url: "/account",
+    });
+  },
+
+
+  finishPasswordReset(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: `/account/reset-password/finish`,
+      data: values,
     });
   },
 
@@ -153,6 +161,14 @@ const AxiosCenter = {
       url: `/statut-employes`,
     });
   },
+
+  archiveWrapperEmploye(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/wrapperemploye/archive`,
+      data: values,
+    });
+  },
   //fin Gestion Social
 
   getReleve() {
@@ -182,6 +198,13 @@ const AxiosCenter = {
     });
   },
 
+  getReleveSoldeById(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/releves/${id}/solde`,
+    });
+  },
+
   getOperationById(id) {
     return ApiBackEnd({
       method: "get",
@@ -202,6 +225,14 @@ const AxiosCenter = {
       data: values,
     });
   },
+
+  deleteOperation(id) {
+    return ApiBackEnd({
+      method: "delete",
+      url: `/operations/${id}`,
+    });
+  },
+
   postReleve(values) {
     return ApiBackEnd({
       method: "post",
@@ -421,6 +452,13 @@ const AxiosCenter = {
       url: `factures/societe/${id}`,
     });
   },
+  createLigneProduit(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: "/ligne-produits",
+      data: values,
+    });
+  }
 };
 
 export default AxiosCenter;

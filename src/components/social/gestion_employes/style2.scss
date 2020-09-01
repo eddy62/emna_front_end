@@ -18,10 +18,13 @@
 
 p {
   word-spacing: normal;
+  font-size: large;
 }
 .gras {
   font-weight: bold;
   margin-left: 20px;
+  color: darkcyan;
+  font-size: large;
 }
 .elt {
   float: left;
@@ -50,4 +53,8 @@ p {
 
 .civ {
   max-width: 20px;
+}
+
+.attention {
+  color: #f80606;
 }

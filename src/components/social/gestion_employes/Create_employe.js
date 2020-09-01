@@ -74,13 +74,16 @@ const employeSchema = Yup.object().shape({
   raisonSociale: Yup.string("String").max(20, "Trop long"),
   dateEmbauche: Yup.date().required("Champ Obligatoire"),
   dateSortie: Yup.date().required("Champ Obligatoire"),
-  typeContrat: Yup.string("String").required("Champ Obligatoire"),
+  codeTypeContrat: Yup.string("String").required("Champ Obligatoire"),
   categorie: Yup.string("String").required("Champ Obligatoire"),
   poste: Yup.string("String").required("Champ Obligatoire"),
   codeRef: Yup.string("String").required("Champ obligatoire"), //StatutEmploye
   salaireHoraire: Yup.number().required("Champ Obligatoire"),
   salaireBrutMensuelle: Yup.number().required("Champ Obligatoire"),
   heuresMensuelle: Yup.string("String").required("Champ Obligatoire"),
+  periodeEssai: Yup.number()
+    .max(121, "120 jours limite conventionnelle")
+    .required("Champ obligatoire"),
 });
 
 const ComposantErreur = (props) => (
@@ -217,16 +220,18 @@ class NewEmploye extends React.Component {
                 telephonePortable: "",
                 fax: "",
                 societeId: 1,
-                raisonSociale: entreprise, //TO DO recupère le nom de la société
+                raisonSociale: entreprise,
                 dateEmbauche: "",
                 dateSortie: "",
-                typeContrat: "",
+                codeTypeContrat: "",
+
                 categorie: "",
                 poste: "",
                 codeRef: "",
                 salaireHoraire: "",
                 salaireBrutMensuelle: "",
                 heuresMensuelle: "",
+                periodeEssai: 0,
               }}
               validationSchema={employeSchema}
             >
@@ -599,8 +604,8 @@ class NewEmploye extends React.Component {
                               <br />
                               <select
                                 className="browser-default custom-select"
-                                name="typeContrat"
-                                value={values.typeContrat}
+                                name="codeTypeContrat"
+                                value={values.codeTypeContrat}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                               >
@@ -617,7 +622,7 @@ class NewEmploye extends React.Component {
                               </select>
                               {errors.typeContrat && touched.typeContrat && (
                                 <div className="text-danger">
-                                  {errors.typeContrat}
+                                  {errors.codeTypeContrat}
                                 </div>
                               )}
                             </div>
@@ -651,7 +656,7 @@ class NewEmploye extends React.Component {
                         </MDBRow>
                         <MDBRow around between>
                           {/* ligne3 */}
-                          <MDBCol md="7" className="mb-3">
+                          <MDBCol md="4" className="mb-3">
                             <Field
                               name="poste"
                               label="Poste"
@@ -659,6 +664,17 @@ class NewEmploye extends React.Component {
                             />
                             <ErrorMessage
                               name="poste"
+                              component={ComposantErreur}
+                            />
+                          </MDBCol>
+                          <MDBCol md="3" className="mb-3">
+                            <Field
+                              name="periodeEssai"
+                              label="Essai (Nb jours)*"
+                              component={ComposantNumber}
+                            />
+                            <ErrorMessage
+                              name="periodeEssai"
                               component={ComposantErreur}
                             />
                           </MDBCol>

@@ -26,20 +26,18 @@ const SignupSchema = Yup.object().shape({
 export class ForgotPassword extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { creationMessage: "" };
+    this.state = { isSubmitting: false, forgotMessage: "" };
   }
 
   submit = (values) => {
-    AxiosCenter.requestPasswordReset(values)
-      .then((response) => {
-        console.log(values);
-      })
-      .catch((error) => {
-        console.log("Raté..");
+    AxiosCenter.requestPasswordReset(values).then((response) => {
+      if (response.status === 200) {
         this.setState({
-          connexionMessage: "Login et/ou Mot de passe incorrect",
+          forgotMessage:
+            "Demande de réinitialisation enregistrée, pensez à verifier vos emails",
         });
-      });
+      }
+    });
   };
 
   render() {
@@ -106,12 +104,13 @@ export class ForgotPassword extends React.Component {
                             gradient="blue"
                             rounded
                             className="btn-block z-depth-1a"
+                            disabled={isSubmitting}
                           >
                             Recevoir l'email de modification
                           </MDBBtn>
                         </div>
                         <strong style={{ color: "red" }}>
-                          {this.state.creationMessage}
+                          {this.state.forgotMessage}
                         </strong>
                       </MDBCardBody>
                     </MDBCard>

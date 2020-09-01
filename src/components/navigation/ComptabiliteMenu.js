@@ -13,11 +13,19 @@ import {
 } from "mdbreact";
 
 class ComptabiliteMenu extends React.Component {
+
+  componentDidMount() {
+    this.backListener = this.props.history.listen(location => {
+      console.log(location)
+    });
+  }
+
   render() {
     const title = "Espace Comptabilité";
     const title2 = "Facture";
     const title3 = "Devis";
     const title4 = "Relevé Bancaire";
+    
 
     return (
       <div className="App">
