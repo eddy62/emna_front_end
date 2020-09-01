@@ -427,6 +427,7 @@ const AxiosCenter = {
     formData.append("tva", facture.tva);
     formData.append("moyenDePaiement", facture.moyenDePaiement);
     formData.append("societeId", 1);
+    formData.append("client", facture.client);
     for (let i = 0; i < files.length; i++) {
       formData.append("listeFiles", files.item(i));
     }
