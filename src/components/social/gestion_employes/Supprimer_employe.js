@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import { toast } from "react-toastify";
+import * as dateFns from "date-fns";
 import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
@@ -13,7 +15,6 @@ import {
   MDBModalFooter,
   MDBRow,
 } from "mdbreact";
-import { toast } from "react-toastify";
 
 class SupprimerEmploye extends Component {
   constructor(props) {
@@ -23,7 +24,6 @@ class SupprimerEmploye extends Component {
       redirect: false,
       modal: false,
       societeId: UserService.getSocietyId(),
-      //resultat: false,
     };
   }
 
@@ -32,40 +32,45 @@ class SupprimerEmploye extends Component {
       modal: !this.state.modal,
     });
   };
-  // notify = (type) => {
-  //   return () => {
-  //     switch (type) {
-  //       case "success":
-  //         toast.success("Success message", {
-  //           closeButton: false,
-  //         });
-  //         break;
-  //       case "error":
-  //         toast.error("Error message", {
-  //           closeButton: false,
-  //         });
-  //         break;
-  //       default:
-  //         toast.error("Error message", {
-  //           closeButton: false,
-  //         });
-  //     }
-  //   };
-  // };
 
   delete = () => {
     const idEmploye = this.props.employe.id;
     console.log(idEmploye);
+    const { employe } = this.props;
+    const diff = dateFns.differenceInCalendarYears(
+      new Date(),
+      new Date(employe.dateSortie)
+    );
+    console.log(diff);
 
     AxiosCenter.deleteWrapperEmploye(idEmploye)
       .then((response) => {
         console.log(response);
-        //const result = response.data;
-
+        const resultat = response.data;
+        if (resultat) {
+          toast.success(
+            <div className="text-center">
+              <strong>Employé Supprimé &nbsp;&nbsp;!"</strong>
+            </div>,
+            { position: "top-right" }
+          );
+        } else {
+          toast.error(
+            <div className="text-center">
+              <strong>Employé NON Supprimé &nbsp;&nbsp;!</strong>
+              <br />
+              <small>
+                Le temps d'archivage est de {diff} &nbsp;ans.
+                <br />
+                (minimum 5 ans)
+              </small>
+            </div>,
+            { position: "top-right" }
+          );
+        }
         this.setState({
           modal: !this.state.modal,
           redirect: true,
-          //resultat: result,
         });
       })
       .catch((error) => {
@@ -92,10 +97,11 @@ class SupprimerEmploye extends Component {
             <MDBIcon icon="exclamation-triangle" className="attention" />
           </MDBModalHeader>
           <MDBModalBody>
-            <p>Voulez-vous supprimer l'Employé ?</p>
+            <p>Voulez-vous supprimer l'Employé et toutes ses données?</p>
             <span className="gras">
               Attention, la suppression est IRREVERSIBLE !
             </span>
+            <p>(L'Employé doit avoir été archivé depuis au moins 5 ans)</p>
           </MDBModalBody>
           <MDBModalFooter between around>
             <MDBRow>
@@ -119,9 +125,6 @@ class SupprimerEmploye extends Component {
               >
                 Supprimer
               </MDBBtn>
-              {/* {this.state.result === true
-                ? this.notify("success")
-                : this.notify("error")} */}
               {this.state.redirect && (
                 <Redirect to={"/listEmployes/" + societeId} />
               )}

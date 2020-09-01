@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
+import { toast } from "react-toastify";
 import {
   MDBContainer,
   MDBBtn,
@@ -39,6 +40,12 @@ class ArchiverEmploye extends Component {
     AxiosCenter.archiveWrapperEmploye(employe)
       .then((response) => {
         console.log(response);
+        toast.success(
+          <div className="text-center">
+            <strong>Employé Archivé &nbsp;&nbsp;!</strong>
+          </div>,
+          { position: "top-right" }
+        );
         this.setState({
           modal: !this.state.modal,
           redirect: true,
@@ -74,6 +81,7 @@ class ArchiverEmploye extends Component {
             <span className="gras">
               Attention, l'Employé ne sera plus dans l'effectif de la Société !
             </span>
+            <p className="p">(Les données seront archivées pendant 5ans)</p>
           </MDBModalBody>
           <MDBModalFooter between around>
             <MDBRow>
