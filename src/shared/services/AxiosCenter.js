@@ -17,6 +17,7 @@ const AxiosCenter = {
     });
   },
 
+
   //gestion clientFournisseur
   getAllClientFournisseurBySociete(id) {
     return ApiBackEnd({
@@ -233,6 +234,14 @@ const AxiosCenter = {
       url: `/releves/${id}`,
     });
   },
+
+  validateReleve(id) {
+    return ApiBackEnd({
+      method: "put",
+      url: `/releve/${id}`,
+    });
+  },
+
   getUser(id) {
     return ApiBackEnd({
       method: "get",

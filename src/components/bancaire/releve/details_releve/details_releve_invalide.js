@@ -12,6 +12,7 @@ import {
   MDBBtn,
   MDBCol,
 } from "mdbreact";
+import UserService from '../../../../shared/services/UserService';
 
 export class DetailsReleveInvalide extends React.Component {
   constructor(props) {
@@ -131,6 +132,24 @@ export class DetailsReleveInvalide extends React.Component {
                           <span id="color-button"> Ajouter une opération</span>
                         </MDBBtn>
                       </Link>
+
+                      { UserService.getRole() != "ROLE_ACCOUNTANT" &&
+
+                        <MDBBtn onClick={AxiosCenter.validateReleve(this.props.match.params.id)}
+                            className="boutton"
+                            color=" teal lighten-2"
+                            rounded
+                            size="sm"
+                        >
+                          <Link
+                              to={"/releveinvalide/" + this.props.match.params.id}
+                          >
+                            <span id="color-button"> Valider</span>
+                          </Link>
+                        </MDBBtn>
+                      }
+
+
                     </p>
                   </MDBCardTitle>
                 </MDBCardBody>
