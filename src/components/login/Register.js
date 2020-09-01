@@ -1,9 +1,7 @@
 import React from "react";
 import "./style.scss";
 import { Formik } from "formik";
-import AxiosCenter from "../../shared/services/AxiosCenter";
 import { withRouter } from "react-router-dom";
-import TokenService from "../../shared/services/TokenService";
 import {
   MDBContainer,
   MDBRow,
@@ -12,11 +10,8 @@ import {
   MDBCardBody,
   MDBInput,
   MDBBtn,
-  MDBIcon,
-  MDBModalFooter,
 } from "mdbreact";
 import * as Yup from "yup";
-import UserService from "../../shared/services/UserService";
 import ErrorMessForm from "./../../shared/component/ErrorMessForm";
 
 const SignupSchema = Yup.object().shape({

@@ -4,16 +4,7 @@ import * as Yup from "yup";
 import AxiosCenter from "../../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../../shared/component/Loading";
 import UserService from "../../../../../../shared/services/UserService";
-import
-{
-  MDBContainer,
-  MDBBtn,
-  MDBRow,
-  MDBCardBody,
-  MDBCard,
-  MDBInput,
-  MDBCol,
-} from "mdbreact";
+import{ MDBContainer,MDBBtn,MDBRow,MDBCardBody,MDBCard,MDBInput,MDBCol } from "mdbreact";
 
 const lexique =
 {
@@ -98,10 +89,10 @@ class EditOperation extends React.Component {
         <MDBContainer>
           <h1>{lexique.title}</h1>
         <Formik
-              onSubmit={this.submit}
-              initialValues={this.getInitialValues()}
-              validationSchema={operationSchema}
-              enableReinitialize={true}
+              onSubmit            = {this.submit}
+              initialValues       = {this.getInitialValues()}
+              validationSchema    = {operationSchema}
+              enableReinitialize  = {true}
             >
               {({
                 values,

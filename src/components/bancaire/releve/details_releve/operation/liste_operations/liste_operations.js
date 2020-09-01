@@ -3,13 +3,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Loading from "../../../../../../shared/component/Loading";
 import UserService from "../../../../../../shared/services/UserService";
-import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBContainer,
-  MDBCol,
-} from "mdbreact";
+import DeletionConfirmationModal from "../../../../../utils/DeletionConfirmationModal";
+import {MDBCard,MDBCardBody,MDBCardTitle,MDBContainer,MDBCol} from "mdbreact";
+import EditOperation from "../edit_operation/pageEditOperation";
+import RedirectionBtn from "../../../../../../shared/component/RedirectionBtn";
 
 export default class ListeOperations extends React.Component {
   constructor(props) {
@@ -39,6 +36,10 @@ export default class ListeOperations extends React.Component {
       .catch((err) => console.log(err));
   }
 
+  deleteOperation = (id) => {
+    AxiosCenter.deleteOperation(id).then((res) => this.componentDidMount());
+  };
+
   listerLesOperations(props) {
     const Operations = props.operations.map((operation,index) => {
       return (
@@ -53,15 +54,19 @@ export default class ListeOperations extends React.Component {
               voir le détail
             </Link>
           </td>
-            <td>
-              { (props.roleUser === "ROLE_SOCIETY" || props.roleUser === "ROLE_ADMIN") &&
-                !props.isReleveUnvalid &&
-                <Link to={  "/editoperation/" + operation.id}>
-                  {" "}
-                  Modifier
-                </Link>
-              }
-            </td>
+          <td>
+            { (props.roleUser === "ROLE_SOCIETY" || props.roleUser === "ROLE_ADMIN") &&
+              !props.isReleveUnvalid &&
+              <RedirectionBtn
+                route ={"/editoperation/" + operation.id} 
+                msg   = "Modifier"
+                color ="default-color"
+              />
+            }
+          </td>
+        <td>          
+            <DeletionConfirmationModal deleteOperation={ () => {props.deleteOperation(operation.id)} } />
+          </td>
         </tr>
       );
     });
@@ -73,7 +78,7 @@ export default class ListeOperations extends React.Component {
             <MDBCard>
               <MDBCardBody>
                 <MDBCardTitle className="MDBCardTitle">
-                  <h1>Opérations</h1>
+                  Opérations
                   <table className="table table-striped">
                     <thead>
                       <tr>
@@ -96,7 +101,13 @@ export default class ListeOperations extends React.Component {
 
   render() {
     if (this.state.loaded) {
-      return <this.listerLesOperations operations={this.state.operations} roleUser={this.state.roleUser}/>;
+      return (
+        <this.listerLesOperations 
+          operations={this.state.operations} 
+          deleteOperation={this.deleteOperation}
+          roleUser={this.state.roleUser}
+        />
+      );  
     } else {
       return <Loading />;
     }
