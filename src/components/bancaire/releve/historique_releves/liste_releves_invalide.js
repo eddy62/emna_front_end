@@ -2,6 +2,8 @@ import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import React from "react";
 import { Link } from "react-router-dom";
 import Loading from "../../../../shared/component/Loading";
+import ReleveConstants from "../releve_constants"
+import UserService from '../../../../shared/services/UserService';
 import {
   MDBCard,
   MDBCardBody,
@@ -17,10 +19,13 @@ export default class ListeRelevesInvalide extends React.Component {
     this.state = {
       loaded: false,
       releves: [],
+      societyId: UserService.getSocietyId()
     };
   }
   componentDidMount() {
-    AxiosCenter.getReleveByEtatAndSociety(1, 3)
+    console.log(this.state.societyId)
+
+    AxiosCenter.getReleveByEtatAndSociety(ReleveConstants.RELEVE_ETAT_INVALIDE, this.state.societyId)
       .then((res) => {
         const releves = res.data;
         this.setState({ releves, loaded: true });
