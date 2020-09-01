@@ -530,7 +530,7 @@ const EditSociete = () => {
     }
    
     const loadUser= () => {
-        const societeId = getSocieteID(id).then( async (res) => {
+        getSocieteID(id).then( async (res) => {
             const result = await AxiosCenter.getSociete(res.id)
             setUser(result.data)
         });   

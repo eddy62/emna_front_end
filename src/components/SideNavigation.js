@@ -3,8 +3,7 @@ import {
   MDBSideNavLink,
   MDBSideNavCat,
   MDBSideNavNav,
-  MDBSideNav,
-  MDBIcon,
+  MDBSideNav
 } from "mdbreact";
 import AxiosCenter from "../shared/services/AxiosCenter";
 import UserService from "./../shared/services/UserService";
@@ -57,7 +56,6 @@ class SideNavigation extends React.Component {
   }
 
   render() {
-    const { onLinkClick } = this.props;
     return (
       <div className="white-skin">
         <MDBSideNav

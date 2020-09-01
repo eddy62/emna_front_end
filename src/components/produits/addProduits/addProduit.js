@@ -59,11 +59,12 @@ class AddProduit extends React.Component {
     };
 
     userSchema = Yup.object().shape({
-        nom: Yup.string().required("Le champ est obligatoire"),
-        reference: Yup.number("Entres des chiffre").required("Le champ est obligatoire"),
-        tva: Yup.string().required("Le champ est obligatoire"),
-        prix: Yup.number(),
-        description: Yup.string().required("Le champ est obligatoire"),
+        nom: Yup.string().min(3, "Le nom ne peut contient moins que 3 caractères")
+            .max(20, "Le nom ne peut dépasser 20 caractères ").required("Le champ est obligatoire"),
+        reference: Yup.number("Format non conforme").required("Le champ est obligatoire"),
+        tva: Yup.number("Format non conforme").required("Le champ est obligatoire"),
+        prix: Yup.number("Format non conforme").required("Le champ est obligatoire"),
+        description: Yup.string().max(200, "200 caractères maximum"),
         unite: Yup.string().required("Le champ est obligatoire"),
     });
 
@@ -132,7 +133,7 @@ class AddProduit extends React.Component {
                                 <br></br>
                                 <div className="row d-flex justify-content-center ">
                                     <MDBBtn rounded type="submit" color="primary">
-                                        Sauvegarder
+                                        Enregistrer
               </MDBBtn>
                                     <Link to="/client-fournisseur">
                                         <MDBBtn rounded color="teal accent-3">
