@@ -196,6 +196,13 @@ const AxiosCenter = {
     });
   },
 
+  getReleveSoldeById(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/releves/${id}/solde`,
+    });
+  },
+
   getOperationById(id) {
     return ApiBackEnd({
       method: "get",
