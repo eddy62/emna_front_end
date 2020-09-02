@@ -64,9 +64,9 @@ class AddProduit extends React.Component {
         reference: Yup.string()
             .matches(/^[0-9]+$/, "Reference doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
         tva: Yup.string()
-            .matches(/^[0-9]+$/, "Tva doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
+            .matches(/^[0-9.]+$/, "Tva doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
         prix: Yup.string()
-            .matches(/^[0-9]+$/, "Prix doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
+            .matches(/^[0-9.]+$/, "Prix doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
         description: Yup.string().max(200, "200 caractères maximum"),
         unite: Yup.string().required("Le champ est obligatoire"),
     });

@@ -19,8 +19,9 @@ class SupprimerClient extends Component {
   supprimerProduit = () => {
     AxiosCenter.deleteClientFournisseur(this.props.client.id, this.state.userId)
       .then((response) => {
-        console.log(response.data)
+        const resultat = response.data;
         this.toggle()
+        this.setState()
         this.props.history.push("/clientFournisseur/liste");
       })
       .catch((error) => {
