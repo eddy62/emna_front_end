@@ -12,6 +12,7 @@ import {
 } from "mdbreact";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import * as dateFns from "date-fns";
 import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import Loading from "../../../shared/component/Loading";
@@ -74,7 +75,10 @@ const employeSchema = Yup.object().shape({
   //Informations Emploi
   raisonSociale: Yup.string("String").max(20, "Trop long"),
   dateEmbauche: Yup.date().required("Champ Obligatoire"),
-  dateSortie: Yup.date(),
+  dateSortie: Yup.date().min(
+    Yup.ref("dateEmbauche"),
+    "La date de sortie ne peut être avant la date d'embauche"
+  ),
   codeTypeContrat: Yup.string("String").required("Champ Obligatoire"),
   categorie: Yup.string("String").required("Champ Obligatoire"),
   poste: Yup.string("String").required("Champ Obligatoire"),
@@ -150,31 +154,53 @@ class NewEmploye extends React.Component {
 
   submit = (values, actions) => {
     console.log(values);
-    AxiosCenter.createWrapperEmploye(values)
-      .then((response) => {
-        console.log(response);
-        const employe = response.data;
-        console.log(employe);
-        if (response.status === 200) {
-          toast.success(
+    const diff = dateFns.differenceInCalendarYears(
+      new Date(),
+      new Date(values.dateNaissance)
+    );
+    console.log(diff);
+    if (diff >= 14) {
+      AxiosCenter.createWrapperEmploye(values)
+        .then((response) => {
+          console.log(response);
+          const employe = response.data;
+          console.log(employe);
+          if (response.status === 200) {
+            toast.success(
+              <div className="text-center">
+                <strong>Employé Crée &nbsp;&nbsp;!</strong>
+              </div>,
+              { position: "top-right" }
+            );
+          }
+          this.props.history.push("/detailEmploye/" + employe.id);
+        })
+        .catch((error) => {
+          console.log(error.response);
+          toast.error(
             <div className="text-center">
-              <strong>Employé Crée &nbsp;&nbsp;!</strong>
+              <strong>Employé NON Crée &nbsp;&nbsp;!</strong>
+              <br />
+              {error.response.data.status === 400 ? (
+                <small>{error.response.data.title}</small>
+              ) : null}
             </div>,
             { position: "top-right" }
           );
-        }
-        this.props.history.push("/detailEmploye/" + employe.id);
-      })
-      .catch((error) => {
-        toast.error(
-          <div className="text-center">
-            <strong>Employé NON Crée &nbsp;&nbsp;!</strong>
-          </div>,
-          { position: "top-right" }
-        );
-        console.log(error);
-      });
-    actions.setSubmitting(true);
+        });
+      actions.setSubmitting(true);
+    } else {
+      toast.error(
+        <div className="text-center">
+          <strong>Employé NON Crée &nbsp;&nbsp;!</strong>
+          <br />
+          <small>Date de Naissance incorrect !</small>
+          <br />
+          <small>L'âge minimum pour travailler est de 14 ans !</small>
+        </div>,
+        { position: "top-right" }
+      );
+    }
   };
 
   render() {
@@ -182,8 +208,6 @@ class NewEmploye extends React.Component {
     const title = "Gestion Social";
     const title1 = "Enregister un Nouvel Employé";
     const entreprise = this.state.societe.raisonSociale;
-    console.log(typeof entreprise);
-
     return (
       <div className="App">
         <div className="newEmp">
@@ -370,7 +394,7 @@ class NewEmploye extends React.Component {
                           <MDBCol md="3" className="mb-3">
                             <Field
                               name="villeNaissance"
-                              label="Ville de Naissance"
+                              label="Ville de Naissance*"
                               component={ComposantInput}
                             />
                             <ErrorMessForm
@@ -693,7 +717,7 @@ class NewEmploye extends React.Component {
                           <MDBCol md="4" className="mb-3">
                             <Field
                               name="poste"
-                              label="Poste"
+                              label="Poste*"
                               component={ComposantInput}
                             />
                             <ErrorMessForm
