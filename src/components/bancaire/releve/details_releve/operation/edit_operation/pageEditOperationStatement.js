@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import AxiosCenter from "../../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../../shared/component/Loading";
 import UserService from "../../../../../../shared/services/UserService";
-import{ MDBContainer,MDBBtn,MDBRow,MDBCardBody,MDBCard,MDBInput,MDBCol } from "mdbreact";
+import{ MDBContainer,MDBBtn,MDBInput,MDBCardTitle } from "mdbreact";
 
 const lexique =
 {
@@ -59,7 +59,8 @@ class EditOperation extends React.Component {
   }
 
   componentDidMount() {
-    if (this.state.roleUser === "ROLE_SOCIETY") {
+    if (this.state.roleUser === "ROLE_SOCIETY" ||
+        this.state.roleUser === "ROLE_ADMIN") {
       const idOperation = this.props.match.params.id;
       AxiosCenter.getOperationById(idOperation)
       .then((response) => {
@@ -85,9 +86,10 @@ class EditOperation extends React.Component {
   render() {
     if (!this.state.loaded) return <Loading />;
     return (
-      <div className="container-fluid p-5 bg-light d-flex flex-column justify-content-center align-items-center">
-        <MDBContainer>
-          <h1>{lexique.title}</h1>
+      <MDBContainer>
+        <div>
+        <MDBCardTitle tag="h1">{lexique.title}</MDBCardTitle>
+        <hr></hr>
         <Formik
               onSubmit            = {this.submit}
               initialValues       = {this.getInitialValues()}
@@ -105,80 +107,68 @@ class EditOperation extends React.Component {
                 handleBlur,
                 handleReset,
               }) => (
-                <Form onSubmit={handleSubmit}>
-                  <div>
-                    <MDBCardBody>
-                      <MDBCard className="cadre">
-                        <MDBRow around>
-                          <MDBCol md="6" className="mb-3">
-                            {/* Date  condition : verif date supérieur à date ajd */}
-                            <Field
-                              name="date"
-                              label={lexique.date}
-                              value={values.date}
-                              component={ComposantDate}
-                            />
-                            <ErrorMessage
-                              name="date"
-                              component={ComposantErreur}
+                <Form onSubmit={handleSubmit}
+                  className="container-fluid p-5  lighten-5 justify-content-center align-items-center"
+                >
+                <Field
+                  name="date"
+                  label={lexique.date}
+                  value={values.date}
+                  component={ComposantDate}
+                />
+                <ErrorMessage
+                  name="date"
+                  component={ComposantErreur}
 
-                            />
+                />
 
-                            {/* Description */}
-                            <div>
-                              <Field
-                                name="description"
-                                label={lexique.description}
-                                component={ComposantInput}
-                              />
-                              <ErrorMessage
-                                name="description"
-                                component={ComposantErreur}
-                              />
-                            </div>
+                {/* Description */}
+                <div>
+                  <Field
+                    name="description"
+                    label={lexique.description}
+                    component={ComposantInput}
+                  />
+                  <ErrorMessage
+                    name="description"
+                    component={ComposantErreur}
+                  />
+                </div>
 
-                            {/* Type */}
-                            <div>
-                              <select
-                                className="browser-default custom-select"
-                                name="type"
-                                onChange={handleChange}
-                                value={values.type}
-                                onBlur={handleBlur}
-                              >
-                                <option value="debit">{lexique.operationType.debit}</option>
-                                <option value="credit">{lexique.operationType.credit}</option>
-                              </select>
-                              {errors.type && touched.type && (
-                                <div className="text-danger">
-                                  {errors.type}
-                                </div>
-                              )}
-                            </div>
+                {/* Type */}
+                <div>
+                  <select
+                    className="browser-default custom-select"
+                    name="type"
+                    onChange={handleChange}
+                    value={values.type}
+                    onBlur={handleBlur}
+                  >
+                    <option value="debit">{lexique.operationType.debit}</option>
+                      <option value="credit">{lexique.operationType.credit}</option>
+                  </select>
+                  {errors.type && touched.type && (
+                    <div className="text-danger">
+                      {errors.type}
+                    </div>
+                  )}
+                </div>
 
-                            { /* Solde */ }
-                            <div>
-                              <Field
-                                name="solde"
-                                label={lexique.solde}
-                                component={ComposantInput}
-                              />
-                             <ErrorMessage
-                              name="solde"
-                              component={ComposantErreur}
-                            />
-                            </div>
-                          </MDBCol>
-                        </MDBRow>
-                      </MDBCard>
-                    </MDBCardBody>
-                  </div>
-                  <p className="small">* Mention Obligatoire</p>
-                  <div>
-                    <hr></hr>
-                  </div>
-                  <div>
-                    <MDBBtn
+                { /* Solde */ }
+                <div>
+                  <Field
+                    name="solde"
+                    label={lexique.solde}
+                    component={ComposantInput}
+                  />
+                <ErrorMessage
+                  name="solde"
+                  component={ComposantErreur}
+                />
+                </div>
+
+                <div className="row d-flex justify-content-center ">
+                <MDBBtn
                       color="teal accent-3"
                       rounded
                       size="sm"
@@ -210,12 +200,12 @@ class EditOperation extends React.Component {
                     >
                       Retour
                     </MDBBtn>
-                  </div>
+                </div>
                 </Form>
               )}
             </Formik>
+            </div>
         </MDBContainer>
-      </div>
     );
   }
 }

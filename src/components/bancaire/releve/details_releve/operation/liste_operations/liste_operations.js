@@ -5,7 +5,6 @@ import Loading from "../../../../../../shared/component/Loading";
 import UserService from "../../../../../../shared/services/UserService";
 import DeletionConfirmationModal from "../../../../../utils/DeletionConfirmationModal";
 import {MDBCard,MDBCardBody,MDBCardTitle,MDBContainer,MDBCol} from "mdbreact";
-import EditOperation from "../edit_operation/pageEditOperation";
 import RedirectionBtn from "../../../../../../shared/component/RedirectionBtn";
 
 export default class ListeOperations extends React.Component {
