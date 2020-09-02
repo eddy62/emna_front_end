@@ -75,6 +75,12 @@ class SupprimerEmploye extends Component {
       })
       .catch((error) => {
         console.log(error);
+        toast.error(
+          <div className="text-center">
+            <strong>Employé NON Supprimé &nbsp;&nbsp;!</strong>
+          </div>,
+          { position: "top-right" }
+        );
       });
   };
   redirection = () => this.setState({ redirect: true });
@@ -93,15 +99,24 @@ class SupprimerEmploye extends Component {
           Supprimer
         </MDBBtn>
         <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
-          <MDBModalHeader toggle={this.toggle}>
-            <MDBIcon icon="exclamation-triangle" className="attention" />
-          </MDBModalHeader>
+          <div className="align-self-center">
+            <MDBModalHeader toggle={this.toggle}>
+              <MDBIcon
+                icon="exclamation-triangle"
+                className="attention"
+                size="2x"
+              />
+            </MDBModalHeader>
+          </div>
           <MDBModalBody>
-            <p>Voulez-vous supprimer l'Employé et toutes ses données?</p>
-            <span className="gras">
-              Attention, la suppression est IRREVERSIBLE !
-            </span>
-            <p>(L'Employé doit avoir été archivé depuis au moins 5 ans)</p>
+            <p>Supprimer l'Employé et toutes ses données?</p>
+            <span className="gras">ATTENTION,</span>
+            <br />
+            <span className="gras">LA SUPPRESSION EST IRREVERSIBLE !</span>
+            <br />
+            <small>
+              (L'Employé doit avoir été archivé depuis au moins 5 ans)
+            </small>
           </MDBModalBody>
           <MDBModalFooter between around>
             <MDBRow>

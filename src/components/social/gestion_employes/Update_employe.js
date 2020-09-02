@@ -56,7 +56,12 @@ const employeSchema = Yup.object().shape({
   //Informations Emploi
   raisonSociale: Yup.string("String").max(20, "Trop long"),
   dateEmbauche: Yup.date().required("Champ Obligatoire"),
-  dateSortie: Yup.date().required("Champ Obligatoire"),
+  dateSortie: Yup.date()
+    .min(
+      Yup.ref("dateEmbauche"),
+      "La date de sortie ne peut être avant la date d'embauche"
+    )
+    .required("Champ Obligatoire"),
   codeTypeContrat: Yup.string("String").required("Champ Obligatoire"),
   categorie: Yup.string("String").required("Champ Obligatoire"),
   poste: Yup.string("String").required("Champ Obligatoire"),
@@ -149,6 +154,10 @@ class UpdateEmploye extends React.Component {
         toast.error(
           <div className="text-center">
             <strong>Employé NON Modifié &nbsp;&nbsp;!</strong>
+            <br />
+            {error.response.data.status === 400 ? (
+              <small>{error.response.data.title}</small>
+            ) : null}
           </div>,
           { position: "top-right" }
         );
