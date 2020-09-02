@@ -9,6 +9,7 @@ import {
     MDBContainer,
     MDBInput,
 } from "mdbreact";
+import { toast } from "react-toastify";
 
 const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
@@ -75,10 +76,23 @@ class UpdateProduit extends Component {
     submit = (values, actions) => {
         AxiosCenter.updateProduit(values)
             .then((response) => {
+                toast.success(
+                    <div className="text-center">
+                        <strong>Le produit {this.state.updateProduit.nom} a été mis à jour </strong>
+                    </div>,
+                    { position: "top-right" }
+                );
                 this.props.history.push("/produit/detail/" + response.data.id);
             })
             .catch((error) => {
                 console.log(error);
+                toast.error(
+                    <div className="text-center">
+                        <strong>Le produit n'a pas été mis à jour&nbsp;&nbsp;!</strong>
+                        <br />
+                    </div>,
+                    { position: "top-right" }
+                );
             });
         actions.setSubmitting(true);
     }

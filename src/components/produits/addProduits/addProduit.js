@@ -10,6 +10,7 @@ import {
     MDBInput,
 } from "mdbreact";
 import UserService from '../../../shared/services/UserService';
+import { toast } from "react-toastify";
 
 
 
@@ -47,11 +48,23 @@ class AddProduit extends React.Component {
     submit = (values, actions) => {
         AxiosCenter.createProduit(values)
             .then((response) => {
-                console.log(response.data);
+                toast.success(
+                    <div className="text-center">
+                        <strong>Le nouveau produit {response.data.nom} a été bien crée</strong>
+                    </div>,
+                    { position: "top-right" }
+                );
                 this.props.history.push("/client-fournisseur");
             })
             .catch((error) => {
                 console.log(error);
+                toast.error(
+                    <div className="text-center">
+                        <strong>Erreur lors de la création d'un nouveau Client Fournisseur &nbsp;&nbsp;!</strong>
+                        <br />
+                    </div>,
+                    { position: "top-right" }
+                );
             });
 
         actions.setSubmitting(true);

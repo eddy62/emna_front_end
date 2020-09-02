@@ -4,6 +4,7 @@ import * as Yup from "yup"
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import { Link } from 'react-router-dom';
 import { MDBBtn, MDBContainer, MDBCardHeader, MDBCardTitle, MDBInput } from "mdbreact";
+import { toast } from "react-toastify";
 
 const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
@@ -50,10 +51,23 @@ class ModifierClient extends Component {
     submit = (values, actions) => {
         AxiosCenter.updateClientFournisseur(values)
             .then((response) => {
+                toast.success(
+                    <div className="text-center">
+                        <strong>Le client {this.state.updateClient.nom} a été mis à jour </strong>
+                    </div>,
+                    { position: "top-right" }
+                );
                 this.props.history.push("/clientFournisseur/detail/" + response.data.id);
             })
             .catch((error) => {
                 console.log(error);
+                toast.error(
+                    <div className="text-center">
+                        <strong>Le Client {this.state.updateClient.nom} n'a pas été mis à jour&nbsp;&nbsp;!</strong>
+                        <br />
+                    </div>,
+                    { position: "top-right" }
+                );
             });
         actions.setSubmitting(true);
     }

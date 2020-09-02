@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
-
+import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
 class SupprimerClient extends Component {
   state = {
     modal: false,
     userId: UserService.getUserId(),
+    redirect: false,
 
   }
 
@@ -19,17 +21,31 @@ class SupprimerClient extends Component {
   supprimerProduit = () => {
     AxiosCenter.deleteClientFournisseur(this.props.client.id, this.state.userId)
       .then((response) => {
-        const resultat = response.data;
-        this.toggle()
-        this.setState()
-        this.props.history.push("/clientFournisseur/liste");
+        toast.success(
+          <div className="text-center">
+            <strong> Le Client Fournisseur {this.props.client.nom} a été bien Supprimé &nbsp;&nbsp;!"</strong>
+          </div>,
+          { position: "top-right" }
+        );
+
+        this.setState({
+          modal: !this.state.modal,
+          redirect: true,
+        });
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error)
+        toast.error(
+          <div className="text-center">
+            <strong>Erreur lors la suppression &nbsp;&nbsp;!</strong>
+            <br />
+          </div>,
+          { position: "top-right" }
+        );
       });
 
-  }
-
+  };
+  redirection = () => this.setState({ redirect: true });
   render() {
     return (
       <MDBContainer>
@@ -43,7 +59,9 @@ class SupprimerClient extends Component {
           <MDBModalFooter>
             <MDBBtn rounded type="button" circle="true" size="sm" onClick={this.toggle}>Annuler</MDBBtn>
             <MDBBtn rounded toggle={this.toggle} color="secondary" onClick={() => this.supprimerProduit()} circle="true" size="sm" >
-              Supprimer</MDBBtn>
+              Supprimer</MDBBtn>  {this.state.redirect && (
+              <Redirect to={"/clientFournisseur/liste"} />
+            )}
 
           </MDBModalFooter>
         </MDBModal>

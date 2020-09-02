@@ -5,6 +5,7 @@ import AxiosCenter from "../../../shared/services/AxiosCenter";
 import { Link } from "react-router-dom";
 import { MDBBtn, MDBContainer, MDBCardHeader, MDBCardTitle, MDBInput } from "mdbreact";
 import UserService from '../../../shared/services/UserService';
+import { toast } from "react-toastify";
 
 const ComposantErreur = (props) => (
   <div className="text-danger">{props.children}</div>
@@ -12,7 +13,6 @@ const ComposantErreur = (props) => (
 
 const ComposantInput = ({ field, form: { touched, errors }, ...props }) => (
   <div >
-    {/* <label> {props.label} </label> */}
     <MDBInput label={props.label} type="text" {...props} className="form-control" {...field} />
   </div>
 );
@@ -21,10 +21,22 @@ class AddClientFournisseur extends React.Component {
   submit = (values, actions) => {
     AxiosCenter.createClientFournisseur(values)
       .then((response) => {
-        console.log(response.data);
+        toast.success(
+          <div className="text-center">
+            <strong>Le nouveau Client Fournisseur {response.data.nom} a été bien crée</strong>
+          </div>,
+          { position: "top-right" }
+        );
       })
       .catch((error) => {
         console.log(error);
+        toast.error(
+          <div className="text-center">
+            <strong>Erreur lors de la création d'un nouveau Client Fournisseur &nbsp;&nbsp;!</strong>
+            <br />
+          </div>,
+          { position: "top-right" }
+        );
       });
 
     actions.setSubmitting(true);
