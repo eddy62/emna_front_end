@@ -1,4 +1,6 @@
 import React from "react";
+import * as dateFns from "date-fns";
+import { fr } from "date-fns/esm/locale";
 import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
@@ -23,14 +25,12 @@ class ListEmployes extends React.Component {
       societe: {},
       choice: "",
       listeEmployes: [],
-      message: "",
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
     const idSociete = this.props.match.params.id;
-    const message = this.props.match.params.message;
     console.log(idSociete);
     AxiosCenter.getSociete(idSociete)
       .then((response) => {
@@ -95,8 +95,20 @@ class ListEmployes extends React.Component {
               matricule: employe.matricule,
               nom: employe.nomUsage,
               prenom: employe.prenom,
-              dateEmbauche: employe.dateEmbauche,
-              dateSortie: employe.dateSortie,
+              dateEmbauche: dateFns.format(
+                new Date(employe.dateEmbauche),
+                "dd-MM-yyyy",
+                {
+                  locale: fr,
+                }
+              ),
+              dateSortie: dateFns.format(
+                new Date(employe.dateSortie),
+                "dd-MM-yyyy",
+                {
+                  locale: fr,
+                }
+              ),
               typeContrat: employe.codeTypeContrat,
               libelle: employe.libelle,
               clickEvent: () => {
@@ -110,7 +122,6 @@ class ListEmployes extends React.Component {
               columns: columns,
               rows: rows,
               loaded: true,
-              message: message,
             });
           });
         }
@@ -191,8 +202,20 @@ class ListEmployes extends React.Component {
             matricule: employe.matricule,
             nom: employe.nomUsage,
             prenom: employe.prenom,
-            dateEmbauche: employe.dateEmbauche,
-            dateSortie: employe.dateSortie,
+            dateEmbauche: dateFns.format(
+              new Date(employe.dateEmbauche),
+              "dd-MM-yyyy",
+              {
+                locale: fr,
+              }
+            ),
+            dateSortie: dateFns.format(
+              new Date(employe.dateSortie),
+              "dd-MM-yyyy",
+              {
+                locale: fr,
+              }
+            ),
             typeContrat: employe.intituleTypeContrat,
             clickEvent: () => {
               this.props.history.push("/detailEmploye/" + employe.id);
@@ -287,7 +310,6 @@ class ListEmployes extends React.Component {
                 </form>
               </MDBCol>
             </div>
-            {this.state.message !== "" ? <div></div> : null}
             <br />
             <div>
               <this.maListe maListe={this.state.listeEmployes} />

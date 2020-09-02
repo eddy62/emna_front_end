@@ -16,6 +16,7 @@ import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import Loading from "../../../shared/component/Loading";
 import ErrorMessForm from "../../../shared/component/ErrorMessForm";
+import { toast } from "react-toastify";
 
 const employeSchema = Yup.object().shape({
   //Identitée
@@ -73,7 +74,7 @@ const employeSchema = Yup.object().shape({
   //Informations Emploi
   raisonSociale: Yup.string("String").max(20, "Trop long"),
   dateEmbauche: Yup.date().required("Champ Obligatoire"),
-  dateSortie: Yup.date().required("Champ Obligatoire"),
+  dateSortie: Yup.date(),
   codeTypeContrat: Yup.string("String").required("Champ Obligatoire"),
   categorie: Yup.string("String").required("Champ Obligatoire"),
   poste: Yup.string("String").required("Champ Obligatoire"),
@@ -151,11 +152,26 @@ class NewEmploye extends React.Component {
     console.log(values);
     AxiosCenter.createWrapperEmploye(values)
       .then((response) => {
+        console.log(response);
         const employe = response.data;
         console.log(employe);
+        if (response.status === 200) {
+          toast.success(
+            <div className="text-center">
+              <strong>Employé Crée &nbsp;&nbsp;!</strong>
+            </div>,
+            { position: "top-right" }
+          );
+        }
         this.props.history.push("/detailEmploye/" + employe.id);
       })
       .catch((error) => {
+        toast.error(
+          <div className="text-center">
+            <strong>Employé NON Crée &nbsp;&nbsp;!</strong>
+          </div>,
+          { position: "top-right" }
+        );
         console.log(error);
       });
     actions.setSubmitting(true);

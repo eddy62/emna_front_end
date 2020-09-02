@@ -16,6 +16,7 @@ import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import Loading from "../../../shared/component/Loading";
 import ErrorMessForm from "../../../shared/component/ErrorMessForm";
+import { toast } from "react-toastify";
 
 const employeSchema = Yup.object().shape({
   //Identitée
@@ -131,11 +132,26 @@ class UpdateEmploye extends React.Component {
     console.log(values);
     AxiosCenter.updateWrapperEmploye(values)
       .then((response) => {
+        console.log(response);
         const employe = response.data;
         console.log(employe);
+        if (response.status === 200) {
+          toast.success(
+            <div className="text-center">
+              <strong>Information Employé modofié &nbsp;&nbsp;!</strong>
+            </div>,
+            { position: "top-right" }
+          );
+        }
         this.props.history.push("/detailEmploye/" + employe.id);
       })
       .catch((error) => {
+        toast.error(
+          <div className="text-center">
+            <strong>Employé NON Modifié &nbsp;&nbsp;!</strong>
+          </div>,
+          { position: "top-right" }
+        );
         console.log(error);
       });
     actions.setSubmitting(true);
