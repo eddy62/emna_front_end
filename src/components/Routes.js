@@ -33,6 +33,7 @@ import DetailsReleveInvalide from "./bancaire/releve/details_releve/details_rele
 import DetailsReleveNonArchive from "./bancaire/releve/details_releve/details_releve_non_archive";
 import CreationReleve from "./bancaire/releve/creation_releve/creation_releve";
 import DetailsOperation from "./bancaire/releve/details_releve/operation/details_operation/details_operation";
+import EditOperation from "./bancaire/releve/details_releve/operation/edit_operation/pageEditOperationStatement";
 import MenuReleveNon from "./bancaire/releve/historique_releves/menu_releve_non";
 import ListeRelevesInvalide from "./bancaire/releve/historique_releves/liste_releves_invalide";
 import ListeRelevesNonArchive from "./bancaire/releve/historique_releves/liste_releves_non_archive";
@@ -227,6 +228,10 @@ export default class Routes extends Component {
         <PrivateRoute
           path="/detailsoperation/:id"
           component={DetailsOperation}
+        />
+        <PrivateRoute
+          path="/editoperation/:id"
+          component={EditOperation}
         />
         <PrivateRoute path="/menurelevenon" component={MenuReleveNon} />
 
