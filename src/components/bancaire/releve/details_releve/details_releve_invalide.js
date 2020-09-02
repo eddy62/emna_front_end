@@ -3,9 +3,18 @@ import {Link} from "react-router-dom";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import ListeOperations from "./operation/liste_operations/liste_operations";
 import Loading from "../../../../shared/component/Loading";
-import {MDBCard, MDBCardBody, MDBCardTitle, MDBCardHeader, MDBContainer, MDBBtn, MDBCol,} from "mdbreact";
+import {
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardHeader,
+  MDBContainer,
+  MDBBtn,
+  MDBCol,
+} from "mdbreact";
 import UserService from '../../../../shared/services/UserService';
 import ReleveSolde from './details_releve_solde'
+
 
 export class DetailsReleveInvalide extends React.Component {
     constructor(props) {
@@ -75,6 +84,7 @@ export class DetailsReleveInvalide extends React.Component {
                         </MDBCol>
                         <br/>
                     </div>
+
                 </MDBContainer>
             </div>
         );
@@ -126,6 +136,22 @@ export class DetailsReleveInvalide extends React.Component {
                                                 </Link>
                                             </MDBBtn>
                                             }
+                                            { (UserService.getRole() === "ROLE_ADMIN" ||
+                                                UserService.getRole() === "ROLE_SOCIETY") &&
+
+                                            <MDBBtn onClick={AxiosCenter.validateReleve(this.props.match.params.id)}
+                                                    className="boutton"
+                                                    color=" teal lighten-2"
+                                                    rounded
+                                                    size="sm"
+                                            >
+                                                <Link
+                                                    to={"/releveinvalide/" + this.props.match.params.id}
+                                                >
+                                                    <span id="color-button"> Valider</span>
+                                                </Link>
+                                            </MDBBtn>
+                                            }
                                         </p>
                                     </MDBCardTitle>
                                 </MDBCardBody>
@@ -137,6 +163,7 @@ export class DetailsReleveInvalide extends React.Component {
         } else {
             return <Loading/>;
         }
+
     }
 }
 

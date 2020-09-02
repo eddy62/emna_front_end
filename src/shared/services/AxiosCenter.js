@@ -16,6 +16,7 @@ const AxiosCenter = {
     });
   },
 
+
   finishPasswordReset(values) {
     return ApiBackEnd({
       method: "post",
@@ -23,6 +24,7 @@ const AxiosCenter = {
       data: values,
     });
   },
+
 
   //gestion clientFournisseur
   getAllClientFournisseurBySociete(id) {
@@ -196,6 +198,13 @@ const AxiosCenter = {
     });
   },
 
+  getReleveSoldeById(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/releves/${id}/solde`,
+    });
+  },
+
   getOperationById(id) {
     return ApiBackEnd({
       method: "get",
@@ -213,6 +222,14 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "post",
       url: "/operations",
+      data: values,
+    });
+  },
+  
+  updateOperation(values) {
+    return ApiBackEnd({
+      method: "put",
+      url: `/operations`,
       data: values,
     });
   },
@@ -256,6 +273,14 @@ const AxiosCenter = {
       url: `/releves/${id}`,
     });
   },
+
+  validateReleve(id) {
+    return ApiBackEnd({
+      method: "put",
+      url: `/releve/${id}`,
+    });
+  },
+
   getUser(id) {
     return ApiBackEnd({
       method: "get",
@@ -410,6 +435,7 @@ const AxiosCenter = {
     formData.append("tva", facture.tva);
     formData.append("moyenDePaiement", facture.moyenDePaiement);
     formData.append("societeId", 1);
+    formData.append("client", facture.client);
     for (let i = 0; i < files.length; i++) {
       formData.append("listeFiles", files.item(i));
     }
