@@ -1,5 +1,6 @@
 import React from "react";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
+import Loading from "../../../../shared/component/Loading";
 
 export class ReleveSolde extends React.Component
 {
@@ -10,10 +11,11 @@ export class ReleveSolde extends React.Component
             solde: 0
         };
     }
+
     componentDidMount() {
         AxiosCenter.getReleveSoldeById(this.props.releveId)
         .then((res) => {
-            const solde = res.data;
+            let solde = res.data;
             if (solde == null) solde = "N/A";
             this.setState({
                 solde,
@@ -24,6 +26,7 @@ export class ReleveSolde extends React.Component
     }
 
     render () {
+        if(!this.state.loaded) return <Loading/>
         return (
              <p>
                 Solde du compte pour ce mois :

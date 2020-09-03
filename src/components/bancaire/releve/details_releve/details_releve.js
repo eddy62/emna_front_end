@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import ListeOperations from "./operation/liste_operations/liste_operations";
 import Loading from "../../../../shared/component/Loading";
-import ReleveSolde from './details_releve_solde'
+
 import {
   MDBCard,
   MDBCardBody,
@@ -13,6 +13,7 @@ import {
   MDBBtn,
   MDBCol,
 } from "mdbreact";
+import ReleveDetailsCard from "./ReleveDetailsCard";
 
 export class DetailsReleve extends React.Component {
   constructor(props) {
@@ -50,38 +51,9 @@ export class DetailsReleve extends React.Component {
             </MDBCardHeader>
           </div>
           <div>
-            <hr></hr>
+            <hr/>
           </div>
-          <div>
-            <MDBCol>
-              <MDBCard>
-                <MDBCardBody>
-                  <MDBCardTitle className="MDBCardTitle">
-                    <div>
-                      <div className="row">
-                        <div className="col-3">
-                          <p>
-                            Relevé bancaire:
-                            <br />
-                            du {props.detailsreleve.dateDebut}
-                            <br />
-                            au {props.detailsreleve.dateFin}{" "}
-                          </p>
-                        </div>
-                        <div className="col-6"></div>
-                        <div className="col-3">
-                          Information de la banque :{" "}
-                          {props.detailsreleve.banque}
-                        </div>
-                      </div>
-                      <ReleveSolde releveId={this.state.releveId} />
-                    </div>
-                  </MDBCardTitle>
-                </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
-            <br />
-          </div>
+          <ReleveDetailsCard releve={this.state.releve}/>
         </MDBContainer>
       </div>
     );
@@ -96,7 +68,7 @@ export class DetailsReleve extends React.Component {
                 <MDBCardBody>
                   <MDBCardTitle className="MDBCardTitle">
                     <div>
-                      <this.detailsReleve detailsreleve={this.state.releve} />
+                      <ReleveDetailsCard releve={this.state.releve} />
                     </div>
 
                     <div className="row">

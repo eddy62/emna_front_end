@@ -236,10 +236,9 @@ export default class Routes extends Component {
         <PrivateRoute path="/menurelevenon" component={MenuReleveNon} />
 
         {/* Rapprochement bancaire */}
-        <PrivateRoute path="/gestionReleves/rapprochementBancaire" component={BankReconciliation} />
+        <PrivateRoute path="/gestionReleves/rapprochementBancaire/:id" component={BankReconciliation} />
         <PrivateRoute path="/gestionReleves/rapprochementBancaire/listeOperations" component={ListOfOperations} />
         <PrivateRoute path="/gestionReleves/rapprochementBancaire/listeFactures" component={ListOfInvoices} />
-
 
         <PrivateRoute
           path="/releveinvalide"
