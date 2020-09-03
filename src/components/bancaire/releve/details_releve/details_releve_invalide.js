@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import ListeOperations from "./operation/liste_operations/liste_operations";
 import Loading from "../../../../shared/component/Loading";
-import {MDBCard,MDBCardBody,MDBCardTitle,MDBCardHeader,MDBContainer,MDBBtn,MDBCol} from "mdbreact";
+import {MDBCard, MDBCardBody, MDBCardTitle, MDBCardHeader, MDBContainer, MDBBtn, MDBCol} from "mdbreact";
 import UserService from '../../../../shared/services/UserService';
 import ReleveSolde from './details_releve_solde'
 
@@ -133,18 +133,19 @@ export class DetailsReleveInvalide extends React.Component {
                                             {(UserService.getRole() === "ROLE_ADMIN" ||
                                                 UserService.getRole() === "ROLE_SOCIETY") &&
 
-                                            <MDBBtn onClick={this.validateReleve}
-                                                    className="boutton"
-                                                    color=" teal lighten-2"
-                                                    rounded
-                                                    size="sm"
+                                            <Link
+                                                to={"/releveinvalide/"}
                                             >
-                                                <Link
-                                                    to={"/releveinvalide/"}
+                                                <MDBBtn onClick={this.validateReleve}
+                                                        className="boutton"
+                                                        color=" teal lighten-2"
+                                                        rounded
+                                                        size="sm"
                                                 >
+
                                                     <span id="color-button"> Valider</span>
-                                                </Link>
-                                            </MDBBtn>
+                                                </MDBBtn>
+                                            </Link>
                                             }
                                         </p>
                                     </MDBCardTitle>
