@@ -171,11 +171,6 @@ class CreatePrime extends React.Component {
                                             size="sm"
                                         >Enregistrer
                                         </MDBBtn>
-                                        <ToastContainer
-                                                    hideProgressBar={false}
-                                                    newestOnTop={true}
-                                                    autoClose={2500}
-                                        />
                                     </MDBRow>
                                 </Form>
                             )}

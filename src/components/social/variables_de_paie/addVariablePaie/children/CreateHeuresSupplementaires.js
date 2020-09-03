@@ -187,11 +187,6 @@ class CreateHeuresSupplementaires extends React.Component {
                                                 type="submit"
                                             >Enregistrer
                                             </MDBBtn>
-                                            <ToastContainer
-                                                    hideProgressBar={false}
-                                                    newestOnTop={true}
-                                                    autoClose={2500}
-                                                />
                                         </MDBRow>
                                     </MDBCardBody>
                                 </Form>

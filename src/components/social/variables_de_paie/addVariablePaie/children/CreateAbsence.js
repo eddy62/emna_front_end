@@ -238,12 +238,7 @@ class CreateAbsence extends React.Component {
                                                     size="sm"
                                                     type="submit"
                                                 >Enregistrer
-                                                </MDBBtn>
-                                                <ToastContainer
-                                                    hideProgressBar={false}
-                                                    newestOnTop={true}
-                                                    autoClose={2500}
-                                                />
+                                                </MDBBtn>                                                
                                             </MDBCol>
                                     </MDBRow>
                                 </MDBCardBody>

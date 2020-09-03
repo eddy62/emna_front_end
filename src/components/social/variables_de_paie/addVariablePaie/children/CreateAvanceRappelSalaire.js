@@ -38,7 +38,7 @@ const notify = type => {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) Enregistrée(s) &nbsp;&nbsp;!</strong>
+                    <strong>Avance/Rappel sur salaire Enregistré(e) &nbsp;&nbsp;!</strong>
                 </div>,
                 //{position: "top-right"}
             );
@@ -46,7 +46,7 @@ const notify = type => {
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) NON Enregistrée(s) &nbsp;&nbsp;!</strong>
+                    <strong>Avance/Rappel sur salaire NON Enregistré(e) &nbsp;&nbsp;!</strong>
                 </div>,
                 //{position: "top-right"}
             );
@@ -235,11 +235,6 @@ class CreateAvanceRappelSalaire extends React.Component {
                                                 type="submit"
                                             >Enregistrer
                                             </MDBBtn>
-                                            <ToastContainer
-                                                    hideProgressBar={false}
-                                                    newestOnTop={true}
-                                                    autoClose={2500}
-                                                />
                                         </MDBRow>
                                     </MDBCardBody>
                                 </Form>

@@ -2,9 +2,9 @@ import React from "react";
 import {Formik, Field, ErrorMessage, Form} from "formik";
 import * as Yup from "yup";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
-import {MDBBtn, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput, MDBRow, MDBCol} from "mdbreact";
+import {MDBBtn, MDBCardBody, MDBContainer, MDBInput, MDBRow, MDBCol} from "mdbreact";
 import Loading from "../../../../../shared/component/Loading";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 
 const notify = type => {
     switch (type) {
@@ -119,6 +119,7 @@ class CreateNoteDeFrais extends React.Component {
                 const noteDeFrais = response.data;
                 console.log("POST : " + JSON.stringify(noteDeFrais, null, 4));
                 notify("success");
+                actions.resetForm();
             }).catch((error) => {
             console.log(error);
             notify("error");
@@ -226,11 +227,6 @@ class CreateNoteDeFrais extends React.Component {
                                                     type="submit"
                                                 >Enregistrer
                                                 </MDBBtn>
-                                                <ToastContainer
-                                                    hideProgressBar={false}
-                                                    newestOnTop={true}
-                                                    autoClose={2500}
-                                                />
                                             </div>
                                         </MDBCol>
                                     </MDBRow>
