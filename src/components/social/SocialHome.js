@@ -215,7 +215,7 @@ class AccueilSocial extends React.Component {
               </div>
               <Link to="/">
                 <MDBBtn color="teal accent-3" rounded size="sm">
-                  Retour à l'Acceuil
+                  Retour à l'Accueil
                 </MDBBtn>
               </Link>
             </MDBContainer>

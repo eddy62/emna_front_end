@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import { toast } from "react-toastify";
-import * as dateFns from "date-fns";
 import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
+import { toast } from "react-toastify";
 import {
   MDBContainer,
   MDBBtn,
@@ -16,7 +15,7 @@ import {
   MDBRow,
 } from "mdbreact";
 
-class SupprimerEmploye extends Component {
+class ArchiverEmploye extends Component {
   constructor(props) {
     super(props);
 
@@ -24,6 +23,8 @@ class SupprimerEmploye extends Component {
       redirect: false,
       modal: false,
       societeId: UserService.getSocietyId(),
+      employe: {},
+      load: false,
     };
   }
 
@@ -33,41 +34,18 @@ class SupprimerEmploye extends Component {
     });
   };
 
-  delete = () => {
-    const idEmploye = this.props.employe.id;
-    console.log(idEmploye);
-    const { employe } = this.props;
-    const diff = dateFns.differenceInCalendarYears(
-      new Date(),
-      new Date(employe.dateSortie)
-    );
-    console.log(diff);
-
-    AxiosCenter.deleteWrapperEmploye(idEmploye)
+  archive = () => {
+    const employe = this.props.employe;
+    console.log(employe);
+    AxiosCenter.archiveWrapperEmploye(employe)
       .then((response) => {
         console.log(response);
-        const resultat = response.data;
-        if (resultat) {
-          toast.success(
-            <div className="text-center">
-              <strong>Employé Supprimé &nbsp;&nbsp;!"</strong>
-            </div>,
-            { position: "top-right" }
-          );
-        } else {
-          toast.error(
-            <div className="text-center">
-              <strong>Employé NON Supprimé &nbsp;&nbsp;!</strong>
-              <br />
-              <small>
-                Le temps d'archivage est de {diff} &nbsp;ans.
-                <br />
-                (minimum 5 ans)
-              </small>
-            </div>,
-            { position: "top-right" }
-          );
-        }
+        toast.success(
+          <div className="text-center">
+            <strong>Employé Archivé &nbsp;&nbsp;!</strong>
+          </div>,
+          { position: "top-right" }
+        );
         this.setState({
           modal: !this.state.modal,
           redirect: true,
@@ -77,13 +55,15 @@ class SupprimerEmploye extends Component {
         console.log(error);
         toast.error(
           <div className="text-center">
-            <strong>Employé NON Supprimé &nbsp;&nbsp;!</strong>
+            <strong>Employé NON Archivé &nbsp;&nbsp;!</strong>
           </div>,
           { position: "top-right" }
         );
       });
   };
+
   redirection = () => this.setState({ redirect: true });
+
   render() {
     const societeId = this.state.societeId;
 
@@ -96,7 +76,7 @@ class SupprimerEmploye extends Component {
           size="sm"
           onClick={this.toggle}
         >
-          Supprimer
+          Archiver
         </MDBBtn>
         <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
           <div className="align-self-center">
@@ -109,14 +89,14 @@ class SupprimerEmploye extends Component {
             </MDBModalHeader>
           </div>
           <MDBModalBody>
-            <p>Supprimer l'Employé et toutes ses données?</p>
-            <span className="gras">ATTENTION,</span>
+            <p className="p">Voulez-vous archiver l'Employé ?</p>
+            <span className="gras">ATTENTION, </span>
             <br />
-            <span className="gras">LA SUPPRESSION EST IRREVERSIBLE !</span>
+            <span className="gras">
+              L'Employé ne sera plus dans l'effectif de la Société !
+            </span>
             <br />
-            <small>
-              (L'Employé doit avoir été archivé depuis au moins 5 ans)
-            </small>
+            <small>(Les données seront archivées pendant 5 ans)</small>
           </MDBModalBody>
           <MDBModalFooter between around>
             <MDBRow>
@@ -134,11 +114,11 @@ class SupprimerEmploye extends Component {
                 rounded
                 toggle={this.toggle}
                 color="teal accent-3"
-                onClick={this.delete}
+                onClick={this.archive}
                 circle="true"
                 size="sm"
               >
-                Supprimer
+                Archiver
               </MDBBtn>
               {this.state.redirect && (
                 <Redirect to={"/listEmployes/" + societeId} />
@@ -151,4 +131,4 @@ class SupprimerEmploye extends Component {
   }
 }
 
-export default SupprimerEmploye;
+export default ArchiverEmploye;

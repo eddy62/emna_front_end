@@ -1,13 +1,22 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import axioscenter from "../../shared/services/AxiosCenter";
-import UserService from "../../shared/services/UserService";
 
 class CreerFacture extends React.Component {
   state = {
     prixtotal: 0,
     tva: 0,
+    clients: []
   };
+
+  componentDidMount() {
+    axioscenter.getAllClientFournisseurBySociete(1).then((res) => {
+      const clients = res.data;
+      console.log(clients);
+      this.setState({ clients });
+    });
+  }
+
   submit = (values) => {
     let documents = values.documents;
     values.documents = null;
@@ -15,15 +24,16 @@ class CreerFacture extends React.Component {
     values.tva = this.state.tva;
     values.prixHT = this.state.prixtotal - this.state.tva;
     values.moyenDePaiement = "CHEQUE";
-    axioscenter.uploadFacture(values, documents).then(res => {
+    console.log(values);
+    axioscenter.uploadFacture(values, documents).then((res) => {
       for (let i = 0; i < values.produits.length; i++) {
         let produitToUpload = values.produits[i];
         produitToUpload.factureId = res.data.id;
-        axioscenter.createProduit(produitToUpload);
+        axioscenter.createLigneProduit(produitToUpload);
       }
     });
   };
- 
+
   updatePrix = (ev, index, produits, setFieldValue, remove) => {
     var prixtotal = 0;
     setFieldValue(
@@ -99,18 +109,20 @@ class CreerFacture extends React.Component {
               </div>
               <div className="form-group">
                 <label>Client</label>
-                <select
+                <input
                   type="text"
                   name="client"
+                  list="clients"
                   className="form-control"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.client}
-                >
-                  <option value="" label="Selectionner le client"></option>
-                  <option value="auchan" label="Auchan"></option>
-                  <option value="carrefour" label="Carrefour"></option>
-                </select>
+                />
+                <datalist id="clients">
+                  {this.state.clients.map((client) => (
+                    <option value={client.nom} label={client.nom} key={client.id}></option>
+                  ))}
+                </datalist>
               </div>
               <div className="form-row">
                 <div className="form-group col-md-6">

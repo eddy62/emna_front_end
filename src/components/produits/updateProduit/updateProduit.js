@@ -7,7 +7,9 @@ import {
     MDBBtn, MDBCardTitle,
     MDBCardHeader,
     MDBContainer,
+    MDBInput,
 } from "mdbreact";
+import { toast } from "react-toastify";
 
 const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
@@ -15,14 +17,12 @@ const ComposantErreur = (props) => (
 
 const ComposantInput = ({ field, form: { touched, errors }, ...props }) => (
     <div >
-        <label> {props.label} </label>
-        <input type="text" {...props} className="form-control" {...field} />
+        <MDBInput label={props.label} type="text" {...props} className="form-control" {...field} />
     </div>
 );
 const ComposantTextarea = ({ field, form: { touched, errors }, ...props }) => (
     <div >
-        <label> {props.label} </label>
-        <textarea rows="4" type="text" {...props} className="form-control" {...field} />
+        <MDBInput type="textarea" label={props.label} rows="4"  {...props} className="form-control" {...field} />
     </div>
 );
 const ComposantSelect = ({ field, form: { touched, errors }, ...props }) => (
@@ -76,10 +76,23 @@ class UpdateProduit extends Component {
     submit = (values, actions) => {
         AxiosCenter.updateProduit(values)
             .then((response) => {
+                toast.success(
+                    <div className="text-center">
+                        <strong>Le produit {this.state.updateProduit.nom} a été mis à jour </strong>
+                    </div>,
+                    { position: "top-right" }
+                );
                 this.props.history.push("/produit/detail/" + response.data.id);
             })
             .catch((error) => {
                 console.log(error);
+                toast.error(
+                    <div className="text-center">
+                        <strong>Le produit n'a pas été mis à jour&nbsp;&nbsp;!</strong>
+                        <br />
+                    </div>,
+                    { position: "top-right" }
+                );
             });
         actions.setSubmitting(true);
     }
@@ -87,11 +100,16 @@ class UpdateProduit extends Component {
 
 
     userSchema = Yup.object().shape({
-        nom: Yup.string().required("Le champ est obligatoire"),
-        reference: Yup.number("Entres des chiffre").required("Le champ est obligatoire"),
-        tva: Yup.string().required("Le champ est obligatoire"),
-        prix: Yup.number(),
-        description: Yup.string().required("Le champ est obligatoire"),
+        nom: Yup.string().min(3, "Le Nom ne peut contient moins que 3 caractères")
+            .max(20, "Le nom ne peut dépasser 20 caractères ").required("Le champ est obligatoire"),
+        reference: Yup.string()
+            .matches(/^[0-9]+$/, "Reference doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
+        tva: Yup.string()
+            .matches(/^[0-9.]+$/, "Tva doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
+        prix: Yup.string()
+            .matches(/^[0-9.]+$/, "Prix doit être composé uniquement de chiffres")
+            .required("Le champ est obligatoire"),
+        description: Yup.string().max(200, "200 caractères maximum"),
         unite: Yup.string().required("Le champ est obligatoire"),
     });
     render() {
@@ -100,7 +118,7 @@ class UpdateProduit extends Component {
 
             <MDBContainer>
                 <div>
-                    <MDBCardHeader color="default-color">Société {this.props.name} </MDBCardHeader>
+                    <MDBCardHeader color="default-color">Gestion Produits </MDBCardHeader>
                     <br></br>
                     <MDBCardTitle tag="h1">Edite Produit {this.state.UpdateProduit.nom} </MDBCardTitle>
                     <hr></hr>
@@ -118,7 +136,7 @@ class UpdateProduit extends Component {
                                 <div >
                                     <Field
                                         name="nom"
-                                        label="Nom de Produit"
+                                        label="Nom produit"
                                         component={ComposantInput}
                                     />
                                     <ErrorMessage name="nom" component={ComposantErreur} />
@@ -155,7 +173,7 @@ class UpdateProduit extends Component {
               </MDBBtn>
                                     <Link to={`/produit/detail/${this.state.UpdateProduit.id}`}>
                                         <MDBBtn rounded color="teal accent-3">
-                                            Retour
+                                            Annuler
                   </MDBBtn>
                                     </Link>
                                 </div>

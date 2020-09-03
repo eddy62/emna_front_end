@@ -7,8 +7,10 @@ import {
     MDBBtn, MDBCardTitle,
     MDBCardHeader,
     MDBContainer,
+    MDBInput,
 } from "mdbreact";
 import UserService from '../../../shared/services/UserService';
+import { toast } from "react-toastify";
 
 
 
@@ -19,14 +21,12 @@ const ComposantErreur = (props) => (
 
 const ComposantInput = ({ field, form: { touched, errors }, ...props }) => (
     <div >
-        <label> {props.label} </label>
-        <input type="text" {...props} className="form-control" {...field} />
+        <MDBInput label={props.label} type="text" {...props} className="form-control" {...field} />
     </div>
 );
 const ComposantTextarea = ({ field, form: { touched, errors }, ...props }) => (
     <div >
-        <label> {props.label} </label>
-        <textarea rows="4" type="text" {...props} className="form-control" {...field} />
+        <MDBInput type="textarea" label={props.label} rows="4"  {...props} className="form-control" {...field} />
     </div>
 );
 const ComposantSelect = ({ field, form: { touched, errors }, ...props }) => (
@@ -48,11 +48,23 @@ class AddProduit extends React.Component {
     submit = (values, actions) => {
         AxiosCenter.createProduit(values)
             .then((response) => {
-                console.log(response.data);
+                toast.success(
+                    <div className="text-center">
+                        <strong>Le nouveau produit {response.data.nom} a été bien crée</strong>
+                    </div>,
+                    { position: "top-right" }
+                );
                 this.props.history.push("/client-fournisseur");
             })
             .catch((error) => {
                 console.log(error);
+                toast.error(
+                    <div className="text-center">
+                        <strong>Erreur lors de la création d'un nouveau Client Fournisseur &nbsp;&nbsp;!</strong>
+                        <br />
+                    </div>,
+                    { position: "top-right" }
+                );
             });
 
         actions.setSubmitting(true);
@@ -60,11 +72,15 @@ class AddProduit extends React.Component {
     };
 
     userSchema = Yup.object().shape({
-        nom: Yup.string().required("Le champ est obligatoire"),
-        reference: Yup.number("Entres des chiffre").required("Le champ est obligatoire"),
-        tva: Yup.string().required("Le champ est obligatoire"),
-        prix: Yup.number(),
-        description: Yup.string().required("Le champ est obligatoire"),
+        nom: Yup.string().min(3, "Le Nom ne peut contient moins que 3 caractères")
+            .max(20, "Le nom ne peut dépasser 20 caractères ").required("Le champ est obligatoire"),
+        reference: Yup.string()
+            .matches(/^[0-9]+$/, "Reference doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
+        tva: Yup.string()
+            .matches(/^[0-9.]+$/, "Tva doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
+        prix: Yup.string()
+            .matches(/^[0-9.]+$/, "Prix doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
+        description: Yup.string().max(200, "200 caractères maximum"),
         unite: Yup.string().required("Le champ est obligatoire"),
     });
 
@@ -73,9 +89,9 @@ class AddProduit extends React.Component {
 
             <MDBContainer>
                 <div>
-                    <MDBCardHeader color="default-color">Société {this.props.name} </MDBCardHeader>
+                    <MDBCardHeader color="default-color">Gestion Produits</MDBCardHeader>
                     <br></br>
-                    <MDBCardTitle tag="h1">Enregister un Nouveau Produit </MDBCardTitle>
+                    <MDBCardTitle tag="h3">Enregister un Nouveau Produit </MDBCardTitle>
                     <hr></hr>
                     <Formik
                         onSubmit={this.submit}
@@ -94,12 +110,12 @@ class AddProduit extends React.Component {
                         {({ handleSubmit, isSubmitting }) => (
                             <form
                                 onSubmit={handleSubmit}
-                                className="container-fluid p-5  lighten-5 justify-content-center align-items-center"
+                                className="bg-white border p-5 d-flex flex-column"
                             >
                                 <div >
                                     <Field
                                         name="nom"
-                                        label="Nom de Produit"
+                                        label="Nom Produit"
                                         component={ComposantInput}
                                     />
                                     <ErrorMessage name="nom" component={ComposantErreur} />
@@ -133,7 +149,7 @@ class AddProduit extends React.Component {
                                 <br></br>
                                 <div className="row d-flex justify-content-center ">
                                     <MDBBtn rounded type="submit" color="primary">
-                                        Sauvegarder
+                                        Enregistrer
               </MDBBtn>
                                     <Link to="/client-fournisseur">
                                         <MDBBtn rounded color="teal accent-3">
