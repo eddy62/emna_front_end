@@ -13,7 +13,7 @@ export class ReleveSolde extends React.Component
     componentDidMount() {
         AxiosCenter.getReleveSoldeById(this.props.releveId)
         .then((res) => {
-            const solde = res.data;
+            let solde = res.data;
             if (solde == null) solde = "N/A";
             this.setState({
                 solde,
