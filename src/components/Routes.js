@@ -15,6 +15,8 @@ import Contrat from "./contrat/Contrat";
 import DetailContrat from "./contrat/detailContrat/DetailContrat";
 import CreerContrat from "./contrat/creerContrat/CreerContrat";
 
+import ParentAddVariablePaie from "./social/variables_de_paie/addVariablePaie/ParentAddVariablePaie";
+
 //gestion ClientFournisseur imports
 import MenuClientFournisseur from "./clientFournisseur/menuClientFournisseur";
 import ListerClients from "./clientFournisseur/listerClientFournisseur/listerClients";
@@ -95,6 +97,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/newEmploye/:id" component={NewEmploye} />
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
         <PrivateRoute path="/deleteEmploye/:id" component={SupprimerEmploye} />
+        <PrivateRoute path="/variables_de_paie/addVariablePaie/ParentAddVariablePaie/:id" component={ParentAddVariablePaie} />
         {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />
