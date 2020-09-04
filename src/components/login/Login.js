@@ -12,7 +12,6 @@ import {
   MDBCardBody,
   MDBInput,
   MDBBtn,
-  MDBIcon,
   MDBModalFooter,
 } from "mdbreact";
 import * as Yup from "yup";

@@ -2,6 +2,8 @@ import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import React from "react";
 import { Link } from "react-router-dom";
 import Loading from "../../../../shared/component/Loading";
+import ReleveConstants from "../releve_constants"
+import UserService from '../../../../shared/services/UserService';
 import {
   MDBCard,
   MDBCardBody,
@@ -11,17 +13,19 @@ import {
   MDBBtn,
   MDBCol,
 } from "mdbreact";
+
 export default class ListeRelevesArchives extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loaded: false,
+      societyId: UserService.getSocietyId(),
       releves: [],
     };
   }
 
   componentDidMount() {
-    AxiosCenter.getReleveByEtatAndSociety(3, 3)
+    AxiosCenter.getReleveByEtatAndSociety(ReleveConstants.RELEVE_ETAT_ARCHIVE, this.state.societyId)
       .then((res) => {
         const releves = res.data;
         this.setState({ releves, loaded: true });

@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup"
-import Style from "./../ClientFournisseur.module.css";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import { Link } from 'react-router-dom';
-import {
-    MDBBtn
-} from "mdbreact";
+import { MDBBtn, MDBContainer, MDBCardHeader, MDBCardTitle, MDBInput } from "mdbreact";
+import { toast } from "react-toastify";
 
 const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
 );
 
 const ComposantInput = ({ field, form: { touched, errors }, ...props }) => (
-    <div className=" form-group col-6">
-        <label> {props.label} </label>
-        <input type="text" {...props} className="form-control" {...field} />
+    <div >
+        <MDBInput label={props.label} type="text" {...props} className="form-control" {...field} />
     </div>
 );
 
@@ -54,10 +51,23 @@ class ModifierClient extends Component {
     submit = (values, actions) => {
         AxiosCenter.updateClientFournisseur(values)
             .then((response) => {
+                toast.success(
+                    <div className="text-center">
+                        <strong>Le client {this.state.updateClient.nom} a été mis à jour </strong>
+                    </div>,
+                    { position: "top-right" }
+                );
                 this.props.history.push("/clientFournisseur/detail/" + response.data.id);
             })
             .catch((error) => {
                 console.log(error);
+                toast.error(
+                    <div className="text-center">
+                        <strong>Le Client {this.state.updateClient.nom} n'a pas été mis à jour&nbsp;&nbsp;!</strong>
+                        <br />
+                    </div>,
+                    { position: "top-right" }
+                );
             });
         actions.setSubmitting(true);
     }
@@ -65,76 +75,92 @@ class ModifierClient extends Component {
 
 
     userSchema = Yup.object().shape({
-        nom: Yup.string("String").min(2, "Trop court").max(20, "Trop long").required("Le champ est obligatoire"),
-        siren: Yup.number("Entres des chiffre").required("Le champ est obligatoire"),
-        email: Yup.string().email("L'email doit être valide").required("Le champ est obligatoire"),
-        telephone: Yup.number().min(9, "Trop court"),
-        numeroRue: Yup.string().required("Le champ est obligatoire"),
+        nom: Yup.string("String")
+            .min(3, "Le nom ne peut contient moins que 3 caractères")
+            .max(20, "Le nom ne peut dépasser 20 caractères ")
+            .required("Le champ est obligatoire"),
+        siren: Yup.string()
+            .matches(/^[0-9]+$/, "Siren doit être composé uniquement de chiffres").required("Le champ est obligatoire").min(9, 'Doit contenir exactement 9 chiffres')
+            .max(9, 'Doit contenir exactement 9 chiffres'),
+        email: Yup.string()
+            .email("L'adress mail doit être valide")
+            .required("Le champ est obligatoire"),
+        telephone: Yup.string()
+            .matches(/^[0-9]+$/, "Telephone doit être composé uniquement de chiffres").required("Le champ est obligatoire").min(10, 'Doit contenir exactement 10 chiffres')
+            .max(10, 'Doit contenir exactement 10 chiffres'),
+        numeroRue: Yup.string()
+            .matches(/^[0-9]+$/, "Numero doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
         nomRue: Yup.string().required("Le champ est obligatoire"),
-        codePostal: Yup.string().required("Le champ est obligatoire"),
-        ville: Yup.string().required("Le champ est obligatoire"),
-        pays: Yup.string().required("Le champ est obligatoire"),
+        codePostal: Yup.string().matches(/^[a-zA-Z0-9\s]+$/, "Code postal invalide").required("Le champ est obligatoire"),
+        ville: Yup.string().matches(/^[a-zA-Zéçèùàêû\s]+$/, "Ville doit être composé uniquement de littres").required("Le champ est obligatoire"),
+        pays: Yup.string().matches(/^[a-zA-Zéçèùàêû\s]+$/, "Pays doit être composé uniquement de littres").required("Le champ est obligatoire"),
     });
     render() {
 
         return (
-
-            <div className="container-fluid ">
-                <h1 className={Style.h2}>Modifier un client fournisseur</h1>
-                <Formik
-                    initialValues={this.getInitialValues()}
-                    onSubmit={this.submit}
-                    enableReinitialize={true}
-                    validationSchema={this.userSchema}
-                >
-                    {({ handleSubmit }) => (
-                        <form
-                            onSubmit={handleSubmit}
-                            className=" container-fluid p-5  teal lighten-5 justify-content-center align-items-center"
+            <MDBContainer>
+                <div>
+                    <MDBCardHeader color="default-color">Gestion Client Fournisseur </MDBCardHeader>
+                    <br></br>
+                    <MDBCardTitle tag="h3">Modifier les donnnées d'un Client Fournisseur  </MDBCardTitle>
+                    <hr></hr>
+                    <div className="container-fluid ">
+                        <Formik
+                            initialValues={this.getInitialValues()}
+                            onSubmit={this.submit}
+                            enableReinitialize={true}
+                            validationSchema={this.userSchema}
                         >
-                            <div className=" row p-2">
-                                <Field name="nom" label="Nom de la Société" component={ComposantInput} />
-                                <ErrorMessage name="nom" component={ComposantErreur} />
+                            {({ handleSubmit }) => (
+                                <form
+                                    onSubmit={handleSubmit}
+                                    className="bg-white border p-5 d-flex flex-column"
+                                >
+                                    <div >
+                                        <Field name="nom" label="Nom de la Société" component={ComposantInput} />
+                                        <ErrorMessage name="nom" component={ComposantErreur} />
 
-                                <Field name="siren" label="SIREN" component={ComposantInput} />
-                                <ErrorMessage name="siren" component={ComposantErreur} />
+                                        <Field name="siren" label="SIREN" component={ComposantInput} />
+                                        <ErrorMessage name="siren" component={ComposantErreur} />
 
-                                <Field name="email" label="Email" component={ComposantInput} />
-                                <ErrorMessage name="email" component={ComposantErreur} />
+                                        <Field name="email" label="Adresse mail" component={ComposantInput} />
+                                        <ErrorMessage name="email" component={ComposantErreur} />
 
-                                <Field name="telephone" label="Téléphone" component={ComposantInput} />
-                                <ErrorMessage name="telephone" component={ComposantErreur} />
+                                        <Field name="telephone" label="Téléphone" component={ComposantInput} />
+                                        <ErrorMessage name="telephone" component={ComposantErreur} />
 
-                                <Field name="numeroRue" label="Numero" component={ComposantInput} />
-                                <ErrorMessage name="numeroRue" component={ComposantErreur} />
+                                        <Field name="numeroRue" label="Numero" component={ComposantInput} />
+                                        <ErrorMessage name="numeroRue" component={ComposantErreur} />
 
-                                <Field name="nomRue" label="Rue" component={ComposantInput} />
-                                <ErrorMessage name="nomRue" component={ComposantErreur} />
+                                        <Field name="nomRue" label="Rue" component={ComposantInput} />
+                                        <ErrorMessage name="nomRue" component={ComposantErreur} />
 
-                                <Field name="codePostal" label="Code Postal" component={ComposantInput} />
-                                <ErrorMessage name="codePostal" component={ComposantErreur} />
+                                        <Field name="codePostal" label="Code Postal" component={ComposantInput} />
+                                        <ErrorMessage name="codePostal" component={ComposantErreur} />
 
-                                <Field name="ville" label="Ville" component={ComposantInput} />
-                                <ErrorMessage name="ville" component={ComposantErreur} />
+                                        <Field name="ville" label="Ville" component={ComposantInput} />
+                                        <ErrorMessage name="ville" component={ComposantErreur} />
 
-                                <Field name="pays" label="Pays" component={ComposantInput} />
-                                <ErrorMessage name="pays" component={ComposantErreur} />
-                            </div>
-                            <div className="container-fluid  justify-content-center ">
-                                <MDBBtn rounded type="submit" color="primary">
-                                    Sauvegarder
+                                        <Field name="pays" label="Pays" component={ComposantInput} />
+                                        <ErrorMessage name="pays" component={ComposantErreur} />
+                                    </div>
+                                    <br></br>
+                                    <div className="row d-flex justify-content-center ">
+                                        <MDBBtn rounded type="submit" color="primary">
+                                            Sauvegarder
               </MDBBtn>
-                                <Link to="/client-fournisseur">
-                                    <MDBBtn rounded color="teal accent-3">
-                                        Retour
+                                        <Link to="/client-fournisseur">
+                                            <MDBBtn rounded color="teal accent-3">
+                                                Annuler
                   </MDBBtn>
-                                </Link>
-                            </div>
-                        </form>
-                    )}
-                </Formik>
-            </div>
-
+                                        </Link>
+                                    </div>
+                                </form>
+                            )}
+                        </Formik>
+                    </div>
+                </div>
+            </MDBContainer >
         );
     }
 }

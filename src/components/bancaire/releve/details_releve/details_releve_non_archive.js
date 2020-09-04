@@ -1,17 +1,11 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import ListeOperations from "./operation/liste_operations/liste_operations";
 import Loading from "../../../../shared/component/Loading";
-import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardHeader,
-  MDBContainer,
-  MDBBtn,
-  MDBCol,
-} from "mdbreact";
+import ReleveSolde from './details_releve_solde'
+import {MDBCard,MDBCardBody,MDBCardTitle,MDBCardHeader,MDBContainer,MDBBtn,MDBCol} from "mdbreact";
 
 export class DetailsReleveNonArchive extends React.Component {
   constructor(props) {
@@ -73,10 +67,7 @@ export class DetailsReleveNonArchive extends React.Component {
                           {props.detailsreleve.banque}
                         </div>
                       </div>
-                      <p>
-                        Solde du compte pour ce mois :{" "}
-                        {props.detailsreleve.solde} €
-                      </p>
+                      <ReleveSolde releveId={this.state.releveId} />
                     </div>
                   </MDBCardTitle>
                 </MDBCardBody>

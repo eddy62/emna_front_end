@@ -1,6 +1,5 @@
 import React from "react";
 import FactureElement from "./factureElement";
-import { render } from "@testing-library/react";
 import Table from "react-bootstrap/Table";
 import Axios from "../../shared/services/AxiosCenter";
 

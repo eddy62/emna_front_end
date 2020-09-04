@@ -36,7 +36,7 @@ class ListerClientFournisseur extends Component {
     return (
       <MDBContainer>
         <div>
-          <MDBCardHeader color="default-color">Liste Des Clients Founisseurs</MDBCardHeader>
+          <MDBCardHeader color="default-color">Gestion Client Fournisseur</MDBCardHeader>
           <MDBCardTitle tag="h1"> {this.state.nomSociete} </MDBCardTitle>
           <div>
             <br></br>
