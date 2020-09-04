@@ -18,6 +18,7 @@ export default class ParentAddVariablePaie extends Component {
         super(props);
         this.state = {
           loaded: false,
+          societyName: '',
           listeEmployes: [],
           idNameSelected: '',
           yearSelected: new Date().getFullYear(),
@@ -54,8 +55,8 @@ export default class ParentAddVariablePaie extends Component {
         //console.log(idSociete);
         AxiosCenter.getSociete(idSociete)
         .then((response) => {
-            const societe = response.data;
-            this.setState({ societe: societe });
+            const societyName = response.data.civilite;
+            this.setState({ societyName });
         })
         .catch((error) => {
             console.log(error);
@@ -96,7 +97,7 @@ export default class ParentAddVariablePaie extends Component {
                     <MDBContainer>
                         <div className="titre">
                             <MDBCardHeader color="default-color">
-                                <MDBCardTitle tag="h2">Raison Sociale Société</MDBCardTitle>
+                                <MDBCardTitle tag="h2">Raison Sociale {this.state.societyName}</MDBCardTitle>
                             </MDBCardHeader>
                         </div>
 
