@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import { toast } from "react-toastify";
+import * as dateFns from "date-fns";
 import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
@@ -34,10 +36,38 @@ class SupprimerEmploye extends Component {
   delete = () => {
     const idEmploye = this.props.employe.id;
     console.log(idEmploye);
+    const { employe } = this.props;
+    const diff = dateFns.differenceInCalendarYears(
+      new Date(),
+      new Date(employe.dateSortie)
+    );
+    console.log(diff);
 
     AxiosCenter.deleteWrapperEmploye(idEmploye)
       .then((response) => {
         console.log(response);
+        const resultat = response.data;
+        if (resultat) {
+          toast.success(
+            <div className="text-center">
+              <strong>Employé Supprimé &nbsp;&nbsp;!"</strong>
+            </div>,
+            { position: "top-right" }
+          );
+        } else {
+          toast.error(
+            <div className="text-center">
+              <strong>Employé NON Supprimé &nbsp;&nbsp;!</strong>
+              <br />
+              <small>
+                Le temps d'archivage est de {diff} &nbsp;ans.
+                <br />
+                (minimum 5 ans)
+              </small>
+            </div>,
+            { position: "top-right" }
+          );
+        }
         this.setState({
           modal: !this.state.modal,
           redirect: true,
@@ -45,6 +75,12 @@ class SupprimerEmploye extends Component {
       })
       .catch((error) => {
         console.log(error);
+        toast.error(
+          <div className="text-center">
+            <strong>Employé NON Supprimé &nbsp;&nbsp;!</strong>
+          </div>,
+          { position: "top-right" }
+        );
       });
   };
   redirection = () => this.setState({ redirect: true });
@@ -63,14 +99,24 @@ class SupprimerEmploye extends Component {
           Supprimer
         </MDBBtn>
         <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
-          <MDBModalHeader toggle={this.toggle}>
-            <MDBIcon icon="exclamation-triangle" className="attention" />
-          </MDBModalHeader>
+          <div className="align-self-center">
+            <MDBModalHeader toggle={this.toggle}>
+              <MDBIcon
+                icon="exclamation-triangle"
+                className="attention"
+                size="2x"
+              />
+            </MDBModalHeader>
+          </div>
           <MDBModalBody>
-            <p>Voulez-vous supprimer l'Employé ?</p>
-            <span className="gras">
-              Attention, la suppression est IRREVERSIBLE !
-            </span>
+            <p>Supprimer l'Employé et toutes ses données?</p>
+            <span className="gras">ATTENTION,</span>
+            <br />
+            <span className="gras">LA SUPPRESSION EST IRREVERSIBLE !</span>
+            <br />
+            <small>
+              (L'Employé doit avoir été archivé depuis au moins 5 ans)
+            </small>
           </MDBModalBody>
           <MDBModalFooter between around>
             <MDBRow>

@@ -16,6 +16,7 @@ const AxiosCenter = {
     });
   },
 
+
   finishPasswordReset(values) {
     return ApiBackEnd({
       method: "post",
@@ -23,6 +24,7 @@ const AxiosCenter = {
       data: values,
     });
   },
+
 
   //gestion clientFournisseur
   getAllClientFournisseurBySociete(id) {
@@ -100,6 +102,60 @@ const AxiosCenter = {
       method: "get",
       url: `/wrapperemployes/society/${id}`,
     });
+  },
+
+  getAllTypesAbsence() {
+    return ApiBackEnd({
+      method: "GET",
+      url: "/type-absences",
+    });
+  },
+
+  createAbsence(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/absences",
+      data: values,
+    });
+  },
+
+  getAllTypePrimes() {
+    return ApiBackEnd({
+      method: "GET",
+      url: "/type-primes",
+    });
+  },
+
+  createPrime(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/primes",
+      data: values,
+    });
+  },
+
+  createHeureSupplementaire(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: `/heures-supplementaires`,
+      data: values,
+    })
+  },
+
+  createAvanceRappelSalaire(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: '/avance-rappel-salaires',
+      data: values,
+    })
+  },
+
+  createNoteDeFrais(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: '/note-de-frais',
+      data: values
+    })
   },
 
   getWrapperEmploye(id) {
@@ -196,6 +252,13 @@ const AxiosCenter = {
     });
   },
 
+  getReleveSoldeById(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/releves/${id}/solde`,
+    });
+  },
+
   getOperationById(id) {
     return ApiBackEnd({
       method: "get",
@@ -213,6 +276,14 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "post",
       url: "/operations",
+      data: values,
+    });
+  },
+  
+  updateOperation(values) {
+    return ApiBackEnd({
+      method: "put",
+      url: `/operations`,
       data: values,
     });
   },
@@ -256,6 +327,14 @@ const AxiosCenter = {
       url: `/releves/${id}`,
     });
   },
+
+  validateReleve(id) {
+    return ApiBackEnd({
+      method: "put",
+      url: `/releve/${id}`,
+    });
+  },
+
   getUser(id) {
     return ApiBackEnd({
       method: "get",
@@ -410,6 +489,7 @@ const AxiosCenter = {
     formData.append("tva", facture.tva);
     formData.append("moyenDePaiement", facture.moyenDePaiement);
     formData.append("societeId", 1);
+    formData.append("client", facture.client);
     for (let i = 0; i < files.length; i++) {
       formData.append("listeFiles", files.item(i));
     }
@@ -449,7 +529,7 @@ const AxiosCenter = {
       url: "/ligne-produits",
       data: values,
     });
-  }
+  },
 };
 
 export default AxiosCenter;

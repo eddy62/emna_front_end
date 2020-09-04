@@ -1,10 +1,4 @@
 import React from "react";
-import "./style2.scss";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import AxiosCenter from "../../../shared/services/AxiosCenter";
-import Loading from "../../../shared/component/Loading";
-
 import {
   MDBContainer,
   MDBCardHeader,
@@ -16,6 +10,14 @@ import {
   MDBInput,
   MDBCol,
 } from "mdbreact";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+import * as dateFns from "date-fns";
+import "./style2.scss";
+import AxiosCenter from "../../../shared/services/AxiosCenter";
+import Loading from "../../../shared/component/Loading";
+import ErrorMessForm from "../../../shared/component/ErrorMessForm";
+import { toast } from "react-toastify";
 
 const employeSchema = Yup.object().shape({
   //Identitée
@@ -73,7 +75,10 @@ const employeSchema = Yup.object().shape({
   //Informations Emploi
   raisonSociale: Yup.string("String").max(20, "Trop long"),
   dateEmbauche: Yup.date().required("Champ Obligatoire"),
-  dateSortie: Yup.date().required("Champ Obligatoire"),
+  dateSortie: Yup.date().min(
+    Yup.ref("dateEmbauche"),
+    "La date de sortie ne peut être avant la date d'embauche"
+  ),
   codeTypeContrat: Yup.string("String").required("Champ Obligatoire"),
   categorie: Yup.string("String").required("Champ Obligatoire"),
   poste: Yup.string("String").required("Champ Obligatoire"),
@@ -85,10 +90,6 @@ const employeSchema = Yup.object().shape({
     .max(121, "120 jours limite conventionnelle")
     .required("Champ obligatoire"),
 });
-
-const ComposantErreur = (props) => (
-  <div className="text-danger">{props.children}</div>
-);
 
 const ComposantInput = ({ field, form: { touched, errors }, ...props }) => (
   <MDBInput label={props.label} outline type="text" {...props} {...field} />
@@ -153,16 +154,53 @@ class NewEmploye extends React.Component {
 
   submit = (values, actions) => {
     console.log(values);
-    AxiosCenter.createWrapperEmploye(values)
-      .then((response) => {
-        const employe = response.data;
-        console.log(employe);
-        this.props.history.push("/detailEmploye/" + employe.id);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    actions.setSubmitting(true);
+    const diff = dateFns.differenceInCalendarYears(
+      new Date(),
+      new Date(values.dateNaissance)
+    );
+    console.log(diff);
+    if (diff >= 14) {
+      AxiosCenter.createWrapperEmploye(values)
+        .then((response) => {
+          console.log(response);
+          const employe = response.data;
+          console.log(employe);
+          if (response.status === 200) {
+            toast.success(
+              <div className="text-center">
+                <strong>Employé Crée &nbsp;&nbsp;!</strong>
+              </div>,
+              { position: "top-right" }
+            );
+          }
+          this.props.history.push("/detailEmploye/" + employe.id);
+        })
+        .catch((error) => {
+          console.log(error.response);
+          toast.error(
+            <div className="text-center">
+              <strong>Employé NON Crée &nbsp;&nbsp;!</strong>
+              <br />
+              {error.response.data.status === 400 ? (
+                <small>{error.response.data.title}</small>
+              ) : null}
+            </div>,
+            { position: "top-right" }
+          );
+        });
+      actions.setSubmitting(true);
+    } else {
+      toast.error(
+        <div className="text-center">
+          <strong>Employé NON Crée &nbsp;&nbsp;!</strong>
+          <br />
+          <small>Date de Naissance incorrect !</small>
+          <br />
+          <small>L'âge minimum pour travailler est de 14 ans !</small>
+        </div>,
+        { position: "top-right" }
+      );
+    }
   };
 
   render() {
@@ -170,8 +208,6 @@ class NewEmploye extends React.Component {
     const title = "Gestion Social";
     const title1 = "Enregister un Nouvel Employé";
     const entreprise = this.state.societe.raisonSociale;
-    console.log(typeof entreprise);
-
     return (
       <div className="App">
         <div className="newEmp">
@@ -224,7 +260,6 @@ class NewEmploye extends React.Component {
                 dateEmbauche: "",
                 dateSortie: "",
                 codeTypeContrat: "",
-
                 categorie: "",
                 poste: "",
                 codeRef: "",
@@ -261,9 +296,10 @@ class NewEmploye extends React.Component {
                               label="N° Matricule*"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="matricule"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.matricule}
+                              touched={touched.matricule}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="6" className="mb-3">
@@ -272,9 +308,10 @@ class NewEmploye extends React.Component {
                               label="N° Sécurité Sociale*"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="numeroSecuriteSociale"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.numeroSecuriteSociale}
+                              touched={touched.numeroSecuriteSociale}
+                              right
                             />
                           </MDBCol>
                         </MDBRow>
@@ -283,6 +320,11 @@ class NewEmploye extends React.Component {
                           <MDBCol md="2" className="mb-3">
                             <div>
                               <br />
+                              <ErrorMessForm
+                                error={errors.civilite}
+                                touched={touched.civilite}
+                                right
+                              />
                               <select
                                 className="browser-default custom-select"
                                 name="civilite"
@@ -296,11 +338,6 @@ class NewEmploye extends React.Component {
                                 <option value="M">Monsieur</option>
                                 <option value="F">Madame</option>
                               </select>
-                              {errors.civilite && touched.civilite && (
-                                <div className="text-danger">
-                                  {errors.civilite}
-                                </div>
-                              )}
                             </div>
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
@@ -309,9 +346,10 @@ class NewEmploye extends React.Component {
                               label="Nom de Naissance"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="nomNaissance"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.nomNaissance}
+                              touched={touched.nomNaissance}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
@@ -320,9 +358,10 @@ class NewEmploye extends React.Component {
                               label="Nom d'usage*"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="nomUsage"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.nomUsage}
+                              touched={touched.nomUsage}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
@@ -331,9 +370,10 @@ class NewEmploye extends React.Component {
                               label="Prénom(s)"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="prenom"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.prenom}
+                              touched={touched.prenom}
+                              right
                             />
                           </MDBCol>
                         </MDBRow>
@@ -345,20 +385,22 @@ class NewEmploye extends React.Component {
                               label="Date Naissance*"
                               component={ComposantDate}
                             />
-                            <ErrorMessage
-                              name="dateNaissance"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.dateNaissance}
+                              touched={touched.dateNaissance}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
                             <Field
                               name="villeNaissance"
-                              label="Ville de Naissance"
+                              label="Ville de Naissance*"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="villeNaissance"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.villeNaissance}
+                              touched={touched.villeNaissance}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="2" className="mb-3">
@@ -367,9 +409,10 @@ class NewEmploye extends React.Component {
                               label="Département"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="departementNaissance"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.departementNaissance}
+                              touched={touched.departementNaissance}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
@@ -378,9 +421,10 @@ class NewEmploye extends React.Component {
                               label="Pays*"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="paysNaisance"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.paysNaisance}
+                              touched={touched.paysNaisance}
+                              right
                             />
                           </MDBCol>
                         </MDBRow>
@@ -389,6 +433,11 @@ class NewEmploye extends React.Component {
                           <MDBCol md="4" className="mb-3">
                             <div>
                               <br />
+                              <ErrorMessForm
+                                error={errors.situationFamiliale}
+                                touched={touched.situationFamiliale}
+                                right
+                              />
                               <select
                                 className="browser-default custom-select"
                                 name="situationFamiliale"
@@ -404,11 +453,6 @@ class NewEmploye extends React.Component {
                                 <option value="D">Divorcé(e)</option>
                                 <option value="V">Veuf(ve)</option>
                               </select>
-                              {errors.civilite && touched.civilite && (
-                                <div className="text-danger">
-                                  {errors.civilite}
-                                </div>
-                              )}
                             </div>
                           </MDBCol>
                           <MDBCol md="4" className="mb-3">
@@ -417,9 +461,10 @@ class NewEmploye extends React.Component {
                               label="Enfant(s) à Charge*"
                               component={ComposantNumber}
                             />
-                            <ErrorMessage
-                              name="enfantsACharge"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.enfantsACharge}
+                              touched={touched.enfantsACharge}
+                              right
                             />
                           </MDBCol>
                         </MDBRow>
@@ -438,9 +483,10 @@ class NewEmploye extends React.Component {
                               label="N°"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="numeroRue"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.numeroRue}
+                              touched={touched.numeroRue}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="9" className="mb-3">
@@ -449,9 +495,10 @@ class NewEmploye extends React.Component {
                               label="Libellé*"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="nomRue"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.nomRue}
+                              touched={touched.nomRue}
+                              right
                             />
                           </MDBCol>
                         </MDBRow>
@@ -463,9 +510,10 @@ class NewEmploye extends React.Component {
                               label="Complément Adresse / BP"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="boitePostale"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.boitePostale}
+                              touched={touched.boitePostale}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="2" className="mb-3">
@@ -474,9 +522,10 @@ class NewEmploye extends React.Component {
                               label="Code Postal*"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="codePostal"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.codePostal}
+                              touched={touched.codePostal}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
@@ -485,9 +534,10 @@ class NewEmploye extends React.Component {
                               label="Ville*"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="ville"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.ville}
+                              touched={touched.ville}
+                              right
                             />
                           </MDBCol>
 
@@ -497,9 +547,10 @@ class NewEmploye extends React.Component {
                               label="Pays*"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="pays"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.pays}
+                              touched={touched.pays}
+                              right
                             />
                           </MDBCol>
                         </MDBRow>
@@ -511,9 +562,10 @@ class NewEmploye extends React.Component {
                               label="Email*"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="email"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.email}
+                              touched={touched.email}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="2" className="mb-3">
@@ -522,9 +574,10 @@ class NewEmploye extends React.Component {
                               label="Telephone fixe"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="telephoneFix"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.telephoneFix}
+                              touched={touched.telephoneFix}
+                              right
                             />
                           </MDBCol>
 
@@ -534,9 +587,10 @@ class NewEmploye extends React.Component {
                               label="Fax"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="fax"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.fax}
+                              touched={touched.fax}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="2" className="mb-3">
@@ -545,9 +599,10 @@ class NewEmploye extends React.Component {
                               label="Portable*"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="telephonePortable"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.telephonePortable}
+                              touched={touched.telephonePortable}
+                              right
                             />
                           </MDBCol>
                         </MDBRow>
@@ -568,9 +623,10 @@ class NewEmploye extends React.Component {
                               disabled
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="raisonSociale"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.raisonSociale}
+                              touched={touched.raisonSociale}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
@@ -579,9 +635,10 @@ class NewEmploye extends React.Component {
                               label="Date Embauche*"
                               component={ComposantDate}
                             />
-                            <ErrorMessage
-                              name="dateEmbauche"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.dateEmbauche}
+                              touched={touched.dateEmbauche}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
@@ -590,9 +647,10 @@ class NewEmploye extends React.Component {
                               label="Date Sortie"
                               component={ComposantDate}
                             />
-                            <ErrorMessage
-                              name="dateSortie"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.dateSortie}
+                              touched={touched.dateSortie}
+                              right
                             />
                           </MDBCol>
                         </MDBRow>
@@ -602,6 +660,11 @@ class NewEmploye extends React.Component {
                           <MDBCol md="6" className="mb-3">
                             <div>
                               <br />
+                              <ErrorMessForm
+                                error={errors.codeTypeContrat}
+                                touched={touched.codeTypeContrat}
+                                right
+                              />
                               <select
                                 className="browser-default custom-select"
                                 name="codeTypeContrat"
@@ -620,16 +683,16 @@ class NewEmploye extends React.Component {
                                   )
                                 )}
                               </select>
-                              {errors.typeContrat && touched.typeContrat && (
-                                <div className="text-danger">
-                                  {errors.codeTypeContrat}
-                                </div>
-                              )}
                             </div>
                           </MDBCol>
                           <MDBCol md="4" className="mb-3">
                             <div>
                               <br />
+                              <ErrorMessForm
+                                error={errors.categorie}
+                                touched={touched.categorie}
+                                right
+                              />
                               <select
                                 className="browser-default custom-select"
                                 name="categorie"
@@ -646,11 +709,6 @@ class NewEmploye extends React.Component {
                                 <option value="C">Cadre</option>
                                 <option value="STG">Stagiaire</option>
                               </select>
-                              {errors.typeContrat && touched.typeContrat && (
-                                <div className="text-danger">
-                                  {errors.typeContrat}
-                                </div>
-                              )}
                             </div>
                           </MDBCol>
                         </MDBRow>
@@ -659,12 +717,13 @@ class NewEmploye extends React.Component {
                           <MDBCol md="4" className="mb-3">
                             <Field
                               name="poste"
-                              label="Poste"
+                              label="Poste*"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="poste"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.poste}
+                              touched={touched.poste}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
@@ -673,14 +732,20 @@ class NewEmploye extends React.Component {
                               label="Essai (Nb jours)*"
                               component={ComposantNumber}
                             />
-                            <ErrorMessage
-                              name="periodeEssai"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.periodeEssai}
+                              touched={touched.periodeEssai}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
                             <div>
                               <br />
+                              <ErrorMessForm
+                                error={errors.libelle}
+                                touched={touched.libelle}
+                                right
+                              />
                               <select
                                 className="browser-default custom-select"
                                 name="codeRef"
@@ -697,11 +762,6 @@ class NewEmploye extends React.Component {
                                   </option>
                                 ))}
                               </select>
-                              {errors.typeContrat && touched.typeContrat && (
-                                <div className="text-danger">
-                                  {errors.typeContrat}
-                                </div>
-                              )}
                             </div>
                           </MDBCol>
                         </MDBRow>
@@ -714,9 +774,10 @@ class NewEmploye extends React.Component {
                               label="Salaire Horaire*"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="salaireHoraire"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.salaireHoraire}
+                              touched={touched.salaireHoraire}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
@@ -725,9 +786,10 @@ class NewEmploye extends React.Component {
                               label="Salaire Mensuel*"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="salaireBrutMensuelle"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.salaireBrutMensuelle}
+                              touched={touched.salaireBrutMensuelle}
+                              right
                             />
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
@@ -736,9 +798,10 @@ class NewEmploye extends React.Component {
                               label="Heures Mensuelles*"
                               component={ComposantInput}
                             />
-                            <ErrorMessage
-                              name="heuresMensuelle"
-                              component={ComposantErreur}
+                            <ErrorMessForm
+                              error={errors.heuresMensuelle}
+                              touched={touched.heuresMensuelle}
+                              right
                             />
                           </MDBCol>
                         </MDBRow>

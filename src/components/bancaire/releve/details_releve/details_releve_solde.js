@@ -11,13 +11,10 @@ export class ReleveSolde extends React.Component
         };
     }
     componentDidMount() {
-        AxiosCenter.getOperationByReleveId(this.props.releveId)
+        AxiosCenter.getReleveSoldeById(this.props.releveId)
         .then((res) => {
-            const operations = res.data;
-            let solde        = 0;
-            operations.forEach(operation => {
-                solde += operation.solde
-            });
+            let solde = res.data;
+            if (solde == null) solde = "N/A";
             this.setState({
                 solde,
                 loaded: true,

@@ -3,9 +3,10 @@ import {Link} from "react-router-dom";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import ListeOperations from "./operation/liste_operations/liste_operations";
 import Loading from "../../../../shared/component/Loading";
-import {MDBCard, MDBCardBody, MDBCardTitle, MDBCardHeader, MDBContainer, MDBBtn, MDBCol,} from "mdbreact";
+import {MDBCard, MDBCardBody, MDBCardTitle, MDBCardHeader, MDBContainer, MDBBtn, MDBCol} from "mdbreact";
 import UserService from '../../../../shared/services/UserService';
 import ReleveSolde from './details_releve_solde'
+
 
 export class DetailsReleveInvalide extends React.Component {
     constructor(props) {
@@ -67,7 +68,7 @@ export class DetailsReleveInvalide extends React.Component {
                                                     {props.detailsreleve.banque}
                                                 </div>
                                             </div>
-                                            <ReleveSolde releveId={this.state.releveId} />
+                                            <ReleveSolde releveId={this.state.releveId}/>
                                         </div>
                                     </MDBCardTitle>
                                 </MDBCardBody>
@@ -75,10 +76,13 @@ export class DetailsReleveInvalide extends React.Component {
                         </MDBCol>
                         <br/>
                     </div>
+
                 </MDBContainer>
             </div>
         );
     };
+
+    validateReleve = () => AxiosCenter.validateReleve(this.props.match.params.id)
 
     render() {
         if (this.state.loaded) {
@@ -90,7 +94,7 @@ export class DetailsReleveInvalide extends React.Component {
                                 <MDBCardBody>
                                     <MDBCardTitle className="MDBCardTitle">
                                         <div>
-                                            <this.detailsReleve detailsreleve={this.state.releve} />
+                                            <this.detailsReleve detailsreleve={this.state.releve}/>
                                         </div>
 
                                         <div className="row">
@@ -126,6 +130,23 @@ export class DetailsReleveInvalide extends React.Component {
                                                 </Link>
                                             </MDBBtn>
                                             }
+                                            {(UserService.getRole() === "ROLE_ADMIN" ||
+                                                UserService.getRole() === "ROLE_SOCIETY") &&
+
+                                            <Link
+                                                to={"/releveinvalide/"}
+                                            >
+                                                <MDBBtn onClick={this.validateReleve}
+                                                        className="boutton"
+                                                        color=" teal lighten-2"
+                                                        rounded
+                                                        size="sm"
+                                                >
+
+                                                    <span id="color-button"> Valider</span>
+                                                </MDBBtn>
+                                            </Link>
+                                            }
                                         </p>
                                     </MDBCardTitle>
                                 </MDBCardBody>
@@ -137,6 +158,7 @@ export class DetailsReleveInvalide extends React.Component {
         } else {
             return <Loading/>;
         }
+
     }
 }
 

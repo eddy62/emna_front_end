@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
+import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
 
 class DeleteProduit extends Component {
     state = {
         modal: false,
         userId: UserService.getUserId(),
+        redirect: false
 
     }
 
@@ -19,15 +22,30 @@ class DeleteProduit extends Component {
     supprimerProduit = () => {
         AxiosCenter.deleteProduit(this.props.produit.id, this.state.userId)
             .then((response) => {
-                console.log(response.data)
-                this.toggle()
-                this.props.history.push("/produits");
+                toast.success(
+                    <div className="text-center">
+                        <strong> Le Produit {this.props.produit.nom} a été bien Supprimé</strong>
+                    </div>,
+                    { position: "top-right" }
+                );
+                this.setState({
+                    modal: !this.state.modal,
+                    redirect: true,
+                })
             })
             .catch((error) => {
                 console.log(error);
+                toast.error(
+                    <div className="text-center">
+                        <strong>Erreur lors la suppression &nbsp;&nbsp;!</strong>
+                        <br />
+                    </div>,
+                    { position: "top-right" }
+                );
             });
 
-    }
+    };
+    redirection = () => this.setState({ redirect: true });
 
     render() {
         return (
@@ -44,6 +62,9 @@ class DeleteProduit extends Component {
 
                         <MDBBtn rounded toggle={this.toggle} color="secondary" onClick={() => this.supprimerProduit()} circle="true" size="sm" >
                             Supprimer</MDBBtn>
+                        {this.state.redirect && (
+                            <Redirect to={"/produits"} />
+                        )}
 
                     </MDBModalFooter>
                 </MDBModal>

@@ -5,6 +5,7 @@ import AxiosCenter from "../../../shared/services/AxiosCenter";
 import { Link } from "react-router-dom";
 import { MDBBtn, MDBContainer, MDBCardHeader, MDBCardTitle, MDBInput } from "mdbreact";
 import UserService from '../../../shared/services/UserService';
+import { toast } from "react-toastify";
 
 const ComposantErreur = (props) => (
   <div className="text-danger">{props.children}</div>
@@ -12,7 +13,6 @@ const ComposantErreur = (props) => (
 
 const ComposantInput = ({ field, form: { touched, errors }, ...props }) => (
   <div >
-    {/* <label> {props.label} </label> */}
     <MDBInput label={props.label} type="text" {...props} className="form-control" {...field} />
   </div>
 );
@@ -21,10 +21,22 @@ class AddClientFournisseur extends React.Component {
   submit = (values, actions) => {
     AxiosCenter.createClientFournisseur(values)
       .then((response) => {
-        console.log(response.data);
+        toast.success(
+          <div className="text-center">
+            <strong>Le nouveau Client Fournisseur {response.data.nom} a été bien crée</strong>
+          </div>,
+          { position: "top-right" }
+        );
       })
       .catch((error) => {
         console.log(error);
+        toast.error(
+          <div className="text-center">
+            <strong>Erreur lors de la création d'un nouveau Client Fournisseur &nbsp;&nbsp;!</strong>
+            <br />
+          </div>,
+          { position: "top-right" }
+        );
       });
 
     actions.setSubmitting(true);
@@ -36,16 +48,21 @@ class AddClientFournisseur extends React.Component {
       .min(3, "Le nom ne peut contient moins que 3 caractères")
       .max(20, "Le nom ne peut dépasser 20 caractères ")
       .required("Le champ est obligatoire"),
-    siren: Yup.number().required("Le champ est obligatoire"),
+    siren: Yup.string()
+      .matches(/^[0-9]+$/, "Siren doit être composé uniquement de chiffres").required("Le champ est obligatoire").min(9, 'Doit contenir exactement 9 chiffres')
+      .max(9, 'Doit contenir exactement 9 chiffres'),
     email: Yup.string()
       .email("L'adress mail doit être valide")
       .required("Le champ est obligatoire"),
-    telephone: Yup.number("Format non conforme").required("Le champ est obligatoire"),
-    numeroRue: Yup.string().required("Le champ est obligatoire"),
+    telephone: Yup.string()
+      .matches(/^[0-9]+$/, "Telephone doit être composé uniquement de chiffres").required("Le champ est obligatoire").min(10, 'Doit contenir exactement 10 chiffres')
+      .max(10, 'Doit contenir exactement 10 chiffres'),
+    numeroRue: Yup.string()
+      .matches(/^[0-9]+$/, "Numero doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
     nomRue: Yup.string().required("Le champ est obligatoire"),
-    codePostal: Yup.string().required("Le champ est obligatoire"),
-    ville: Yup.string().required("Le champ est obligatoire"),
-    pays: Yup.string().required("Le champ est obligatoire"),
+    codePostal: Yup.string().matches(/^[a-zA-Z0-9\s]+$/, "Code postal invalide").required("Le champ est obligatoire"),
+    ville: Yup.string().matches(/^[a-zA-Zéçèùàêû\s]+$/, "Ville doit être composé uniquement de littres").required("Le champ est obligatoire"),
+    pays: Yup.string().matches(/^[a-zA-Zéçèùàêû\s]+$/, "Pays doit être composé uniquement de littres").required("Le champ est obligatoire"),
   });
 
   render() {

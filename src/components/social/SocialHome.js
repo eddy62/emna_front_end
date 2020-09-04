@@ -170,7 +170,7 @@ class AccueilSocial extends React.Component {
                               size="sm"
                               onClick={() => {
                                 this.props.history.push(
-                                  "/socialHome/" + this.state.societe.id
+                                  "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/" + this.state.societe.id
                                 );
                               }}
                             >
@@ -215,7 +215,7 @@ class AccueilSocial extends React.Component {
               </div>
               <Link to="/">
                 <MDBBtn color="teal accent-3" rounded size="sm">
-                  Retour à l'Acceuil
+                  Retour à l'Accueil
                 </MDBBtn>
               </Link>
             </MDBContainer>

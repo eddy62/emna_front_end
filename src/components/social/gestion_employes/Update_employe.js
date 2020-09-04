@@ -1,9 +1,4 @@
 import React from "react";
-import "./style2.scss";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import AxiosCenter from "../../../shared/services/AxiosCenter";
-import Loading from "../../../shared/component/Loading";
 import {
   MDBContainer,
   MDBCardHeader,
@@ -15,6 +10,13 @@ import {
   MDBInput,
   MDBCol,
 } from "mdbreact";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import "./style2.scss";
+import AxiosCenter from "../../../shared/services/AxiosCenter";
+import Loading from "../../../shared/component/Loading";
+import ErrorMessForm from "../../../shared/component/ErrorMessForm";
+import { toast } from "react-toastify";
 
 const employeSchema = Yup.object().shape({
   //Identitée
@@ -54,7 +56,12 @@ const employeSchema = Yup.object().shape({
   //Informations Emploi
   raisonSociale: Yup.string("String").max(20, "Trop long"),
   dateEmbauche: Yup.date().required("Champ Obligatoire"),
-  dateSortie: Yup.date().required("Champ Obligatoire"),
+  dateSortie: Yup.date()
+    .min(
+      Yup.ref("dateEmbauche"),
+      "La date de sortie ne peut être avant la date d'embauche"
+    )
+    .required("Champ Obligatoire"),
   codeTypeContrat: Yup.string("String").required("Champ Obligatoire"),
   categorie: Yup.string("String").required("Champ Obligatoire"),
   poste: Yup.string("String").required("Champ Obligatoire"),
@@ -130,11 +137,30 @@ class UpdateEmploye extends React.Component {
     console.log(values);
     AxiosCenter.updateWrapperEmploye(values)
       .then((response) => {
+        console.log(response);
         const employe = response.data;
         console.log(employe);
+        if (response.status === 200) {
+          toast.success(
+            <div className="text-center">
+              <strong>Information Employé modofié &nbsp;&nbsp;!</strong>
+            </div>,
+            { position: "top-right" }
+          );
+        }
         this.props.history.push("/detailEmploye/" + employe.id);
       })
       .catch((error) => {
+        toast.error(
+          <div className="text-center">
+            <strong>Employé NON Modifié &nbsp;&nbsp;!</strong>
+            <br />
+            {error.response.data.status === 400 ? (
+              <small>{error.response.data.title}</small>
+            ) : null}
+          </div>,
+          { position: "top-right" }
+        );
         console.log(error);
       });
     actions.setSubmitting(true);
@@ -222,6 +248,11 @@ class UpdateEmploye extends React.Component {
                           <MDBCol md="2" className="mb-3">
                             <div>
                               <br />
+                              <ErrorMessForm
+                                error={errors.matricule}
+                                touched={touched.matricule}
+                                right
+                              />
                               <select
                                 className="browser-default custom-select"
                                 name="civilite"
@@ -233,11 +264,6 @@ class UpdateEmploye extends React.Component {
                                 <option value="M">Monsieur</option>
                                 <option value="F">Madame</option>
                               </select>
-                              {errors.civilite && touched.civilite && (
-                                <div className="text-danger">
-                                  {errors.civilite}
-                                </div>
-                              )}
                             </div>
                           </MDBCol>
                           <MDBCol md="3" className="mb-3">
@@ -692,7 +718,7 @@ class UpdateEmploye extends React.Component {
                         );
                       }}
                     >
-                      Retour
+                      ANNULER
                     </MDBBtn>
                   </div>
                 </Form>

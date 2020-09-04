@@ -9,6 +9,7 @@ import {
     MDBContainer,
     MDBInput,
 } from "mdbreact";
+import { toast } from "react-toastify";
 
 const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
@@ -75,10 +76,23 @@ class UpdateProduit extends Component {
     submit = (values, actions) => {
         AxiosCenter.updateProduit(values)
             .then((response) => {
+                toast.success(
+                    <div className="text-center">
+                        <strong>Le produit {this.state.updateProduit.nom} a été mis à jour </strong>
+                    </div>,
+                    { position: "top-right" }
+                );
                 this.props.history.push("/produit/detail/" + response.data.id);
             })
             .catch((error) => {
                 console.log(error);
+                toast.error(
+                    <div className="text-center">
+                        <strong>Le produit n'a pas été mis à jour&nbsp;&nbsp;!</strong>
+                        <br />
+                    </div>,
+                    { position: "top-right" }
+                );
             });
         actions.setSubmitting(true);
     }
@@ -86,11 +100,15 @@ class UpdateProduit extends Component {
 
 
     userSchema = Yup.object().shape({
-        nom: Yup.string().min(3, "Le nom ne peut contient moins que 3 caractères")
+        nom: Yup.string().min(3, "Le Nom ne peut contient moins que 3 caractères")
             .max(20, "Le nom ne peut dépasser 20 caractères ").required("Le champ est obligatoire"),
-        reference: Yup.number("Format non conforme").required("Le champ est obligatoire"),
-        tva: Yup.number("Format non conforme").required("Le champ est obligatoire"),
-        prix: Yup.number("Format non conforme").required("Le champ est obligatoire"),
+        reference: Yup.string()
+            .matches(/^[0-9]+$/, "Reference doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
+        tva: Yup.string()
+            .matches(/^[0-9.]+$/, "Tva doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
+        prix: Yup.string()
+            .matches(/^[0-9.]+$/, "Prix doit être composé uniquement de chiffres")
+            .required("Le champ est obligatoire"),
         description: Yup.string().max(200, "200 caractères maximum"),
         unite: Yup.string().required("Le champ est obligatoire"),
     });
@@ -118,7 +136,7 @@ class UpdateProduit extends Component {
                                 <div >
                                     <Field
                                         name="nom"
-                                        label="Nom de Produit"
+                                        label="Nom produit"
                                         component={ComposantInput}
                                     />
                                     <ErrorMessage name="nom" component={ComposantErreur} />
@@ -155,7 +173,7 @@ class UpdateProduit extends Component {
               </MDBBtn>
                                     <Link to={`/produit/detail/${this.state.UpdateProduit.id}`}>
                                         <MDBBtn rounded color="teal accent-3">
-                                            Retour
+                                            Annuler
                   </MDBBtn>
                                     </Link>
                                 </div>

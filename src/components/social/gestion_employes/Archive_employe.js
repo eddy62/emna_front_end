@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import "./style2.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
+import { toast } from "react-toastify";
 import {
   MDBContainer,
   MDBBtn,
@@ -39,6 +40,12 @@ class ArchiverEmploye extends Component {
     AxiosCenter.archiveWrapperEmploye(employe)
       .then((response) => {
         console.log(response);
+        toast.success(
+          <div className="text-center">
+            <strong>Employé Archivé &nbsp;&nbsp;!</strong>
+          </div>,
+          { position: "top-right" }
+        );
         this.setState({
           modal: !this.state.modal,
           redirect: true,
@@ -46,6 +53,12 @@ class ArchiverEmploye extends Component {
       })
       .catch((error) => {
         console.log(error);
+        toast.error(
+          <div className="text-center">
+            <strong>Employé NON Archivé &nbsp;&nbsp;!</strong>
+          </div>,
+          { position: "top-right" }
+        );
       });
   };
 
@@ -66,14 +79,24 @@ class ArchiverEmploye extends Component {
           Archiver
         </MDBBtn>
         <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
-          <MDBModalHeader toggle={this.toggle}>
-            <MDBIcon icon="exclamation-triangle" className="attention" />
-          </MDBModalHeader>
+          <div className="align-self-center">
+            <MDBModalHeader toggle={this.toggle}>
+              <MDBIcon
+                icon="exclamation-triangle"
+                className="attention"
+                size="2x"
+              />
+            </MDBModalHeader>
+          </div>
           <MDBModalBody>
             <p className="p">Voulez-vous archiver l'Employé ?</p>
+            <span className="gras">ATTENTION, </span>
+            <br />
             <span className="gras">
-              Attention, l'Employé ne sera plus dans l'effectif de la Société !
+              L'Employé ne sera plus dans l'effectif de la Société !
             </span>
+            <br />
+            <small>(Les données seront archivées pendant 5 ans)</small>
           </MDBModalBody>
           <MDBModalFooter between around>
             <MDBRow>
