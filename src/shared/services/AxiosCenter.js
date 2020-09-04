@@ -435,6 +435,14 @@ const AxiosCenter = {
       url: `factures/societe/${id}`,
     });
   },
+
+  getInvoicesByStatement(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/factures/relevé/${id}`
+    })
+  },
+
   createLigneProduit(values) {
     return ApiBackEnd({
       method: "post",
