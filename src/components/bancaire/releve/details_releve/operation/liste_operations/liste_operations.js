@@ -63,8 +63,12 @@ export default class ListeOperations extends React.Component {
               />
             }
           </td>
-        <td>          
-            <DeletionConfirmationModal deleteOperation={ () => {props.deleteOperation(operation.id)} } />
+        <td>
+          {(props.roleUser === "ROLE_SOCIETY" || props.roleUser === "ROLE_ADMIN") &&
+          <DeletionConfirmationModal deleteOperation={() => {
+            props.deleteOperation(operation.id)
+          }}/>
+          }
           </td>
         </tr>
       );
