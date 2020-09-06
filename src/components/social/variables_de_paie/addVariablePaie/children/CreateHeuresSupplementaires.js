@@ -4,7 +4,6 @@ import * as Yup from "yup";
 import Loading from "../../../../../shared/component/Loading";
 import {
     MDBBtn,
-    MDBCard,
     MDBCardBody,
     MDBCol,
     MDBContainer,
@@ -60,7 +59,6 @@ const notify = type => {
                 <div className="text-center">
                     <strong>Heure(s) supplémentaire(s) Enregistrée(s) &nbsp;&nbsp;!</strong>
                 </div>,
-                //{position: "top-right"}
             );
             break;
         case "error":
@@ -68,7 +66,6 @@ const notify = type => {
                 <div className="text-center">
                     <strong>Heure(s) supplémentaire(s) NON Enregistrée(s) &nbsp;&nbsp;!</strong>
                 </div>,
-                //{position: "top-right"}
             );
             break;
     }
@@ -92,12 +89,11 @@ class CreateHeuresSupplementaires extends React.Component {
     submit = (values, actions) => {
         values.annee = this.props.yearSelected
         values.mois = this.props.monthSelected
-        values.employeId = this.props.idEmploye
+        values.employeId = this.props.employeId
 
         AxiosCenter.createHeureSupplementaire(values)
             .then((response) => {
                 const heureSup = response.data;
-                console.log(heureSup);
                 notify('success');
                 actions.resetForm();
             }).catch((error) => {
@@ -123,7 +119,6 @@ class CreateHeuresSupplementaires extends React.Component {
     }
     
     render() {
-        const title = "Heures Supplémentaires"
         if (!this.state.loaded) return <Loading/>
         else return (
             this.updatePeriod(),
@@ -146,8 +141,7 @@ class CreateHeuresSupplementaires extends React.Component {
                             validationSchema={heuresSupSchema(this.state)}
                         >
                             {({
-                                  handleSubmit,
-                                  resetForm
+                                  handleSubmit
                               }) => (
                                 <Form onSubmit={handleSubmit}>
                                     <MDBCardBody style={{marginTop:"-3%", marginBottom:"-3%"}}>
