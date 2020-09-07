@@ -47,7 +47,7 @@ class BankReconciliation extends Component {
                     </MDBCol>
                     <MDBCol>
                         <MDBCard>
-                            <ListOfInvoices/>
+                            <ListOfInvoices idReleve={this.state.releve.id}/>
                         </MDBCard>
                     </MDBCol>
                 </MDBRow>

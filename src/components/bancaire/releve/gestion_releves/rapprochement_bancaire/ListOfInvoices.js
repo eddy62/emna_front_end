@@ -2,25 +2,27 @@ import React, { Component } from 'react';
 import Axios from '../../../../../shared/services/AxiosCenter';
 import { MDBTable, MDBCardTitle, MDBTableHead, MDBTableBody } from 'mdbreact';
 import StatementInvoice from '../../../../gestion_factures/StatementInvoice';
+import Loading from "../../../../../shared/component/Loading";
 
 export default class ListOfInvoices extends Component {
 
   constructor(props){
-    super();
+    super(props);
     this.state = {
-      factures : []
+      factures : {},
+      loaded: false,
     }
   }
 
   componentDidMount(){
-    Axios.getInvoicesByStatement(1).then((res) => {
+    Axios.getInvoicesByStatement(this.props.idReleve).then((res) => {
       const factures = res.data;
-      this.setState({factures});
+      this.setState({factures, loaded : true});
     });
   }
 
   render(){
-
+    if (!this.state.loaded) return <Loading/>
     return (
       <div>
         <MDBCardTitle className="card-title text-center py-2">
@@ -36,7 +38,7 @@ export default class ListOfInvoices extends Component {
           </MDBTableHead>
           <MDBTableBody>
             {this.state.factures.map((facture, index) => (
-              <StatementInvoice key={facture.id} facture={facture} />  
+              <StatementInvoice key={facture.id} facture={facture} />
             ))}
           </MDBTableBody>  
         </MDBTable>
