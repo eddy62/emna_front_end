@@ -23,8 +23,6 @@ export default class ListeRelevesInvalide extends React.Component {
     };
   }
   componentDidMount() {
-    console.log(this.state.societyId)
-
     AxiosCenter.getReleveByEtatAndSociety(ReleveConstants.RELEVE_ETAT_INVALIDE, this.state.societyId)
       .then((res) => {
         const releves = res.data;

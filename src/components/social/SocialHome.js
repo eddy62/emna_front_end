@@ -170,7 +170,7 @@ class AccueilSocial extends React.Component {
                               size="sm"
                               onClick={() => {
                                 this.props.history.push(
-                                  "/socialHome/" + this.state.societe.id
+                                  "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/" + this.state.societe.id
                                 );
                               }}
                             >

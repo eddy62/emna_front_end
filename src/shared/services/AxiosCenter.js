@@ -104,6 +104,60 @@ const AxiosCenter = {
     });
   },
 
+  getAllTypesAbsence() {
+    return ApiBackEnd({
+      method: "GET",
+      url: "/type-absences",
+    });
+  },
+
+  createAbsence(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/absences",
+      data: values,
+    });
+  },
+
+  getAllTypePrimes() {
+    return ApiBackEnd({
+      method: "GET",
+      url: "/type-primes",
+    });
+  },
+
+  createPrime(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/primes",
+      data: values,
+    });
+  },
+
+  createHeureSupplementaire(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: `/heures-supplementaires`,
+      data: values,
+    })
+  },
+
+  createAvanceRappelSalaire(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: '/avance-rappel-salaires',
+      data: values,
+    })
+  },
+
+  createNoteDeFrais(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: '/note-de-frais',
+      data: values
+    })
+  },
+
   getWrapperEmploye(id) {
     return ApiBackEnd({
       method: "get",
@@ -461,6 +515,14 @@ const AxiosCenter = {
       url: `factures/societe/${id}`,
     });
   },
+
+  getInvoicesByStatement(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/factures/relevé/${id}`
+    })
+  },
+
   createLigneProduit(values) {
     return ApiBackEnd({
       method: "post",

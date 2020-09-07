@@ -3,18 +3,9 @@ import {Link} from "react-router-dom";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import ListeOperations from "./operation/liste_operations/liste_operations";
 import Loading from "../../../../shared/component/Loading";
-import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardHeader,
-  MDBContainer,
-  MDBBtn,
-  MDBCol,
-} from "mdbreact";
+import {MDBCard, MDBCardBody, MDBCardTitle, MDBCardHeader, MDBContainer, MDBBtn, MDBCol} from "mdbreact";
 import UserService from '../../../../shared/services/UserService';
 import ReleveDetailsCard from "./ReleveDetailsCard";
-
 
 export class DetailsReleveInvalide extends React.Component {
     constructor(props) {
@@ -60,6 +51,8 @@ export class DetailsReleveInvalide extends React.Component {
         );
     };
 
+    validateReleve = () => AxiosCenter.validateReleve(this.props.match.params.id)
+
     render() {
         if (this.state.loaded) {
             return (
@@ -70,7 +63,7 @@ export class DetailsReleveInvalide extends React.Component {
                                 <MDBCardBody>
                                     <MDBCardTitle className="MDBCardTitle">
                                         <div>
-                                            <this.detailsReleve detailsreleve={this.state.releve} />
+                                            <this.detailsReleve detailsreleve={this.state.releve}/>
                                         </div>
 
                                         <div className="row">
@@ -94,33 +87,35 @@ export class DetailsReleveInvalide extends React.Component {
 
                                             {(UserService.getRole() === "ROLE_ADMIN" ||
                                                 UserService.getRole() === "ROLE_SOCIETY") &&
-                                            <MDBBtn
-                                                className="boutton"
-                                                color=" teal lighten-2"
-                                                rounded
-                                                size="sm"
-                                                disabled={false}
-                                            >
-                                                <Link to={"/creationoperation/" + this.props.match.params.id}>
-                                                    <span id="color-button"> Ajouter une opération</span>
-                                                </Link>
-                                            </MDBBtn>
-                                            }
-                                            { (UserService.getRole() === "ROLE_ADMIN" ||
-                                                UserService.getRole() === "ROLE_SOCIETY") &&
-
-                                            <MDBBtn onClick={AxiosCenter.validateReleve(this.props.match.params.id)}
+                                            <Link to={"/creationoperation/" + this.props.match.params.id}>
+                                                <MDBBtn
                                                     className="boutton"
                                                     color=" teal lighten-2"
                                                     rounded
                                                     size="sm"
-                                            >
-                                                <Link
-                                                    to={"/releveinvalide/" + this.props.match.params.id}
+                                                    disabled={false}
                                                 >
+                                                    <span id="color-button"> Ajouter une opération</span>
+                                                </MDBBtn>
+                                            </Link>
+
+                                            }
+                                            {(UserService.getRole() === "ROLE_ADMIN" ||
+                                                UserService.getRole() === "ROLE_SOCIETY") &&
+
+                                            <Link
+                                                to={"/releveinvalide/"}
+                                            >
+                                                <MDBBtn onClick={this.validateReleve}
+                                                        className="boutton"
+                                                        color=" teal lighten-2"
+                                                        rounded
+                                                        size="sm"
+                                                >
+
                                                     <span id="color-button"> Valider</span>
-                                                </Link>
-                                            </MDBBtn>
+                                                </MDBBtn>
+                                            </Link>
                                             }
                                         </p>
                                     </MDBCardTitle>
@@ -133,7 +128,6 @@ export class DetailsReleveInvalide extends React.Component {
         } else {
             return <Loading/>;
         }
-
     }
 }
 
