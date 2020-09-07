@@ -15,8 +15,8 @@ const ComposantDate = ({field, form: {touched, errors}, ...props}) => (
     <div>
         <label> {props.label} </label>
         <input type="Date"
-               // max={props.datefin}
-               // min={props.datedebut}
+               max={props.datefin}
+               min={props.datedebut}
                className="form-control"
                {...props}
                {...field} />
@@ -92,9 +92,9 @@ class PageAddOperationStatement extends React.Component {
     }
 
     schema = (state) => { return Yup.object().shape({
-            date: Yup.date().required("La date est obligatoire"),
-                // .max(state.datefin, "La date ne peut être supérieur à la date de fin du relevé")
-                // .min(state.datedebut, "La date ne peut être inférieur a la date du début du relevé"),
+            date: Yup.date().required("La date est obligatoire")
+                .max(state.datefin, "La date ne peut être supérieur à la date de fin du relevé")
+                .min(state.datedebut, "La date ne peut être inférieur a la date du début du relevé"),
             description: Yup.string().required("La description est obligatoire"),
             solde: Yup.number().positive("Le solde doit être positif")
                 .required("Le solde est obligatoire"),
