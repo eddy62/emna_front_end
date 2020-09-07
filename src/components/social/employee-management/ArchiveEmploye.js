@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import "./style2.scss";
+import "./gestionEmploye.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
 import { toast } from "react-toastify";
@@ -15,7 +15,7 @@ import {
   MDBRow,
 } from "mdbreact";
 
-class ArchiverEmploye extends Component {
+class ArchiveEmploye extends Component {
   constructor(props) {
     super(props);
 
@@ -131,4 +131,4 @@ class ArchiverEmploye extends Component {
   }
 }
 
-export default ArchiverEmploye;
+export default ArchiveEmploye;

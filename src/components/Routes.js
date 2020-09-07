@@ -4,12 +4,12 @@ import { PrivateRoute } from "../helpers/PrivateRoute";
 
 //Gestion Social import
 import AccueilSocial from "./social/SocialHome";
-import ListEmployes from "./social/gestion_employes/List_employes";
-import DetailEmploye from "./social/gestion_employes/Detail_employe";
-import NewEmploye from "./social/gestion_employes/Create_employe";
-import UpdateEmploye from "./social/gestion_employes/Update_employe";
-import SupprimerEmploye from "./social/gestion_employes/Supprimer_employe";
-import ArchiverEmploye from "./social/gestion_employes/Archive_employe";
+import ListEmployes from "./social/employee-management/ListEmployes";
+import DetailEmploye from "./social/employee-management/DetailEmploye";
+import CreateEmploye from "./social/employee-management/CreateEmploye";
+import UpdateEmploye from "./social/employee-management/UpdateEmploye";
+import DeleteEmploye from "./social/employee-management/DeleteEmploye";
+import ArchiveEmploye from "./social/employee-management/ArchiveEmploye";
 
 import ListeContrat from "./contrat/listeContrat/ListeContrat";
 import Contrat from "./contrat/Contrat";
@@ -43,7 +43,6 @@ import PageAddOperationStatement from "./bancaire/releve/details_releve/operatio
 import BankReconciliation from "./bancaire/releve/gestion_releves/rapprochement_bancaire/BankReconciliation";
 import ListOfOperations from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfOperations";
 import ListOfInvoices from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfInvoices";
-
 
 // gestionUserRoutesImports
 import Users from "./users/Users";
@@ -100,11 +99,14 @@ export default class Routes extends Component {
         <PrivateRoute path="/socialHome/:id" component={AccueilSocial} />
         <PrivateRoute path="/listEmployes/:id" component={ListEmployes} />
         <PrivateRoute path="/detailEmploye/:id" component={DetailEmploye} />
-        <PrivateRoute path="/newEmploye/:id" component={NewEmploye} />
+        <PrivateRoute path="/newEmploye/:id" component={CreateEmploye} />
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
-        <PrivateRoute path="/deleteEmploye/:id" component={SupprimerEmploye} />
-        <PrivateRoute path="/variables_de_paie/addVariablePaie/ParentAddVariablePaie/:id" component={ParentAddVariablePaie} />
-        <PrivateRoute path="/archiveEmploye/:id" component={ArchiverEmploye} />
+        <PrivateRoute path="/deleteEmploye/:id" component={DeleteEmploye} />
+        <PrivateRoute
+          path="/variables_de_paie/addVariablePaie/ParentAddVariablePaie/:id"
+          component={ParentAddVariablePaie}
+        />
+        <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
         {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />
@@ -215,7 +217,10 @@ export default class Routes extends Component {
         {/*stau stands for : Select to add user*/}
         {/* finGestionUserRoutes */}
         <PrivateRoute path="/bancaire" component={Bancaire} />
-        <PrivateRoute path="/creationoperation/:id" component={PageAddOperationStatement} />
+        <PrivateRoute
+          path="/creationoperation/:id"
+          component={PageAddOperationStatement}
+        />
         <PrivateRoute path="/menureleve" component={Releve} />
         <PrivateRoute path="/historiquereleve/:id" component={ListeReleves} />
         <PrivateRoute path="/detailsreleve/:id" component={DetailsReleve} />
@@ -232,22 +237,22 @@ export default class Routes extends Component {
           path="/detailsoperation/:id"
           component={DetailsOperation}
         />
-        <PrivateRoute
-          path="/editoperation/:id"
-          component={EditOperation}
-        />
+        <PrivateRoute path="/editoperation/:id" component={EditOperation} />
         <PrivateRoute path="/menurelevenon" component={MenuReleveNon} />
-
         {/* Rapprochement bancaire */}
-        <PrivateRoute path="/gestionReleves/rapprochementBancaire" component={BankReconciliation} />
-        <PrivateRoute path="/gestionReleves/rapprochementBancaire/listeOperations" component={ListOfOperations} />
-        <PrivateRoute path="/gestionReleves/rapprochementBancaire/listeFactures" component={ListOfInvoices} />
-
-
         <PrivateRoute
-          path="/releveinvalide"
-          component={ListeRelevesInvalide}
+          path="/gestionReleves/rapprochementBancaire"
+          component={BankReconciliation}
         />
+        <PrivateRoute
+          path="/gestionReleves/rapprochementBancaire/listeOperations"
+          component={ListOfOperations}
+        />
+        <PrivateRoute
+          path="/gestionReleves/rapprochementBancaire/listeFactures"
+          component={ListOfInvoices}
+        />
+        <PrivateRoute path="/releveinvalide" component={ListeRelevesInvalide} />
         <PrivateRoute
           path="/relevenonarchive/:id"
           component={ListeRelevesNonArchive}
