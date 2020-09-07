@@ -91,8 +91,7 @@ class PageAddOperationStatement extends React.Component {
             });
     }
 
-    schema = (state) => {
-        Yup.object().shape({
+    schema = (state) => { return Yup.object().shape({
             date: Yup.date().required("La date est obligatoire"),
                 // .max(state.datefin, "La date ne peut être supérieur à la date de fin du relevé")
                 // .min(state.datedebut, "La date ne peut être inférieur a la date du début du relevé"),
