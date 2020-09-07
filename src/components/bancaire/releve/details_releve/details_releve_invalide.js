@@ -5,8 +5,7 @@ import ListeOperations from "./operation/liste_operations/liste_operations";
 import Loading from "../../../../shared/component/Loading";
 import {MDBCard, MDBCardBody, MDBCardTitle, MDBCardHeader, MDBContainer, MDBBtn, MDBCol} from "mdbreact";
 import UserService from '../../../../shared/services/UserService';
-import ReleveSolde from './details_releve_solde'
-
+import ReleveDetailsCard from "./ReleveDetailsCard";
 
 export class DetailsReleveInvalide extends React.Component {
     constructor(props) {
@@ -44,39 +43,9 @@ export class DetailsReleveInvalide extends React.Component {
                         </MDBCardHeader>
                     </div>
                     <div>
-                        <hr></hr>
+                        <hr/>
                     </div>
-                    <div>
-                        <MDBCol>
-                            <MDBCard>
-                                <MDBCardBody>
-                                    <MDBCardTitle className="MDBCardTitle">
-                                        <div>
-                                            <div className="row">
-                                                <div className="col-3">
-                                                    <p>
-                                                        Relevé bancaire:
-                                                        <br/>
-                                                        du {props.detailsreleve.dateDebut}
-                                                        <br/>
-                                                        au {props.detailsreleve.dateFin}{" "}
-                                                    </p>
-                                                </div>
-                                                <div className="col-6"></div>
-                                                <div className="col-3">
-                                                    Information de la banque :{" "}
-                                                    {props.detailsreleve.banque}
-                                                </div>
-                                            </div>
-                                            <ReleveSolde releveId={this.state.releveId}/>
-                                        </div>
-                                    </MDBCardTitle>
-                                </MDBCardBody>
-                            </MDBCard>
-                        </MDBCol>
-                        <br/>
-                    </div>
-
+                    <ReleveDetailsCard releve={this.state.releve}/>
                 </MDBContainer>
             </div>
         );
@@ -159,7 +128,6 @@ export class DetailsReleveInvalide extends React.Component {
         } else {
             return <Loading/>;
         }
-
     }
 }
 
