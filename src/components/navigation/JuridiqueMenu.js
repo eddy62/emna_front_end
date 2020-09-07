@@ -58,7 +58,7 @@ class JuridiqueMenu extends React.Component {
                   </MDBCardBody>
                 </MDBCard>
               </MDBCol>
-              {(UserService.getRole() === "ROLE_SOCIETY" || UserService.getRole() === "ROLE_ADMIN") ? (
+              {UserService.getRole() === "ROLE_SOCIETY" ? (
                 <MDBCol>
                   <MDBCard>
                     <MDBCardBody>
