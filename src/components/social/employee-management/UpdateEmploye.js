@@ -688,38 +688,38 @@ class UpdateEmploye extends React.Component {
                       <hr></hr>
                     </div>
                     <div>
-                      <MDBBtn
-                        color="teal accent-3"
-                        rounded
-                        size="sm"
-                        type="submit"
-                      >
-                        Enregistrer
-                    </MDBBtn>
-
-                      <MDBBtn
-                        color="teal accent-3"
-                        rounded
-                        size="sm"
-                        type="reset"
-                        onClick={handleReset}
-                        disabled={!dirty || isSubmitting}
-                      >
-                        RESET
-                    </MDBBtn>
-
-                      <MDBBtn
-                        color="teal accent-3"
-                        rounded
-                        size="sm"
-                        onClick={() => {
-                          this.props.history.push(
-                            "/listEmployes/" + this.state.employe.societeId
-                          );
-                        }}
-                      >
-                        ANNULER
-                    </MDBBtn>
+                      <MDBRow around between>
+                        <MDBBtn
+                          color="teal accent-3"
+                          rounded
+                          size="sm"
+                          type="submit"
+                        >
+                          Enregistrer
+                      </MDBBtn>
+                        <MDBBtn
+                          color="teal accent-3"
+                          rounded
+                          size="sm"
+                          type="reset"
+                          onClick={handleReset}
+                          disabled={!dirty || isSubmitting}
+                        >
+                          RESET
+                      </MDBBtn>
+                        <MDBBtn
+                          color="teal accent-3"
+                          rounded
+                          size="sm"
+                          onClick={() => {
+                            this.props.history.push(
+                              "/listEmployes/" + this.state.employe.societeId
+                            );
+                          }}
+                        >
+                          ANNULER
+                      </MDBBtn>
+                      </MDBRow>
                     </div>
                   </Form>
                 )}
