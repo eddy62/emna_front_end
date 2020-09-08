@@ -137,14 +137,14 @@ export class Login extends React.Component {
                           {this.state.connexionMessage}
                         </strong>
                       </MDBCardBody>
-                      <MDBModalFooter className="mx-5 pt-3 mb-1">
+                      {/* <MDBModalFooter className="mx-5 pt-3 mb-1">
                         <p className="font-small grey-text d-flex justify-content-end">
                           Pas encore de compte chez nous ?
                           <Link to="/register">
                             <p className="blue-text ml-1">Créer un compte</p>
                           </Link>
                         </p>
-                      </MDBModalFooter>
+                      </MDBModalFooter> */}
                     </MDBCard>
                   </MDBCol>
                 </MDBRow>

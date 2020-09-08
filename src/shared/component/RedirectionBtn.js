@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
  * 
  */
 const RedirectionBtn = (props) => {
-    console.log(props)
   return (
             <MDBContainer>
             <Link to={ props.route }>

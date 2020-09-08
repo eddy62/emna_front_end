@@ -56,7 +56,6 @@ class UpdateProduit extends Component {
         AxiosCenter.getProduitById(this.state.IdEntity)
             .then((response) => {
                 const produit = response.data;
-                console.log(response.data)
                 this.setState({
                     UpdateProduit: produit,
                     loaded: true,
@@ -78,7 +77,7 @@ class UpdateProduit extends Component {
             .then((response) => {
                 toast.success(
                     <div className="text-center">
-                        <strong>Le produit {this.state.updateProduit.nom} a été mis à jour </strong>
+                        <strong>Le produit a été mis à jour </strong>
                     </div>,
                     { position: "top-right" }
                 );

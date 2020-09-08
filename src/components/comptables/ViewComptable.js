@@ -67,7 +67,6 @@ const ViewComptable = () => {
             setUser(result.data)
         });   
     }
-    
 
     const goBack = () => {
         window.history.back();

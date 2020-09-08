@@ -25,6 +25,18 @@ const UserService = {
   getSocietyId() {
     return cookies.get("societyId");
   },
+
+  isAdmin() {
+    return this.getRole() === "ROLE_ADMIN"
+  },
+
+  isSociety() {
+    return this.getRole() === "ROLE_SOCIETY";
+  },
+
+  isAccountant() {
+    return this.getRole() === "ROLE_ACCOUNTANT";
+  }
 };
 
 export default UserService;

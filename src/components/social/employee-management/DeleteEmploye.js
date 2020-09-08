@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as dateFns from "date-fns";
-import "./style2.scss";
+import "./gestionEmploye.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
 import {
@@ -16,7 +16,7 @@ import {
   MDBRow,
 } from "mdbreact";
 
-class SupprimerEmploye extends Component {
+class DeleteEmploye extends Component {
   constructor(props) {
     super(props);
 
@@ -151,4 +151,4 @@ class SupprimerEmploye extends Component {
   }
 }
 
-export default SupprimerEmploye;
+export default DeleteEmploye;
