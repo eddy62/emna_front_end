@@ -92,7 +92,7 @@ class CreateHeuresSupplementaires extends React.Component {
     submit = (values, actions) => {
         values.annee = this.props.yearSelected
         values.mois = this.props.monthSelected
-        values.employeId = this.props.idEmploye
+        values.employeId = this.props.employeId
 
         AxiosCenter.createHeureSupplementaire(values)
             .then((response) => {

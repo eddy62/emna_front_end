@@ -106,7 +106,6 @@ class CreateAbsence extends React.Component {
         AxiosCenter.getAllTypesAbsence()
             .then((response) => {
                 const list = response.data
-                console.log(list)
                 this.setState({
                     absenceTypesList: list,
                     loaded: true
@@ -136,7 +135,6 @@ class CreateAbsence extends React.Component {
     };
 
     updatePeriod() {
-        console.log("updatePeriod");
         this.state.startPeriod = new Date(new Date()
             .setFullYear(
                 this.props.yearSelected,

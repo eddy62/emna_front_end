@@ -79,7 +79,6 @@ class CreatePrime extends React.Component {
         AxiosCenter.getAllTypePrimes()
             .then((response) => {
                 const list = response.data
-                console.log(list)
                 this.setState(
                     {
                         listeTypePrime: list,
