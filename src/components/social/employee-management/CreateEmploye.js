@@ -24,10 +24,10 @@ const employeSchema = Yup.object().shape({
   matricule: Yup.string()
     .min(6, "Trop court")
     .max(8, "Trop long")
-    .required("Champ obligatoire"),
+    .required("Champ obligatoire - Format 'EMP<num>'"),
   numeroSecuriteSociale: Yup.string("String")
-    .min(15, "Numero non Conforme")
-    .max(15, "Numero non Conforme")
+    .min(15, "Numero non Conforme - 15 Chiffres")
+    .max(15, "Numero non Conforme - 15 Chiffres")
     .required("Champ obligatoire"),
   civilite: Yup.string().required("Champ obligatoire"),
   nomNaissance: Yup.string().min(2, "Trop court").max(20, "Trop long"),
@@ -168,7 +168,7 @@ class CreateEmploye extends React.Component {
           if (response.status === 200) {
             toast.success(
               <div className="text-center">
-                <strong>Employé Crée &nbsp;&nbsp;!</strong>
+                <strong>Employé Enregistré &nbsp;&nbsp;!</strong>
               </div>,
               { position: "top-right" }
             );
@@ -179,7 +179,7 @@ class CreateEmploye extends React.Component {
           console.log(error.response);
           toast.error(
             <div className="text-center">
-              <strong>Employé NON Crée &nbsp;&nbsp;!</strong>
+              <strong>Employé NON Enregistré &nbsp;&nbsp;!</strong>
               <br />
               {error.response.data.status === 400 ? (
                 <small>{error.response.data.title}</small>
@@ -192,7 +192,7 @@ class CreateEmploye extends React.Component {
     } else {
       toast.error(
         <div className="text-center">
-          <strong>Employé NON Crée &nbsp;&nbsp;!</strong>
+          <strong>Employé NON Enregistré &nbsp;&nbsp;!</strong>
           <br />
           <small>Date de Naissance incorrect !</small>
           <br />
