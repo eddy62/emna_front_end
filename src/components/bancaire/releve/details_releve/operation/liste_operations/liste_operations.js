@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Loading from "../../../../../../shared/component/Loading";
 import UserService from "../../../../../../shared/services/UserService";
-import DeletionConfirmationModal from "../../../../../utils/DeletionConfirmationModal";
+import DeletionConfirmationModal from "../../../../../../shared/component/DeletionConfirmationModal";
 import {MDBCard,MDBCardBody,MDBCardTitle,MDBContainer,MDBCol} from "mdbreact";
 import RedirectionBtn from "../../../../../../shared/component/RedirectionBtn";
 

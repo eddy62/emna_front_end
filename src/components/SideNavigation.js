@@ -3,7 +3,7 @@ import {
   MDBSideNavLink,
   MDBSideNavCat,
   MDBSideNavNav,
-  MDBSideNav
+  MDBSideNav,
 } from "mdbreact";
 import AxiosCenter from "../shared/services/AxiosCenter";
 import UserService from "./../shared/services/UserService";
@@ -68,15 +68,8 @@ class SideNavigation extends React.Component {
           style={{ transition: "padding-left .3s" }}
           href="/"
         >
-          <form role="search" className="search-form">
-            <div className="form-group md-form mt-0 pt-1 ripple-parent">
-              <input
-                type="text"
-                placeholder="Rechercher"
-                className="form-control"
-              />
-            </div>
-          </form>
+          <br></br>
+          <br></br>
           {(UserService.getRole() === "ROLE_ACCOUNTANT") |
           (UserService.getRole() === "ROLE_ADMIN") ? (
             <div>

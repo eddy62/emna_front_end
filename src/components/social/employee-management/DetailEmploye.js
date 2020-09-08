@@ -1,10 +1,10 @@
 import React from "react";
 import * as dateFns from "date-fns";
 import { fr } from "date-fns/esm/locale";
-import "./style2.scss";
+import "./gestionEmploye.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import SupprimerEmploye from "./Supprimer_employe";
-import ArchiverEmploye from "./Archive_employe";
+import DeleteEmploye from "./DeleteEmploye";
+import ArchiveEmploye from "./ArchiveEmploye";
 import UserService from "../../../shared/services/UserService";
 import {
   MDBCardTitle,
@@ -287,14 +287,14 @@ class DetailEmploye extends React.Component {
               </div>
               <div>
                 {UserService.getRole() === "ROLE_SOCIETY" &&
-                employe.codeRef === "EMPEND" ? (
-                  <SupprimerEmploye employe={employe} />
-                ) : null}
+                  employe.codeRef === "EMPEND" ? (
+                    <DeleteEmploye employe={employe} />
+                  ) : null}
 
                 {UserService.getRole() === "ROLE_SOCIETY" &&
-                employe.codeRef !== "EMPEND" ? (
-                  <ArchiverEmploye employe={employe} />
-                ) : null}
+                  employe.codeRef !== "EMPEND" ? (
+                    <ArchiveEmploye employe={employe} />
+                  ) : null}
               </div>
               <div>
                 <MDBBtn

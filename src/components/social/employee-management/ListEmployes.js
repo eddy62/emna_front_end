@@ -1,7 +1,7 @@
 import React from "react";
 import * as dateFns from "date-fns";
 import { fr } from "date-fns/esm/locale";
-import "./style2.scss";
+import "./gestionEmploye.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
 import Loading from "../../../shared/component/Loading";
@@ -217,6 +217,7 @@ class ListEmployes extends React.Component {
               }
             ),
             typeContrat: employe.intituleTypeContrat,
+            libelle: employe.libelle,
             clickEvent: () => {
               this.props.history.push("/detailEmploye/" + employe.id);
             },
