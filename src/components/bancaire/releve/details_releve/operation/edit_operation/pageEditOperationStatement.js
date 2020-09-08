@@ -46,7 +46,6 @@ class EditOperation extends React.Component {
     this.state = {
       loaded: false,
       operation: {},
-      roleUser: UserService.getRole()
     };
   }
 
@@ -55,12 +54,11 @@ class EditOperation extends React.Component {
   };
 
   isTypeSelected = (value) => {
-    if (value == this.state.type) return "selected";
+    if (value === this.state.type) return "selected";
   }
 
   componentDidMount() {
-    if (this.state.roleUser === "ROLE_SOCIETY" ||
-        this.state.roleUser === "ROLE_ADMIN") {
+    if (UserService.isAdmin() || UserService.isSociety()) {
       const idOperation = this.props.match.params.id;
       AxiosCenter.getOperationById(idOperation)
       .then((response) => {
@@ -89,7 +87,7 @@ class EditOperation extends React.Component {
       <MDBContainer>
         <div>
         <MDBCardTitle tag="h1">{lexique.title}</MDBCardTitle>
-        <hr></hr>
+        <hr/>
         <Formik
               onSubmit            = {this.submit}
               initialValues       = {this.getInitialValues()}
