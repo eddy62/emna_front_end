@@ -1,6 +1,5 @@
 import React from "react";
-//import "./style2.scss";
-import {Formik, Form, Field, ErrorMessage, setNestedObjectValues} from 'formik';
+import {Formik, Form, Field, ErrorMessage} from 'formik';
 import * as Yup from "yup";
 import Loading from "../../../../../shared/component/Loading";
 import {
@@ -84,17 +83,8 @@ class CreateAvanceRappelSalaire extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            employeId: this.props.employeId,
-            minDate: new Date(new Date()
-                .setFullYear(2020, // TODO this.props.yearSelected
-                    9 - 1, // TODO this.props.monthSelected */ /* January = 0, December = 11 */
-                    1))
-                .toISOString().slice(0, 10), // TODO Format YYYY-MM-DD
-            maxDate: new Date(new Date()
-                .setFullYear(2020, // TODO this.props.yearSelected
-                    9, // TODO this.props.monthSelected
-                    0)) /* To get the last day of the last month */
-                .toISOString().slice(0, 10),
+            minDate: "",
+            maxDate: "",
             loaded: false,
         };
     }
@@ -102,8 +92,6 @@ class CreateAvanceRappelSalaire extends React.Component {
     componentDidMount() {
         this.setState({
             loaded: true,
-            minDate: "",
-            maxDate: ""
         });
     }
 
@@ -114,7 +102,7 @@ class CreateAvanceRappelSalaire extends React.Component {
 
         AxiosCenter.createAvanceRappelSalaire(values)
             .then((response) => {
-                const avanceRappelSalaire = response.data
+                const AVANCERAPPELSALAIRE = response.data
                 notify("success", values.type);
                 actions.resetForm();
             }).catch((error) => {
