@@ -1,11 +1,18 @@
-import React, { Component } from "react";
-import { Formik, Field } from "formik";
+import React, {Component} from "react";
 import "./../style2.scss";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
-import { MDBCardTitle, MDBCardHeader, MDBBtn, MDBContainer, MDBRow, MDBCard, MDBCollapseHeader, MDBCollapse, MDBCardBody } from "mdbreact";
-import Component1 from "./Component1";
-import Absence from "./Absence";
+import {
+    MDBBtn,
+    MDBCard,
+    MDBCardBody,
+    MDBCardHeader,
+    MDBCardTitle,
+    MDBCollapse,
+    MDBCollapseHeader,
+    MDBContainer,
+    MDBRow
+} from "mdbreact";
 import CreateAbsence from "./children/CreateAbsence";
 import CreatePrime from "./children/CreatePrime";
 import CreateAvanceRappelSalaire from "./children/CreateAvanceRappelSalaire";
