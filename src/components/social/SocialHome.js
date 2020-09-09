@@ -1,18 +1,18 @@
 import React from "react";
-import "./style1.scss";
-import { Link } from "react-router-dom";
+import "./social.scss";
+import {Link} from "react-router-dom";
 import AxiosCenter from "../../shared/services/AxiosCenter";
 import UserService from "../../shared/services/UserService";
 import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCardHeader,
-  MDBBtn,
-  MDBContainer,
-  MDBRow,
-  MDBCol,
+    MDBBtn,
+    MDBCard,
+    MDBCardBody,
+    MDBCardHeader,
+    MDBCardText,
+    MDBCardTitle,
+    MDBCol,
+    MDBContainer,
+    MDBRow,
 } from "mdbreact";
 
 class AccueilSocial extends React.Component {
@@ -151,71 +151,71 @@ class AccueilSocial extends React.Component {
                 </MDBRow>
                 <br />
                 {(UserService.getRole() === "ROLE_SOCIETY") |
-                (UserService.getRole() === "ROLE_ACCOUNTANT") ? (
-                  <MDBRow around between>
-                    <MDBCol md="3" className="mb-3">
-                      <MDBCard className="cadre1">
-                        <MDBCardBody>
-                          <MDBCardTitle tag="h4">{title3}</MDBCardTitle>
-                          <br />
-                          <MDBCardText>
-                            Enregistrement et modification des variables de
-                            paies des Employés
+                  (UserService.getRole() === "ROLE_ACCOUNTANT") ? (
+                    <MDBRow around between>
+                      <MDBCol md="3" className="mb-3">
+                        <MDBCard className="cadre1">
+                          <MDBCardBody>
+                            <MDBCardTitle tag="h4">{title3}</MDBCardTitle>
+                            <br />
+                            <MDBCardText>
+                              Enregistrement et modification des variables de
+                              paies des Employés
                           </MDBCardText>
-                          <br />
-                          <div className="boutton">
-                            <MDBBtn
-                              color="teal accent-3"
-                              rounded
-                              size="sm"
-                              onClick={() => {
-                                this.props.history.push(
-                                  "/socialHome/" + this.state.societe.id
-                                );
-                              }}
-                            >
-                              Gerer
+                            <br />
+                            <div className="boutton">
+                              <MDBBtn
+                                color="teal accent-3"
+                                rounded
+                                size="sm"
+                                onClick={() => {
+                                  this.props.history.push(
+                                    "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/" + this.state.societe.id
+                                  );
+                                }}
+                              >
+                                Gerer
                             </MDBBtn>
-                          </div>
-                        </MDBCardBody>
-                      </MDBCard>
-                    </MDBCol>
-                    <MDBCol md="3" className="mb-3">
-                      <MDBCard className="cadre1">
-                        <MDBCardBody>
-                          <MDBCardTitle tag="h4">{title4}</MDBCardTitle>
-                          <br />
-                          <MDBCardText>
-                            Consultation et Téléchargement des Fiches de Paie
-                            des Employés
+                            </div>
+                          </MDBCardBody>
+                        </MDBCard>
+                      </MDBCol>
+                      <MDBCol md="3" className="mb-3">
+                        <MDBCard className="cadre1">
+                          <MDBCardBody>
+                            <MDBCardTitle tag="h4">{title4}</MDBCardTitle>
+                            <br />
+                            <MDBCardText>
+                              Consultation et Téléchargement des Fiches de Paie
+                              des Employés
                           </MDBCardText>
-                          <br />
-                          <div className="boutton">
-                            <MDBBtn
-                              color="teal accent-3"
-                              rounded
-                              size="sm"
-                              onClick={() => {
-                                this.props.history.push(
-                                  "/socialHome/" + this.state.societe.id
-                                );
-                              }}
-                            >
-                              Gerer
+                            <br />
+                            <div className="boutton">
+                              <MDBBtn
+                                color="teal accent-3"
+                                rounded
+                                size="sm"
+                                onClick={() => {
+                                  this.props.history.push(
+                                    "/socialHome/" + this.state.societe.id
+                                  );
+                                }}
+                              >
+                                Gerer
                             </MDBBtn>
-                          </div>
-                        </MDBCardBody>
-                      </MDBCard>
-                    </MDBCol>
-                  </MDBRow>
-                ) : null}
+                            </div>
+                          </MDBCardBody>
+                        </MDBCard>
+                      </MDBCol>
+                    </MDBRow>
+                  ) : null}
               </div>
               <div className="titre">
                 <hr />
               </div>
               <Link to="/">
                 <MDBBtn color="teal accent-3" rounded size="sm">
-                  Retour à l'Acceuil
+                  Retour à l'Accueil
                 </MDBBtn>
               </Link>
             </MDBContainer>

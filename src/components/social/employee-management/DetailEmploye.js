@@ -1,18 +1,13 @@
 import React from "react";
-import "./style2.scss";
+import * as dateFns from "date-fns";
+import {fr} from "date-fns/esm/locale";
+import "./gestionEmploye.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import SupprimerEmploye from "./Supprimer_employe";
-import ArchiverEmploye from "./Archive_employe";
+import DeleteEmploye from "./DeleteEmploye";
+import ArchiveEmploye from "./ArchiveEmploye";
 import UserService from "../../../shared/services/UserService";
-import {
-  MDBCardTitle,
-  MDBCardHeader,
-  MDBContainer,
-  MDBCard,
-  MDBBtn,
-  MDBRow,
-  MDBCardBody,
-} from "mdbreact";
+import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBContainer, MDBRow,} from "mdbreact";
+import Loading from "../../../shared/component/Loading";
 
 class DetailEmploye extends React.Component {
   constructor(props) {
@@ -20,6 +15,7 @@ class DetailEmploye extends React.Component {
     this.state = {
       idSociete: UserService.getSocietyId,
       employe: {},
+      loaded: false,
     };
   }
 
@@ -30,7 +26,7 @@ class DetailEmploye extends React.Component {
       .then((response) => {
         const employe = response.data;
         console.log(employe);
-        this.setState({ employe: employe });
+        this.setState({ employe: employe, loaded: true });
       })
       .catch((error) => {
         console.log(error);
@@ -38,10 +34,17 @@ class DetailEmploye extends React.Component {
   }
 
   render() {
+    if (!this.state.loaded) return <Loading />;
     const title = "Gestion Social";
     const title1 = "Information Employé";
     const employe = this.state.employe;
     const entreprise = employe.raisonSociale;
+    const date = employe.dateNaissance;
+    console.log(date);
+    const newdate = new Date(date);
+    console.log(newdate);
+    const date2 = dateFns.format(newdate, "dd-MM-yyyy", { locale: fr });
+    console.log(date2);
     return (
       <div className="App">
         <div className="employes">
@@ -97,7 +100,13 @@ class DetailEmploye extends React.Component {
                     <div className="ligne3">
                       <p className="elt1">
                         <label className="gras">Né(e) le : </label>&nbsp;
-                        {employe.dateNaissance}
+                        {dateFns.format(
+                          new Date(employe.dateNaissance),
+                          "dd-MM-yyyy",
+                          {
+                            locale: fr,
+                          }
+                        )}
                       </p>
                       <p className="elt">
                         <label className="gras">à : </label>&nbsp;
@@ -186,12 +195,24 @@ class DetailEmploye extends React.Component {
                       </p>
                       <p className="elt">
                         <label className="gras">Date Embauche : </label>&nbsp;
-                        {employe.dateEmbauche}
+                        {dateFns.format(
+                          new Date(employe.dateEmbauche),
+                          "dd-MM-yyyy",
+                          {
+                            locale: fr,
+                          }
+                        )}
                       </p>
                       <p className="elt">
                         <label className="gras">Date Fin Contrat : </label>
                         &nbsp;
-                        {employe.dateSortie}
+                        {dateFns.format(
+                          new Date(employe.dateSortie),
+                          "dd-MM-yyyy",
+                          {
+                            locale: fr,
+                          }
+                        )}
                       </p>
                     </div>
                     <div className="ligne2">
@@ -258,14 +279,14 @@ class DetailEmploye extends React.Component {
               </div>
               <div>
                 {UserService.getRole() === "ROLE_SOCIETY" &&
-                employe.codeRef === "EMPEND" ? (
-                  <SupprimerEmploye employe={employe} />
-                ) : null}
+                  employe.codeRef === "EMPEND" ? (
+                    <DeleteEmploye employe={employe} />
+                  ) : null}
 
                 {UserService.getRole() === "ROLE_SOCIETY" &&
-                employe.codeRef !== "EMPEND" ? (
-                  <ArchiverEmploye employe={employe} />
-                ) : null}
+                  employe.codeRef !== "EMPEND" ? (
+                    <ArchiveEmploye employe={employe} />
+                  ) : null}
               </div>
               <div>
                 <MDBBtn

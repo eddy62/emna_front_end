@@ -1,23 +1,13 @@
 import React from "react";
 import "./style.scss";
-import { Formik } from "formik";
+import {Formik} from "formik";
 import AxiosCenter from "../../shared/services/AxiosCenter";
-import { withRouter } from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import TokenService from "../../shared/services/TokenService";
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBInput,
-  MDBBtn,
-  MDBModalFooter,
-} from "mdbreact";
+import {MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
 import * as Yup from "yup";
 import UserService from "../../shared/services/UserService";
 import ErrorMessForm from "./../../shared/component/ErrorMessForm";
-import { Link } from "react-router-dom";
 
 const SignupSchema = Yup.object().shape({
   username: Yup.string().required("Veuillez renseigner votre Login"),
@@ -137,14 +127,14 @@ export class Login extends React.Component {
                           {this.state.connexionMessage}
                         </strong>
                       </MDBCardBody>
-                      <MDBModalFooter className="mx-5 pt-3 mb-1">
+                      {/* <MDBModalFooter className="mx-5 pt-3 mb-1">
                         <p className="font-small grey-text d-flex justify-content-end">
                           Pas encore de compte chez nous ?
                           <Link to="/register">
                             <p className="blue-text ml-1">Créer un compte</p>
                           </Link>
                         </p>
-                      </MDBModalFooter>
+                      </MDBModalFooter> */}
                     </MDBCard>
                   </MDBCol>
                 </MDBRow>

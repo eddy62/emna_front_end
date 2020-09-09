@@ -1,18 +1,20 @@
 import React from "react";
-import "./style2.scss";
+import * as dateFns from "date-fns";
+import {fr} from "date-fns/esm/locale";
+import "./gestionEmploye.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
 import Loading from "../../../shared/component/Loading";
 import {
-  MDBCardTitle,
-  MDBCardHeader,
-  MDBContainer,
-  MDBBtn,
-  MDBTable,
-  MDBTableBody,
-  MDBTableHead,
-  MDBRow,
-  MDBCol,
+    MDBBtn,
+    MDBCardHeader,
+    MDBCardTitle,
+    MDBCol,
+    MDBContainer,
+    MDBRow,
+    MDBTable,
+    MDBTableBody,
+    MDBTableHead,
 } from "mdbreact";
 
 class ListEmployes extends React.Component {
@@ -74,6 +76,11 @@ class ListEmployes extends React.Component {
             field: "typeContrat",
             sort: "asc",
           },
+          {
+            label: "Statut",
+            field: "libelle",
+            sort: "asc",
+          },
         ];
 
         let rows = [];
@@ -88,9 +95,22 @@ class ListEmployes extends React.Component {
               matricule: employe.matricule,
               nom: employe.nomUsage,
               prenom: employe.prenom,
-              dateEmbauche: employe.dateEmbauche,
-              dateSortie: employe.dateSortie,
+              dateEmbauche: dateFns.format(
+                new Date(employe.dateEmbauche),
+                "dd-MM-yyyy",
+                {
+                  locale: fr,
+                }
+              ),
+              dateSortie: dateFns.format(
+                new Date(employe.dateSortie),
+                "dd-MM-yyyy",
+                {
+                  locale: fr,
+                }
+              ),
               typeContrat: employe.codeTypeContrat,
+              libelle: employe.libelle,
               clickEvent: () => {
                 this.props.history.push("/detailEmploye/" + employe.id);
               },
@@ -182,9 +202,22 @@ class ListEmployes extends React.Component {
             matricule: employe.matricule,
             nom: employe.nomUsage,
             prenom: employe.prenom,
-            dateEmbauche: employe.dateEmbauche,
-            dateSortie: employe.dateSortie,
+            dateEmbauche: dateFns.format(
+              new Date(employe.dateEmbauche),
+              "dd-MM-yyyy",
+              {
+                locale: fr,
+              }
+            ),
+            dateSortie: dateFns.format(
+              new Date(employe.dateSortie),
+              "dd-MM-yyyy",
+              {
+                locale: fr,
+              }
+            ),
             typeContrat: employe.intituleTypeContrat,
+            libelle: employe.libelle,
             clickEvent: () => {
               this.props.history.push("/detailEmploye/" + employe.id);
             },

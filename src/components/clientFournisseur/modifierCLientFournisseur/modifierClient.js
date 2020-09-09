@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
-import { Formik, Field, ErrorMessage } from "formik";
+import React, {Component} from 'react';
+import {ErrorMessage, Field, Formik} from "formik";
 import * as Yup from "yup"
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import { Link } from 'react-router-dom';
-import { MDBBtn, MDBContainer, MDBCardHeader, MDBCardTitle, MDBInput } from "mdbreact";
+import {Link} from 'react-router-dom';
+import {MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput} from "mdbreact";
+import {toast} from "react-toastify";
 
 const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
@@ -50,10 +51,23 @@ class ModifierClient extends Component {
     submit = (values, actions) => {
         AxiosCenter.updateClientFournisseur(values)
             .then((response) => {
+                toast.success(
+                    <div className="text-center">
+                        <strong>Le client {this.state.updateClient.nom} a été mis à jour </strong>
+                    </div>,
+                    { position: "top-right" }
+                );
                 this.props.history.push("/clientFournisseur/detail/" + response.data.id);
             })
             .catch((error) => {
                 console.log(error);
+                toast.error(
+                    <div className="text-center">
+                        <strong>Le Client {this.state.updateClient.nom} n'a pas été mis à jour&nbsp;&nbsp;!</strong>
+                        <br />
+                    </div>,
+                    { position: "top-right" }
+                );
             });
         actions.setSubmitting(true);
     }
@@ -65,16 +79,21 @@ class ModifierClient extends Component {
             .min(3, "Le nom ne peut contient moins que 3 caractères")
             .max(20, "Le nom ne peut dépasser 20 caractères ")
             .required("Le champ est obligatoire"),
-        siren: Yup.number().required("Le champ est obligatoire"),
+        siren: Yup.string()
+            .matches(/^[0-9]+$/, "Siren doit être composé uniquement de chiffres").required("Le champ est obligatoire").min(9, 'Doit contenir exactement 9 chiffres')
+            .max(9, 'Doit contenir exactement 9 chiffres'),
         email: Yup.string()
             .email("L'adress mail doit être valide")
             .required("Le champ est obligatoire"),
-        telephone: Yup.number("Format non conforme").required("Le champ est obligatoire"),
-        numeroRue: Yup.number().required("Le champ est obligatoire"),
+        telephone: Yup.string()
+            .matches(/^[0-9]+$/, "Telephone doit être composé uniquement de chiffres").required("Le champ est obligatoire").min(10, 'Doit contenir exactement 10 chiffres')
+            .max(10, 'Doit contenir exactement 10 chiffres'),
+        numeroRue: Yup.string()
+            .matches(/^[0-9]+$/, "Numero doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
         nomRue: Yup.string().required("Le champ est obligatoire"),
-        codePostal: Yup.string().required("Le champ est obligatoire"),
-        ville: Yup.string().required("Le champ est obligatoire"),
-        pays: Yup.string().required("Le champ est obligatoire"),
+        codePostal: Yup.string().matches(/^[a-zA-Z0-9\s]+$/, "Code postal invalide").required("Le champ est obligatoire"),
+        ville: Yup.string().matches(/^[a-zA-Zéçèùàêû\s]+$/, "Ville doit être composé uniquement de littres").required("Le champ est obligatoire"),
+        pays: Yup.string().matches(/^[a-zA-Zéçèùàêû\s]+$/, "Pays doit être composé uniquement de littres").required("Le champ est obligatoire"),
     });
     render() {
 

@@ -1,18 +1,16 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import React, {Component} from "react";
+import {BrowserRouter as Router} from "react-router-dom";
 
 import {
-  MDBNavbar,
-  MDBNavbarBrand,
-  MDBNavbarNav,
-  MDBNavItem,
-  MDBNavLink,
-  MDBIcon,
-  MDBDropdown,
-  MDBDropdownToggle,
-  MDBDropdownMenu,
-  MDBDropdownItem,
-  MDBBadge,
+    MDBBadge,
+    MDBDropdown,
+    MDBDropdownItem,
+    MDBDropdownMenu,
+    MDBDropdownToggle,
+    MDBIcon,
+    MDBNavbar,
+    MDBNavbarBrand,
+    MDBNavbarNav,
 } from "mdbreact";
 
 class TopNavigation extends Component {
@@ -106,7 +104,7 @@ class TopNavigation extends Component {
                 </MDBDropdownItem>
               </MDBDropdownMenu>
             </MDBDropdown>
-            <MDBNavItem>
+            {/* <MDBNavItem>
               <MDBNavLink to="#">
                 <MDBIcon icon="envelope" />
                 <span className="d-none d-md-inline ml-1">Contact</span>
@@ -117,17 +115,17 @@ class TopNavigation extends Component {
                 <MDBIcon icon="comments" />
                 <span className="d-none d-md-inline ml-1">Support</span>
               </MDBNavLink>
-            </MDBNavItem>
+            </MDBNavItem> */}
             <MDBDropdown>
               <MDBDropdownToggle nav caret>
                 <MDBIcon icon="user" />{" "}
-                <span className="d-none d-md-inline">Profile</span>
+                <span className="d-none d-md-inline">Profil</span>
               </MDBDropdownToggle>
               <MDBDropdownMenu right style={{ minWidth: "200px" }}>
+                <MDBDropdownItem href="#!">Mon compte</MDBDropdownItem>
                 <MDBDropdownItem onClick={this.props.logout}>
-                  Log Out
+                  Se déconnecter
                 </MDBDropdownItem>
-                <MDBDropdownItem href="#!">My Account</MDBDropdownItem>
               </MDBDropdownMenu>
             </MDBDropdown>
           </MDBNavbarNav>

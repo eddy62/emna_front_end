@@ -1,29 +1,36 @@
 import AxiosCenter from "../../../../../../shared/services/AxiosCenter";
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Loading from "../../../../../../shared/component/Loading";
-import DeletionConfirmationModal from "../../../../../utils/DeletionConfirmationModal";
+import UserService from "../../../../../../shared/services/UserService";
+import DeletionConfirmationModal from "../../../../../../shared/component/DeletionConfirmationModal";
+import {MDBCard, MDBCardBody, MDBCardTitle, MDBCol, MDBContainer} from "mdbreact";
+import RedirectionBtn from "../../../../../../shared/component/RedirectionBtn";
 
-import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBContainer,
-  MDBCol,
-} from "mdbreact";
 export default class ListeOperations extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loaded: false,
       operations: [],
+      roleUser: UserService.getRole(),
+      isReleveUnvalid: false
     };
   }
+
   componentDidMount() {
     AxiosCenter.getOperationByReleveId(this.props.releveId)
       .then((res) => {
         const operations = res.data;
         this.setState({ operations, loaded: true });
+      })
+      .catch((err) => console.log(err));
+
+      AxiosCenter.getReleveById(this.props.releveId)
+      .then((res) => {
+        const releve = res.data;
+        const isReleveUnvalid = releve.etatReleveId !== 2;
+        this.setState({ isReleveUnvalid, loaded: true });
       })
       .catch((err) => console.log(err));
   }
@@ -33,11 +40,11 @@ export default class ListeOperations extends React.Component {
   };
 
   listerLesOperations(props) {
-    const Operations = props.operations.map((operation, index) => {
+    const Operations = props.operations.map((operation,index) => {
       return (
         <tr key={operation.id} className="alert alert-success" role="alert">
           <td> {operation.date}</td>
-          <td>{operation.description} </td>
+          <td> {operation.description} </td>
           <td> {operation.type}</td>
           <td> {operation.solde}</td>
           <td>
@@ -46,8 +53,22 @@ export default class ListeOperations extends React.Component {
               voir le détail
             </Link>
           </td>
-          <td>          
-            <DeletionConfirmationModal deleteOperation={ () => {props.deleteOperation(operation.id)} } />
+          <td>
+            { (props.roleUser === "ROLE_SOCIETY" || props.roleUser === "ROLE_ADMIN") &&
+              !props.isReleveUnvalid &&
+              <RedirectionBtn
+                route ={"/editoperation/" + operation.id} 
+                msg   = "Modifier"
+                color ="default-color"
+              />
+            }
+          </td>
+        <td>
+          {(props.roleUser === "ROLE_SOCIETY" || props.roleUser === "ROLE_ADMIN") &&
+          <DeletionConfirmationModal deleteOperation={() => {
+            props.deleteOperation(operation.id)
+          }}/>
+          }
           </td>
         </tr>
       );
@@ -87,6 +108,7 @@ export default class ListeOperations extends React.Component {
         <this.listerLesOperations 
           operations={this.state.operations} 
           deleteOperation={this.deleteOperation}
+          roleUser={this.state.roleUser}
         />
       );  
     } else {

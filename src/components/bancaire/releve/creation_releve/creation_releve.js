@@ -1,9 +1,10 @@
 import React from "react";
-import { Formik } from "formik";
-import { Link } from "react-router-dom";
+import {Formik} from "formik";
+import {Link} from "react-router-dom";
 
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
-import { MDBBtn } from "mdbreact";
+import {MDBBtn} from "mdbreact";
+
 class CreationReleve extends React.Component {
   submit = (values) => {
     AxiosCenter.postReleve(values)

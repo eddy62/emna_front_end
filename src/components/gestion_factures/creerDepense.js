@@ -1,5 +1,5 @@
 import React from "react";
-import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
+import {ErrorMessage, Field, FieldArray, Form, Formik} from "formik";
 
 class CreerDepense extends React.Component {
   state = {

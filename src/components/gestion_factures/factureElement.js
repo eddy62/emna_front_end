@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter as Link } from "react-router-dom";
+import {BrowserRouter as Link} from "react-router-dom";
+
 class FactureElement extends React.Component {
   render() {
     return (

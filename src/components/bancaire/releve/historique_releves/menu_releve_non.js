@@ -1,15 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardHeader,
-  MDBBtn,
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-} from "mdbreact";
+import {Link} from "react-router-dom";
+import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer, MDBRow,} from "mdbreact";
 
 export class MenuReleveNon extends React.Component {
   render() {
