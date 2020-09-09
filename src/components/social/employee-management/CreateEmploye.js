@@ -108,6 +108,17 @@ const ComposantNumber = ({ field, form: { touched, errors }, ...props }) => (
     {...field}
   />
 );
+const ComposantNumberDecimal = ({ field, form: { touched, errors }, ...props }) => (
+  <MDBInput
+    label={props.label}
+    min="0.01"
+    step="0.01"
+    outline
+    type="number"
+    {...props}
+    {...field}
+  />
+);
 
 class CreateEmploye extends React.Component {
   constructor(props) {
@@ -771,7 +782,7 @@ class CreateEmploye extends React.Component {
                               <Field
                                 name="salaireHoraire"
                                 label="Salaire Horaire*"
-                                component={ComposantInput}
+                                component={ComposantNumberDecimal}
                               />
                               <ErrorMessForm
                                 error={errors.salaireHoraire}
@@ -783,7 +794,7 @@ class CreateEmploye extends React.Component {
                               <Field
                                 name="salaireBrutMensuelle"
                                 label="Salaire Mensuel*"
-                                component={ComposantInput}
+                                component={ComposantNumberDecimal}
                               />
                               <ErrorMessForm
                                 error={errors.salaireBrutMensuelle}
@@ -795,7 +806,7 @@ class CreateEmploye extends React.Component {
                               <Field
                                 name="heuresMensuelle"
                                 label="Heures Mensuelles*"
-                                component={ComposantInput}
+                                component={ComposantNumberDecimal}
                               />
                               <ErrorMessForm
                                 error={errors.heuresMensuelle}
