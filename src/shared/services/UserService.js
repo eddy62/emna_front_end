@@ -1,4 +1,5 @@
 import Cookies from "universal-cookie";
+
 const cookies = new Cookies();
 
 const UserService = {
@@ -25,6 +26,18 @@ const UserService = {
   getSocietyId() {
     return cookies.get("societyId");
   },
+
+  isAdmin() {
+    return this.getRole() === "ROLE_ADMIN"
+  },
+
+  isSociety() {
+    return this.getRole() === "ROLE_SOCIETY";
+  },
+
+  isAccountant() {
+    return this.getRole() === "ROLE_ACCOUNTANT";
+  }
 };
 
 export default UserService;

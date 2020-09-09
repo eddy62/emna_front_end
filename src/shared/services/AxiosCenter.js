@@ -17,6 +17,7 @@ const AxiosCenter = {
     });
   },
 
+
   finishPasswordReset(values) {
     return ApiBackEnd({
       method: "post",
@@ -24,6 +25,7 @@ const AxiosCenter = {
       data: values,
     });
   },
+
 
   //gestion clientFournisseur
   getAllClientFournisseurBySociete(id) {
@@ -103,6 +105,60 @@ const AxiosCenter = {
     });
   },
 
+  getAllTypesAbsence() {
+    return ApiBackEnd({
+      method: "GET",
+      url: "/type-absences",
+    });
+  },
+
+  createAbsence(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/absences",
+      data: values,
+    });
+  },
+
+  getAllTypePrimes() {
+    return ApiBackEnd({
+      method: "GET",
+      url: "/type-primes",
+    });
+  },
+
+  createPrime(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/primes",
+      data: values,
+    });
+  },
+
+  createHeureSupplementaire(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: `/heures-supplementaires`,
+      data: values,
+    })
+  },
+
+  createAvanceRappelSalaire(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: '/avance-rappel-salaires',
+      data: values,
+    })
+  },
+
+  createNoteDeFrais(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: '/note-de-frais',
+      data: values
+    })
+  },
+
   getWrapperEmploye(id) {
     return ApiBackEnd({
       method: "get",
@@ -168,6 +224,14 @@ const AxiosCenter = {
       data: values,
     });
   },
+
+  getOneWrapperVariablesDePaie(idEmploye, annee, mois) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/wrappervariablespaie/employe/${idEmploye}/annee/${annee}/mois/${mois}`,
+    });
+  },
+  
   //fin Gestion Social
 
   getReleve() {
@@ -180,6 +244,12 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "get",
       url: `/releve/etat/${idEtat}/societe/${idSociete}`,
+    });
+  },
+  getReleveByEtat(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/releve/etat/${id}`,
     });
   },
 
@@ -224,6 +294,14 @@ const AxiosCenter = {
       data: values,
     });
   },
+  
+  updateOperation(values) {
+    return ApiBackEnd({
+      method: "put",
+      url: `/operations`,
+      data: values,
+    });
+  },
 
   deleteOperation(id) {
     return ApiBackEnd({
@@ -264,6 +342,14 @@ const AxiosCenter = {
       url: `/releves/${id}`,
     });
   },
+
+  validateReleve(id) {
+    return ApiBackEnd({
+      method: "put",
+      url: `/releve/${id}`,
+    });
+  },
+
   getUser(id) {
     return ApiBackEnd({
       method: "get",
@@ -449,13 +535,21 @@ const AxiosCenter = {
       url: `facturesvente/societe/${id}`,
     });
   },
+
+  getInvoicesByStatement(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/factures/relevé/${id}`
+    })
+  },
+
   createLigneProduit(values) {
     return ApiBackEnd({
       method: "post",
       url: "/ligne-produits",
       data: values,
     });
-  }
+  },
 };
 
 export default AxiosCenter;

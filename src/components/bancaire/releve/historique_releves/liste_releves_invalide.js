@@ -1,26 +1,22 @@
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Loading from "../../../../shared/component/Loading";
-import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardHeader,
-  MDBContainer,
-  MDBBtn,
-  MDBCol,
-} from "mdbreact";
+import ReleveConstants from "../releve_constants"
+import UserService from '../../../../shared/services/UserService';
+import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer,} from "mdbreact";
+
 export default class ListeRelevesInvalide extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loaded: false,
       releves: [],
+      societyId: UserService.getSocietyId()
     };
   }
   componentDidMount() {
-    AxiosCenter.getReleveByEtatAndSociety(1, 3)
+    AxiosCenter.getReleveByEtatAndSociety(ReleveConstants.RELEVE_ETAT_INVALIDE, this.state.societyId)
       .then((res) => {
         const releves = res.data;
         this.setState({ releves, loaded: true });

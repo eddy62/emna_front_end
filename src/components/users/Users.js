@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 import Pagination from "../pages/Pagination";
 import Swal from "sweetalert2";
 import AxiosCenter from "../../shared/services/AxiosCenter";
+
 const Users = () => {
 
     const [users, setUser] = useState([]);

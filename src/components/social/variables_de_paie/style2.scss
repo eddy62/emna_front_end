@@ -1,0 +1,19 @@
+.content{
+    height: auto;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.cardContent{
+    width: 75%;
+}
+
+.btnContent {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.btnContainer {
+    align-items: center;
+}
