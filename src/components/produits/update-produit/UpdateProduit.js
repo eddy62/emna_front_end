@@ -24,7 +24,9 @@ const ComposantSelect = ({ field, form: { touched, errors }, ...props }) => (
     <div >
         <label> {props.label} </label>
         <select className=" form-control browser-default custom-select" name="unite"  {...props} {...field} >
-            {/* <option value="pc">PC</option> */}
+            <option value="" disabled selected>
+                Unite*
+                                </option>
             <option value="h">H</option>
             <option value="j">J</option>
             <option value="m">M</option>

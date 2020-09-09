@@ -1,11 +1,11 @@
 import React from "react";
-import {ErrorMessage, Field, Formik} from "formik";
+import { ErrorMessage, Field, Formik } from "formik";
 import * as Yup from "yup";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import {Link} from "react-router-dom";
-import {MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput,} from "mdbreact";
+import { Link } from "react-router-dom";
+import { MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput, } from "mdbreact";
 import UserService from '../../../shared/services/UserService';
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 
 const ComposantErreur = (props) => (
@@ -26,7 +26,7 @@ const ComposantSelect = ({ field, form: { touched, errors }, ...props }) => (
     <div >
         <label> {props.label} </label>
         <select className=" form-control browser-default custom-select" name="unite"  {...props} {...field} >
-            {/* <option value="pc">PC</option> */}
+            <option value="" disabled selected> Unité *</option>
             <option value="h">H</option>
             <option value="j">J</option>
             <option value="m">M</option>
@@ -127,7 +127,7 @@ class AddProduit extends React.Component {
                                         type="numbre"
                                         component={ComposantErreur}
                                     />
-                                    <Field name="unite" label="Unité" component={ComposantSelect} />
+                                    <Field name="unite" component={ComposantSelect} />
                                     <ErrorMessage name="unite" component={ComposantErreur} />
 
                                     <Field name="prix" label="Prix" component={ComposantInput} />

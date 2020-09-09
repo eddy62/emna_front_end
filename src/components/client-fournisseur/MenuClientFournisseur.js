@@ -1,15 +1,15 @@
-import React, {Component} from "react";
-import {Link} from "react-router-dom";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import {
-    MDBBtn,
-    MDBCard,
-    MDBCardBody,
-    MDBCardHeader,
-    MDBCardText,
-    MDBCardTitle,
-    MDBCol,
-    MDBContainer,
-    MDBRow
+  MDBBtn,
+  MDBCard,
+  MDBCardBody,
+  MDBCardHeader,
+  MDBCardText,
+  MDBCardTitle,
+  MDBCol,
+  MDBContainer,
+  MDBRow
 } from "mdbreact";
 import AxiosCenter from "../../shared/services/AxiosCenter";
 import UserService from '../../shared/services/UserService';
@@ -74,7 +74,7 @@ class MenuClientFournisseur extends Component {
             <div className="justify-content-center container-fluid align-items-center">
               <form className="form-inline ">
                 <input value={this.state.value}
-                  onChange={e => this.onChangeHandler(e)} className="form-control form-control-sm mr-3 w-75" type="text" placeholder="Raison sociale??"
+                  onChange={e => this.onChangeHandler(e)} className="form-control form-control-sm mr-3 w-75" type="text" placeholder="Trouver un client fournisseur par son nom!"
                   aria-label="Search" />
                 <i className="fas fa-search" aria-hidden="true"></i>
               </form>
@@ -83,11 +83,12 @@ class MenuClientFournisseur extends Component {
         </div>
         <div>
           <br></br>
-
           {this.state.clientFournisseur ? (
-            <Link to={`/clientFournisseur/detail/${this.state.clientFournisseur.id}`}>
+            <div>        <Link to={`/clientFournisseur/detail/${this.state.clientFournisseur.id}`}>
               <span>{this.state.clientFournisseur.nom}</span>
             </Link>
+              <br></br>
+            </div>
           ) : (null)}
 
           <br></br>
