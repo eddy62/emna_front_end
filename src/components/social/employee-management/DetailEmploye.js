@@ -1,12 +1,12 @@
 import React from "react";
 import * as dateFns from "date-fns";
-import {fr} from "date-fns/esm/locale";
+import { fr } from "date-fns/esm/locale";
 import "./gestionEmploye.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import DeleteEmploye from "./DeleteEmploye";
 import ArchiveEmploye from "./ArchiveEmploye";
 import UserService from "../../../shared/services/UserService";
-import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBContainer, MDBRow,} from "mdbreact";
+import { MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBContainer, MDBRow, } from "mdbreact";
 import Loading from "../../../shared/component/Loading";
 
 class DetailEmploye extends React.Component {
@@ -151,6 +151,10 @@ class DetailEmploye extends React.Component {
                       <p className="elt">
                         <label className="gras">Libellé : </label>&nbsp;
                         {employe.nomRue}
+                      </p>
+                      <p className="elt">
+                        <label className="gras">Complément/BP : </label>&nbsp;
+                        {employe.boitePostale}
                       </p>
                     </div>
                     <div className="ligne2">
