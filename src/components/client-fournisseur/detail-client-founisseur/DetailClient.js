@@ -1,14 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import {
-    MDBCardTitle,
-    MDBCardHeader,
-    MDBContainer,
-    MDBCard,
-    MDBBtn,
-    MDBRow,
-    MDBCardBody,
-} from "mdbreact";
+import {Link} from "react-router-dom";
+import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBContainer, MDBRow,} from "mdbreact";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 
 

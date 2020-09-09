@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import SupprimerClientFournisseur from "../supprimerClientFounisseur/supprimerClient";
+import SupprimerClientFournisseur from "../delete-client-founisseur/DeleteClient";
 import { MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer } from 'mdbreact';
 import { Link } from "react-router-dom";
 import UserService from '../../../shared/services/UserService';

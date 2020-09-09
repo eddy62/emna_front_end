@@ -1,8 +1,9 @@
 import React from 'react';
-import { MDBDataTable, MDBCardHeader, MDBCardTitle, MDBContainer, MDBBtn } from 'mdbreact';
+import {MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer, MDBDataTable} from 'mdbreact';
 import AxiosCenter from '../../../shared/services/AxiosCenter';
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import UserService from '../../../shared/services/UserService';
+
 class ListeProduits extends React.Component {
     constructor(props) {
         super(props);

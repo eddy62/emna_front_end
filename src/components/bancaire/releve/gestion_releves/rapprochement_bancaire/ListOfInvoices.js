@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Axios from '../../../../../shared/services/AxiosCenter';
-import { MDBTable, MDBCardTitle, MDBTableHead, MDBTableBody } from 'mdbreact';
+import {MDBCardTitle, MDBTable, MDBTableBody, MDBTableHead} from 'mdbreact';
 import StatementInvoice from '../../../../gestion_factures/StatementInvoice';
 import Loading from "../../../../../shared/component/Loading";
 

@@ -1,33 +1,33 @@
 import React from "react";
 import {
-  MDBContainer,
-  MDBCardHeader,
-  MDBCardTitle,
-  MDBBtn,
-  MDBRow,
-  MDBCardBody,
-  MDBCard,
-  MDBInput,
-  MDBCol,
+    MDBBtn,
+    MDBCard,
+    MDBCardBody,
+    MDBCardHeader,
+    MDBCardTitle,
+    MDBCol,
+    MDBContainer,
+    MDBInput,
+    MDBRow,
 } from "mdbreact";
-import { Formik, Form, Field } from "formik";
+import {Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import * as dateFns from "date-fns";
 import "./gestionEmploye.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import Loading from "../../../shared/component/Loading";
 import ErrorMessForm from "../../../shared/component/ErrorMessForm";
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
 
 const employeSchema = Yup.object().shape({
   //Identitée
   matricule: Yup.string()
     .min(6, "Trop court")
     .max(8, "Trop long")
-    .required("Champ obligatoire"),
+    .required("Champ obligatoire - Format 'EMP<num>'"),
   numeroSecuriteSociale: Yup.string("String")
-    .min(15, "Numero non Conforme")
-    .max(15, "Numero non Conforme")
+    .min(15, "Numero non Conforme - 15 Chiffres")
+    .max(15, "Numero non Conforme - 15 Chiffres")
     .required("Champ obligatoire"),
   civilite: Yup.string().required("Champ obligatoire"),
   nomNaissance: Yup.string().min(2, "Trop court").max(20, "Trop long"),
@@ -108,6 +108,17 @@ const ComposantNumber = ({ field, form: { touched, errors }, ...props }) => (
     {...field}
   />
 );
+const ComposantNumberDecimal = ({ field, form: { touched, errors }, ...props }) => (
+  <MDBInput
+    label={props.label}
+    min="0.01"
+    step="0.01"
+    outline
+    type="number"
+    {...props}
+    {...field}
+  />
+);
 
 class CreateEmploye extends React.Component {
   constructor(props) {
@@ -168,7 +179,7 @@ class CreateEmploye extends React.Component {
           if (response.status === 200) {
             toast.success(
               <div className="text-center">
-                <strong>Employé Crée &nbsp;&nbsp;!</strong>
+                <strong>Employé Enregistré &nbsp;&nbsp;!</strong>
               </div>,
               { position: "top-right" }
             );
@@ -179,7 +190,7 @@ class CreateEmploye extends React.Component {
           console.log(error.response);
           toast.error(
             <div className="text-center">
-              <strong>Employé NON Crée &nbsp;&nbsp;!</strong>
+              <strong>Employé NON Enregistré &nbsp;&nbsp;!</strong>
               <br />
               {error.response.data.status === 400 ? (
                 <small>{error.response.data.title}</small>
@@ -192,7 +203,7 @@ class CreateEmploye extends React.Component {
     } else {
       toast.error(
         <div className="text-center">
-          <strong>Employé NON Crée &nbsp;&nbsp;!</strong>
+          <strong>Employé NON Enregistré &nbsp;&nbsp;!</strong>
           <br />
           <small>Date de Naissance incorrect !</small>
           <br />
@@ -771,7 +782,7 @@ class CreateEmploye extends React.Component {
                               <Field
                                 name="salaireHoraire"
                                 label="Salaire Horaire*"
-                                component={ComposantInput}
+                                component={ComposantNumberDecimal}
                               />
                               <ErrorMessForm
                                 error={errors.salaireHoraire}
@@ -783,7 +794,7 @@ class CreateEmploye extends React.Component {
                               <Field
                                 name="salaireBrutMensuelle"
                                 label="Salaire Mensuel*"
-                                component={ComposantInput}
+                                component={ComposantNumberDecimal}
                               />
                               <ErrorMessForm
                                 error={errors.salaireBrutMensuelle}
@@ -795,7 +806,7 @@ class CreateEmploye extends React.Component {
                               <Field
                                 name="heuresMensuelle"
                                 label="Heures Mensuelles*"
-                                component={ComposantInput}
+                                component={ComposantNumberDecimal}
                               />
                               <ErrorMessForm
                                 error={errors.heuresMensuelle}

@@ -1,17 +1,8 @@
-
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import {
-    MDBCardTitle,
-    MDBCardHeader,
-    MDBContainer,
-    MDBCard,
-    MDBBtn,
-    MDBRow,
-    MDBCardBody,
-} from "mdbreact";
+import { MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBContainer, MDBRow, } from "mdbreact";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import DeleteProduit from "../deleteProduit/deleteProduit";
+import DeleteProduit from "../delete-produit/DeleteProduit";
 
 
 class DetailsProduit extends Component {

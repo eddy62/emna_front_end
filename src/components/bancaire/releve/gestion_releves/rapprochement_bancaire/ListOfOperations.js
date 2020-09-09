@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { MDBCardTitle } from 'mdbreact';
+import React, {Component} from 'react';
+import {MDBCardTitle} from 'mdbreact';
 
 class ListOfOperations extends Component {
   render() {

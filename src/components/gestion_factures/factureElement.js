@@ -1,15 +1,15 @@
 import React from "react";
-import { BrowserRouter as Link } from "react-router-dom";
+import {BrowserRouter as Link} from "react-router-dom";
+
 class FactureElement extends React.Component {
   render() {
     return (
       <tr>
         <td>{this.props.facture.numfact}</td>
-        <td>{this.props.facture.clientFournisseurId}</td>
+        <td>{this.props.facture.nomClient}</td>
         <td>{this.props.facture.date}</td>
-        <td>{this.props.facture.dateEcheance}</td>
         <td>{this.props.facture.prixTTC} €</td>
-        <td>{this.props.facture.etatFactureId}</td>
+        <td>{this.props.facture.etatFacture}</td>
         <button className="btn-secondary btn-sm">
           <Link
             to={{

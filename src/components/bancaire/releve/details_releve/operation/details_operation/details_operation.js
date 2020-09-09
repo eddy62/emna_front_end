@@ -1,16 +1,9 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import AxiosCenter from "../../../../../../shared/services/AxiosCenter";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
-import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardHeader,
-  MDBContainer,
-  MDBBtn,
-  MDBCol,
-} from "mdbreact";
+import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer,} from "mdbreact";
+
 export default class DetailsOperation extends Component {
   constructor(props) {
     super(props);
