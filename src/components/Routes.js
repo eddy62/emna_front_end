@@ -81,10 +81,10 @@ import UpdateProduit from "./produits/update-produit/UpdateProduit";
 import Referentiels from "./referentiels/Referentiels";
 
 //GestionFactures
-import AccueilFacture from "./gestion_factures/accueilFactures";
-import CreerFacture from "./gestion_factures/creerFacture";
-import CreerDepense from "./gestion_factures/creerDepense";
-import DetailFacture from "./gestion_factures/detailFacture";
+import AccueilFacture from "./gestion_factures/factures/accueilFactures";
+import CreerFacture from "./gestion_factures/factures/creerFacture";
+import CreerDepense from "./gestion_factures/depenses/creerDepense";
+import AccueilDepense from './gestion_factures/depenses/accueilDepenses';
 
 //gestion Variables de paie
 
@@ -109,8 +109,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
         {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
-        <PrivateRoute path="/newfacture" component={CreerFacture} />
-        <PrivateRoute path="/detailfacture" component={DetailFacture} />
+        <PrivateRoute path="/accueildepenses" component={AccueilDepense} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />
         <PrivateRoute path="/newdepense" component={CreerDepense} />
         {/* Gestion des Contrats*/}

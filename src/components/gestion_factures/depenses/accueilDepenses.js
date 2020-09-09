@@ -1,10 +1,8 @@
 import React from "react";
-import FiltresFacture from "./filtreFactures";
-import ListeFactures from "./listeFactures";
+import ListeDepenses from "./listeDepenses";
 import Dropdown from "react-bootstrap/Dropdown";
-import {BrowserRouter as Link} from "react-router-dom";
 
-class AccueilFacture extends React.Component {
+class AccueilDepense extends React.Component {
   constructor(props) {
     super();
   }
@@ -12,7 +10,6 @@ class AccueilFacture extends React.Component {
   render() {
     return (
       <div className="AccueilFacture">
-        <FiltresFacture />
         <Dropdown>
           <Dropdown.Toggle variant="success" id="dropdown-basic">
             Nouvelle
@@ -30,10 +27,10 @@ class AccueilFacture extends React.Component {
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        <ListeFactures />
+        <ListeDepenses />
       </div>
     );
   }
 }
 
-export default AccueilFacture;
+export default AccueilDepense;

@@ -1,5 +1,6 @@
 import ApiBackEnd from "./../config/ApiBackEnd";
 import UserService from "./UserService";
+import Axios from "axios";
 
 const AxiosCenter = {
   authenticate(values) {
@@ -503,7 +504,7 @@ const AxiosCenter = {
     formData.append("prixTTC", facture.prixTTC);
     formData.append("tva", facture.tva);
     formData.append("moyenDePaiement", facture.moyenDePaiement);
-    formData.append("societeId", UserService.getSocietyId);
+    formData.append("societeId", UserService.getSocietyId());
     formData.append("client", facture.client);
     formData.append("numRue", facture.numAdresse);
     formData.append("nomRue", facture.nomRueAdresse);
@@ -522,6 +523,40 @@ const AxiosCenter = {
     });
   },
 
+  uploadDepense(facture, files) {
+    let formData = new FormData();
+    formData.append("message", facture.message);
+    formData.append("date", facture.date);
+    formData.append("prixTTC", facture.prixTTC);
+    formData.append("moyenDePaiement", facture.moyenDePaiement);
+    formData.append("societeId", UserService.getSocietyId());
+    formData.append("client", facture.client);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("listeFiles", files.item(i));
+    }
+
+    return ApiBackEnd({
+      method: "POST",
+      url: "/depense/new",
+      mode: "no-cors",
+      data: formData,
+    });
+  },
+
+  getLastNumFactBySociete(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/facture/lastnumfact/${id}`,
+    });
+  },
+
+  getInfosForCreationFacture(id){
+    return Axios.all([
+      this.getLastNumFactBySociete(id),
+      this.getAllClientFournisseurBySociete(id)
+    ])
+  },
+
   deleteFacture(id) {
     return ApiBackEnd({
       method: "DELETE",
@@ -533,6 +568,13 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "GET",
       url: `facturesvente/societe/${id}`,
+    });
+  },
+
+  getDepenseBySociete(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `facturesachat/societe/${id}`,
     });
   },
 

@@ -1,5 +1,6 @@
 import React from "react";
-import {BrowserRouter as Link} from "react-router-dom";
+import { BrowserRouter as Link } from "react-router-dom";
+import { Dropdown } from "react-bootstrap";
 
 class FactureElement extends React.Component {
   render() {
@@ -19,25 +20,19 @@ class FactureElement extends React.Component {
               },
             }}
           >
-            Détails
+            Visualiser
           </Link>
         </button>
-        <button
-          href="/modifierfacture"
-          className="btn-info btn-sm"
-        >
-          Modifier
-        </button>
-        <button
-          href="/modifierfacture"
-          className="btn-danger btn-sm"
-          facture={this.props.facture}
-          onClick={() => {
-            this.props.remove(this.props.facture.id);
-          }}
-        >
-          Supprimer
-        </button>
+        <Dropdown>
+          <Dropdown.Toggle variant="primary" id="dropdown-basic" size="sm">
+            Action
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item href="#/action-1">Comptabilisé</Dropdown.Item>
+            <Dropdown.Item href="#/action-2">En cours de traitement</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </tr>
     );
   }
