@@ -150,36 +150,38 @@ class AccueilSocial extends React.Component {
                   ) : null}
                 </MDBRow>
                 <br />
-                {(UserService.getRole() === "ROLE_SOCIETY") |
-                  (UserService.getRole() === "ROLE_ACCOUNTANT") ? (
-                    <MDBRow around between>
-                      <MDBCol md="3" className="mb-3">
-                        <MDBCard className="cadre1">
-                          <MDBCardBody>
-                            <MDBCardTitle tag="h4">{title3}</MDBCardTitle>
-                            <br />
-                            <MDBCardText>
-                              Enregistrement et modification des variables de
-                              paies des Employés
+                <MDBRow around between>
+                  {(UserService.getRole() === "ROLE_SOCIETY") ? (
+                    <MDBCol md="3" className="mb-3">
+                      <MDBCard className="cadre1">
+                        <MDBCardBody>
+                          <MDBCardTitle tag="h4">{title3}</MDBCardTitle>
+                          <br />
+                          <MDBCardText>
+                            Enregistrement et modification des variables de
+                            paies des Employés
                           </MDBCardText>
-                            <br />
-                            <div className="boutton">
-                              <MDBBtn
-                                color="teal accent-3"
-                                rounded
-                                size="sm"
-                                onClick={() => {
-                                  this.props.history.push(
-                                    "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/" + this.state.societe.id
-                                  );
-                                }}
-                              >
-                                Gerer
+                          <br />
+                          <div className="boutton">
+                            <MDBBtn
+                              color="teal accent-3"
+                              rounded
+                              size="sm"
+                              onClick={() => {
+                                this.props.history.push(
+                                  "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/" + this.state.societe.id
+                                );
+                              }}
+                            >
+                              Gerer
                             </MDBBtn>
-                            </div>
-                          </MDBCardBody>
-                        </MDBCard>
-                      </MDBCol>
+                          </div>
+                        </MDBCardBody>
+                      </MDBCard>
+                    </MDBCol>
+                  ) : null}
+                  {(UserService.getRole() === "ROLE_SOCIETY") |
+                    (UserService.getRole() === "ROLE_ACCOUNTANT") ? (
                       <MDBCol md="3" className="mb-3">
                         <MDBCard className="cadre1">
                           <MDBCardBody>
@@ -207,8 +209,8 @@ class AccueilSocial extends React.Component {
                           </MDBCardBody>
                         </MDBCard>
                       </MDBCol>
-                    </MDBRow>
-                  ) : null}
+                    ) : null}
+                </MDBRow>
               </div>
               <div className="titre">
                 <hr />

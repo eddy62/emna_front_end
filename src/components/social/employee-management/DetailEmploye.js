@@ -72,6 +72,10 @@ class DetailEmploye extends React.Component {
                     <br />
                     <div className="ligne1">
                       <p className="elt1">
+                        <label className="gras">Id Employé :</label> &nbsp;
+                        {employe.id}
+                      </p>
+                      <p className="elt">
                         <label className="gras">Matricule :</label> &nbsp;
                         {employe.matricule}
                       </p>

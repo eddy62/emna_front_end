@@ -66,19 +66,19 @@ class SideNavigation extends React.Component {
           <br></br>
           <br></br>
           {(UserService.getRole() === "ROLE_ACCOUNTANT") |
-          (UserService.getRole() === "ROLE_ADMIN") ? (
-            <div>
-              <select
-                id="mySelect"
-                className="browser-default custom-select"
-                onChange={() => this.changeSocietyId()}
-              >
-                {this.state.societes.map((societe) => (
-                  <option value={societe.id}>{societe.civilite}</option>
-                ))}
-              </select>
-            </div>
-          ) : null}
+            (UserService.getRole() === "ROLE_ADMIN") ? (
+              <div>
+                <select
+                  id="mySelect"
+                  className="browser-default custom-select"
+                  onChange={() => this.changeSocietyId()}
+                >
+                  {this.state.societes.map((societe) => (
+                    <option value={societe.id}>{societe.civilite}</option>
+                  ))}
+                </select>
+              </div>
+            ) : null}
           <MDBSideNavNav>
             <MDBSideNavCat
               name="Comptabilité"
@@ -102,7 +102,7 @@ class SideNavigation extends React.Component {
                 "Employés"
               )}
               {this.rSNL(
-                "/socialHome/" + UserService.getSocietyId(),
+                "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/" + UserService.getSocietyId(),
                 "Variable Paie"
               )}
               {this.rSNL(
