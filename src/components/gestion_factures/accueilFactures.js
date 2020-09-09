@@ -19,14 +19,14 @@ class AccueilFacture extends React.Component {
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item>
-              <Link to="/newfacture">Facture</Link>
+            <Dropdown.Item href="/newfacture">
+              Facture
             </Dropdown.Item>
-            <Dropdown.Item>
-              <Link to="/newdepense">Depense</Link>
+            <Dropdown.Item href="/newdepense">
+              Depense
             </Dropdown.Item>
-            <Dropdown.Item>
-              <Link to="/newdevis">Devis</Link>
+            <Dropdown.Item href="/newdevis">
+             Devis
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage, FieldArray } from "formik";
 import axioscenter from "../../shared/services/AxiosCenter";
+import * as Yup from "yup";
 
 class CreerFacture extends React.Component {
   state = {
@@ -23,7 +24,6 @@ class CreerFacture extends React.Component {
     values.prixTTC = this.state.prixtotal;
     values.tva = this.state.tva;
     values.prixHT = this.state.prixtotal - this.state.tva;
-    values.moyenDePaiement = "CHEQUE";
     console.log(values);
     axioscenter.uploadFacture(values, documents).then((res) => {
       for (let i = 0; i < values.produits.length; i++) {
@@ -60,9 +60,22 @@ class CreerFacture extends React.Component {
     this.setState({ tva: tva });
   };
 
+  userSchema = Yup.object().shape({
+    numfact: Yup.number("Format non conforme").required("Le champ est obligatoire"),
+    nom: Yup.string().max(10, "10 caractères maximum"),
+    tva: Yup.number("Format non conforme").required("Le champ est obligatoire"),
+    prix: Yup.number("Format non conforme").required("Le champ est obligatoire"),
+    description: Yup.string().max(20, "20 caractères maximum"),
+    numeroRue: Yup.string().required("Le champ est obligatoire"),
+    nomRue: Yup.string().required("Le champ est obligatoire"),
+    codePostal: Yup.string().required("Le champ est obligatoire"),
+    ville: Yup.string().required("Le champ est obligatoire"),
+    pays: Yup.string().required("Le champ est obligatoire")
+});
+
+
   render() {
     const initialValues = {
-      nom: "",
       documents: [],
       produits: [
         {
@@ -96,7 +109,7 @@ class CreerFacture extends React.Component {
             >
               <div className="form-group row">
                 <label className="col-form-label">Facture N°</label>
-                <div className="col-md-1">
+                <div className="col-md-2">
                   <input
                     type="text"
                     name="numfact"
@@ -107,7 +120,8 @@ class CreerFacture extends React.Component {
                   />
                 </div>
               </div>
-              <div className="form-group">
+              <div className="form-row">
+                <div className="form-group col-md-6">
                 <label>Client</label>
                 <input
                   type="text"
@@ -123,6 +137,22 @@ class CreerFacture extends React.Component {
                     <option value={client.nom} label={client.nom} key={client.id}></option>
                   ))}
                 </datalist>
+                </div>
+                <div className="form-group col-md-6">
+                <label>Moyen de Paiement</label>
+                <select
+                  name="moyenDePaiement"
+                  className=" form-control browser-default custom-select"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.client}
+                >
+                    <option value="Chèque" label="Chèque"></option>
+                    <option value="Espèces" label="Espèces"></option>
+                    <option value="Carte Bancaire" label="Carte Bancaire"></option>
+                    <option value="Virement" label="Virement"></option>
+                </select>
+                </div>
               </div>
               <div className="form-row">
                 <div className="form-group col-md-6">
@@ -151,14 +181,50 @@ class CreerFacture extends React.Component {
                 </div>
               </div>
               <div className="form-group">
-                <label>Adresse</label>
+                <label>N° de rue</label>
                 <input
                   type="text-area"
                   name="adresse"
                   className="form-control"
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  value={values.adresse}
+                  value={values.numAdresse}
+                />
+                <label>Nom de rue</label>
+                <input
+                  type="text-area"
+                  name="adresse"
+                  className="form-control"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.nomRueAdresse}
+                />
+                <label>Code Postal</label>
+                <input
+                  type="text-area"
+                  name="adresse"
+                  className="form-control"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.codePostal}
+                />
+                <label>Ville</label>
+                <input
+                  type="text-area"
+                  name="adresse"
+                  className="form-control"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.ville}
+                />
+                <label>Pays</label>
+                <input
+                  type="text-area"
+                  name="adresse"
+                  className="form-control"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.pays}
                 />
               </div>
               <FieldArray name="produits">
