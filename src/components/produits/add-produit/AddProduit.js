@@ -1,10 +1,12 @@
-import React, {Component} from 'react';
-import {ErrorMessage, Field, Formik} from "formik";
-import * as Yup from "yup"
+import React from "react";
+import { ErrorMessage, Field, Formik } from "formik";
+import * as Yup from "yup";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import {Link} from 'react-router-dom';
-import {MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput,} from "mdbreact";
-import {toast} from "react-toastify";
+import { Link } from "react-router-dom";
+import { MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput, } from "mdbreact";
+import UserService from '../../../shared/services/UserService';
+import { toast } from "react-toastify";
+
 
 const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
@@ -24,7 +26,7 @@ const ComposantSelect = ({ field, form: { touched, errors }, ...props }) => (
     <div >
         <label> {props.label} </label>
         <select className=" form-control browser-default custom-select" name="unite"  {...props} {...field} >
-            {/* <option value="pc">PC</option> */}
+            <option value="" disabled selected> Unité *</option>
             <option value="h">H</option>
             <option value="j">J</option>
             <option value="m">M</option>
@@ -35,63 +37,32 @@ const ComposantSelect = ({ field, form: { touched, errors }, ...props }) => (
     </div>
 );
 
-class UpdateProduit extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            UpdateProduit: {},
-            loaded: false,
-            IdEntity: this.props.match.params.id,
-        };
-    }
-
-
-    componentDidMount() {
-        AxiosCenter.getProduitById(this.state.IdEntity)
-            .then((response) => {
-                const produit = response.data;
-                this.setState({
-                    UpdateProduit: produit,
-                    loaded: true,
-                });
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }
-
-
-    getInitialValues = () => {
-        return this.state.UpdateProduit;
-    }
-
-
+class AddProduit extends React.Component {
     submit = (values, actions) => {
-        AxiosCenter.updateProduit(values)
+        AxiosCenter.createProduit(values)
             .then((response) => {
                 toast.success(
                     <div className="text-center">
-                        <strong>Le produit a été mis à jour </strong>
+                        <strong>Le nouveau produit {response.data.nom} a été bien crée</strong>
                     </div>,
                     { position: "top-right" }
                 );
-                this.props.history.push("/produit/detail/" + response.data.id);
+                this.props.history.push("/client-fournisseur");
             })
             .catch((error) => {
                 console.log(error);
                 toast.error(
                     <div className="text-center">
-                        <strong>Le produit n'a pas été mis à jour&nbsp;&nbsp;!</strong>
+                        <strong>Erreur lors de la création d'un nouveau Client Fournisseur &nbsp;&nbsp;!</strong>
                         <br />
                     </div>,
                     { position: "top-right" }
                 );
             });
+
         actions.setSubmitting(true);
-    }
 
-
+    };
 
     userSchema = Yup.object().shape({
         nom: Yup.string().min(3, "Le Nom ne peut contient moins que 3 caractères")
@@ -101,36 +72,43 @@ class UpdateProduit extends Component {
         tva: Yup.string()
             .matches(/^[0-9.]+$/, "Tva doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
         prix: Yup.string()
-            .matches(/^[0-9.]+$/, "Prix doit être composé uniquement de chiffres")
-            .required("Le champ est obligatoire"),
+            .matches(/^[0-9.]+$/, "Prix doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
         description: Yup.string().max(200, "200 caractères maximum"),
         unite: Yup.string().required("Le champ est obligatoire"),
     });
-    render() {
 
+    render() {
         return (
 
             <MDBContainer>
                 <div>
-                    <MDBCardHeader color="default-color">Gestion Produits </MDBCardHeader>
+                    <MDBCardHeader color="default-color">Gestion Produits</MDBCardHeader>
                     <br></br>
-                    <MDBCardTitle tag="h1">Edite Produit {this.state.UpdateProduit.nom} </MDBCardTitle>
+                    <MDBCardTitle tag="h3">Enregister un Nouveau Produit </MDBCardTitle>
                     <hr></hr>
                     <Formik
-                        initialValues={this.getInitialValues()}
                         onSubmit={this.submit}
-                        enableReinitialize={true}
+                        initialValues={{
+                            nom: "",
+                            reference: "",
+                            tva: "",
+                            prix: "",
+                            unite: "",
+                            description: "",
+                            societeId: UserService.getSocietyId(),
+                            id: null,
+                        }}
                         validationSchema={this.userSchema}
                     >
-                        {({ handleSubmit }) => (
+                        {({ handleSubmit, isSubmitting }) => (
                             <form
                                 onSubmit={handleSubmit}
-                                className=" container-fluid p-5 lighten-5 justify-content-center align-items-center"
+                                className="bg-white border p-5 d-flex flex-column"
                             >
                                 <div >
                                     <Field
                                         name="nom"
-                                        label="Nom produit"
+                                        label="Nom Produit"
                                         component={ComposantInput}
                                     />
                                     <ErrorMessage name="nom" component={ComposantErreur} />
@@ -149,7 +127,7 @@ class UpdateProduit extends Component {
                                         type="numbre"
                                         component={ComposantErreur}
                                     />
-                                    <Field name="unite" label="Unité" component={ComposantSelect} />
+                                    <Field name="unite" component={ComposantSelect} />
                                     <ErrorMessage name="unite" component={ComposantErreur} />
 
                                     <Field name="prix" label="Prix" component={ComposantInput} />
@@ -159,15 +137,16 @@ class UpdateProduit extends Component {
                                         rows="2" />
                                     <ErrorMessage name="description" component={ComposantErreur} />
 
+
                                 </div>
                                 <br></br>
                                 <div className="row d-flex justify-content-center ">
                                     <MDBBtn rounded type="submit" color="primary">
-                                        Sauvegarder
+                                        Enregistrer
               </MDBBtn>
-                                    <Link to={`/produit/detail/${this.state.UpdateProduit.id}`}>
+                                    <Link to="/client-fournisseur">
                                         <MDBBtn rounded color="teal accent-3">
-                                            Annuler
+                                            Retour
                   </MDBBtn>
                                     </Link>
                                 </div>
@@ -176,8 +155,8 @@ class UpdateProduit extends Component {
                     </Formik>
                 </div >
             </MDBContainer >
-
         );
     }
 }
-export default UpdateProduit;
+
+export default AddProduit;
