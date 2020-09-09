@@ -183,6 +183,12 @@ const AxiosCenter = {
       url: `/releve/etat/${idEtat}/societe/${idSociete}`,
     });
   },
+  getReleveByEtat(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/releve/etat/${id}`,
+    });
+  },
 
   getReleveBySocieteId(id) {
     return ApiBackEnd({

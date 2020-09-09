@@ -35,6 +35,7 @@ import CreationReleve from "./bancaire/releve/creation_releve/creation_releve";
 import DetailsOperation from "./bancaire/releve/details_releve/operation/details_operation/details_operation";
 import MenuReleveNon from "./bancaire/releve/historique_releves/menu_releve_non";
 import ListeRelevesInvalide from "./bancaire/releve/historique_releves/liste_releves_invalide";
+import ListeRelevesValide from "./bancaire/releve/historique_releves/liste_releves_valide";
 import ListeRelevesNonArchive from "./bancaire/releve/historique_releves/liste_releves_non_archive";
 import PageAddOperationStatement from "./bancaire/releve/details_releve/operation/creation_operation/pageAddOperationStatement";
 import BankReconciliation from "./bancaire/releve/gestion_releves/rapprochement_bancaire/BankReconciliation";
@@ -239,6 +240,10 @@ export default class Routes extends Component {
         <PrivateRoute
           path="/releveinvalide"
           component={ListeRelevesInvalide}
+        />
+        <PrivateRoute
+            path="/relevevalide"
+            component={ListeRelevesValide}
         />
         <PrivateRoute
           path="/relevenonarchive/:id"
