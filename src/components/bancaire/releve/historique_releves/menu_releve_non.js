@@ -56,7 +56,7 @@ export class MenuReleveNon extends React.Component {
 
                     <br />
                     <div className="boutton">
-                      <Link to="/gestionReleves/rapprochementBancaire">
+                      <Link to="/relevevalide">
                         <MDBBtn
                           className="boutton"
                           color=" teal lighten-2"

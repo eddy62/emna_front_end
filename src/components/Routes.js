@@ -38,6 +38,7 @@ import DetailsOperation from "./bancaire/releve/details_releve/operation/details
 import EditOperation from "./bancaire/releve/details_releve/operation/edit_operation/pageEditOperationStatement";
 import MenuReleveNon from "./bancaire/releve/historique_releves/menu_releve_non";
 import ListeRelevesInvalide from "./bancaire/releve/historique_releves/liste_releves_invalide";
+import ListeRelevesValide from "./bancaire/releve/historique_releves/liste_releves_valide";
 import ListeRelevesNonArchive from "./bancaire/releve/historique_releves/liste_releves_non_archive";
 import PageAddOperationStatement
   from "./bancaire/releve/details_releve/operation/creation_operation/pageAddOperationStatement";
@@ -256,6 +257,10 @@ export default class Routes extends Component {
           component={ListOfInvoices}
         />
         <PrivateRoute path="/releveinvalide" component={ListeRelevesInvalide} />
+        <PrivateRoute
+            path="/relevevalide"
+            component={ListeRelevesValide}
+        />
         <PrivateRoute
           path="/relevenonarchive/:id"
           component={ListeRelevesNonArchive}

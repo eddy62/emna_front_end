@@ -6,11 +6,10 @@ class FactureElement extends React.Component {
     return (
       <tr>
         <td>{this.props.facture.numfact}</td>
-        <td>{this.props.facture.clientFournisseurId}</td>
+        <td>{this.props.facture.nomClient}</td>
         <td>{this.props.facture.date}</td>
-        <td>{this.props.facture.dateEcheance}</td>
         <td>{this.props.facture.prixTTC} €</td>
-        <td>{this.props.facture.etatFactureId}</td>
+        <td>{this.props.facture.etatFacture}</td>
         <button className="btn-secondary btn-sm">
           <Link
             to={{

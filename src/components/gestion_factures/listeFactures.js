@@ -38,7 +38,6 @@ class ListeFactures extends React.Component {
               <th>Num. Facture</th>
               <th>Client/Fournisseur</th>
               <th>Date</th>
-              <th>Echéance</th>
               <th>Total</th>
               <th>Etat Facture</th>
             </tr>

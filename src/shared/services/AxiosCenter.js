@@ -1,4 +1,5 @@
 import ApiBackEnd from "./../config/ApiBackEnd";
+import UserService from "./UserService";
 
 const AxiosCenter = {
   authenticate(values) {
@@ -243,6 +244,12 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "get",
       url: `/releve/etat/${idEtat}/societe/${idSociete}`,
+    });
+  },
+  getReleveByEtat(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/releve/etat/${id}`,
     });
   },
 
@@ -496,8 +503,13 @@ const AxiosCenter = {
     formData.append("prixTTC", facture.prixTTC);
     formData.append("tva", facture.tva);
     formData.append("moyenDePaiement", facture.moyenDePaiement);
-    formData.append("societeId", 1);
+    formData.append("societeId", UserService.getSocietyId);
     formData.append("client", facture.client);
+    formData.append("numRue", facture.numAdresse);
+    formData.append("nomRue", facture.nomRueAdresse);
+    formData.append("codePostal", facture.codePostal);
+    formData.append("ville", facture.ville);
+    formData.append("pays", facture.pays);
     for (let i = 0; i < files.length; i++) {
       formData.append("listeFiles", files.item(i));
     }
@@ -520,7 +532,7 @@ const AxiosCenter = {
   getFactureBySociete(id) {
     return ApiBackEnd({
       method: "GET",
-      url: `factures/societe/${id}`,
+      url: `facturesvente/societe/${id}`,
     });
   },
 
