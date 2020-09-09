@@ -1,6 +1,6 @@
-import React, {Component} from "react";
-import {Switch} from "react-router-dom";
-import {PrivateRoute} from "../helpers/PrivateRoute";
+import React, { Component } from "react";
+import { Switch } from "react-router-dom";
+import { PrivateRoute } from "../helpers/PrivateRoute";
 
 //Gestion Social import
 import AccueilSocial from "./social/SocialHome";
@@ -19,12 +19,12 @@ import CreerContrat from "./contrat/creerContrat/CreerContrat";
 import ParentAddVariablePaie from "./social/variables_de_paie/addVariablePaie/ParentAddVariablePaie";
 
 //gestion ClientFournisseur imports
-import MenuClientFournisseur from "./clientFournisseur/menuClientFournisseur";
-import ListerClients from "./clientFournisseur/listerClientFournisseur/listerClients";
-import AddClient from "./clientFournisseur/addClientFournisseur/addClient";
-import ModifierClient from "./clientFournisseur/modifierCLientFournisseur/modifierClient";
-import SupprimerClient from "./clientFournisseur/supprimerClientFounisseur/supprimerClient";
-import DetailsClient from "./clientFournisseur/detailsClientFounisseur/detailsClient";
+import MenuClientFournisseur from "./client-fournisseur/MenuClientFournisseur";
+import ListerClients from "./client-fournisseur/list-client-fournisseur/ListClients";
+import AddClient from "./client-fournisseur/add-client-fournisseur/AddClient";
+import ModifierClient from "./client-fournisseur/update-cLient-fournisseur/UpdateClient";
+import SupprimerClient from "./client-fournisseur/delete-client-founisseur/DeleteClient";
+import DetailsClient from "./client-fournisseur/detail-client-founisseur/DetailClient";
 
 //gestionBancaire
 import Bancaire from "./bancaire/index";
@@ -40,7 +40,7 @@ import MenuReleveNon from "./bancaire/releve/historique_releves/menu_releve_non"
 import ListeRelevesInvalide from "./bancaire/releve/historique_releves/liste_releves_invalide";
 import ListeRelevesNonArchive from "./bancaire/releve/historique_releves/liste_releves_non_archive";
 import PageAddOperationStatement
-    from "./bancaire/releve/details_releve/operation/creation_operation/pageAddOperationStatement";
+  from "./bancaire/releve/details_releve/operation/creation_operation/pageAddOperationStatement";
 import BankReconciliation from "./bancaire/releve/gestion_releves/rapprochement_bancaire/BankReconciliation";
 import ListOfOperations from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfOperations";
 import ListOfInvoices from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfInvoices";
@@ -71,10 +71,10 @@ import ComptabiliteMenu from "./navigation/ComptabiliteMenu";
 import JuridiqueMenu from "./navigation/JuridiqueMenu";
 // finGestionUserRoutesImports
 //GestionProduits
-import ListeProduits from "./produits/listeProduits/listeProduits";
-import DetailsProduit from "./produits/detailsProduits/detailsProduit";
-import AddProduit from "./produits/addProduits/addProduit";
-import UpdateProduit from "./produits/updateProduit/updateProduit";
+import ListeProduits from "./produits/list-produits/ListProduits";
+import DetailsProduit from "./produits/detail-produit/DetailsProduit";
+import AddProduit from "./produits/add-produit/AddProduit";
+import UpdateProduit from "./produits/update-produit/UpdateProduit";
 //finGestionProduits
 //GestionReferentiels
 import Referentiels from "./referentiels/Referentiels";
