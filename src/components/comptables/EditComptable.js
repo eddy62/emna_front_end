@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory, useParams, Link } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {Link, useHistory, useParams} from 'react-router-dom';
 import Select from "react-select";
 import AxiosCenter from '../../shared/services/AxiosCenter';
-
 
 
 const EditComptable = () => {

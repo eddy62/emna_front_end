@@ -1,5 +1,4 @@
-import {MDBCard,MDBCardBody,MDBCardTitle,MDBCol} from "mdbreact";
-import ReleveSolde from "./DetailsReleveSoldeParaph";
+import {MDBCard, MDBCardBody, MDBCardTitle, MDBCol} from "mdbreact";
 import React from "react";
 
 const ReleveDetailsCard = (props) => {
@@ -26,7 +25,10 @@ const ReleveDetailsCard = (props) => {
                                         {props.releve.banque}
                                     </div>
                                 </div>
-                                <ReleveSolde releveId={props.releve.id}/>
+                                <p>
+                                    Solde du compte pour ce mois :
+                                    { " " + props.releve.solde + " €" }
+                                </p>
                             </div>
                         </MDBCardTitle>
                     </MDBCardBody>

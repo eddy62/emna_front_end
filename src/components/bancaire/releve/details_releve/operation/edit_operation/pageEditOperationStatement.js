@@ -1,10 +1,10 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import AxiosCenter from "../../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../../shared/component/Loading";
 import UserService from "../../../../../../shared/services/UserService";
-import{ MDBContainer,MDBBtn,MDBInput,MDBCardTitle } from "mdbreact";
+import {MDBBtn, MDBCardTitle, MDBContainer, MDBInput} from "mdbreact";
 
 const lexique =
 {

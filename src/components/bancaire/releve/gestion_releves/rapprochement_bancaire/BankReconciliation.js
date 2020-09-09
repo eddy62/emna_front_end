@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {MDBContainer, MDBCard, MDBRow, MDBCol, MDBCardHeader, MDBCardTitle, MDBBtn} from 'mdbreact';
+import {MDBBtn, MDBCard, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer, MDBRow} from 'mdbreact';
 import {Link} from "react-router-dom";
 
 import ListOfInvoices from './ListOfInvoices';

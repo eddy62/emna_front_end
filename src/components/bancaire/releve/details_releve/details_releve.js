@@ -1,9 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import ListeOperations from "./operation/liste_operations/liste_operations";
 import Loading from "../../../../shared/component/Loading";
-import {MDBCard,MDBCardBody,MDBCardTitle,MDBCardHeader,MDBContainer,MDBBtn,MDBCol} from "mdbreact";
+import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer} from "mdbreact";
 import ReleveDetailsCard from "./ReleveDetailsCard";
 
 export class DetailsReleve extends React.Component {

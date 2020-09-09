@@ -3,8 +3,7 @@ import {Link} from "react-router-dom";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import ListeOperations from "./operation/liste_operations/liste_operations";
 import Loading from "../../../../shared/component/Loading";
-import ReleveSolde from './DetailsReleveSoldeParaph'
-import {MDBCard,MDBCardBody,MDBCardTitle,MDBCardHeader,MDBContainer,MDBBtn,MDBCol} from "mdbreact";
+import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer} from "mdbreact";
 
 export class DetailsReleveNonArchive extends React.Component {
     constructor(props) {
@@ -44,7 +43,10 @@ export class DetailsReleveNonArchive extends React.Component {
                     <div>
                         <hr/>
                     </div>
-                    <ReleveSolde releveId={props.releve.id}/>
+                    <p>
+                        Solde du compte pour ce mois :
+                        { " " + props.releve.solde + " €" }
+                    </p>
                 </MDBContainer>
             </div>
         );

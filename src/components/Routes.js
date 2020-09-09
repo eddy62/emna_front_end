@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { Switch } from "react-router-dom";
-import { PrivateRoute } from "../helpers/PrivateRoute";
+import React, {Component} from "react";
+import {Switch} from "react-router-dom";
+import {PrivateRoute} from "../helpers/PrivateRoute";
 
 //Gestion Social import
 import AccueilSocial from "./social/SocialHome";
@@ -39,7 +39,8 @@ import EditOperation from "./bancaire/releve/details_releve/operation/edit_opera
 import MenuReleveNon from "./bancaire/releve/historique_releves/menu_releve_non";
 import ListeRelevesInvalide from "./bancaire/releve/historique_releves/liste_releves_invalide";
 import ListeRelevesNonArchive from "./bancaire/releve/historique_releves/liste_releves_non_archive";
-import PageAddOperationStatement from "./bancaire/releve/details_releve/operation/creation_operation/pageAddOperationStatement";
+import PageAddOperationStatement
+    from "./bancaire/releve/details_releve/operation/creation_operation/pageAddOperationStatement";
 import BankReconciliation from "./bancaire/releve/gestion_releves/rapprochement_bancaire/BankReconciliation";
 import ListOfOperations from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfOperations";
 import ListOfInvoices from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfInvoices";
@@ -69,14 +70,12 @@ import HomeMenu from "./navigation/HomeMenu";
 import ComptabiliteMenu from "./navigation/ComptabiliteMenu";
 import JuridiqueMenu from "./navigation/JuridiqueMenu";
 // finGestionUserRoutesImports
-
 //GestionProduits
 import ListeProduits from "./produits/listeProduits/listeProduits";
 import DetailsProduit from "./produits/detailsProduits/detailsProduit";
 import AddProduit from "./produits/addProduits/addProduit";
 import UpdateProduit from "./produits/updateProduit/updateProduit";
 //finGestionProduits
-
 //GestionReferentiels
 import Referentiels from "./referentiels/Referentiels";
 

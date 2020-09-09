@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import "../App.scss";
 import SideNavigation from "./SideNavigation";
 import TopNavigation from "./TopNavigation";
 import Routes from "./Routes";
 import TokenService from "../shared/services/TokenService";
-import { withRouter } from "react-router-dom";
+import {withRouter} from "react-router-dom";
 
 class App extends Component {
   constructor(props) {

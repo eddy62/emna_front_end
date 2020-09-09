@@ -1,16 +1,8 @@
 import React from "react";
 import "./style.scss";
-import { Formik } from "formik";
-import { withRouter } from "react-router-dom";
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBInput,
-  MDBBtn,
-} from "mdbreact";
+import {Formik} from "formik";
+import {withRouter} from "react-router-dom";
+import {MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
 import * as Yup from "yup";
 import ErrorMessForm from "./../../shared/component/ErrorMessForm";
 

@@ -1,11 +1,18 @@
-import React, { Component } from "react";
-import { Formik, Field } from "formik";
+import React, {Component} from "react";
 import "./../style2.scss";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
-import { MDBCardTitle, MDBCardHeader, MDBBtn, MDBContainer, MDBRow, MDBCard, MDBCollapseHeader, MDBCollapse, MDBCardBody } from "mdbreact";
-import Component1 from "./Component1";
-import Absence from "./Absence";
+import {
+    MDBBtn,
+    MDBCard,
+    MDBCardBody,
+    MDBCardHeader,
+    MDBCardTitle,
+    MDBCollapse,
+    MDBCollapseHeader,
+    MDBContainer,
+    MDBRow
+} from "mdbreact";
 import CreateAbsence from "./children/CreateAbsence";
 import CreatePrime from "./children/CreatePrime";
 import CreateAvanceRappelSalaire from "./children/CreateAvanceRappelSalaire";
@@ -18,7 +25,7 @@ export default class ParentAddVariablePaie extends Component {
         super(props);
         this.state = {
           loaded: false,
-          societyName: '',
+          society: {},
           listeEmployes: [],
           idNameSelected: '',
           yearSelected: new Date().getFullYear(),
@@ -55,8 +62,8 @@ export default class ParentAddVariablePaie extends Component {
         //console.log(idSociete);
         AxiosCenter.getSociete(idSociete)
         .then((response) => {
-            const societyName = response.data.civilite;
-            this.setState({ societyName });
+            const society = response.data;
+            this.setState({ society });
         })
         .catch((error) => {
             console.log(error);
@@ -90,14 +97,14 @@ export default class ParentAddVariablePaie extends Component {
         const { collapseID } = this.state;
         /*const list = this.state.listeEmployes;
         console.log(list);*/
-        console.log(this.state.monthSelected);
+        //console.log(this.state.monthSelected);
         return (
             <div className="App">
                 <div className="social">
                     <MDBContainer>
                         <div className="titre">
                             <MDBCardHeader color="default-color">
-                                <MDBCardTitle tag="h2">Raison Sociale {this.state.societyName}</MDBCardTitle>
+                                <MDBCardTitle tag="h2">Raison Sociale {this.state.society.civilite}</MDBCardTitle>
                             </MDBCardHeader>
                         </div>
 
@@ -114,7 +121,7 @@ export default class ParentAddVariablePaie extends Component {
                                             >                                        
                                                 <option disabled selected>Choisissez employé</option>
                                                 {this.state.listeEmployes.map((employe) => (
-                                                    <option value={employe.id}>{employe.nomUsage}</option>
+                                                    <option key={employe.id} value={employe.id}>{employe.nomUsage}</option>
                                                 ))}
                                             </select>
                                         </div>
@@ -126,8 +133,8 @@ export default class ParentAddVariablePaie extends Component {
                                             onChange={this.changeHandler}
                                         >
                                             <option disabled>Choisissez une année</option>
-                                            {this.state.year.map((y) => (
-                                                <option value={y.item}>{y.item}</option>
+                                            {this.state.year.map((y, index) => (
+                                                <option key={index} value={y.item}>{y.item}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -139,8 +146,8 @@ export default class ParentAddVariablePaie extends Component {
                                             onChange={this.changeHandler}
                                         >
                                             <option disabled defaultValue={new Date().getMonth()}>Choisissez un mois</option>
-                                            {this.state.period.map((p) => (
-                                                <option selected={p.id === this.state.monthSelected} value={p.id}>{p.text}</option>
+                                            {this.state.period.map((p, index) => (
+                                                <option key={index} selected={p.id === this.state.monthSelected} value={p.id}>{p.text}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -256,17 +263,20 @@ export default class ParentAddVariablePaie extends Component {
 
                             <div className="btnContent">
                                 <div className="btnConainer">
-                                    <Link to="">
+                                    {this.state.idNameSelected ? (
                                         <MDBBtn color="teal accent-3" rounded size="sm"
                                             onClick={() => {
                                                 this.props.history.push(
-                                                ""
+                                                    "/variables_de_paie/updateVariablePaie/ParentUpdateVariablePaie/" + this.state.society.id + "/" + this.state.idNameSelected
                                                 );
                                             }}
                                             >
                                             Voir Détail
                                         </MDBBtn>
-                                    </Link>
+                                    ) : (
+                                        <MDBBtn color="teal accent-3" rounded size="sm" disabled>Voir Détail</MDBBtn>
+                                    )}
+                                        
                                                         
                                     <Link to="/socialHome/1">
                                         <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm">
