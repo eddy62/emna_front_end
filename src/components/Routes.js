@@ -16,8 +16,6 @@ import Contrat from "./contrat/Contrat";
 import DetailContrat from "./contrat/detailContrat/DetailContrat";
 import CreerContrat from "./contrat/creerContrat/CreerContrat";
 
-import ParentAddVariablePaie from "./social/variables_de_paie/addVariablePaie/ParentAddVariablePaie";
-
 //gestion ClientFournisseur imports
 import MenuClientFournisseur from "./clientFournisseur/menuClientFournisseur";
 import ListerClients from "./clientFournisseur/listerClientFournisseur/listerClients";
@@ -87,6 +85,7 @@ import CreerDepense from "./gestion_factures/creerDepense";
 import DetailFacture from "./gestion_factures/detailFacture";
 
 //gestion Variables de paie
+import ParentAddVariablePaie from "./social/variables_de_paie/addVariablePaie/ParentAddVariablePaie";
 
 export default class Routes extends Component {
   render() {

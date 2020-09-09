@@ -104,6 +104,7 @@ const AxiosCenter = {
     });
   },
 
+      //Variables de paie
   getAllTypesAbsence() {
     return ApiBackEnd({
       method: "GET",
@@ -142,11 +143,41 @@ const AxiosCenter = {
     })
   },
 
+  modifyHeureSupplementaire(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/heures-supplementaires`,
+      data: values,
+    })
+  },
+
+  deleteHeureSupplementaire(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/heures-supplementaires/${id}`,
+    })
+  },
+
   createAvanceRappelSalaire(values) {
     return ApiBackEnd({
       method: "POST",
-      url: '/avance-rappel-salaires',
+      url: `/avance-rappel-salaires`,
       data: values,
+    })
+  },
+
+  modifyAvanceRappelSalaire(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/avance-rappel-salaires`,
+      data: values,
+    })
+  },
+
+  deleteAvanceRappelSalaire(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/avance-rappel-salaires/${id}`,
     })
   },
 
@@ -157,6 +188,7 @@ const AxiosCenter = {
       data: values
     })
   },
+      //Fin Variables de paie
 
   getWrapperEmploye(id) {
     return ApiBackEnd({
