@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
-import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
+import React, {Component} from 'react';
+import {MDBBtn, MDBContainer, MDBModal, MDBModalBody, MDBModalFooter, MDBModalHeader} from 'mdbreact';
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
-import { toast } from "react-toastify";
-import { Redirect } from "react-router-dom";
+import {toast} from "react-toastify";
+import {Redirect} from "react-router-dom";
+
 class SupprimerClient extends Component {
   state = {
     modal: false,

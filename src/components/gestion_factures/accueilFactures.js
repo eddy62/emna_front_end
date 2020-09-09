@@ -2,7 +2,7 @@ import React from "react";
 import FiltresFacture from "./filtreFactures";
 import ListeFactures from "./listeFactures";
 import Dropdown from "react-bootstrap/Dropdown";
-import { BrowserRouter as Link } from "react-router-dom";
+import {BrowserRouter as Link} from "react-router-dom";
 
 class AccueilFacture extends React.Component {
   constructor(props) {

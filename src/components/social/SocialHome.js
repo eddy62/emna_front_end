@@ -1,18 +1,18 @@
 import React from "react";
 import "./social.scss";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import AxiosCenter from "../../shared/services/AxiosCenter";
 import UserService from "../../shared/services/UserService";
 import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCardHeader,
-  MDBBtn,
-  MDBContainer,
-  MDBRow,
-  MDBCol,
+    MDBBtn,
+    MDBCard,
+    MDBCardBody,
+    MDBCardHeader,
+    MDBCardText,
+    MDBCardTitle,
+    MDBCol,
+    MDBContainer,
+    MDBRow,
 } from "mdbreact";
 
 class AccueilSocial extends React.Component {

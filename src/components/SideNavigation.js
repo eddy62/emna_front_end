@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  MDBSideNavLink,
-  MDBSideNavCat,
-  MDBSideNavNav,
-  MDBSideNav,
-} from "mdbreact";
+import {MDBSideNav, MDBSideNavCat, MDBSideNavLink, MDBSideNavNav,} from "mdbreact";
 import AxiosCenter from "../shared/services/AxiosCenter";
 import UserService from "./../shared/services/UserService";
 import "./style.scss";

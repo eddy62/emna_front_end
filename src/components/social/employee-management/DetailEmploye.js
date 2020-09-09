@@ -1,20 +1,12 @@
 import React from "react";
 import * as dateFns from "date-fns";
-import { fr } from "date-fns/esm/locale";
+import {fr} from "date-fns/esm/locale";
 import "./gestionEmploye.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import DeleteEmploye from "./DeleteEmploye";
 import ArchiveEmploye from "./ArchiveEmploye";
 import UserService from "../../../shared/services/UserService";
-import {
-  MDBCardTitle,
-  MDBCardHeader,
-  MDBContainer,
-  MDBCard,
-  MDBBtn,
-  MDBRow,
-  MDBCardBody,
-} from "mdbreact";
+import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBContainer, MDBRow,} from "mdbreact";
 import Loading from "../../../shared/component/Loading";
 
 class DetailEmploye extends React.Component {

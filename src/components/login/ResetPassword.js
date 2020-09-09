@@ -1,22 +1,10 @@
 import React from "react";
 import "./style.scss";
-import { Formik } from "formik";
+import {Formik} from "formik";
 import AxiosCenter from "../../shared/services/AxiosCenter";
-import { withRouter, Redirect } from "react-router-dom";
-import TokenService from "../../shared/services/TokenService";
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBInput,
-  MDBBtn,
-  MDBIcon,
-  MDBModalFooter,
-} from "mdbreact";
+import {Redirect, withRouter} from "react-router-dom";
+import {MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
 import * as Yup from "yup";
-import UserService from "../../shared/services/UserService";
 import ErrorMessForm from "./../../shared/component/ErrorMessForm";
 import queryString from "query-string";
 

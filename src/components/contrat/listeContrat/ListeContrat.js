@@ -1,6 +1,6 @@
 import React from 'react';
 import ContratService from '../service/ContratService';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Loading from "../../../shared/component/Loading";
 
 export default class ListeContrat extends React.Component {

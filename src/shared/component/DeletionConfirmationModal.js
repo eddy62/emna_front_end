@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { MDBContainer, MDBBtn, MDBModal, MDBModalHeader, MDBModalFooter } from 'mdbreact';
+import React, {Component} from 'react';
+import {MDBBtn, MDBContainer, MDBModal, MDBModalFooter, MDBModalHeader} from 'mdbreact';
 
 export default class DeletionConfirmationModal extends Component {
 

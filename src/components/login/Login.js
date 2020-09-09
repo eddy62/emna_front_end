@@ -1,23 +1,13 @@
 import React from "react";
 import "./style.scss";
-import { Formik } from "formik";
+import {Formik} from "formik";
 import AxiosCenter from "../../shared/services/AxiosCenter";
-import { withRouter } from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import TokenService from "../../shared/services/TokenService";
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBCard,
-  MDBCardBody,
-  MDBInput,
-  MDBBtn,
-  MDBModalFooter,
-} from "mdbreact";
+import {MDBBtn, MDBCard, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
 import * as Yup from "yup";
 import UserService from "../../shared/services/UserService";
 import ErrorMessForm from "./../../shared/component/ErrorMessForm";
-import { Link } from "react-router-dom";
 
 const SignupSchema = Yup.object().shape({
   username: Yup.string().required("Veuillez renseigner votre Login"),

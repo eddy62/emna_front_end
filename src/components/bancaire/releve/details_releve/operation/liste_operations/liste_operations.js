@@ -1,10 +1,10 @@
 import AxiosCenter from "../../../../../../shared/services/AxiosCenter";
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Loading from "../../../../../../shared/component/Loading";
 import UserService from "../../../../../../shared/services/UserService";
 import DeletionConfirmationModal from "../../../../../../shared/component/DeletionConfirmationModal";
-import {MDBCard,MDBCardBody,MDBCardTitle,MDBContainer,MDBCol} from "mdbreact";
+import {MDBCard, MDBCardBody, MDBCardTitle, MDBCol, MDBContainer} from "mdbreact";
 import RedirectionBtn from "../../../../../../shared/component/RedirectionBtn";
 
 export default class ListeOperations extends React.Component {

@@ -1,19 +1,10 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import React, {Component} from "react";
+import {Redirect} from "react-router-dom";
 import "./gestionEmploye.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
-import { toast } from "react-toastify";
-import {
-  MDBContainer,
-  MDBBtn,
-  MDBModal,
-  MDBModalBody,
-  MDBModalHeader,
-  MDBIcon,
-  MDBModalFooter,
-  MDBRow,
-} from "mdbreact";
+import {toast} from "react-toastify";
+import {MDBBtn, MDBContainer, MDBIcon, MDBModal, MDBModalBody, MDBModalFooter, MDBModalHeader, MDBRow,} from "mdbreact";
 
 class ArchiveEmploye extends Component {
   constructor(props) {

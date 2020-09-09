@@ -1,20 +1,11 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import { toast } from "react-toastify";
+import React, {Component} from "react";
+import {Redirect} from "react-router-dom";
+import {toast} from "react-toastify";
 import * as dateFns from "date-fns";
 import "./gestionEmploye.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
-import {
-  MDBContainer,
-  MDBBtn,
-  MDBModal,
-  MDBModalBody,
-  MDBModalHeader,
-  MDBIcon,
-  MDBModalFooter,
-  MDBRow,
-} from "mdbreact";
+import {MDBBtn, MDBContainer, MDBIcon, MDBModal, MDBModalBody, MDBModalFooter, MDBModalHeader, MDBRow,} from "mdbreact";
 
 class DeleteEmploye extends Component {
   constructor(props) {

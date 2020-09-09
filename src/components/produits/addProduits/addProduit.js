@@ -1,18 +1,11 @@
 import React from "react";
-import { Formik, Field, ErrorMessage } from "formik";
+import {ErrorMessage, Field, Formik} from "formik";
 import * as Yup from "yup";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import { Link } from "react-router-dom";
-import {
-    MDBBtn, MDBCardTitle,
-    MDBCardHeader,
-    MDBContainer,
-    MDBInput,
-} from "mdbreact";
+import {Link} from "react-router-dom";
+import {MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput,} from "mdbreact";
 import UserService from '../../../shared/services/UserService';
-import { toast } from "react-toastify";
-
-
+import {toast} from "react-toastify";
 
 
 const ComposantErreur = (props) => (

@@ -1,20 +1,11 @@
-import React, {Component} from "react";
+import React from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
-import {
-    MDBBtn, MDBCard, MDBCardBody,
-    MDBCardHeader, MDBCardTitle, MDBContainer,
-    MDBDropdown,
-    MDBDropdownItem,
-    MDBDropdownMenu,
-    MDBDropdownToggle, MDBInput,
-    MDBRow
-} from "mdbreact";
+import {MDBBtn, MDBContainer, MDBInput, MDBRow} from "mdbreact";
 
 import Loading from "../../../../../shared/component/Loading";
-import * as actions from "react-bootstrap-sweetalert";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.min.css';
 
 const ComposantErreur = (props) => (

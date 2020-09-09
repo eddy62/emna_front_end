@@ -1,4 +1,4 @@
-import {MDBCard,MDBCardBody,MDBCardTitle,MDBCol} from "mdbreact";
+import {MDBCard, MDBCardBody, MDBCardTitle, MDBCol} from "mdbreact";
 import React from "react";
 
 const ReleveDetailsCard = (props) => {
