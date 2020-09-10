@@ -41,7 +41,7 @@ export default class EditStatement extends Component {
     if (this.state.roleUser === "ROLE_SOCIETY" || 
         this.state.roleUser === "ROLE_ADMIN") {
           const idStatement = this.props.match.params.id;
-          AxiosCenter.getReleveById(idStatement)
+          AxiosCenter.getStatementById(idStatement)
           .then((response) => {
             const statement = response.data;
             this.setState({ statement: statement, loaded: true });
