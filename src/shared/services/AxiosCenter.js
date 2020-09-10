@@ -255,6 +255,13 @@ const AxiosCenter = {
       data: values,
     });
   },
+
+  getOneWrapperVariablesDePaie(idEmploye, year, month) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/wrappervariablespaie/employe/${idEmploye}/annee/${year}/mois/${month}`
+    })
+  },
   //fin Gestion Social
 
   getReleve() {

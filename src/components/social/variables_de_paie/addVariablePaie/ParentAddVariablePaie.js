@@ -26,6 +26,7 @@ export default class ParentAddVariablePaie extends Component {
         this.state = {
           loaded: false,
           societyName: '',
+          society: {},
           listeEmployes: [],
           idNameSelected: '',
           yearSelected: new Date().getFullYear(),
@@ -62,8 +63,8 @@ export default class ParentAddVariablePaie extends Component {
         //console.log(idSociete);
         AxiosCenter.getSociete(idSociete)
         .then((response) => {
-            const societyName = response.data.civilite;
-            this.setState({ societyName });
+            const society = response.data;
+            this.setState({ society });
         })
         .catch((error) => {
             console.log(error);
@@ -104,7 +105,7 @@ export default class ParentAddVariablePaie extends Component {
                     <MDBContainer>
                         <div className="titre">
                             <MDBCardHeader color="default-color">
-                                <MDBCardTitle tag="h2">Raison Sociale {this.state.societyName}</MDBCardTitle>
+                                <MDBCardTitle tag="h2">Raison Sociale {this.state.society.civilite}</MDBCardTitle>
                             </MDBCardHeader>
                         </div>
 
@@ -263,17 +264,15 @@ export default class ParentAddVariablePaie extends Component {
 
                             <div className="btnContent">
                                 <div className="btnConainer">
-                                    <Link to="">
-                                        <MDBBtn color="teal accent-3" rounded size="sm"
-                                            onClick={() => {
-                                                this.props.history.push(
-                                                ""
-                                                );
-                                            }}
-                                            >
-                                            Voir Détail
-                                        </MDBBtn>
-                                    </Link>
+                                    <MDBBtn color="teal accent-3" rounded size="sm" disabled={!this.state.idNameSelected}
+                                        onClick={() => {
+                                            this.props.history.push(
+                                            "/variables_de_paie/updateVariablePaie/ParentUpdateVariablePaie/" + this.state.society.id + "/" + this.state.idNameSelected
+                                            );
+                                        }}
+                                        >
+                                        Voir Détail
+                                    </MDBBtn>
                                                         
                                     <Link to="/socialHome/1">
                                         <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm">
