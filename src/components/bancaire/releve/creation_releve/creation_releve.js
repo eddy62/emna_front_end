@@ -17,7 +17,10 @@ const lexique = {
 const releveSchema = Yup.object().shape(
     {
         dateDebut: Yup.date().required("La date de début est obligatoire"),
-        dateFin: Yup.date().required("La date de fin est obligatoire"),
+        dateFin: Yup.date().required("La date de fin est obligatoire").min(
+            Yup.ref('dateDebut'),
+            "La date de fin doit être ultérieure à la date de début"
+        ),
         banque: Yup.string().required("Le nom de la banque est requit")
     });
 
