@@ -55,7 +55,7 @@ const AddSociete = () => {
         
         try {
             e.preventDefault();
-            await AxiosCenter.addSociete(user);
+            await AxiosCenter.addSociety(user);
             if(user.activated){
                 history.push("/users/stvu/societes/active")
             }

@@ -7,7 +7,7 @@ import {MDBBtn} from "mdbreact";
 
 class CreationReleve extends React.Component {
   submit = (values) => {
-    AxiosCenter.postReleve(values)
+    AxiosCenter.postStatement(values)
       .then(() => {
         this.props.history.push("/menureleve");
       })

@@ -17,12 +17,12 @@ class ListeFactures extends React.Component {
       return facture.id === id
     });
     factures.splice(index,1);
-    Axios.deleteFacture(id);
+    Axios.deleteInvoice(id);
     this.setState({factures:factures});
   }
 
   componentDidMount(){
-    Axios.getFactureBySociete(1).then((res) => {
+    Axios.getInvoicesBySociety(1).then((res) => {
       const factures = res.data;
       this.setState({factures});
     });

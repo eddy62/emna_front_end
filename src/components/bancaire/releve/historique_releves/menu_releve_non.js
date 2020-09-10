@@ -9,8 +9,8 @@ export class MenuReleveNon extends React.Component {
         <MDBContainer>
           <div>
             <MDBCardHeader color="default-color">
-              <MDBCardTitle>
-                <h1>Gestion de vos relevés bancaires</h1>
+              <MDBCardTitle  tag="h1">
+                Gestion de vos relevés bancaires
               </MDBCardTitle>
               <br />
             </MDBCardHeader>

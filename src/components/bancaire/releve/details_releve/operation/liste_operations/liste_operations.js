@@ -19,14 +19,14 @@ export default class ListeOperations extends React.Component {
   }
 
   componentDidMount() {
-    AxiosCenter.getOperationByReleveId(this.props.releveId)
+    AxiosCenter.getOperationsByReleveId(this.props.releveId)
       .then((res) => {
         const operations = res.data;
         this.setState({ operations, loaded: true });
       })
       .catch((err) => console.log(err));
 
-      AxiosCenter.getReleveById(this.props.releveId)
+      AxiosCenter.getStatementById(this.props.releveId)
       .then((res) => {
         const releve = res.data;
         const isReleveUnvalid = releve.etatReleveId !== 2;

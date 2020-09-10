@@ -26,7 +26,7 @@ class AccueilSocial extends React.Component {
   componentDidMount() {
     const idSociete = this.props.match.params.id;
     console.log(idSociete);
-    AxiosCenter.getWrapperSociete(idSociete)
+    AxiosCenter.getWrapperSociety(idSociete)
       .then((response) => {
         const societe = response.data;
         console.log(societe);

@@ -16,7 +16,7 @@ export default class ListeRelevesInvalide extends React.Component {
     };
   }
   componentDidMount() {
-    AxiosCenter.getReleveByEtatAndSociety(ReleveConstants.RELEVE_ETAT_INVALIDE, this.state.societyId)
+    AxiosCenter.getStatementsByStateAndSociety(ReleveConstants.RELEVE_ETAT_INVALIDE, this.state.societyId)
       .then((res) => {
         const releves = res.data;
         this.setState({ releves, loaded: true });
@@ -25,7 +25,7 @@ export default class ListeRelevesInvalide extends React.Component {
   }
 
   deleteReleve = (id) => {
-    AxiosCenter.deleteReleve(id).then((res) => this.componentDidMount());
+    AxiosCenter.deleteStatement(id).then((res) => this.componentDidMount());
   };
 
   listerLesReleves(props) {

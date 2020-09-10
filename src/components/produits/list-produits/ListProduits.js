@@ -20,7 +20,7 @@ class ListeProduits extends React.Component {
 
     componentDidMount() {
         if (this.state.roleUser === "ROLE_SOCIETY") {
-            AxiosCenter.getProduit(this.state.societeId)
+            AxiosCenter.getProduct(this.state.societeId)
                 .then((response) => {
                     const columns = [
                         {

@@ -60,7 +60,7 @@ export default class ParentAddVariablePaie extends Component {
           //Récupération de l'id de la société
         const idSociete = this.props.match.params.id;
         //console.log(idSociete);
-        AxiosCenter.getSociete(idSociete)
+        AxiosCenter.getSocietyById(idSociete)
         .then((response) => {
             const society = response.data;
             this.setState({ society });

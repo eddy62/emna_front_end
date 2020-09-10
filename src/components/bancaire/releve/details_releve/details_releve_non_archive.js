@@ -15,7 +15,7 @@ export class DetailsReleveNonArchive extends React.Component {
     }
 
     componentDidMount() {
-        AxiosCenter.getReleveById(this.props.match.params.id)
+        AxiosCenter.getStatementById(this.props.match.params.id)
             .then((res) => {
                 const releve = res.data;
                 this.setState({

@@ -10,7 +10,7 @@ class CreerFacture extends React.Component {
   };
 
   componentDidMount() {
-    axioscenter.getAllClientFournisseurBySociete(1).then((res) => {
+    axioscenter.getAllCustomerSupplierBySociete(1).then((res) => {
       const clients = res.data;
       console.log(clients);
       this.setState({ clients });
@@ -25,11 +25,11 @@ class CreerFacture extends React.Component {
     values.prixHT = this.state.prixtotal - this.state.tva;
     values.moyenDePaiement = "CHEQUE";
     console.log(values);
-    axioscenter.uploadFacture(values, documents).then((res) => {
+    axioscenter.uploadInvoice(values, documents).then((res) => {
       for (let i = 0; i < values.produits.length; i++) {
         let produitToUpload = values.produits[i];
         produitToUpload.factureId = res.data.id;
-        axioscenter.createLigneProduit(produitToUpload);
+        axioscenter.createLineProduct(produitToUpload);
       }
     });
   };

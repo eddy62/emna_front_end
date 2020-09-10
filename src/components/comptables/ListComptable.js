@@ -12,8 +12,8 @@ const ListComptable = () => {
       <MDBContainer>
         <div>
           <MDBCardHeader color="default-color">
-            <MDBCardTitle>
-              <h1>Gestion Des Comptables</h1>
+            <MDBCardTitle tag="h1">
+              Gestion Des Comptables
             </MDBCardTitle>
             <br />
           </MDBCardHeader>

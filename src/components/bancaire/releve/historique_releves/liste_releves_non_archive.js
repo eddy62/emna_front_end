@@ -17,7 +17,7 @@ export default class ListeRelevesNonArchive extends React.Component {
   }
 
   componentDidMount() {
-    AxiosCenter.getReleveByEtatAndSociety(ReleveConstants.RELEVE_ETAT_NON_ARCHIVE, this.state.societyId)
+    AxiosCenter.getStatementsByStateAndSociety(ReleveConstants.RELEVE_ETAT_NON_ARCHIVE, this.state.societyId)
       .then((res) => {
         const releves = res.data;
         this.setState({ releves, loaded: true });

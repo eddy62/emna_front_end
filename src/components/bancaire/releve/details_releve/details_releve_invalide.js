@@ -17,7 +17,7 @@ export class DetailsReleveInvalide extends React.Component {
     }
 
     componentDidMount() {
-        AxiosCenter.getReleveById(this.props.match.params.id)
+        AxiosCenter.getStatementById(this.props.match.params.id)
             .then((res) => {
                 const releve = res.data;
                 this.setState({
@@ -51,7 +51,7 @@ export class DetailsReleveInvalide extends React.Component {
         );
     };
 
-    validateReleve = () => AxiosCenter.validateReleve(this.props.match.params.id)
+    validateReleve = () => AxiosCenter.validateStatement(this.props.match.params.id)
 
     render() {
         if (this.state.loaded) {

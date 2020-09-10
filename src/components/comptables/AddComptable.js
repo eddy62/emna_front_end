@@ -54,7 +54,7 @@ const AddComptable = () => {
     const onSubmit = async (e) => {
         try {
             e.preventDefault();
-            await AxiosCenter.addComptable(user);
+            await AxiosCenter.addAccountant(user);
             if(user.activated){
                 history.push("/users/stvu/comptables/active")
             }

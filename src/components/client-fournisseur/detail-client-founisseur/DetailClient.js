@@ -15,7 +15,7 @@ class Details extends React.Component {
     }
 
     componentDidMount() {
-        AxiosCenter.getClientFournisseur(this.state.idClient)
+        AxiosCenter.getCustomerSupplier(this.state.idClient)
             .then((response) => {
                 const client = response.data;
                 console.log(" get client " + response.data)
