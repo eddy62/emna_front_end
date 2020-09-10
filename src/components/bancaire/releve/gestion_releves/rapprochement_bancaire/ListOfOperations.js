@@ -1,16 +1,50 @@
 import React, {Component} from 'react';
-import {MDBCardTitle} from 'mdbreact';
+import {MDBCardTitle, MDBTable, MDBTableBody, MDBTableHead} from 'mdbreact';
+import Axios from "../../../../../shared/services/AxiosCenter";
+import Loading from "../../../../../shared/component/Loading";
+import StatementOperation from "../StatementOperation";
 
-class ListOfOperations extends Component {
-  render() {
-    return (
-      <div>
-        <MDBCardTitle className="card-title text-center py-2">
-          Liste des opérations
-        </MDBCardTitle>         
-      </div>
-    );
-  }
+export default class ListOfOperations extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            operation: {},
+            loaded: false,
+        }
+    }
+
+    componentDidMount() {
+        Axios.getOperationByReleveId(this.props.idReleve).then((res) => {
+            const operations = res.data;
+            this.setState({operations, loaded: true});
+        });
+    }
+
+    render() {
+        if (!this.state.loaded) return <Loading/>
+        return (
+            <div>
+                <MDBCardTitle className="card-title text-center py-2">
+                    Liste des opérations
+                </MDBCardTitle>
+                <MDBTable striped scrollY maxHeight="500px">
+                    <MDBTableHead>
+                        <tr>
+                            <td><strong>Id</strong></td>
+                            <td><strong>Date</strong></td>
+                            <td><strong>Description</strong></td>
+                            <td><strong>Solde</strong></td>
+                            <td><strong>Type</strong></td>
+                        </tr>
+                    </MDBTableHead>
+                    <MDBTableBody>
+                        {this.state.operations.map((operation, index) => (
+                            <StatementOperation key={operation.id} operation={operation}/>
+                        ))}
+                    </MDBTableBody>
+                </MDBTable>
+            </div>
+        );
+    }
 }
-
-export default ListOfOperations;

@@ -42,7 +42,7 @@ class BankReconciliation extends Component {
                 <MDBRow className='py-5'>
                     <MDBCol>
                         <MDBCard>
-                            <ListOfOperations/>
+                            <ListOfOperations idReleve={this.state.releve.id}/>
                         </MDBCard>
                     </MDBCol>
                     <MDBCol>
