@@ -64,7 +64,7 @@ export class DetailsReleve extends React.Component {
 
                     <div className="row">
                       <div className="col-12">
-                        <ListeOperations releveId={this.state.releveId} />
+                        <ListeOperations releveId={this.state.releveId}/>
                       </div>
                     </div>
                     <p>

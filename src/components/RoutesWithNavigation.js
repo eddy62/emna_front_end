@@ -37,7 +37,7 @@ class App extends Component {
       });
     }
   };
-  
+
   logout = () => {
     this.props.history.push("/login");
     TokenService.deconnexion();

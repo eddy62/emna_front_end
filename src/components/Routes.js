@@ -38,6 +38,7 @@ import DetailsOperation from "./bancaire/releve/details_releve/operation/details
 import EditOperation from "./bancaire/releve/details_releve/operation/edit_operation/pageEditOperationStatement";
 import MenuReleveNon from "./bancaire/releve/historique_releves/menu_releve_non";
 import ListeRelevesInvalide from "./bancaire/releve/historique_releves/liste_releves_invalide";
+import ListeRelevesValide from "./bancaire/releve/historique_releves/liste_releves_valide";
 import ListeRelevesNonArchive from "./bancaire/releve/historique_releves/liste_releves_non_archive";
 import PageAddOperationStatement
   from "./bancaire/releve/details_releve/operation/creation_operation/pageAddOperationStatement";
@@ -80,10 +81,10 @@ import UpdateProduit from "./produits/update-produit/UpdateProduit";
 import Referentiels from "./referentiels/Referentiels";
 
 //GestionFactures
-import AccueilFacture from "./gestion_factures/accueilFactures";
-import CreerFacture from "./gestion_factures/creerFacture";
-import CreerDepense from "./gestion_factures/creerDepense";
-import DetailFacture from "./gestion_factures/detailFacture";
+import AccueilFacture from "./gestion_factures/factures/accueilFactures";
+import CreerFacture from "./gestion_factures/factures/creerFacture";
+import CreerDepense from "./gestion_factures/depenses/creerDepense";
+import AccueilDepense from './gestion_factures/depenses/accueilDepenses';
 
 //gestion Variables de paie
 
@@ -108,8 +109,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
         {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
-        <PrivateRoute path="/newfacture" component={CreerFacture} />
-        <PrivateRoute path="/detailfacture" component={DetailFacture} />
+        <PrivateRoute path="/accueildepenses" component={AccueilDepense} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />
         <PrivateRoute path="/newdepense" component={CreerDepense} />
         {/* Gestion des Contrats*/}
@@ -256,6 +256,10 @@ export default class Routes extends Component {
           component={ListOfInvoices}
         />
         <PrivateRoute path="/releveinvalide" component={ListeRelevesInvalide} />
+        <PrivateRoute
+            path="/relevevalide"
+            component={ListeRelevesValide}
+        />
         <PrivateRoute
           path="/relevenonarchive/:id"
           component={ListeRelevesNonArchive}

@@ -29,7 +29,7 @@ export default class ListeContrat extends React.Component {
                       <h5>  {contrat.contratTitre} - {contrat.employerNom} {contrat.employerPrenom}
                        <button type="button" className="btn btn--danger">Supprimer</button>
                         <Link to={"/detailcontrat/"+contrat.employerId}>
-                            <button type="button" className="btn btn-outline-success">Voir le contrat</button>
+                            <button type="button" className="btn btn-outline-success text-right">Voir le contrat</button>
                         </Link>
                           </h5>
                     </div>
@@ -38,16 +38,15 @@ export default class ListeContrat extends React.Component {
                 return(
                     <div key={index} className="alert alert-danger" >
                        <h5> {contrat.contratTitre} - {contrat.employerNom} {contrat.employerPrenom}  - En attente d'une signature
-                           <button type="button" className="btn btn--danger">Supprimer</button>
+                           <button type="button" className="btn btn--danger text-right">Supprimer</button>
                         <Link to={"/detailcontrat/"+contrat.employerId}>
-                              <button type="button" className="btn btn-outline-danger">Voir le contrat</button>
+                              <button type="button" className="btn btn-outline-danger text-right">Voir le contrat</button>
                         </Link>
-                           <div className="file-field medium">
-                               <div className="btn btn-outline-secondary btn-rounded waves-effect float-left">
+
+                               <div className="btn btn-outline-secondary btn-rounded waves-effect text-right  file-field medium">
                                    <span>Upload</span>
                                    <input type="file"/>
                                </div>
-                           </div>
                        </h5>
                     </div>
                 );

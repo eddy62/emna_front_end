@@ -1,13 +1,40 @@
 import React from "react";
 import {ErrorMessage, Field, FieldArray, Form, Formik} from "formik";
+import axioscenter from "../../../shared/services/AxiosCenter";
+import * as Yup from "yup";
+import UserService from "../../../shared/services/UserService";
+import Loading from "../../../shared/component/Loading";
 
-class CreerDepense extends React.Component {
+class CreerFacture extends React.Component {
   state = {
+    loaded: false,
     prixtotal: 0,
     tva: 0,
   };
+
+  componentDidMount() {
+    axioscenter.getAllCustomerSupplierBySociete(UserService.getSocietyId()).then((resarray) => {
+      this.setState({
+        clients: resarray[1].data,
+        numfact: resarray[0].data +1,
+        loaded: true
+      })
+    })
+  }
+
   submit = (values) => {
-    console.log(values);
+    let documents = values.documents;
+    values.documents = null;
+    values.prixTTC = this.state.prixtotal;
+    values.tva = this.state.tva;
+    values.prixHT = this.state.prixtotal - this.state.tva;
+    axioscenter.uploadInvoice(values, documents).then((res) => {
+      for (let i = 0; i < values.produits.length; i++) {
+        let produitToUpload = values.produits[i];
+        produitToUpload.factureId = res.data.id;
+        axioscenter.createLineProduct(produitToUpload);
+      }
+    });
   };
 
   updatePrix = (ev, index, produits, setFieldValue, remove) => {
@@ -36,8 +63,25 @@ class CreerDepense extends React.Component {
     this.setState({ tva: tva });
   };
 
+//   userSchema = Yup.object().shape({
+//     numfact: Yup.number("Format non conforme").required("Le champ est obligatoire"),
+//     nom: Yup.string().max(10, "10 caractères maximum"),
+//     tva: Yup.number("Format non conforme").required("Le champ est obligatoire"),
+//     prix: Yup.number("Format non conforme").required("Le champ est obligatoire"),
+//     description: Yup.string().max(20, "20 caractères maximum"),
+//     numeroRue: Yup.string().required("Le champ est obligatoire"),
+//     nomRue: Yup.string().required("Le champ est obligatoire"),
+//     codePostal: Yup.string().required("Le champ est obligatoire"),
+//     ville: Yup.string().required("Le champ est obligatoire"),
+//     pays: Yup.string().required("Le champ est obligatoire")
+// });
+
+
   render() {
+    if (this.state.loaded === false) return <Loading />
     const initialValues = {
+      numfact: this.state.numfact,
+      documents: [],
       produits: [
         {
           nom: "",
@@ -54,8 +98,8 @@ class CreerDepense extends React.Component {
         d-flex flex-column justify-content-center"
       >
         {" "}
-        <h1>Nouvelle dépense</h1>
-        <Formik onSubmit={this.submit} initialValues={initialValues}>
+        <h1>Nouvelle Facture</h1>
+        <Formik onSubmit={this.submit} initialValues={initialValues} validationSchema={this.userSchema}>
           {({
             values,
             handleBlur,
@@ -70,7 +114,7 @@ class CreerDepense extends React.Component {
             >
               <div className="form-group row">
                 <label className="col-form-label">Facture N°</label>
-                <div className="col-md-1">
+                <div className="col-md-2">
                   <input
                     type="text"
                     name="numfact"
@@ -81,20 +125,39 @@ class CreerDepense extends React.Component {
                   />
                 </div>
               </div>
-              <div className="form-group">
-                <label>Fournisseur</label>
-                <select
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                <label>Client</label>
+                <input
                   type="text"
                   name="client"
+                  list="clients"
                   className="form-control"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.client}
+                />
+                <datalist id="clients">
+                  {this.state.clients.map((client) => (
+                    <option value={client.nom} label={client.nom} key={client.id}></option>
+                  ))}
+                </datalist>
+                </div>
+                <div className="form-group col-md-6">
+                <label>Moyen de Paiement</label>
+                <select
+                  name="moyenDePaiement"
+                  className=" form-control browser-default custom-select"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.moyenDePaiement}
                 >
-                  <option value="" label="Selectionner le fournisseur"></option>
-                  <option value="auchan" label="Auchan"></option>
-                  <option value="carrefour" label="Carrefour"></option>
+                    <option value="Chèque" label="Chèque"></option>
+                    <option value="Espèces" label="Espèces"></option>
+                    <option value="Carte Bancaire" label="Carte Bancaire"></option>
+                    <option value="Virement" label="Virement"></option>
                 </select>
+                </div>
               </div>
               <div className="form-row">
                 <div className="form-group col-md-6">
@@ -121,6 +184,53 @@ class CreerDepense extends React.Component {
                     value={values.echeance}
                   />
                 </div>
+              </div>
+              <div className="form-group">
+                <label>N° de rue</label>
+                <input
+                  type="text-area"
+                  name="adresse"
+                  className="form-control"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.numAdresse}
+                />
+                <label>Nom de rue</label>
+                <input
+                  type="text-area"
+                  name="adresse"
+                  className="form-control"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.nomRueAdresse}
+                />
+                <label>Code Postal</label>
+                <input
+                  type="text-area"
+                  name="adresse"
+                  className="form-control"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.codePostal}
+                />
+                <label>Ville</label>
+                <input
+                  type="text-area"
+                  name="adresse"
+                  className="form-control"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.ville}
+                />
+                <label>Pays</label>
+                <input
+                  type="text-area"
+                  name="adresse"
+                  className="form-control"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.pays}
+                />
               </div>
               <FieldArray name="produits">
                 {({ insert, remove, push }) => (
@@ -275,7 +385,7 @@ class CreerDepense extends React.Component {
                 )}
               </FieldArray>
               <div className="form-group">
-                <label>Notes</label>
+                <label>Message</label>
                 <input
                   type="text"
                   name="message"
@@ -287,20 +397,12 @@ class CreerDepense extends React.Component {
               </div>
               <h2>TVA : {this.state.tva} €</h2>
               <h2>Prix total : {this.state.prixtotal} €</h2>
-              <div className="form-group">
-                <input
-                  type="file"
-                  className="form-control-file"
-                  id="exampleFormControlFile1"
-                  multiple
-                />
-              </div>
               <button
                 type="submit"
                 className="btn btn-primary"
                 disabled={isSubmitting}
               >
-                Enregistrer
+                Générer
               </button>
             </Form>
           )}
@@ -310,4 +412,4 @@ class CreerDepense extends React.Component {
   }
 }
 
-export default CreerDepense;
+export default CreerFacture;

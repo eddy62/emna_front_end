@@ -1,7 +1,8 @@
 import React from "react";
 import FactureElement from "./factureElement";
 import Table from "react-bootstrap/Table";
-import Axios from "../../shared/services/AxiosCenter";
+import Axios from "../../../shared/services/AxiosCenter";
+import UserService from './../../../shared/services/UserService';
 
 class ListeFactures extends React.Component {
   constructor(props){
@@ -22,7 +23,7 @@ class ListeFactures extends React.Component {
   }
 
   componentDidMount(){
-    Axios.getInvoicesBySociety(1).then((res) => {
+    Axios.getInvoicesBySociety(UserService.getSocietyId()).then((res) => {
       const factures = res.data;
       this.setState({factures});
     });
@@ -36,9 +37,8 @@ class ListeFactures extends React.Component {
           <thead>
             <tr>
               <th>Num. Facture</th>
-              <th>Client/Fournisseur</th>
+              <th>Client</th>
               <th>Date</th>
-              <th>Echéance</th>
               <th>Total</th>
               <th>Etat Facture</th>
             </tr>
