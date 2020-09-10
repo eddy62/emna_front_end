@@ -1,9 +1,17 @@
 import React, { Component } from "react";
 import "./../style2.scss";
-import { MDBContainer, MDBCardHeader, MDBCardTitle, MDBRow, MDBTable, MDBTableBody, MDBTableHead, MDBCol, MDBBtn, MDBCard  } from "mdbreact";
+import { MDBContainer, MDBCardHeader, MDBCardTitle, MDBRow, MDBCol, MDBBtn, MDBCard  } from "mdbreact";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import Loading from "../../../../shared/component/Loading"
 import { Link } from "react-router-dom";
+import AbsenceComponent from "./children/AbsenceComponent";
+import TableNoteDeFrais from "./tableUpdate/TableNoteDeFrais";
+import TableAbsence from "./tableUpdate/TableAbsence";
+import NoteDeFraisComponent from "./children/NoteDeFraisComponent";
+import TablePrime from "./tableUpdate/TablePrime"
+import PrimeComponent from "./children/PrimeComponent";
+import TableHeureSup from "./tableUpdate/TableHeureSup";
+import TableAvanceRappelSalaire from "./tableUpdate/TableAvanceRappelSalaire"
 
 export default class ParentUpdateVariablePaie extends Component {
 
@@ -42,8 +50,11 @@ export default class ParentUpdateVariablePaie extends Component {
         heureSupList: [],
         primeList: [],
         noteDeFraisList: [],
-        avanceRappelSalaireList: []
+        avanceRappelSalaireList: [],
+        key: '',
+        idToDelete: ''
         };
+        this.handleClick = this.handleClick.bind(this);
       }
 
       componentDidMount() {
@@ -58,13 +69,6 @@ export default class ParentUpdateVariablePaie extends Component {
             const primeList = response.data.wrapperPrimeList;            
             const noteDeFraisList = response.data.noteDeFraisDTOList;
             const avanceRappelSalaireList = response.data.avanceRappelSalaireDTOList;
-                       console.log("Response data");
-            console.log(response.data);
-            console.log({absenceList});
-            console.log({heureSupList});
-            console.log({primeList});
-            console.log({noteDeFraisList});
-            console.log({avanceRappelSalaireList});
             this.setState({
                 absenceList: absenceList,
                 heureSupList: heureSupList,
@@ -101,12 +105,6 @@ export default class ParentUpdateVariablePaie extends Component {
                     const primeList = response.data.wrapperPrimeList;            
                     const noteDeFraisList = response.data.noteDeFraisDTOList;
                     const avanceRappelSalaireList = response.data.avanceRappelSalaireDTOList;
-                    console.log("changeHandler")
-                    console.log({absenceList});
-                    console.log({heureSupList});
-                    console.log({primeList});
-                    console.log({noteDeFraisList});
-                    console.log({avanceRappelSalaireList});
                     this.setState({
                         absenceList,
                         heureSupList,
@@ -119,181 +117,25 @@ export default class ParentUpdateVariablePaie extends Component {
             })            
         };
 
-            NoteDeFraisTable = () => {
-            return (
-              <MDBTable>
-                <MDBTableHead color="default-color">
-                  <tr>
-                    <th className="font-weight-bold">Note de frais</th>
-                    <th>Date</th>
-                    <th>Montant</th>
-                    <th>Justificatif(s)</th>
-                    <th className="w-25"></th>
-                  </tr>
-                </MDBTableHead>
-                <MDBTableBody>
-                {this.state.noteDeFraisList.map((frais, index) => (
-                    <tr key={index}>
-                        <td>{frais.designation}</td>
-                        <td>{frais.date}</td>
-                        <td>{frais.montant} €</td>
-                        <td>{frais.justificatif}</td>
-                        {frais.etatVariablePaieId === 1 ? (
-                            <td>
-                                <MDBBtn color="teal accent-3" rounded size="sm">UPDATE</MDBBtn>
-                                <MDBBtn color="danger" rounded size="sm">DELETE</MDBBtn>
-                            </td>
-                        ) : (
-                            <td>Confirmé</td>
-                        )}
-                    </tr>
-                ))}          
-                </MDBTableBody>
-              </MDBTable>
-            );
-          }
+        /*getIdToDelete(compName, key) {
+                console.log(key);
+            this.setState({render:compName, key})        }*/
 
-          AbsenceTable = () => {
-            return (
-              <MDBTable>
-                <MDBTableHead color="default-color">
-                  <tr>
-                    <th className="font-weight-bold">Absence</th>
-                    <th>Du</th>
-                    <th>Au</th>
-                    <th>Justificatif(s)</th>
-                    <th className="w-25"></th>
-                  </tr>
-                </MDBTableHead>
-                
-                {this.state.absenceList.length ? (
-                    <MDBTableBody>
-                        {this.state.absenceList.map((abs, index) => (
-                            <tr key={index}>
-                                <td>{abs.intitule}</td>
-                                <td>{abs.debutAbsence}</td>
-                                <td>{abs.finAbsence}</td>
-                                <td>{abs.justificatif}</td>
-                                {abs.etatVariablePaieId === 1 ? (
-                                    <td>
-                                        <MDBBtn color="teal accent-3" rounded size="sm">UPDATE</MDBBtn>
-                                        <MDBBtn color="danger" rounded size="sm">DELETE</MDBBtn>
-                                    </td>
-                                ) : (
-                                    <td>Confirmé</td>
-                                )}
-                            </tr>
-                        ))}          
-                        </MDBTableBody>
-                ) : (
-                    <MDBTableBody className="w-100 d-flex justify-content-center">
-                        <tr>
-                            <td colSpan="5">Pas d'absence ce mois</td>
-                        </tr>
-                    </MDBTableBody>
-                )}
-              </MDBTable>
-            );
-          }
-
-          PrimeTable = () => {
-              
-            console.log(this.state.primeList);
-            return (
-              <MDBTable>
-                <MDBTableHead color="default-color">
-                  <tr>
-                    <th className="font-weight-bold">Prime</th>
-                    <th>Montant</th>
-                    <th className="w-25"></th>
-                  </tr>
-                </MDBTableHead>
-                {this.state.primeList.length ? (
-                    <MDBTableBody>
-                    {this.state.primeList.map((prime, index) => (
-                        <tr key={index}>
-                            <td>{prime.type}</td>
-                            <td>{prime.montant} €</td>
-                            {prime.etatVariablePaieId === 1 ? (
-                                <td>
-                                    <MDBBtn color="teal accent-3" rounded size="sm">UPDATE</MDBBtn>
-                                    <MDBBtn color="danger" rounded size="sm">DELETE</MDBBtn>
-                                </td>
-                            ) : (
-                                <td>Confirmé</td>
-                            )}
-                        </tr>
-                    ))}          
-                    </MDBTableBody>
-                ) : (
-                    <MDBTableBody className="w-100 d-flex justify-content-center">
-                    <tr>
-                        <td colSpan="3">Pas de prime ce mois</td>
-                    </tr>
-                    </MDBTableBody>
-                )}
-                
-              </MDBTable>
-            );
-          }
-
-          HeureSuppTable = () => {
-            return (
-              <MDBTable>
-                <MDBTableHead color="default-color">
-                  <tr>
-                    <th className="font-weight-bold">Nombre d'heures supplémentaires</th>
-                    <th>Date</th>
-                    <th className="w-25"></th>
-                  </tr>
-                </MDBTableHead>
-                <MDBTableBody>
-                {this.state.heureSupList.map((hsupp, index) => (
-                    <tr key={index}>
-                        <td>{hsupp.nombreHeure} heure(s)</td>
-                        <td>{hsupp.date}</td>
-                        {hsupp.etatVariablePaieId === 1 ? (
-                            <td>
-                                <MDBBtn color="teal accent-3" rounded size="sm">UPDATE</MDBBtn>
-                                <MDBBtn color="danger" rounded size="sm">DELETE</MDBBtn>
-                            </td>
-                        ) : (
-                            <td>Confirmé</td>
-                        )}
-                    </tr>
-                ))}          
-                </MDBTableBody>
-              </MDBTable>
-            );
-          }
-
-          RappelAvanceTable = () => {
-            return (
-              <MDBTable>
-                <MDBTableHead color="default-color">
-                  <tr>
-                    <th className="font-weight-bold">Montant Rappel/Avance sur Salaire</th>
-                    <th className="w-25"></th>
-                  </tr>
-                </MDBTableHead>
-                <MDBTableBody>
-                {this.state.avanceRappelSalaireList.map((avrap, index) => (
-                    <tr key={index}>
-                        <td>{avrap.montant} €</td>
-                        {avrap.etatVariablePaieId === 1 ? (
-                            <td>
-                                <MDBBtn color="teal accent-3" rounded size="sm">UPDATE</MDBBtn>
-                                <MDBBtn color="danger" rounded size="sm">DELETE</MDBBtn>
-                            </td>
-                        ) : (
-                            <td>Confirmé</td>
-                        )}
-                    </tr>
-                ))}          
-                </MDBTableBody>
-              </MDBTable>
-            );
-          }
+        handleClick(compName, key) {
+            console.log(key);
+            this.setState({render:compName, key});       
+        }
+        
+        _renderSubComp(){
+            switch(this.state.render){
+                case 'NoteDeFraisComponent': return <NoteDeFraisComponent object={this.state.noteDeFraisList[this.state.key]}/>
+                break;
+                case 'AbsenceComponent': return <AbsenceComponent object={this.state.absenceList[this.state.key]}/>
+                break;
+                case 'PrimeComponent': return <PrimeComponent object={this.state.primeList[this.state.key]}/>
+                break;
+            }
+        }
 
 
       render() {
@@ -353,59 +195,61 @@ export default class ParentUpdateVariablePaie extends Component {
                                 </form>                                                                                      
                             </MDBRow>                              
                         </div>
+                        {/**FIN SELECTS */}
 
                         <h3 className="card-title mb-4">Détails des Variables de Paie</h3>
                         {/**CONTENT */}
-                                <div style={{display:"flex",flexDirection:"column"}}>                                                                                         
-                                    <MDBCard className="mt-1">
-                                        {this.NoteDeFraisTable()}
-                                    </MDBCard>                                                        
-                                    <MDBCard>
-                                        {this.AbsenceTable()}
-                                    </MDBCard>                                                        
-                                    <MDBCard>
-                                        {this.PrimeTable()}
-                                    </MDBCard>
-                                    <MDBCard>
-                                        {this.HeureSuppTable()}
-                                    </MDBCard>
-                                    <MDBCard>
-                                        {this.RappelAvanceTable()}
-                                    </MDBCard>
-                                </div>
-                            {/**FOOTER BTN */}
-                            <MDBRow between around className="mt-3">
-                                <MDBCol md="4">
-                                    <Link to="/socialHome/1">
-                                        <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm">
-                                        Ajouter
-                                        </MDBBtn>
-                                    </Link>
-                                </MDBCol>
-
-                                <MDBCol md="4">
-                                        <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm"
-                                        onClick={() => {
-                                            this.props.history.push(
-                                                "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/" + this.state.society.id + "/" + this.state.idNameSelected
-                                            );
-                                        }}>
-                                        Retour
-                                        </MDBBtn>
-                                </MDBCol>
-
-                                <MDBCol md="4">
+                        
+                        {this._renderSubComp()}
+                        <div style={{display:"flex",flexDirection:"column"}}>                                                                                         
+                            <MDBCard className="mt-1">
+                                {<TableNoteDeFrais noteDeFraisList={this.state.noteDeFraisList} handleClick={this.handleClick}/>}
+                            </MDBCard>                                                        
+                            <MDBCard>
+                                {<TableAbsence absenceList={this.state.absenceList} handleClick={this.handleClick} />}                                        
+                            </MDBCard>                                                        
+                            <MDBCard>
+                                {<TablePrime primeList={this.state.primeList} handleClick={this.handleClick} />}                                        
+                            </MDBCard>
+                            <MDBCard>
+                                {<TableHeureSup heureSupList={this.state.heureSupList} handleClick={this.handleClick} />}                                        
+                            </MDBCard>
+                            <MDBCard>
+                                {<TableAvanceRappelSalaire avanceRappelSalaireList={this.state.avanceRappelSalaireList} handleClick={this.handleClick} />}
+                            </MDBCard>
+                        </div>
+                        {/**FOOTER BTN */}
+                        <MDBRow between around className="mt-3">
+                            <MDBCol md="4">
                                 <Link to="/socialHome/1">
-                                        <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm">
-                                        Confirmer
-                                        </MDBBtn>
-                                    </Link>
-                                </MDBCol>
-                            </MDBRow>
+                                    <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm">
+                                    Ajouter
+                                    </MDBBtn>
+                                </Link>
+                            </MDBCol>
 
-                        </MDBContainer>
-                    </div>
+                            <MDBCol md="4">
+                                    <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm"
+                                    onClick={() => {
+                                        this.props.history.push(
+                                            "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/" + this.state.society.id + "/" + this.state.idNameSelected);
+                                    }}>
+                                    Retour
+                                    </MDBBtn>
+                            </MDBCol>
+
+                            <MDBCol md="4">
+                            <Link to="/socialHome/1">
+                                    <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm">
+                                    Confirmer
+                                    </MDBBtn>
+                                </Link>
+                            </MDBCol>
+                        </MDBRow>
+
+                    </MDBContainer>
                 </div>
-            )
-        }
+            </div>
+        )
     }
+}

@@ -264,7 +264,7 @@ export default class ParentAddVariablePaie extends Component {
 
                             <div className="btnContent">
                                 <div className="btnConainer">
-                                    <MDBBtn color="teal accent-3" rounded size="sm"
+                                    <MDBBtn color="teal accent-3" rounded size="sm" disabled={!this.state.idNameSelected}
                                         onClick={() => {
                                             this.props.history.push(
                                             "/variables_de_paie/updateVariablePaie/ParentUpdateVariablePaie/" + this.state.society.id + "/" + this.state.idNameSelected
