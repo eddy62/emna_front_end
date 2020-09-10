@@ -155,6 +155,14 @@ const AxiosCenter = {
     });
   },
 
+  updateReleve(values) {
+    return ApiBackEnd({
+      method: "put",
+      url: "/releves",
+      data: values,
+    });
+  },
+
   getOperationById(id) {
     return ApiBackEnd({
       method: "get",

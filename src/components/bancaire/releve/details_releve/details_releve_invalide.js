@@ -84,7 +84,20 @@ export class DetailsReleveInvalide extends React.Component {
                                                     <span id="color-button"> Retour</span>
                                                 </Link>
                                             </MDBBtn>
-
+                                            {(UserService.getRole() === "ROLE_ADMIN" ||
+                                                UserService.getRole() === "ROLE_SOCIETY") &&
+                                                <MDBBtn
+                                                    className="boutton"
+                                                    color=" teal lighten-2"
+                                                    rounded
+                                                    size="sm"
+                                                    disabled={false}
+                                                >
+                                                    <Link to={"/modification/" + this.props.match.params.id}>
+                                                        <span id="color-button">Modifier le relevé</span>
+                                                    </Link>
+                                                </MDBBtn>
+                                            }                                           
                                             {(UserService.getRole() === "ROLE_ADMIN" ||
                                                 UserService.getRole() === "ROLE_SOCIETY") &&
                                             <Link to={"/creationoperation/" + this.props.match.params.id}>
