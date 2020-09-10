@@ -3,10 +3,9 @@ import {Link} from "react-router-dom";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import ListeOperations from "./operation/liste_operations/liste_operations";
 import Loading from "../../../../shared/component/Loading";
-import {MDBCard, MDBCardBody, MDBCardTitle, MDBCardHeader, MDBContainer, MDBBtn, MDBCol} from "mdbreact";
+import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer} from "mdbreact";
 import UserService from '../../../../shared/services/UserService';
-import ReleveSolde from './details_releve_solde'
-
+import ReleveDetailsCard from "./ReleveDetailsCard";
 
 export class DetailsReleveInvalide extends React.Component {
     constructor(props) {
@@ -44,39 +43,9 @@ export class DetailsReleveInvalide extends React.Component {
                         </MDBCardHeader>
                     </div>
                     <div>
-                        <hr></hr>
+                        <hr/>
                     </div>
-                    <div>
-                        <MDBCol>
-                            <MDBCard>
-                                <MDBCardBody>
-                                    <MDBCardTitle className="MDBCardTitle">
-                                        <div>
-                                            <div className="row">
-                                                <div className="col-3">
-                                                    <p>
-                                                        Relevé bancaire:
-                                                        <br/>
-                                                        du {props.detailsreleve.dateDebut}
-                                                        <br/>
-                                                        au {props.detailsreleve.dateFin}{" "}
-                                                    </p>
-                                                </div>
-                                                <div className="col-6"></div>
-                                                <div className="col-3">
-                                                    Information de la banque :{" "}
-                                                    {props.detailsreleve.banque}
-                                                </div>
-                                            </div>
-                                            <ReleveSolde releveId={this.state.releveId}/>
-                                        </div>
-                                    </MDBCardTitle>
-                                </MDBCardBody>
-                            </MDBCard>
-                        </MDBCol>
-                        <br/>
-                    </div>
-
+                    <ReleveDetailsCard releve={this.state.releve}/>
                 </MDBContainer>
             </div>
         );
@@ -131,17 +100,18 @@ export class DetailsReleveInvalide extends React.Component {
                                             }                                           
                                             {(UserService.getRole() === "ROLE_ADMIN" ||
                                                 UserService.getRole() === "ROLE_SOCIETY") &&
-                                            <MDBBtn
-                                                className="boutton"
-                                                color=" teal lighten-2"
-                                                rounded
-                                                size="sm"
-                                                disabled={false}
-                                            >
-                                                <Link to={"/creationoperation/" + this.props.match.params.id}>
+                                            <Link to={"/creationoperation/" + this.props.match.params.id}>
+                                                <MDBBtn
+                                                    className="boutton"
+                                                    color=" teal lighten-2"
+                                                    rounded
+                                                    size="sm"
+                                                    disabled={false}
+                                                >
                                                     <span id="color-button"> Ajouter une opération</span>
-                                                </Link>
-                                            </MDBBtn>
+                                                </MDBBtn>
+                                            </Link>
+
                                             }
                                             {(UserService.getRole() === "ROLE_ADMIN" ||
                                                 UserService.getRole() === "ROLE_SOCIETY") &&
@@ -171,7 +141,6 @@ export class DetailsReleveInvalide extends React.Component {
         } else {
             return <Loading/>;
         }
-
     }
 }
 

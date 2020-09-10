@@ -1,6 +1,8 @@
 import React from "react";
 import ContratService from "../service/ContratService";
 import Loading from "../../../shared/component/Loading";
+import img from "../../../ressources/images/Contrat.PNG";
+import {Link} from "react-router-dom";
 
 
 export default class DetailContrat extends React.Component {
@@ -32,7 +34,11 @@ export default class DetailContrat extends React.Component {
   detailContrats(props) {
     console.log(props);
     return (
-       <div>coucou</div>
+       <div><img src={img} alt="logo lr" />
+         <Link to={"/listcontrat"}>
+           <button type="button" className="btn btn-outline-mdb-color float-left">Retour</button>
+         </Link>
+       </div>
 
     );
   }

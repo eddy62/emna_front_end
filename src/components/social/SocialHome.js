@@ -1,18 +1,18 @@
 import React from "react";
-import "./style1.scss";
-import { Link } from "react-router-dom";
+import "./social.scss";
+import {Link} from "react-router-dom";
 import AxiosCenter from "../../shared/services/AxiosCenter";
 import UserService from "../../shared/services/UserService";
 import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCardHeader,
-  MDBBtn,
-  MDBContainer,
-  MDBRow,
-  MDBCol,
+    MDBBtn,
+    MDBCard,
+    MDBCardBody,
+    MDBCardHeader,
+    MDBCardText,
+    MDBCardTitle,
+    MDBCol,
+    MDBContainer,
+    MDBRow,
 } from "mdbreact";
 
 class AccueilSocial extends React.Component {
@@ -150,9 +150,8 @@ class AccueilSocial extends React.Component {
                   ) : null}
                 </MDBRow>
                 <br />
-                {(UserService.getRole() === "ROLE_SOCIETY") |
-                (UserService.getRole() === "ROLE_ACCOUNTANT") ? (
-                  <MDBRow around between>
+                <MDBRow around between>
+                  {(UserService.getRole() === "ROLE_SOCIETY") ? (
                     <MDBCol md="3" className="mb-3">
                       <MDBCard className="cadre1">
                         <MDBCardBody>
@@ -180,35 +179,38 @@ class AccueilSocial extends React.Component {
                         </MDBCardBody>
                       </MDBCard>
                     </MDBCol>
-                    <MDBCol md="3" className="mb-3">
-                      <MDBCard className="cadre1">
-                        <MDBCardBody>
-                          <MDBCardTitle tag="h4">{title4}</MDBCardTitle>
-                          <br />
-                          <MDBCardText>
-                            Consultation et Téléchargement des Fiches de Paie
-                            des Employés
+                  ) : null}
+                  {(UserService.getRole() === "ROLE_SOCIETY") |
+                    (UserService.getRole() === "ROLE_ACCOUNTANT") ? (
+                      <MDBCol md="3" className="mb-3">
+                        <MDBCard className="cadre1">
+                          <MDBCardBody>
+                            <MDBCardTitle tag="h4">{title4}</MDBCardTitle>
+                            <br />
+                            <MDBCardText>
+                              Consultation et Téléchargement des Fiches de Paie
+                              des Employés
                           </MDBCardText>
-                          <br />
-                          <div className="boutton">
-                            <MDBBtn
-                              color="teal accent-3"
-                              rounded
-                              size="sm"
-                              onClick={() => {
-                                this.props.history.push(
-                                  "/socialHome/" + this.state.societe.id
-                                );
-                              }}
-                            >
-                              Gerer
+                            <br />
+                            <div className="boutton">
+                              <MDBBtn
+                                color="teal accent-3"
+                                rounded
+                                size="sm"
+                                onClick={() => {
+                                  this.props.history.push(
+                                    "/socialHome/" + this.state.societe.id
+                                  );
+                                }}
+                              >
+                                Gerer
                             </MDBBtn>
-                          </div>
-                        </MDBCardBody>
-                      </MDBCard>
-                    </MDBCol>
-                  </MDBRow>
-                ) : null}
+                            </div>
+                          </MDBCardBody>
+                        </MDBCard>
+                      </MDBCol>
+                    ) : null}
+                </MDBRow>
               </div>
               <div className="titre">
                 <hr />

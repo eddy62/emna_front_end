@@ -1,6 +1,6 @@
 import React from "react";
-import { MDBContainer, MDBBtn } from 'mdbreact';
-import { Link } from "react-router-dom";
+import {MDBBtn, MDBContainer} from 'mdbreact';
+import {Link} from "react-router-dom";
 
 /**
  * Composant permettant de créer un bouton qui redirige en fonction d'une url
@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
  * 
  */
 const RedirectionBtn = (props) => {
-    console.log(props)
   return (
             <MDBContainer>
             <Link to={ props.route }>

@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBSpinner } from "mdbreact";
+import {MDBSpinner} from "mdbreact";
 
 const Loading = () => {
   return (

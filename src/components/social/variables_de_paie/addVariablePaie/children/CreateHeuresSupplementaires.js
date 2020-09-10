@@ -1,18 +1,10 @@
 import React from "react";
-import {Formik, Form, Field, ErrorMessage, useFormik} from 'formik';
+import {ErrorMessage, Field, Form, Formik} from 'formik';
 import * as Yup from "yup";
 import Loading from "../../../../../shared/component/Loading";
-import {
-    MDBBtn,
-    MDBCard,
-    MDBCardBody,
-    MDBCol,
-    MDBContainer,
-    MDBInput,
-    MDBRow,
-} from "mdbreact";
+import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 
 const heuresSupSchema = (props) => {
     return Yup.object().shape({
@@ -58,17 +50,15 @@ const notify = type => {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) Enregistrée(s) &nbsp;&nbsp;!</strong>
+                    <strong>Heure(s) supplémentaire(s) Modifié(s) &nbsp;&nbsp;!</strong>
                 </div>,
-                //{position: "top-right"}
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) NON Enregistrée(s) &nbsp;&nbsp;!</strong>
+                    <strong>Heure(s) supplémentaire(s) NON Modifié(s) &nbsp;&nbsp;!</strong>
                 </div>,
-                //{position: "top-right"}
             );
             break;
     }
@@ -92,12 +82,11 @@ class CreateHeuresSupplementaires extends React.Component {
     submit = (values, actions) => {
         values.annee = this.props.yearSelected
         values.mois = this.props.monthSelected
-        values.employeId = this.props.idEmploye
+        values.employeId = this.props.employeId
 
         AxiosCenter.createHeureSupplementaire(values)
             .then((response) => {
-                const heureSup = response.data;
-                console.log(heureSup);
+                const HEURESUP = response.data;
                 notify('success');
                 actions.resetForm();
             }).catch((error) => {
@@ -123,7 +112,6 @@ class CreateHeuresSupplementaires extends React.Component {
     }
     
     render() {
-        const title = "Heures Supplémentaires"
         if (!this.state.loaded) return <Loading/>
         else return (
             this.updatePeriod(),
@@ -146,8 +134,7 @@ class CreateHeuresSupplementaires extends React.Component {
                             validationSchema={heuresSupSchema(this.state)}
                         >
                             {({
-                                  handleSubmit,
-                                  resetForm
+                                  handleSubmit
                               }) => (
                                 <Form onSubmit={handleSubmit}>
                                     <MDBCardBody style={{marginTop:"-3%", marginBottom:"-3%"}}>
@@ -195,7 +182,6 @@ class CreateHeuresSupplementaires extends React.Component {
                     </MDBContainer>
                 </div>
             </div>
-
         )
     }
 }

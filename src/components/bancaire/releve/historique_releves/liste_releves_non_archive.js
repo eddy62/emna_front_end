@@ -1,18 +1,10 @@
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Loading from "../../../../shared/component/Loading";
 import ReleveConstants from "../releve_constants"
 import UserService from '../../../../shared/services/UserService';
-import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardHeader,
-  MDBContainer,
-  MDBBtn,
-  MDBCol,
-} from "mdbreact";
+import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer,} from "mdbreact";
 
 export default class ListeRelevesNonArchive extends React.Component {
   constructor(props) {

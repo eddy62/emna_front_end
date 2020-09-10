@@ -1,75 +1,104 @@
 import React from "react";
-//import Axios from 'axios';
+
 import { Link } from "react-router-dom";
+import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer, MDBRow} from "mdbreact";
+
 export default class Contrat extends React.Component {
   render() {
     return (
       <div>
-        <h1>GESTION DES CONTRATS</h1>
-        <hr />
 
-        <div className="center">
-          <div className="accueil">
-            <div className="card testimonial-card">
-              <div className="card-up bg-success lighten-1"></div>
-              <div className="avatar mx-auto white">
-                <i className="fas fa-file fa-7x"></i>
-              </div>
-              <div className="card-body">
-                <h4 className="card-title">Creer un nouveau contrat</h4>
-                <hr />
-
-                <p>
-                  <Link to={"/creercontrat"}>
-                    <button className="btn btn-success btn-block my-4">
-                      Creer un nouveau contrat
-                    </button>
-                  </Link>
-                </p>
-              </div>
-            </div>
+        <MDBContainer>
+          <div>
+            <MDBCardHeader color="default-color">
+              <MDBCardTitle>Gestion des contrats de travail</MDBCardTitle>
+              <br />
+            </MDBCardHeader>
           </div>
-          <div className="accueil">
-            <div className="card testimonial-card">
-              <div className="card-up bg-success lighten-1"></div>
-              <div className="avatar mx-auto white">
-                <i className="fas fa-file-alt fa-7x"></i>
-              </div>
-              <div className="card-body">
-                <h4 className="card-title">Voir la liste de mes contrats</h4>
-                <hr />
+          <div>
+            <hr></hr>
+          </div>
+          <div>
+            <MDBRow>
+              <MDBCol>
+                <MDBCard>
+                  <MDBCardBody>
+                    <MDBCardTitle className="MDBCardTitle">
+                      {" "}
+                      Créer un nouveau contrat
+                    </MDBCardTitle>
+                    <br />
 
-                <p>
-                  <Link to={"/listcontrat"}>
-                    <button className="btn btn-success btn-block my-4">
+                    <br />
+                    <div className="boutton">
+                      <Link to="/creercontrat">
+                        <MDBBtn
+                            className="boutton"
+                            color=" teal lighten-2"
+                            rounded
+                            size="sm"
+                        >
+                          <span id="color-button"> GERER</span>
+                        </MDBBtn>
+                      </Link>
+                    </div>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+
+              <MDBCol>
+                <MDBCard>
+                  <MDBCardBody>
+                    <MDBCardTitle className="MDBCardTitle">
                       Voir la liste de mes contrats
-                    </button>
-                  </Link>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="accueil">
-            <div className="card testimonial-card">
-              <div className="card-up bg-success lighten-1"></div>
-              <div className="avatar mx-auto white">
-                <i className="fas fa-archive fa-7x"></i>
-              </div>
-              <div className="card-body">
-                <h4 className="card-title">Consulter mes référentiels</h4>
-                <hr />
+                    </MDBCardTitle>
+                    <br />
 
-                <p>
-                  <Link to={"/ref"}>
-                    <button className="btn btn-success btn-block my-4">
+                    <br />
+                    <div className="boutton">
+                      <Link to="/listcontrat">
+                        <MDBBtn
+                            className="boutton"
+                            color=" teal lighten-2"
+                            rounded
+                            size="sm"
+                        >
+                          <span id="color-button"> GERER</span>
+                        </MDBBtn>
+                      </Link>
+                    </div>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+
+              <MDBCol>
+                <MDBCard>
+                  <MDBCardBody>
+                    <MDBCardTitle className="MDBCardTitle">
                       Consulter mes référentiels
-                    </button>
-                  </Link>
-                </p>
-              </div>
-            </div>
+                    </MDBCardTitle>
+                    <br />
+
+                    <br />
+                    <div className="boutton">
+                      <Link to="/ref">
+                        <MDBBtn
+                            className="boutton"
+                            color=" teal lighten-2"
+                            rounded
+                            size="sm"
+                        >
+                          <span id="color-button"> GERER</span>
+                        </MDBBtn>
+                      </Link>
+                    </div>
+                  </MDBCardBody>
+                </MDBCard>
+              </MDBCol>
+            </MDBRow>
+            <br />
           </div>
-        </div>
+        </MDBContainer>
       </div>
     );
   }

@@ -1,10 +1,10 @@
 import AxiosCenter from "../../../../../../shared/services/AxiosCenter";
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import Loading from "../../../../../../shared/component/Loading";
 import UserService from "../../../../../../shared/services/UserService";
 import DeletionConfirmationModal from "../../../../../../shared/component/DeletionConfirmationModal";
-import {MDBCard,MDBCardBody,MDBCardTitle,MDBContainer,MDBCol} from "mdbreact";
+import {MDBCard, MDBCardBody, MDBCardTitle, MDBCol, MDBContainer} from "mdbreact";
 import RedirectionBtn from "../../../../../../shared/component/RedirectionBtn";
 
 export default class ListeOperations extends React.Component {
@@ -13,7 +13,6 @@ export default class ListeOperations extends React.Component {
     this.state = {
       loaded: false,
       operations: [],
-      roleUser: UserService.getRole(),
       isReleveUnvalid: false
     };
   }
@@ -22,14 +21,14 @@ export default class ListeOperations extends React.Component {
     AxiosCenter.getOperationByReleveId(this.props.releveId)
       .then((res) => {
         const operations = res.data;
-        this.setState({ operations, loaded: true });
+        this.setState({ operations} );
       })
       .catch((err) => console.log(err));
 
       AxiosCenter.getReleveById(this.props.releveId)
       .then((res) => {
         const releve = res.data;
-        const isReleveUnvalid = releve.etatReleveId !== 2;
+        const isReleveUnvalid = releve.etatReleveId === 1;
         this.setState({ isReleveUnvalid, loaded: true });
       })
       .catch((err) => console.log(err));
@@ -54,17 +53,17 @@ export default class ListeOperations extends React.Component {
             </Link>
           </td>
           <td>
-            { (props.roleUser === "ROLE_SOCIETY" || props.roleUser === "ROLE_ADMIN") &&
-              !props.isReleveUnvalid &&
+            { (UserService.isSociety() || UserService.isAdmin()) &&
+              props.isReleveUnvalid &&
               <RedirectionBtn
-                route ={"/editoperation/" + operation.id} 
+                route ={"/editoperation/" + operation.id}
                 msg   = "Modifier"
                 color ="default-color"
               />
             }
           </td>
         <td>
-          {(props.roleUser === "ROLE_SOCIETY" || props.roleUser === "ROLE_ADMIN") &&
+          {(UserService.isSociety() || UserService.isAdmin()) &&
           <DeletionConfirmationModal deleteOperation={() => {
             props.deleteOperation(operation.id)
           }}/>
@@ -109,6 +108,7 @@ export default class ListeOperations extends React.Component {
           operations={this.state.operations} 
           deleteOperation={this.deleteOperation}
           roleUser={this.state.roleUser}
+          isReleveUnvalid={this.state.isReleveUnvalid}
         />
       );  
     } else {
