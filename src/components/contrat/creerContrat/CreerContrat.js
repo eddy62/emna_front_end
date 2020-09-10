@@ -121,7 +121,12 @@ export default class CreerContrat extends React.Component {
                             fields.employeId = this.state.employeId;
                             fields.societeId = this.state.societeId;
                             fields.clauses = this.state.clauses;
-                            ContratService.postContrat(fields);
+                            ContratService.postContrat(fields)
+                                //.then(response =>{
+                               // const blob = new Blob([response.data], { type: 'application/pdf' });
+                               // const url = URL.createObjectURL(blob);
+                               // window.open(url);
+                           // });
                             alert(JSON.stringify(fields, null, 4));
 
                         }}
@@ -149,14 +154,14 @@ export default class CreerContrat extends React.Component {
 
                                         {Article}
                                 <hr/><hr/><hr/>
-                                <button type="button" className="btn btn-light-green float-left" >Ajouter une clause</button>
-                                <button type="button" className="btn btn-light-green float-left">Ajouter un article</button>
+                                <button type="button" className="btn btn-mdb-color float-left" >Ajouter une clause</button>
+                                <button type="button" className="btn btn-mdb-color float-left">Ajouter un article</button>
                                 <hr/><hr/><hr/><hr/><hr/>
                                 <div className="clearfix">
                                 <div className="form-group">
-                                    <button type="submit" className="btn btn-success mr-2 float-right">Creer le contrat</button>
+                                    <button type="submit" className="btn btn-mdb-color mr-2 float-right">Creer le contrat</button>
                                     <Link to={"/contrat/"}>
-                                        <button type="button" className="btn btn-outline-success float-left">Retour</button>
+                                        <button type="button" className="btn btn-outline-mdb-color float-left">Retour</button>
                                     </Link>
                                 </div>
                                 </div>

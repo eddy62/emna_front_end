@@ -1,15 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import {
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCardHeader,
-  MDBBtn,
-  MDBContainer,
-  MDBRow,
-  MDBCol,
+    MDBBtn,
+    MDBCard,
+    MDBCardBody,
+    MDBCardHeader,
+    MDBCardText,
+    MDBCardTitle,
+    MDBCol,
+    MDBContainer,
+    MDBRow,
 } from "mdbreact";
 import UserService from "../../shared/services/UserService";
 
@@ -58,7 +58,7 @@ class JuridiqueMenu extends React.Component {
                   </MDBCardBody>
                 </MDBCard>
               </MDBCol>
-              {(UserService.getRole() === "ROLE_SOCIETY" || UserService.getRole() === "ROLE_ADMIN") ? (
+              {UserService.getRole() === "ROLE_SOCIETY" ? (
                 <MDBCol>
                   <MDBCard>
                     <MDBCardBody>

@@ -1,17 +1,10 @@
 import React from "react";
-import {Formik, Form, Field, ErrorMessage, useFormik} from 'formik';
+import {ErrorMessage, Field, Form, Formik} from 'formik';
 import * as Yup from "yup";
 import Loading from "../../../../../shared/component/Loading";
-import {
-    MDBBtn,
-    MDBCardBody,
-    MDBCol,
-    MDBContainer,
-    MDBInput,
-    MDBRow,
-} from "mdbreact";
+import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
-import {toast, ToastContainer} from "react-toastify";
+import {toast} from "react-toastify";
 
 const heuresSupSchema = (props) => {
     return Yup.object().shape({
@@ -57,14 +50,14 @@ const notify = type => {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) Enregistrée(s) &nbsp;&nbsp;!</strong>
+                    <strong>Heure(s) supplémentaire(s) Modifié(s) &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) NON Enregistrée(s) &nbsp;&nbsp;!</strong>
+                    <strong>Heure(s) supplémentaire(s) NON Modifié(s) &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
@@ -93,7 +86,7 @@ class CreateHeuresSupplementaires extends React.Component {
 
         AxiosCenter.createHeureSupplementaire(values)
             .then((response) => {
-                const heureSup = response.data;
+                const HEURESUP = response.data;
                 notify('success');
                 actions.resetForm();
             }).catch((error) => {
@@ -189,7 +182,6 @@ class CreateHeuresSupplementaires extends React.Component {
                     </MDBContainer>
                 </div>
             </div>
-
         )
     }
 }
