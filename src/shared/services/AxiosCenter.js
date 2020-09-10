@@ -255,6 +255,13 @@ const AxiosCenter = {
       data: values,
     });
   },
+
+  deletePrime(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/primes/${id}`,
+    });
+  },
   //fin Gestion Social
 
   getReleve() {
