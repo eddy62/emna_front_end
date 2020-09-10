@@ -43,6 +43,8 @@ import PageAddOperationStatement from "./bancaire/releve/details_releve/operatio
 import BankReconciliation from "./bancaire/releve/gestion_releves/rapprochement_bancaire/BankReconciliation";
 import ListOfOperations from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfOperations";
 import ListOfInvoices from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfInvoices";
+import EditStatement from "./bancaire/releve/details_releve/edit-statement/EditStatement";
+
 
 
 // gestionUserRoutesImports
@@ -223,6 +225,9 @@ export default class Routes extends Component {
           path="/detailsreleveinvalide/:id"
           component={DetailsReleveInvalide}
         />
+        
+        <PrivateRoute path="/modification/:id" component={EditStatement} />
+
         <PrivateRoute
           path="/detailsrelevenonarchive/:id"
           component={DetailsReleveNonArchive}
