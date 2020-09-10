@@ -104,7 +104,7 @@ class UpdateEmploye extends React.Component {
   componentDidMount() {
     const idEmploye = this.props.match.params.id;
     console.log(idEmploye);
-    AxiosCenter.getAllTypeContrats()
+    AxiosCenter.getAllTypeContracts()
       .then((response) => {
         const listeTypeContrat = response.data;
         console.log(listeTypeContrat);
@@ -113,7 +113,7 @@ class UpdateEmploye extends React.Component {
       .catch((error) => {
         console.log(error);
       });
-    AxiosCenter.getAllStatutEmployes()
+    AxiosCenter.getAllStatutEmployees()
       .then((response) => {
         const listeStatutEmploye = response.data;
         console.log(listeStatutEmploye);
@@ -122,7 +122,7 @@ class UpdateEmploye extends React.Component {
       .catch((error) => {
         console.log(error);
       });
-    AxiosCenter.getWrapperEmploye(idEmploye)
+    AxiosCenter.getWrapperEmployee(idEmploye)
       .then((response) => {
         const employe = response.data;
         console.log(employe);
@@ -135,7 +135,7 @@ class UpdateEmploye extends React.Component {
 
   submit = (values, actions) => {
     console.log(values);
-    AxiosCenter.updateWrapperEmploye(values)
+    AxiosCenter.updateWrapperEmployee(values)
       .then((response) => {
         console.log(response);
         const employe = response.data;

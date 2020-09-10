@@ -17,7 +17,7 @@ export default class ListeRelevesArchives extends React.Component {
   }
 
   componentDidMount() {
-    AxiosCenter.getReleveByEtatAndSociety(ReleveConstants.RELEVE_ETAT_ARCHIVE, this.state.societyId)
+    AxiosCenter.getStatementsByStateAndSociety(ReleveConstants.RELEVE_ETAT_ARCHIVE, this.state.societyId)
       .then((res) => {
         const releves = res.data;
         this.setState({ releves, loaded: true });
@@ -45,8 +45,8 @@ export default class ListeRelevesArchives extends React.Component {
         <MDBContainer>
           <div>
             <MDBCardHeader color="default-color">
-              <MDBCardTitle>
-                <h1>Historique de vos relevés bancaire</h1>
+              <MDBCardTitle tag="h1">
+                Historique de vos relevés bancaire
               </MDBCardTitle>
               <br />
             </MDBCardHeader>

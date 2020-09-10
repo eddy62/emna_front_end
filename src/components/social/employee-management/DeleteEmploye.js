@@ -34,7 +34,7 @@ class DeleteEmploye extends Component {
     );
     console.log(diff);
 
-    AxiosCenter.deleteWrapperEmploye(idEmploye)
+    AxiosCenter.deleteWrapperEmployee(idEmploye)
       .then((response) => {
         console.log(response);
         const resultat = response.data;

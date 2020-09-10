@@ -14,8 +14,6 @@ export default class ListeContrat extends React.Component {
 
 
     componentDidMount(){
-        const query = new URLSearchParams(this.props.location.search);
-        const id = query.get('id')
         ContratService.getContrat(1).then((resultat) => {
             const contrats = resultat.data;
             this.setState({ contrats , loaded:true});

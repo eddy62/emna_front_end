@@ -530,7 +530,7 @@ const EditSociete = () => {
    
     const loadUser= () => {
         getSocieteID(id).then( async (res) => {
-            const result = await AxiosCenter.getSociete(res.id)
+            const result = await AxiosCenter.getSocietyById(res.id)
             setUser(result.data)
         });   
     }
@@ -540,7 +540,7 @@ const EditSociete = () => {
         try {
             e.preventDefault();
             console.log(user)
-            await AxiosCenter.editSociete(user);
+            await AxiosCenter.editSociety(user);
             if(user.activated){
                 history.push("/users/stvu/societes/active")
             }

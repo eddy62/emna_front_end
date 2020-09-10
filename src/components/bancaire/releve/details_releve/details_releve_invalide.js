@@ -17,7 +17,7 @@ export class DetailsReleveInvalide extends React.Component {
     }
 
     componentDidMount() {
-        AxiosCenter.getReleveById(this.props.match.params.id)
+        AxiosCenter.getStatementById(this.props.match.params.id)
             .then((res) => {
                 const releve = res.data;
                 this.setState({
@@ -51,7 +51,7 @@ export class DetailsReleveInvalide extends React.Component {
         );
     };
 
-    validateReleve = () => AxiosCenter.validateReleve(this.props.match.params.id)
+    validateReleve = () => AxiosCenter.validateStatement(this.props.match.params.id)
 
     render() {
         if (this.state.loaded) {
@@ -84,7 +84,20 @@ export class DetailsReleveInvalide extends React.Component {
                                                     <span id="color-button"> Retour</span>
                                                 </Link>
                                             </MDBBtn>
-
+                                            {(UserService.getRole() === "ROLE_ADMIN" ||
+                                                UserService.getRole() === "ROLE_SOCIETY") &&
+                                                <MDBBtn
+                                                    className="boutton"
+                                                    color=" teal lighten-2"
+                                                    rounded
+                                                    size="sm"
+                                                    disabled={false}
+                                                >
+                                                    <Link to={"/modification/" + this.props.match.params.id}>
+                                                        <span id="color-button">Modifier le relevé</span>
+                                                    </Link>
+                                                </MDBBtn>
+                                            }                                           
                                             {(UserService.getRole() === "ROLE_ADMIN" ||
                                                 UserService.getRole() === "ROLE_SOCIETY") &&
                                             <Link to={"/creationoperation/" + this.props.match.params.id}>

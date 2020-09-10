@@ -175,13 +175,14 @@ const EditComptable = () => {
 
     //methode to find comptable by user before calling! Otherwise it'll show only the user.
     const getComptableID = async (id) => {
-        const result =  await AxiosCenter.getComptableByUser(id)
+        const result =  await AxiosCenter.getAccountantByUser(id)
         return result.data;
     }
    
     const loadUser= () => {
-        const comptableId = getComptableID(id).then( async (res) => {
-            const result = await AxiosCenter.getComptable(res.id)
+        //const comptableId =
+            getComptableID(id).then( async (res) => {
+            const result = await AxiosCenter.getAccountant(res.id)
             setUser(result.data)
         });   
     }
@@ -194,7 +195,7 @@ const EditComptable = () => {
             
             e.preventDefault();
             console.log(user)
-            await AxiosCenter.editComptable(user);
+            await AxiosCenter.editAccountant(user);
             if(user.activated){
                 history.push("/users/stvu/comptables/active")
             }

@@ -22,7 +22,7 @@ class DetailEmploye extends React.Component {
   componentDidMount() {
     const idEmploye = this.props.match.params.id;
     console.log(idEmploye);
-    AxiosCenter.getWrapperEmploye(idEmploye)
+    AxiosCenter.getWrapperEmployee(idEmploye)
       .then((response) => {
         const employe = response.data;
         console.log(employe);

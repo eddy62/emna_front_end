@@ -13,7 +13,7 @@ class CreerFacture extends React.Component {
   };
 
   componentDidMount() {
-    axioscenter.getInfosForCreationFacture(UserService.getSocietyId()).then((resarray) => {
+    axioscenter.getAllCustomerSupplierBySociete(UserService.getSocietyId()).then((resarray) => {
       this.setState({
         clients: resarray[1].data,
         numfact: resarray[0].data +1,
@@ -28,11 +28,11 @@ class CreerFacture extends React.Component {
     values.prixTTC = this.state.prixtotal;
     values.tva = this.state.tva;
     values.prixHT = this.state.prixtotal - this.state.tva;
-    axioscenter.uploadFacture(values, documents).then((res) => {
+    axioscenter.uploadInvoice(values, documents).then((res) => {
       for (let i = 0; i < values.produits.length; i++) {
         let produitToUpload = values.produits[i];
         produitToUpload.factureId = res.data.id;
-        axioscenter.createLigneProduit(produitToUpload);
+        axioscenter.createLineProduct(produitToUpload);
       }
     });
   };
