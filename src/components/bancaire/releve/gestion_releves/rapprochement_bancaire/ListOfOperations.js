@@ -15,7 +15,7 @@ export default class ListOfOperations extends Component {
     }
 
     componentDidMount() {
-        Axios.getOperationByReleveId(this.props.idReleve).then((res) => {
+        Axios.getOperationsByReleveId(this.props.idReleve).then((res) => {
             const operations = res.data;
             this.setState({operations, loaded: true});
         });

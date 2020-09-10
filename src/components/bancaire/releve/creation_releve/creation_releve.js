@@ -61,7 +61,7 @@ class CreationReleve extends Component {
 
     submit = (values, actions) => {
         values.societeId = this.state.societeId;
-        AxiosCenter.postReleve(values)
+        AxiosCenter.postStatement(values)
             .then((response) => {
                 toast.success(
                     <div className="text-center">
