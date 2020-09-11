@@ -164,8 +164,7 @@ class UpdateAbsence extends React.Component {
                                 validationSchema={absenceSchema(this.state)}
                         >
                             {({
-                                  handleSubmit,
-                                  values
+                                  handleSubmit
                               }) => (
                                 <Form onSubmit={handleSubmit}
                                       className="w-100"
@@ -232,7 +231,6 @@ class UpdateAbsence extends React.Component {
                                                 </MDBBtn>
                                             </MDBCol>
                                         </MDBRow>
-                                        <pre>{JSON.stringify(values, null, 4)}</pre>
                                     </MDBCardBody>
                                 </Form>
                             )}
