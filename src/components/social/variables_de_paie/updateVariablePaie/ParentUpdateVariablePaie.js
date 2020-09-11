@@ -78,6 +78,7 @@ export default class ParentUpdateVariablePaie extends Component {
                 avanceRappelSalaireList,
                 loaded:true
             })
+            console.log(this.state.absenceList);
         });
     }
 
@@ -215,10 +216,10 @@ export default class ParentUpdateVariablePaie extends Component {
                                 {<TableAbsence absenceList={this.state.absenceList} handleClick={this.handleClick} />}                                        
                             </MDBCard>                                                        
                             <MDBCard>
-                                {<TablePrime primeList={this.state.primeList} handleClick={this.handleClick} />}                                        
+                                {<TablePrime reloadParentAfterUpdate={this.reloadParentAfterUpdate} changeHandler={this.changeHandler} primeList={this.state.primeList} handleClick={this.handleClick} />}                                        
                             </MDBCard>
                             <MDBCard>
-                                {<TableHeureSup heureSupList={this.state.heureSupList} handleClick={this.handleClick} />}                                        
+                                {<TableHeureSup reloadParentAfterUpdate={this.reloadParentAfterUpdate} changeHandler={this.changeHandler} heureSupList={this.state.heureSupList} handleClick={this.handleClick} />}                                        
                             </MDBCard>
                             <MDBCard>
                                 {<TableAvanceRappelSalaire reloadParentAfterUpdate={this.reloadParentAfterUpdate} changeHandler={this.changeHandler} avanceRappelSalaireList={this.state.avanceRappelSalaireList} handleClick={this.handleClick} />}

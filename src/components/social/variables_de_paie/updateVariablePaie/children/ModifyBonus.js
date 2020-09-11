@@ -64,9 +64,6 @@ class ModifyBonus extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            yearSelected : 2020, /*a supp pour test sera fourni par le composant parent apres*/
-            idEmploye: 1, /*a supp pour test*/
-            monthSelected : 9, /*a supp pour test*/
             listeTypePrime: [],
             loaded: false
 
@@ -74,7 +71,7 @@ class ModifyBonus extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.prime)
+        console.log(this.props.primeList)
         AxiosCenter.getAllTypePrimes()
             .then((response) => {
                 const list = response.data
@@ -90,17 +87,20 @@ class ModifyBonus extends React.Component {
 
     }
 
+    componentWillUnmount() {
+        this.props.reloadParentAfterUpdate();
+    }
+
 
     submit = (values, actions) => {
         AxiosCenter.updatePrime(values)
-            .then((response) => {
-                const prime = response.data
-                console.log(prime)
-                notify( "success")
+            .then(() => {
+                notify( "success", values.type)
                 actions.resetForm();
+                this.props.toggleAvance(this.props.index);
             }).catch((error) => {
             console.log(error)
-            notify("error")
+            notify("error", values.type)
         })
         actions.setSubmitting(true)
     }
@@ -174,10 +174,17 @@ class ModifyBonus extends React.Component {
                                                     size="sm"
                                                 >Enregistrer
                                                 </MDBBtn>
-                                                <ToastContainer
+                                                <MDBBtn
+                                                    color="teal accent-3"
+                                                    rounded
+                                                    size="sm"
+                                                    onClick={() => this.props.toggleAvance(this.props.index)}
+                                                >Annuler
+                                                </MDBBtn>
+                                                {/*<ToastContainer
                                                     hideProgressBar={false}
                                                     autoClose={2500}
-                                                />
+                                                />*/}
                                             </MDBRow>
                                         </MDBCard>
                                     </MDBCardBody>

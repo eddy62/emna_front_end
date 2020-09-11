@@ -127,6 +127,13 @@ const AxiosCenter = {
     });
   },
 
+  getTypePrimeById(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url:`/type-primes/${id}`,
+    })
+  },
+
   createPrime(values) {
     return ApiBackEnd({
       method: "POST",
