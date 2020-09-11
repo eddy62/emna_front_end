@@ -120,6 +120,21 @@ const AxiosCenter = {
     });
   },
 
+  updateAbsence(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: "/absences",
+      data: values,
+    });
+  },
+
+  deleteAbsence(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: "/absences/${id}",
+    });
+  },
+
   getAllTypePrimes() {
     return ApiBackEnd({
       method: "GET",
@@ -196,6 +211,14 @@ const AxiosCenter = {
     })
   },
       //Fin Variables de paie
+
+  createOther(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/autres-variables",
+      data: values,
+    });
+  },
 
   getWrapperEmploye(id) {
     return ApiBackEnd({
@@ -340,7 +363,7 @@ const AxiosCenter = {
       data: values,
     });
   },
-  
+
   updateOperation(values) {
     return ApiBackEnd({
       method: "put",
