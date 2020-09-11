@@ -261,6 +261,13 @@ const AxiosCenter = {
     })
   },
 
+  getDepenseBySociete(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `depenses/societe/${id}`,
+    });
+  },
+
 //Post
   finishPasswordReset(values) {
     return ApiBackEnd({
