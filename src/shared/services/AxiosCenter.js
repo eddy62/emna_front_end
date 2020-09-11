@@ -262,6 +262,21 @@ const AxiosCenter = {
       url: `/wrappervariablespaie/employe/${idEmploye}/annee/${year}/mois/${month}`
     })
   },
+  deletePrime(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/primes/${id}`,
+    });
+  },
+
+  updatePrime(values) {
+    return ApiBackEnd({
+      method: "put",
+      url: `/primes`,
+      data: values,
+    });
+  },
+
   //fin Gestion Social
 
   getReleve() {
