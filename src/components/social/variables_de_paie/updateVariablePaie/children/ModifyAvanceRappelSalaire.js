@@ -11,7 +11,7 @@ import {
 } from "mdbreact";
 import {toast} from "react-toastify";
 import Loading from "../../../../../shared/component/Loading";
-import AxiosCenter from "../../../../../shared/services/AxiosCenter";
+import AxiosCenter from "../../../../../shared/services/AxiosCenter"
 
 const avanceRappelSchema = (props) => {
     return Yup.object().shape({
@@ -96,12 +96,16 @@ class ModifyAvanceRappelSalaire extends React.Component {
         this.updatePeriod()
     }
 
+    componentWillUnmount() {
+        this.props.reloadParentAfterUpdate();
+    }
+
     submit = (values, actions) => {
         AxiosCenter.modifyAvanceRappelSalaire(values)
             .then(() => {
                 notify("success", values.type);
                 actions.resetForm();
-                this.props.toggleModalAvanceRappel();
+                this.props.toggleAvance(this.props.index);
             }).catch((error) => {
             console.log(error);
             notify("error", values.type);
@@ -122,9 +126,10 @@ class ModifyAvanceRappelSalaire extends React.Component {
                 this.props.avanceRappelSalaire.mois,
                 0
             )).toISOString().slice(0, 10)
-    }
+    };
 
     render() {
+        {console.log(this.props.reloadParentAfterUpdate)}
         if (!this.state.loaded) return <Loading/>
         else return (
             <div className="App">
@@ -133,7 +138,7 @@ class ModifyAvanceRappelSalaire extends React.Component {
                         {/* Formulaire */}
                         <Formik
                             onSubmit={this.submit}
-                            initialValues={{
+                            initialValues={{                                
                                 annee: this.props.avanceRappelSalaire.annee,
                                 debutPeriode: this.props.avanceRappelSalaire.debutPeriode,
                                 employeId: this.props.avanceRappelSalaire.employeId,
@@ -222,14 +227,14 @@ class ModifyAvanceRappelSalaire extends React.Component {
                                                 color="teal accent-3"
                                                 rounded
                                                 size="sm"
-                                                type="submit"
+                                                type="submit"                                                
                                             >Enregistrer
                                             </MDBBtn>
                                             <MDBBtn
                                                 color="teal accent-3"
                                                 rounded
                                                 size="sm"
-                                                onClick={this.props.toggleModalAvanceRappel}
+                                                onClick={this.props.toggleAvance}
                                             >Annuler
                                             </MDBBtn>
                                         </MDBRow>

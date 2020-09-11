@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./../style2.scss";
-import { MDBContainer, MDBCardHeader, MDBCardTitle, MDBRow, MDBCol, MDBBtn, MDBCard  } from "mdbreact";
+import { MDBContainer, MDBCardHeader, MDBCardTitle, MDBRow, MDBCol, MDBBtn, MDBCard } from "mdbreact";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import Loading from "../../../../shared/component/Loading"
 import { Link } from "react-router-dom";
@@ -11,7 +11,8 @@ import NoteDeFraisComponent from "./children/NoteDeFraisComponent";
 import TablePrime from "./tableUpdate/TablePrime"
 import PrimeComponent from "./children/PrimeComponent";
 import TableHeureSup from "./tableUpdate/TableHeureSup";
-import TableAvanceRappelSalaire from "./tableUpdate/TableAvanceRappelSalaire"
+import TableAvanceRappelSalaire from "./tableUpdate/TableAvanceRappelSalaire";
+import ModifyAvanceRappelSalaire from "./children/ModifyAvanceRappelSalaire";
 
 export default class ParentUpdateVariablePaie extends Component {
 
@@ -52,41 +53,50 @@ export default class ParentUpdateVariablePaie extends Component {
         noteDeFraisList: [],
         avanceRappelSalaireList: [],
         key: '',
-        idToDelete: ''
+        idToDelete: '', 
+        modalHeure: false,
+        submitForm: false
         };
         this.handleClick = this.handleClick.bind(this);
-      }
+        this.reloadParentAfterUpdate = this.reloadParentAfterUpdate.bind(this);
+    }
 
-      componentDidMount() {
-        //Récupération de l'id de la société
-      const societyId = this.props.match.params.societyId;
-      const employeId = this.props.match.params.id;
-      this.setState({ societyId, idEmploye: employeId }, () => {
+    /*Methode qui appel le wrapper variables de paie */
+    getOneWrapperVariablesDePaie = () => {
         AxiosCenter.getOneWrapperVariablesDePaie(this.state.idEmploye, this.state.yearSelected, this.state.monthSelected)
-        .then((response) => {            
+        .then((response) => {         
             const absenceList = response.data.wrapperAbsenceList;
             const heureSupList = response.data.heuresSupplementairesDTOList;
             const primeList = response.data.wrapperPrimeList;            
             const noteDeFraisList = response.data.noteDeFraisDTOList;
             const avanceRappelSalaireList = response.data.avanceRappelSalaireDTOList;
             this.setState({
-                absenceList: absenceList,
-                heureSupList: heureSupList,
-                primeList: primeList,
-                noteDeFraisList: noteDeFraisList,
-                avanceRappelSalaireList: avanceRappelSalaireList,
-                loaded:true})
+                absenceList,
+                heureSupList,
+                primeList,
+                noteDeFraisList,
+                avanceRappelSalaireList,
+                loaded:true
+            })
         });
-      })
+    }
 
-      //Récupération de la liste des employés à travers l'id de la société
-      AxiosCenter.getAllWrapperEmployesBySociety(societyId)
-      .then((response) => {
-          const listeEmployes = response.data;
-          this.setState({ listeEmployes: listeEmployes });
-      });
+    componentDidMount() {
+        //Récupération de l'id de la société
+        const societyId = this.props.match.params.societyId;
+        const employeId = this.props.match.params.id;
+        this.setState({ societyId, idEmploye: employeId }, () => {
+            this.getOneWrapperVariablesDePaie()
+        })
 
-      AxiosCenter.getSociete(societyId)
+        //Récupération de la liste des employés à travers l'id de la société
+        AxiosCenter.getAllWrapperEmployesBySociety(societyId)
+        .then((response) => {
+            const listeEmployes = response.data;
+            this.setState({ listeEmployes: listeEmployes });
+        });
+
+        AxiosCenter.getSociete(societyId)
         .then((response) => {
             const society = response.data;
             this.setState({ society });
@@ -95,50 +105,46 @@ export default class ParentUpdateVariablePaie extends Component {
             console.log(error);
         });
     }
-        //Méthode permettant de setter le State des selects qui sont transmis aux composants enfant
-        changeHandler = event => {
-            this.setState({ [event.target.name]: event.target.value }, () => {
-                AxiosCenter.getOneWrapperVariablesDePaie(this.state.idEmploye, this.state.yearSelected, this.state.monthSelected)
-                .then((response) => {         
-                    const absenceList = response.data.wrapperAbsenceList;
-                    const heureSupList = response.data.heuresSupplementairesDTOList;
-                    const primeList = response.data.wrapperPrimeList;            
-                    const noteDeFraisList = response.data.noteDeFraisDTOList;
-                    const avanceRappelSalaireList = response.data.avanceRappelSalaireDTOList;
-                    this.setState({
-                        absenceList,
-                        heureSupList,
-                        primeList,
-                        noteDeFraisList,
-                        avanceRappelSalaireList,
-                        loaded:true
-                    })
-                });
-            })            
-        };
 
-        /*getIdToDelete(compName, key) {
-                console.log(key);
-            this.setState({render:compName, key})        }*/
+    //Méthode permettant de setter le State des selects qui sont transmis aux composants enfant
+    changeHandler = event => {
+        this.setState({ [event.target.name]: event.target.value }, () => {
+            this.getOneWrapperVariablesDePaie();
+        })            
+    };
 
-        handleClick(compName, key) {
+    /*getIdToDelete(compName, key) {
             console.log(key);
-            this.setState({render:compName, key});       
+        this.setState({render:compName, key})        }*/
+
+        /*reloadParentAfterUpdate() {
+            this.setState({submitForm: true});       
+        }*/
+
+    reloadParentAfterUpdate() {
+        this.getOneWrapperVariablesDePaie();
+    }
+
+    handleClick(compName, key) {
+        console.log(key);
+        this.setState({render:compName, key});       
+    }
+    
+    _renderSubComp(){
+        switch(this.state.render){
+            case 'NoteDeFraisComponent': return <NoteDeFraisComponent object={this.state.noteDeFraisList[this.state.key]}/>
+            break;
+            case 'AbsenceComponent': return <AbsenceComponent object={this.state.absenceList[this.state.key]}/>
+            break;
+            case 'PrimeComponent': return <PrimeComponent object={this.state.primeList[this.state.key]}/>
+            break;
+            case 'ModifyAvanceRappelSalaire': return <ModifyAvanceRappelSalaire avanceRappelSalaireList={this.state.avanceRappelSalaireList[this.state.key]}/>
+            break;
         }
-        
-        _renderSubComp(){
-            switch(this.state.render){
-                case 'NoteDeFraisComponent': return <NoteDeFraisComponent object={this.state.noteDeFraisList[this.state.key]}/>
-                break;
-                case 'AbsenceComponent': return <AbsenceComponent object={this.state.absenceList[this.state.key]}/>
-                break;
-                case 'PrimeComponent': return <PrimeComponent object={this.state.primeList[this.state.key]}/>
-                break;
-            }
-        }
+    }
 
 
-      render() {
+    render() {
         if (!this.state.loaded) return <Loading/>
         else return(
             <div className="App">
@@ -215,7 +221,9 @@ export default class ParentUpdateVariablePaie extends Component {
                                 {<TableHeureSup heureSupList={this.state.heureSupList} handleClick={this.handleClick} />}                                        
                             </MDBCard>
                             <MDBCard>
-                                {<TableAvanceRappelSalaire avanceRappelSalaireList={this.state.avanceRappelSalaireList} handleClick={this.handleClick} />}
+                                {<TableAvanceRappelSalaire reloadParentAfterUpdate={this.reloadParentAfterUpdate} changeHandler={this.changeHandler} avanceRappelSalaireList={this.state.avanceRappelSalaireList} handleClick={this.handleClick} />}
+                                
+
                             </MDBCard>
                         </div>
                         {/**FOOTER BTN */}
