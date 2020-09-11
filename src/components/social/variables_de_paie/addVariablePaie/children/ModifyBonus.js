@@ -74,25 +74,25 @@ class ModifyBonus extends React.Component {
     }
 
     componentDidMount() {
+        console.log(this.props.prime)
         AxiosCenter.getAllTypePrimes()
             .then((response) => {
                 const list = response.data
                 console.log(list)
-                this.setState(
-                    {
+                this.setState({
                         listeTypePrime: list,
                         loaded: true
                     }
                 )
             }).catch((error) => {
-            console.log(error)
+                console.log(error)
         })
 
     }
 
 
     submit = (values, actions) => {
-        AxiosCenter.createPrime(values)
+        AxiosCenter.updatePrime(values)
             .then((response) => {
                 const prime = response.data
                 console.log(prime)
@@ -125,14 +125,15 @@ class ModifyBonus extends React.Component {
                         <Formik
                             onSubmit={this.submit}
                             initialValues={{
-                                annee: this.state.yearSelected, /* this.props.yearSelected, props composant parent a remettre */
-                                employeId: this.state.idEmploye, /* this.props.idEmploye */
-                                etatVariablePaieId: 1,
-                                id: null,
-                                mois: this.state.monthSelected, /* this.props.monthSelected */
-                                montant: 0,
-                                type: "",
-                                typePrimeId: 1
+
+                                annee: this.props.prime.annee,
+                                employeId: this.props.prime.employeId,
+                                etatVariablePaieId: this.props.prime.etatVariablePaieId,
+                                id: this.props.prime.id,
+                                mois: this.props.prime.mois,
+                                montant: this.props.prime.montant,
+                                type: this.props.prime.type,
+                                typePrimeId: this.props.prime.typePrimeId
 
                             }}
                             validationSchema={this.primeSchema}

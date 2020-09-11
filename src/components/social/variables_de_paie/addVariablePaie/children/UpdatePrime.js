@@ -7,27 +7,29 @@ import {
     MDBModalHeader,
 } from "mdbreact";
 import ModifyBonus from "./ModifyBonus";
+import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 
-const prime = {
-    annee: 2020,
-    mois: 9,
-    employeId: 3,
-    montant: 50,
-    etatVariablePaieId: 1,
-    id: 1051,
-    type: "",
-    typePrimeId: "",
-}
+const prime = AxiosCenter.getPrime(9151);
+
 
 class UpdatePrime extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            prime: null,
             modalPrime:false,
         }
     }
 
     togglePrime = () => {
+        AxiosCenter.getPrime(9151)
+            .then((response) => {
+                this.state.prime = response.data
+                console.log(prime)
+            }).catch((error) => {
+            console.log(error)
+        })
+
         this.setState({
             modalPrime: !this.state.modalPrime,
         });
@@ -35,21 +37,27 @@ class UpdatePrime extends React.Component {
 
 
 
-    componentDidMount() {
+    updatePrime() {
+        AxiosCenter.getPrime(9151)
+            .then((response) => {
+                this.state.prime = response.data;
+            });
 
     }
 
     render() {
+
         return (
+        this.updatePrime(),
             <MDBContainer>
                 <MDBBtn onClick={this.togglePrime}>Update</MDBBtn>
-                <MDBModal isOpen={this.state.modalPrime} toggle={this.modalPrime} size="lg">
-                    <MDBModalHeader color="default-color" toggle={this.togglePrime}>
+                <MDBModal isOpen={this.state.modalPrime} toggle={this.togglePrime} size="lg">
+                    {/*<MDBModalHeader color="default-color" toggle={this.togglePrime}>
                         Modification
-                    </MDBModalHeader>
+                    </MDBModalHeader>*/}
                     <MDBModalBody>
                         <ModifyBonus
-                            prime={prime}
+                            prime={this.prime}
                             togglePrime={this.togglePrime}
                         />
                     </MDBModalBody>
@@ -57,6 +65,7 @@ class UpdatePrime extends React.Component {
             </MDBContainer>
         )
     }
+
 }
 
 export default UpdatePrime;

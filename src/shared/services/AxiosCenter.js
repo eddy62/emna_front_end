@@ -262,6 +262,15 @@ const AxiosCenter = {
       url: `/primes/${id}`,
     });
   },
+
+  updatePrime(values) {
+    return ApiBackEnd({
+      method: "put",
+      url: `/primes`,
+      data: values,
+    });
+  },
+
   //fin Gestion Social
 
   getReleve() {
