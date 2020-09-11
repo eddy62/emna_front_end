@@ -85,7 +85,7 @@ import AccueilFacture from "./gestion_factures/accueilFactures";
 import CreerFacture from "./gestion_factures/creerFacture";
 import CreerDepense from "./gestion_factures/creerDepense";
 import DetailFacture from "./gestion_factures/detailFacture";
-import UpdateAbsence from "./social/variables_de_paie/updateDeleteVariablePaie/children/updateDeleteAbsence";
+import TestAbsence from "./social/variables_de_paie/updateDeleteVariablePaie/TestAbsence";
 
 //gestion Variables de paie
 
@@ -109,7 +109,7 @@ export default class Routes extends Component {
         />
         <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
 
-        <PrivateRoute path="/test" component={UpdateAbsence} />
+        <PrivateRoute path="/test" component={TestAbsence} />
         {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />

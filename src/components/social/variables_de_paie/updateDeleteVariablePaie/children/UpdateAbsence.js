@@ -97,15 +97,6 @@ class UpdateAbsence extends React.Component {
             loaded: false,
             startPeriod: "",
             endPeriod: "",
-            id: 1,
-            debutAbsence: "2020-07-01",
-            finAbsence: "2020-07-31",
-            justificatif: "Arrêt Maladie",
-            typeAbsenceId: 1,
-            etatVariablePaieId: 1,
-            employeId: 1,
-            mois: 7,
-            annee: 2020
         };
     }
 
@@ -121,11 +112,15 @@ class UpdateAbsence extends React.Component {
         });
     }
 
+    toggleUpdateAbsence = () => {
+        this.props.toggleUpdateAbsence()
+    }
+
     submit = (values, actions) => {
         AxiosCenter.updateAbsence(values)
             .then(() => {
                 notify("success");
-                //actions.resetForm();
+                this.toggleUpdateAbsence();
             }).catch((error) => {
             console.log(error);
             notify("error");
@@ -136,18 +131,17 @@ class UpdateAbsence extends React.Component {
     updatePeriod() {
         this.state.startPeriod = new Date(new Date()
             .setFullYear(
-                this.state.annee,
-                this.state.mois - 1,
+                this.props.absence.annee,
+                this.props.absence.mois - 1,
                 1
             )).toISOString().slice(0, 10);
         this.state.endPeriod = new Date(new Date()
             .setFullYear(
-                this.state.annee,
-                this.state.mois,
+                this.props.absence.annee,
+                this.props.absence.mois,
                 0
             )).toISOString().slice(0, 10);
     }
-
 
     render() {
         if (!this.state.loaded) return <Loading/>
@@ -156,15 +150,15 @@ class UpdateAbsence extends React.Component {
                 <MDBContainer>
                     <div className="d-flex justify-content-center">
                         <Formik initialValues={{
-                            id: this.state.id,
-                            debutAbsence: this.state.debutAbsence,
-                            finAbsence: this.state.finAbsence,
-                            justificatif: this.state.justificatif,
-                            typeAbsenceId: this.state.typeAbsenceId,
-                            etatVariablePaieId: this.state.etatVariablePaieId,
-                            employeId: this.state.employeId,
-                            mois: this.state.mois,
-                            annee: this.state.annee
+                            id: this.props.absence.id,
+                            debutAbsence: this.props.absence.debutAbsence,
+                            finAbsence: this.props.absence.finAbsence,
+                            justificatif: this.props.absence.justificatif,
+                            typeAbsenceId: this.props.absence.typeAbsenceId,
+                            etatVariablePaieId: this.props.absence.etatVariablePaieId,
+                            employeId: this.props.absence.employeId,
+                            mois: this.props.absence.mois,
+                            annee: this.props.absence.annee
                         }}
                                 onSubmit={this.submit}
                                 validationSchema={absenceSchema(this.state)}
@@ -226,7 +220,8 @@ class UpdateAbsence extends React.Component {
                                                     color="teal accent-3"
                                                     rounded
                                                     size="sm"
-                                                >Supprimer
+                                                    onClick={this.toggleUpdateAbsence}>
+                                                    Annuler
                                                 </MDBBtn>
                                                 <MDBBtn
                                                     color="teal accent-3"

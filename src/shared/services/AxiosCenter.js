@@ -173,6 +173,14 @@ const AxiosCenter = {
     })
   },
 
+  createOther(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/autres-variables",
+      data: values,
+    });
+  },
+
   getWrapperEmploye(id) {
     return ApiBackEnd({
       method: "get",
