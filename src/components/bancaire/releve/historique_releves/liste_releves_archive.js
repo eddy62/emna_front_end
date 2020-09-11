@@ -36,6 +36,13 @@ export default class ListeRelevesArchives extends React.Component {
           <td>
             <Link to={"/detailsreleve/" + releve.id}> voir le détail</Link>
           </td>
+          <td>
+            <button type="button" className="btn btn-primary" onClick={() => {
+              props.getAsPDF(releve.id);
+            }}>
+              <i className="fas fa-file-pdf" />
+            </button>
+          </td>
         </tr>
       );
     });
@@ -52,7 +59,7 @@ export default class ListeRelevesArchives extends React.Component {
             </MDBCardHeader>
           </div>
           <div>
-            <hr></hr>
+            <hr/>
           </div>
           <div>
             <MDBCol>
@@ -97,9 +104,20 @@ export default class ListeRelevesArchives extends React.Component {
     );
   }
 
+  getAsPDF = (statementId) => {
+    AxiosCenter.getPDFArchivedStatement(statementId)
+        .then((res) => {
+          console.log(res.data)
+          const file = new Blob([res.data], {type: 'application/pdf'});
+          const fileURL = URL.createObjectURL(file);
+          window.open(fileURL);
+        })
+        .catch((err) => console.log(err));
+  }
+
   render() {
     if (this.state.loaded) {
-      return <this.listerLesReleves releves={this.state.releves} />;
+      return <this.listerLesReleves releves={this.state.releves} getAsPDF={this.getAsPDF}/>;
     } else {
       return <Loading />;
     }

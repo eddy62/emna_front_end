@@ -287,6 +287,13 @@ const AxiosCenter = {
       url: `/operations/releve/${id}`,
     });
   },
+  getPDFArchivedStatement(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/releves/pdf/${id}`,
+      responseType: 'arraybuffer'
+    });
+  },
   postOperation(values) {
     return ApiBackEnd({
       method: "post",
