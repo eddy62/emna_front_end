@@ -127,7 +127,7 @@ const AxiosCenter = {
       url: `/releve/etat/${idEtat}/societe/${idSociete}`,
     });
   },
-  getReleveByEtat(id) {
+  getStatementByState(id) {
     return ApiBackEnd({
       method: "get",
       url: `/releve/etat/${id}`,
@@ -155,7 +155,7 @@ const AxiosCenter = {
     });
   },
 
-  updateReleve(values) {
+  updateStatement(values) {
     return ApiBackEnd({
       method: "put",
       url: "/releves",
@@ -266,6 +266,20 @@ const AxiosCenter = {
       method: "GET",
       url: `depenses/societe/${id}`,
     });
+  },
+
+  getLastNumFactBySociete(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/facture/lastnumfact/${id}`,
+    });
+  },
+
+  getInfosForCreationFacture(id){
+    return Axios.all([
+      this.getLastNumFactBySociete(id),
+      this.getAllClientFournisseurBySociete(id)
+    ])
   },
 
 //Post
@@ -446,19 +460,6 @@ const AxiosCenter = {
     });
   },
 
-  getLastNumFactBySociete(id) {
-    return ApiBackEnd({
-      method: "GET",
-      url: `/facture/lastnumfact/${id}`,
-    });
-  },
-
-  getInfosForCreationFacture(id){
-    return Axios.all([
-      this.getLastNumFactBySociete(id),
-      this.getAllClientFournisseurBySociete(id)
-    ])
-  },
 
 //Put
   updateCustomerSupplier(values) {
