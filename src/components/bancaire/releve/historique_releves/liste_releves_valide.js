@@ -26,7 +26,7 @@ export default class ListeRelevesValide extends React.Component {
     componentDidMount() {
         console.log(this.state.societyId)
         if (this.state.userRole == "ROLE_ADMIN"){
-            AxiosCenter.getReleveByEtat(ReleveConstants.RELEVE_ETAT_NON_ARCHIVE)
+            AxiosCenter.getStatementByState(ReleveConstants.RELEVE_ETAT_NON_ARCHIVE)
                 .then((res) => {
                     const releves = res.data;
                     this.setState({ releves, loaded: true });

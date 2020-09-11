@@ -53,7 +53,7 @@ export default class EditStatement extends Component {
   }
 
   submit = (values) => {
-    AxiosCenter.updateReleve(values)
+    AxiosCenter.updateStatement(values)
       .then((response) => {
         const statement = response.data;
         this.props.history.push("/detailsreleveinvalide/" + statement.id);
