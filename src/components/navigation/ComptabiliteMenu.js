@@ -16,7 +16,6 @@ class ComptabiliteMenu extends React.Component {
 
   componentDidMount() {
     this.backListener = this.props.history.listen(location => {
-      console.log(location)
     });
   }
 
@@ -32,12 +31,12 @@ class ComptabiliteMenu extends React.Component {
         <MDBContainer>
           <div>
             <MDBCardHeader color="default-color">
-              <MDBCardTitle>
-                <h1>{title}</h1>
+              <MDBCardTitle tag="h1">
+                {title}
               </MDBCardTitle>
               <br />
-              <MDBCardTitle>
-                <h3>Accueil</h3>
+              <MDBCardTitle tag="h3">
+                Accueil
               </MDBCardTitle>
             </MDBCardHeader>
           </div>

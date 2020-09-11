@@ -84,7 +84,7 @@ class CreateHeuresSupplementaires extends React.Component {
         values.mois = this.props.monthSelected
         values.employeId = this.props.employeId
 
-        AxiosCenter.createHeureSupplementaire(values)
+        AxiosCenter.createOvertime(values)
             .then((response) => {
                 const HEURESUP = response.data;
                 notify('success');

@@ -20,7 +20,7 @@ class ListerClientFournisseur extends Component {
 
   componentDidMount() {
     if (this.state.roleUser === "ROLE_SOCIETY") {
-      AxiosCenter.getAllClientFournisseurBySociete(this.state.societeId)
+      AxiosCenter.getAllCustomerSupplierBySociete(this.state.societeId)
         .then((response) => {
           const clients = response.data;
           this.setState({ clients });

@@ -75,7 +75,7 @@ class PageAddOperationStatement extends React.Component {
     };
 
     componentDidMount() {
-        AxiosCenter.getReleveById(this.props.match.params.id)
+        AxiosCenter.getStatementById(this.props.match.params.id)
             .then((response) => {
                 const releve = response.data;
                 this.setState({

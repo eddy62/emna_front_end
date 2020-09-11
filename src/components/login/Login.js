@@ -108,9 +108,7 @@ export class Login extends React.Component {
                         </MDBInput>
                         <p className="font-small blue-text d-flex justify-content-end pb-3">
                           <Link to="/forgot/password">
-                            <p className="blue-text ml-1">
                               Mot de passe oublié ?
-                            </p>
                           </Link>
                         </p>
                         <div className="text-center mb-3">

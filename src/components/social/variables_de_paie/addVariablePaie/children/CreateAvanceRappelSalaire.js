@@ -93,7 +93,7 @@ class CreateAvanceRappelSalaire extends React.Component {
         values.mois = this.props.monthSelected;
         values.employeId = this.props.employeId;
 
-        AxiosCenter.createAvanceRappelSalaire(values)
+        AxiosCenter.createAdvanceRecallSalary(values)
             .then((response) => {
                 const AVANCERAPPELSALAIRE = response.data
                 notify("success", values.type);

@@ -39,7 +39,7 @@ const ComposantSelect = ({ field, form: { touched, errors }, ...props }) => (
 
 class AddProduit extends React.Component {
     submit = (values, actions) => {
-        AxiosCenter.createProduit(values)
+        AxiosCenter.createProduct(values)
             .then((response) => {
                 toast.success(
                     <div className="text-center">

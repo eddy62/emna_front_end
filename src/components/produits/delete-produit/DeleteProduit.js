@@ -20,7 +20,7 @@ class DeleteProduit extends Component {
     }
 
     supprimerProduit = () => {
-        AxiosCenter.deleteProduit(this.props.produit.id, this.state.userId)
+        AxiosCenter.deleteProduct(this.props.produit.id, this.state.userId)
             .then((response) => {
                 toast.success(
                     <div className="text-center">

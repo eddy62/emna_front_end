@@ -24,26 +24,26 @@ export default class ListOfInvoices extends Component {
   render(){
     if (!this.state.loaded) return <Loading/>
     return (
-      <div>
-        <MDBCardTitle className="card-title text-center py-2">
-          Liste des factures
-        </MDBCardTitle>         
-        <MDBTable striped scrollY maxHeight="500px" >
-          <MDBTableHead>
-            <tr>
-              <td><strong>Num</strong></td>
-              <td><strong>Date</strong></td>
-              <td><strong>Prix.TTC</strong></td>
-            </tr>
-          </MDBTableHead>
-          <MDBTableBody>
-            {this.state.factures.map((facture, index) => (
-              <StatementInvoice key={facture.id} facture={facture} />
-            ))}
-          </MDBTableBody>  
-        </MDBTable>
-      </div>
+        <div>
+          <MDBCardTitle className="card-title text-center py-2">
+            Liste des factures
+          </MDBCardTitle>
+          <MDBTable striped scrollY maxHeight="500px">
+            <MDBTableHead>
+              <tr>
+                <td><strong>Num</strong></td>
+                <td><strong>Date</strong></td>
+                <td><strong>Prix.TTC</strong></td>
+              </tr>
+            </MDBTableHead>
+            <MDBTableBody>
+              {this.state.factures.map((facture, index) => (
+                  <StatementInvoice key={facture.id} facture={facture}/>
+              ))}
+            </MDBTableBody>
+          </MDBTable>
+        </div>
     );
   }
-  
+
 }

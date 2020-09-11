@@ -13,9 +13,9 @@ class SideNavigation extends React.Component {
   }
   componentDidMount() {
     if (UserService.getRole() === "ROLE_ACCOUNTANT") {
-      AxiosCenter.getComptableByUser(UserService.getUserId()).then(
+      AxiosCenter.getAccountantByUser(UserService.getUserId()).then(
         (response) => {
-          AxiosCenter.getAllSocietesByComptable(response.data.id).then(
+          AxiosCenter.getAllSocietiesByComptable(response.data.id).then(
             (response) => {
               this.setState({
                 societes: response.data,
@@ -26,14 +26,15 @@ class SideNavigation extends React.Component {
         }
       );
     } else if (UserService.getRole() === "ROLE_ADMIN") {
-      AxiosCenter.getAllSocietes().then((response) => {
+      AxiosCenter.getAllSocieties().then((response) => {
         this.setState({
           societes: response.data,
         });
         UserService.setSocietyId(response.data[0].id);
+        console.log(this.state.societes)
       });
     } else if (UserService.getRole() === "ROLE_SOCIETY") {
-      AxiosCenter.getSocieteByUser(UserService.getUserId()).then((response) => {
+      AxiosCenter.getSocietyByUser(UserService.getUserId()).then((response) => {
         UserService.setSocietyId(response.data.id);
       });
     }

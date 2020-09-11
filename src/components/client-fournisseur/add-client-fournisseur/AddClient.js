@@ -19,7 +19,7 @@ const ComposantInput = ({ field, form: { touched, errors }, ...props }) => (
 
 class AddClientFournisseur extends React.Component {
   submit = (values, actions) => {
-    AxiosCenter.createClientFournisseur(values)
+    AxiosCenter.createCustomerSupplier(values)
       .then((response) => {
         toast.success(
           <div className="text-center">

@@ -29,7 +29,7 @@ class ModifierClient extends Component {
 
 
     componentDidMount() {
-        AxiosCenter.getClientFournisseur(this.state.IdEntity)
+        AxiosCenter.getCustomerSupplier(this.state.IdEntity)
             .then((response) => {
                 const client = response.data;
                 this.setState({
@@ -49,7 +49,7 @@ class ModifierClient extends Component {
 
 
     submit = (values, actions) => {
-        AxiosCenter.updateClientFournisseur(values)
+        AxiosCenter.updateCustomerSupplier(values)
             .then((response) => {
                 toast.success(
                     <div className="text-center">

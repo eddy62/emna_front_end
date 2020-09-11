@@ -56,13 +56,13 @@ const ViewComptable = () => {
 
     //methode to find comptable by user before calling! Otherwise it'll show only the user.
     const getComptableID = async (id) => {
-        const result =  await AxiosCenter.getComptableByUserId(id)
+        const result =  await AxiosCenter.getAccountantByUserId(id)
         return result.data;
     }
    
     const loadUser= () => {
         getComptableID(id).then( async (res) => {
-            const result = await AxiosCenter.getComptable(res.id)
+            const result = await AxiosCenter.getAccountant(res.id)
             setUser(result.data)
         });   
     }

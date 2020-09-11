@@ -50,7 +50,7 @@ class UpdateProduit extends Component {
 
 
     componentDidMount() {
-        AxiosCenter.getProduitById(this.state.IdEntity)
+        AxiosCenter.getProductById(this.state.IdEntity)
             .then((response) => {
                 const produit = response.data;
                 this.setState({
@@ -70,7 +70,7 @@ class UpdateProduit extends Component {
 
 
     submit = (values, actions) => {
-        AxiosCenter.updateProduit(values)
+        AxiosCenter.updateProduct(values)
             .then((response) => {
                 toast.success(
                     <div className="text-center">

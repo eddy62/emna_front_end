@@ -62,7 +62,7 @@ const ViewSociete = () => {
 
     const loadUser = () => {
         getSocieteID(id).then(async (res) => {
-            const result = await AxiosCenter.getSociete(res.id)
+            const result = await AxiosCenter.getSocietyById(res.id)
             setUser(result.data)
         });
     }

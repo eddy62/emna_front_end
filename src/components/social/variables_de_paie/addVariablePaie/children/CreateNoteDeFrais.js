@@ -114,7 +114,7 @@ class CreateNoteDeFrais extends React.Component {
         values.annee = this.props.yearSelected;
         values.mois = this.props.monthSelected;
         console.log("SUBMIT : " + JSON.stringify(values, null, 4));
-        AxiosCenter.createNoteDeFrais(values)
+        AxiosCenter.createExpenseReport(values)
             .then((response) => {
                 const noteDeFrais = response.data;
                 console.log("POST : " + JSON.stringify(noteDeFrais, null, 4));

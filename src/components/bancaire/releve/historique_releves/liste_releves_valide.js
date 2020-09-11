@@ -33,7 +33,7 @@ export default class ListeRelevesValide extends React.Component {
                 })
                 .catch((err) => console.log(err));
         }else {
-            AxiosCenter.getReleveByEtatAndSociety(ReleveConstants.RELEVE_ETAT_NON_ARCHIVE, this.state.societyId)
+            AxiosCenter.getStatementsByStateAndSociety(ReleveConstants.RELEVE_ETAT_NON_ARCHIVE, this.state.societyId)
                 .then((res) => {
                     const releves = res.data;
                     this.setState({ releves, loaded: true });
