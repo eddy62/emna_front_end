@@ -5,11 +5,11 @@ class DepenseElement extends React.Component {
   render() {
     return (
       <tr>
-        <td>{this.props.depense.numfact}</td>
-        <td>{this.props.depense.nomClient}</td>
+        <td>{this.props.depense.numero}</td>
+        <td>{this.props.depense.nomFournisseur}</td>
         <td>{this.props.depense.date}</td>
-        <td>{this.props.depense.prixTTC} €</td>
-        <td>{this.props.depense.etatFacture}</td>
+        <td>{this.props.depense.prix} €</td>
+        <td>{this.props.depense.etatDepense}</td>
         <button className="btn-secondary btn-sm">
           <Link
             to={{

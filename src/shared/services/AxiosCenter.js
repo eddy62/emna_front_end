@@ -574,7 +574,7 @@ const AxiosCenter = {
   getDepenseBySociete(id) {
     return ApiBackEnd({
       method: "GET",
-      url: `facturesachat/societe/${id}`,
+      url: `depense/societe/${id}`,
     });
   },
 
