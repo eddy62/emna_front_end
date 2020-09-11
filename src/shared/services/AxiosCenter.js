@@ -188,6 +188,14 @@ const AxiosCenter = {
       data: values
     })
   },
+
+  getNoteDeFrais(){
+    return ApiBackEnd({
+      method: "GET",
+      url: "/note-de-frais",
+    });
+  },
+
       //Fin Variables de paie
 
   getWrapperEmploye(id) {
