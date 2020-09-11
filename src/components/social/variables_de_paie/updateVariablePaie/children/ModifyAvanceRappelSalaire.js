@@ -129,7 +129,6 @@ class ModifyAvanceRappelSalaire extends React.Component {
     };
 
     render() {
-        {console.log(this.props.reloadParentAfterUpdate)}
         if (!this.state.loaded) return <Loading/>
         else return (
             <div className="App">
@@ -234,7 +233,7 @@ class ModifyAvanceRappelSalaire extends React.Component {
                                                 color="teal accent-3"
                                                 rounded
                                                 size="sm"
-                                                onClick={this.props.toggleAvance}
+                                                onClick={() => this.props.toggleAvance(this.props.index)}
                                             >Annuler
                                             </MDBBtn>
                                         </MDBRow>

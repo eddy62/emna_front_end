@@ -17,7 +17,8 @@ import CreateAbsence from "./children/CreateAbsence";
 import CreatePrime from "./children/CreatePrime";
 import CreateAvanceRappelSalaire from "./children/CreateAvanceRappelSalaire";
 import CreateNoteDeFrais from "./children/CreateNoteDeFrais";
-import CreateHeuresSupplementaires from "./children/CreateHeuresSupplementaires"
+import CreateHeuresSupplementaires from "./children/CreateHeuresSupplementaires";
+import CreateOther from "./children/CreateOther";
 
 export default class ParentAddVariablePaie extends Component {
 
@@ -245,13 +246,13 @@ export default class ParentAddVariablePaie extends Component {
 
                                         <MDBCard className="mb-3">
                                             <MDBCollapseHeader onClick={this.toggleCollapse("collapse6")} className="bg-transparent">
-                                            Autre
+                                            Autres
                                                 <i className={ collapseID==="collapse6" ? "fa fa-angle-up" : "fa fa-angle-down" } />
                                             </MDBCollapseHeader>
                                             <MDBCollapse id="collapse6" isOpen={collapseID}>
                                                 <MDBCardBody>
                                                 {this.state.idNameSelected ? (
-                                                    <div></div>
+                                                    <CreateOther employeId={this.state.idNameSelected} yearSelected={this.state.yearSelected} monthSelected={this.state.monthSelected} />
                                                 ) : (
                                                     <p>Veuillez choisir un employé</p>
                                                 )}

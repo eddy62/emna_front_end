@@ -88,12 +88,16 @@ class ModifyHeuresSupplementaires extends React.Component {
         this.updatePeriod();
     }
 
+    componentWillUnmount() {
+        this.props.reloadParentAfterUpdate();
+    }
+
     submit = (values, actions) => {
         AxiosCenter.modifyHeureSupplementaire(values)
             .then(() => {
                 notify('success');
                 actions.resetForm();
-                this.props.toggleModalHeureSupplementaire();
+                this.props.toggleAvance(this.props.index);
             }).catch((error) => {
             console.log(error);
             notify('error');
@@ -182,7 +186,7 @@ class ModifyHeuresSupplementaires extends React.Component {
                                                 color="teal accent-3"
                                                 rounded
                                                 size="sm"
-                                                onClick={this.props.toggleModalHeureSupplementaire}
+                                                onClick={() => this.props.toggleAvance(this.props.index)}
                                             >Annuler
                                             </MDBBtn>
                                         </MDBRow>

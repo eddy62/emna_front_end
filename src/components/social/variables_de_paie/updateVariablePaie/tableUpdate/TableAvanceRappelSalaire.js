@@ -1,11 +1,26 @@
 import React, { Component } from "react";
 import { MDBTable, MDBTableBody, MDBTableHead, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader } from "mdbreact";
 import ModifyAvanceRappelSalaire from "../children/ModifyAvanceRappelSalaire"
+import AxiosCenter from "../../../../../shared/services/AxiosCenter";
+import {toast} from "react-toastify";
 
-const componentModale = () => {
-    return(
-        console.log("it's work")
-    )
+const notify = (type, nom) => {
+    switch (type) {
+        case "success":
+            toast.success(
+                <div className="text-center">
+                    <strong>Avance/Rappel sur salaire Supprimé(e) &nbsp;&nbsp;!</strong>
+                </div>,
+            );
+            break;
+        case "error":
+            toast.error(
+                <div className="text-center">
+                    <strong>Avance/Rappel sur salaire NON Supprimé(e) &nbsp;&nbsp;!</strong>
+                </div>,
+            );
+            break;
+    }
 };
 
 export default class TableAvanceRappelSalaire extends React.Component {
@@ -14,7 +29,8 @@ export default class TableAvanceRappelSalaire extends React.Component {
         super(props);
         this.state={
             modalAvance: false,
-            index: null,
+            index: null, 
+            modaleDelete: false,
         }
     }
 
@@ -22,8 +38,26 @@ export default class TableAvanceRappelSalaire extends React.Component {
         this.setState({
             index: key,
             modalAvance: !this.state.modalAvance,
-        }, () => {componentModale()});
+        });
        
+    }
+
+    toggleModaleDelete = (key) => {
+        this.setState({
+            index: key,
+            modaleDelete: !this.state.modaleDelete,
+        });
+    }
+
+    callBackToDelete = () => {
+        AxiosCenter.deleteAvanceRappelSalaire(this.props.avanceRappelSalaireList[this.state.index].id).then(() => {
+            this.toggleModaleDelete();
+            this.props.reloadParentAfterUpdate();
+            notify('success');
+        }).catch((error) => {
+            console.log(error);
+            notify('error');
+        });
     }
 
     render() {
@@ -47,7 +81,8 @@ export default class TableAvanceRappelSalaire extends React.Component {
                                 <td>
                                     <MDBBtn color="teal accent-3" rounded size="sm"
                                         onClick={() =>this.toggleModal(index)}>UPDATE</MDBBtn>
-                                    <MDBBtn color="danger" rounded size="sm">DELETE</MDBBtn>
+                                    <MDBBtn color="danger" rounded size="sm"
+                                        onClick={() =>this.toggleModaleDelete(index)}>DELETE</MDBBtn>
                                 </td>
                             ) : (
                                 <td>Confirmé</td>
@@ -63,19 +98,27 @@ export default class TableAvanceRappelSalaire extends React.Component {
                     </MDBTableBody> 
                 )}
             </MDBTable>
-            <MDBModal isOpen={this.state.modalAvance} toggle={this.state.toggleModal} size="lg">
-                {console.log(this.props.avanceRappelSalaireList[this.state.index])}
-                {console.log(this.props.reloadParentAfterUpdate)}
-                {console.log("INDEX TABLE " + this.state.index)}
-                    <MDBModalBody>
-                        <ModifyAvanceRappelSalaire
-                            avanceRappelSalaire={this.props.avanceRappelSalaireList[this.state.index]}  
-                            index={this.state.index}                          
-                            toggleAvance={this.toggleModal}
-                            reloadParentAfterUpdate={reloadParent}
-                        />
-                    </MDBModalBody>
-                </MDBModal>
+            {/** MODALE DELETE */}
+            <MDBModal isOpen={this.state.modaleDelete} backdrop={false} size="lg">
+                <MDBModalBody>
+                    Etes-vous sur de vouloir supprimer cet enregistrement ?
+                    <MDBBtn
+                        onClick={this.toggleModaleDelete}>Annuler</MDBBtn>
+                    <MDBBtn
+                        onClick={this.callBackToDelete}>Confirmer</MDBBtn>
+                </MDBModalBody>
+            </MDBModal>
+            {/** MODALE UPDATE */}
+            <MDBModal isOpen={this.state.modalAvance} backdrop={false} size="lg">
+                <MDBModalBody>
+                    <ModifyAvanceRappelSalaire
+                        avanceRappelSalaire={this.props.avanceRappelSalaireList[this.state.index]}  
+                        index={this.state.index}                          
+                        toggleAvance={this.toggleModal}
+                        reloadParentAfterUpdate={reloadParent}
+                    />
+                </MDBModalBody>
+            </MDBModal>
         </div>
         );
   }
