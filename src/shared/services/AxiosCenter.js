@@ -131,7 +131,7 @@ const AxiosCenter = {
   deleteAbsence(id) {
     return ApiBackEnd({
       method: "DELETE",
-      url: "/absences/${id}",
+      url: `/absences/${id}`,
     });
   },
 
