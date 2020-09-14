@@ -87,6 +87,8 @@ import DetailFacture from "./gestion_factures/detailFacture";
 //gestion Variables de paie
 import ParentAddVariablePaie from "./social/variables_de_paie/addVariablePaie/ParentAddVariablePaie";
 import ParentUpdateVariablePaie from "./social/variables_de_paie/updateVariablePaie/ParentUpdateVariablePaie";
+import ModifyNoteDeFrais from "./social/variables_de_paie/addVariablePaie/children/ModifyNoteDeFrais";
+import UpdateNoteDeFrais from "./social/variables_de_paie/addVariablePaie/children/UpdateNoteDeFrais";
 
 export default class Routes extends Component {
   render() {
@@ -111,6 +113,7 @@ export default class Routes extends Component {
           component={ParentUpdateVariablePaie}
         />
         <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
+
 
         {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />

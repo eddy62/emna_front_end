@@ -210,6 +210,14 @@ const AxiosCenter = {
       data: values
     })
   },
+
+  getNoteDeFrais(){
+    return ApiBackEnd({
+      method: "GET",
+      url: "/note-de-frais",
+    });
+  },
+
       //Fin Variables de paie
 
   createOther(values) {
@@ -303,6 +311,14 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "put",
       url: `/primes`,
+      data: values,
+    });
+  },
+
+  updateNoteDeFrais(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/note-de-frais`,
       data: values,
     });
   },
