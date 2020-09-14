@@ -241,9 +241,6 @@ class ModifyNoteDeFrais extends React.Component {
                                             >Annuler
                                             </MDBBtn>
                                         </MDBRow>
-                                        <pre>{JSON.stringify(values, null, 4)}</pre>
-
-
                                     </MDBCardBody>
                                 </Form>
                             )}

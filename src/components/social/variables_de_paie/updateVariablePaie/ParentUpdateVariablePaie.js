@@ -211,13 +211,13 @@ export default class ParentUpdateVariablePaie extends Component {
                         {/**CONTENT */}
                         
                         {this._renderSubComp()}
-                        <div style={{display:"flex",flexDirection:"column"}}>                                                                                         
-                            <MDBCard className="mt-1">
-                                {<TableNoteDefrais noteDeFraisList={this.state.noteDeFraisList} reloadParentAfterUpdate={this.reloadParentAfterUpdate} changeHandler={this.changeHandler} handleClick={this.handleClick}/>}
-                            </MDBCard>                                                        
+                        <div style={{display:"flex",flexDirection:"column"}}> 
                             <MDBCard>
                                 {<TableAbsence reloadParentAfterUpdate={this.reloadParentAfterUpdate} changeHandler={this.changeHandler} absenceList={this.state.absenceList} handleClick={this.handleClick} />}
-                            </MDBCard>                                                        
+                            </MDBCard>                                                                                        
+                            <MDBCard className="mt-1">
+                                {<TableNoteDefrais noteDeFraisList={this.state.noteDeFraisList} reloadParentAfterUpdate={this.reloadParentAfterUpdate} changeHandler={this.changeHandler} handleClick={this.handleClick}/>}
+                            </MDBCard>                                                                                                                                           
                             <MDBCard>
                                 {<TablePrime reloadParentAfterUpdate={this.reloadParentAfterUpdate} changeHandler={this.changeHandler} primeList={this.state.primeList} handleClick={this.handleClick} />}                                        
                             </MDBCard>

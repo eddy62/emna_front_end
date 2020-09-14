@@ -70,7 +70,7 @@ callBackToDelete = () => {
         <MDBTable>
           <MDBTableHead color="default-color">
             <tr>
-              <th className="font-weight-bold">Prime</th>
+              <th className="font-weight-bold">Primes</th>
               <th>Montant</th>
               <th className="w-25"></th>
             </tr>
@@ -97,7 +97,7 @@ callBackToDelete = () => {
           ) : (
               <MDBTableBody>
               <tr>
-                  <td colSpan="3">Pas de prime ce mois</td>
+                  <td colSpan="3">Pas de Prime ce mois</td>
               </tr>
               </MDBTableBody>
           )}
@@ -105,7 +105,7 @@ callBackToDelete = () => {
           {console.log(this.state.index)}   
         </MDBTable>
         {/** MODALE DELETE */}
-        <MDBModal isOpen={this.state.modaleDelete} backdrop={false} size="lg">
+        <MDBModal isOpen={this.state.modaleDelete} backdrop={false} centered size="lg">
             <MDBModalBody>
                 Etes-vous sur de vouloir supprimer cet enregistrement ?
                 <MDBBtn
@@ -115,7 +115,7 @@ callBackToDelete = () => {
             </MDBModalBody>
         </MDBModal>
         {/** MODALE UPDATE */}
-        <MDBModal isOpen={this.state.modalAvance} toggle={this.toggleModal} size="lg">
+        <MDBModal isOpen={this.state.modalAvance} backdrop={false} centered size="lg">
             <MDBModalBody>
                 <ModifyBonus
                     prime={this.props.primeList[this.state.index]}  

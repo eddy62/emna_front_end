@@ -66,7 +66,7 @@ export default class TableNoteDeFrais extends React.Component {
         <MDBTable>
           <MDBTableHead color="default-color">
             <tr>
-              <th className="font-weight-bold">Note de frais</th>
+              <th className="font-weight-bold">Notes de Frais</th>
               <th>Date</th>
               <th>Montant</th>
               <th>Justificatif(s)</th>
@@ -97,14 +97,14 @@ export default class TableNoteDeFrais extends React.Component {
           ) : (
               <MDBTableBody>
                 <tr>
-                  <td colSpan="5">Pas d'avance/rappel sur salaire ce mois</td>
+                  <td colSpan="5">Pas de Note de Frais ce mois</td>
                 </tr>
               </MDBTableBody>
             )}
         </MDBTable>
 
         {/** MODALE DELETE */}
-        <MDBModal isOpen={this.state.modaleDelete} backdrop={false} size="lg">
+        <MDBModal isOpen={this.state.modaleDelete} backdrop={false} centered size="lg">
           <MDBModalBody>
               Etes-vous sur de vouloir supprimer cet enregistrement ?
               <MDBBtn
@@ -114,7 +114,7 @@ export default class TableNoteDeFrais extends React.Component {
           </MDBModalBody>
         </MDBModal>
         {/** MODALE UPDATE */}
-        <MDBModal isOpen={this.state.modalAvance} size="lg">
+        <MDBModal isOpen={this.state.modalAvance} backdrop={false} centered size="lg">
                     <MDBModalBody>
                         <ModifyNoteDeFrais
                             noteDeFrais={this.props.noteDeFraisList[this.state.index]}

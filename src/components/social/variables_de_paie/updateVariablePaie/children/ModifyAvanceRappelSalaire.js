@@ -65,14 +65,14 @@ const notify = (type, nom) => {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>{nom} sur salaire Modifié(e) &nbsp;&nbsp;!</strong>
+                    <strong>Avance/Rappel sur salaire Modifié(e) &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>{nom} sur salaire NON Modifié(e) &nbsp;&nbsp;!</strong>
+                    <strong>Avance/Rappel sur salaire NON Modifié(e) &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;

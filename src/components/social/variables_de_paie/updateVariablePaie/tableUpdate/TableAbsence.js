@@ -96,7 +96,7 @@ class TableAbsence extends React.Component {
                     ) : (
                         <MDBTableBody>
                             <tr>
-                                <td colSpan="3">Pas d'Absence pour ce mois</td>
+                                <td colSpan="5">Pas d'Absence ce mois</td>
                             </tr>
                         </MDBTableBody>
                     )}
