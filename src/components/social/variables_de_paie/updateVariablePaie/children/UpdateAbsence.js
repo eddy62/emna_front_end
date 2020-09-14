@@ -112,15 +112,12 @@ class UpdateAbsence extends React.Component {
         });
     }
 
-    toggleUpdateAbsence = () => {
-        this.props.toggleUpdateAbsence()
-    }
-
     submit = (values, actions) => {
         AxiosCenter.updateAbsence(values)
             .then(() => {
+                this.props.toggleModalUpdateAbsence(this.props.index);
+                this.props.reloadParentAfterUpdate();
                 notify("success");
-                this.toggleUpdateAbsence();
             }).catch((error) => {
             console.log(error);
             notify("error");
@@ -219,7 +216,7 @@ class UpdateAbsence extends React.Component {
                                                     color="teal accent-3"
                                                     rounded
                                                     size="sm"
-                                                    onClick={this.toggleUpdateAbsence}>
+                                                    onClick={() => this.props.toggleModalUpdateAbsence(this.props.index)}>
                                                     Annuler
                                                 </MDBBtn>
                                                 <MDBBtn

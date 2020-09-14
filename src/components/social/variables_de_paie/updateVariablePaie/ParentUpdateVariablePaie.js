@@ -15,6 +15,7 @@ import TableAvanceRappelSalaire from "./tableUpdate/TableAvanceRappelSalaire";
 import ModifyAvanceRappelSalaire from "./children/ModifyAvanceRappelSalaire";
 import TableNoteDefrais from "./tableUpdate/TableNoteDeFrais";
 import ModifyNoteDeFrais from "./children/ModifyNoteDeFrais";
+import UpdateAbsence from "./children/UpdateAbsence";
 
 export default class ParentUpdateVariablePaie extends Component {
 
@@ -215,7 +216,7 @@ export default class ParentUpdateVariablePaie extends Component {
                                 {<TableNoteDefrais noteDeFraisList={this.state.noteDeFraisList} reloadParentAfterUpdate={this.reloadParentAfterUpdate} changeHandler={this.changeHandler} handleClick={this.handleClick}/>}
                             </MDBCard>                                                        
                             <MDBCard>
-                                {<TableAbsence absenceList={this.state.absenceList} handleClick={this.handleClick} />}                                        
+                                {<TableAbsence reloadParentAfterUpdate={this.reloadParentAfterUpdate} changeHandler={this.changeHandler} absenceList={this.state.absenceList} handleClick={this.handleClick} />}
                             </MDBCard>                                                        
                             <MDBCard>
                                 {<TablePrime reloadParentAfterUpdate={this.reloadParentAfterUpdate} changeHandler={this.changeHandler} primeList={this.state.primeList} handleClick={this.handleClick} />}                                        
