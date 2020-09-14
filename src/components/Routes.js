@@ -11,10 +11,10 @@ import UpdateEmploye from "./social/employee-management/UpdateEmploye";
 import DeleteEmploye from "./social/employee-management/DeleteEmploye";
 import ArchiveEmploye from "./social/employee-management/ArchiveEmploye";
 
-import ListeContrat from "./contrat/listeContrat/ListeContrat";
+import ListeContrat from "./contrat/liste-contrat/ListeContrat";
 import Contrat from "./contrat/Contrat";
-import DetailContrat from "./contrat/detailContrat/DetailContrat";
-import CreerContrat from "./contrat/creerContrat/CreerContrat";
+import DetailContrat from "./contrat/detail-contrat/DetailContrat";
+import CreerContrat from "./contrat/creer-contrat/CreerContrat";
 
 import ParentAddVariablePaie from "./social/variables_de_paie/addVariablePaie/ParentAddVariablePaie";
 
@@ -80,13 +80,16 @@ import AddProduit from "./produits/add-produit/AddProduit";
 import UpdateProduit from "./produits/update-produit/UpdateProduit";
 //finGestionProduits
 //GestionReferentiels
-import Referentiels from "./referentiels/Referentiels";
+import Referentiels from "./contrat/referential/Referentiels";
 
 //GestionFactures
 import AccueilFacture from "./gestion_factures/factures/accueilFactures";
 import CreerFacture from "./gestion_factures/factures/creerFacture";
 import CreerDepense from "./gestion_factures/depenses/creerDepense";
 import AccueilDepense from './gestion_factures/depenses/accueilDepenses';
+
+//Juridique
+import ListOfClauses from "./contrat/referential/clauses/list-of-clauses/ListOfClauses";
 
 //gestion Variables de paie
 
@@ -114,11 +117,16 @@ export default class Routes extends Component {
         <PrivateRoute path="/accueildepenses" component={AccueilDepense} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />
         <PrivateRoute path="/newdepense" component={CreerDepense} />
+
+        {/* Juridique  */}
+
         {/* Gestion des Contrats*/}
         <PrivateRoute path="/listcontrat" component={ListeContrat} />
         <PrivateRoute path="/contrat" component={Contrat} />
         <PrivateRoute path="/detailcontrat/:id" component={DetailContrat} />
         <PrivateRoute path="/creercontrat" component={CreerContrat} />
+        <PrivateRoute path="/clauses/society/:id" component={ListOfClauses} />
+
         {/* gestionUserRoutes */}
         <PrivateRoute exact path="/users" component={Users} />
         <PrivateRoute exact path="/users/add" component={AddUser} />

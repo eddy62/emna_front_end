@@ -282,6 +282,14 @@ const AxiosCenter = {
     ])
   },
 
+  getAllClausesBySocietyId(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/clauses/society/${id}`,
+    });
+  },
+  
+
 //Post
   finishPasswordReset(values) {
     return ApiBackEnd({
