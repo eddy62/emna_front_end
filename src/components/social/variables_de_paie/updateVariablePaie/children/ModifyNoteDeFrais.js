@@ -108,11 +108,15 @@ class ModifyNoteDeFrais extends React.Component {
         };
     }
 
+    componentWillUnmount() {
+        this.props.reloadParentAfterUpdate();
+    }
+
     submit = (values, actions) => {
         AxiosCenter.updateNoteDeFrais(values)
             .then(() => {
                 notify("success");
-                this.props.toggleNoteDeFrais();
+                this.props.toggleNoteDeFrais(this.props.index);
             }).catch((error) => {
             console.log(error);
             notify("error");
@@ -233,7 +237,7 @@ class ModifyNoteDeFrais extends React.Component {
                                                 color="teal accent-3"
                                                 rounded
                                                 size="sm"
-                                                onClick={this.toggleNoteDeFrais}
+                                                onClick={() => this.props.toggleNoteDeFrais(this.props.index)}
                                             >Annuler
                                             </MDBBtn>
                                         </MDBRow>

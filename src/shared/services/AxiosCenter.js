@@ -218,6 +218,13 @@ const AxiosCenter = {
     });
   },
 
+  deleteNoteDeFrais(id){
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/note-de-frais/${id}`,
+    });
+  },
+
       //Fin Variables de paie
 
   createOther(values) {
