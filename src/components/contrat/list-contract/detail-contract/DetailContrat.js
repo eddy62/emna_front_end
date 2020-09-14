@@ -1,7 +1,7 @@
 import React from "react";
-import ContratService from "../service/ContratService";
-import Loading from "../../../shared/component/Loading";
-import img from "../../../ressources/images/Contrat.PNG";
+import ContratService from "../../service/ContratService";
+import Loading from "../../../../shared/component/Loading";
+import img from "../../../../ressources/images/Contrat.PNG";
 import {Link} from "react-router-dom";
 
 

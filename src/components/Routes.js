@@ -11,10 +11,10 @@ import UpdateEmploye from "./social/employee-management/UpdateEmploye";
 import DeleteEmploye from "./social/employee-management/DeleteEmploye";
 import ArchiveEmploye from "./social/employee-management/ArchiveEmploye";
 
-import ListeContrat from "./contrat/listeContrat/ListeContrat";
+import ListeContrat from "./contrat/list-contract/ListeContrat";
 import Contrat from "./contrat/Contrat";
-import DetailContrat from "./contrat/detailContrat/DetailContrat";
-import CreerContrat from "./contrat/creerContrat/CreerContrat";
+import DetailContrat from "./contrat/list-contract/detail-contract/DetailContrat";
+import CreerContrat from "./contrat/create-contract/CreerContrat";
 
 import ParentAddVariablePaie from "./social/variables_de_paie/addVariablePaie/ParentAddVariablePaie";
 
@@ -80,7 +80,7 @@ import AddProduit from "./produits/add-produit/AddProduit";
 import UpdateProduit from "./produits/update-produit/UpdateProduit";
 //finGestionProduits
 //GestionReferentiels
-import Referentiels from "./referentiels/Referentiels";
+import Referentiels from "./contrat/referencial/Referentiels";
 
 //GestionFactures
 import AccueilFacture from "./gestion_factures/factures/accueilFactures";
