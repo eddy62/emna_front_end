@@ -15,9 +15,12 @@ import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 
 const noteDeFraisSchema = (props) => {
     return Yup.object().shape({
-        date: Yup.date().required("Date obligatoire"),
+        date: Yup.date().required("Date obligatoire*")
+        .min(props.minDate, "Date erronée")
+            .max(props.maxDate, "Date erronée"),
         montant: Yup.number().required("Montant obligatoire*")
             .min("0.01", "Ne peut être un montant nul ou négatif"),
+        designation: Yup.string().required("Désignation obligatoire*")
     })
 };
 
@@ -27,8 +30,8 @@ const ComponentDate = ({field, ...props}) => (
         label={props.label}
         outline
         type="date"
-        min={props.debutdate}
-        max={props.findate}
+        min={props.startDate}
+        max={props.endDate}
         {...props}
         {...field}
     />
@@ -36,6 +39,7 @@ const ComponentDate = ({field, ...props}) => (
 
 const ComponentDesignation = ({field, form: {touched, errors}, ...props}) => (
     <MDBInput
+        label={props.label}
         outline
         type="text"
         {...props}
@@ -81,14 +85,14 @@ const notify = (type) => {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>La note de frais a bien été modifiée &nbsp;&nbsp;!</strong>
+                    <strong>Note de frais modifiée &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>La note de frais n'a pas été modifiée  &nbsp;&nbsp;!</strong>
+                    <strong>Note de frais NON modifiée  &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
@@ -100,28 +104,18 @@ class ModifyNoteDeFrais extends React.Component {
         super(props);
         this.state = {
            minDate: "",
-            masDate: "",
-            loaded: false,
+            maxDate: "",
         };
     }
 
-    componentDidMount() {
-        this.setState({
-            loaded: true,
-        });
-        this.updatePeriod()
-    }
-
-
     submit = (values, actions) => {
-        AxiosCenter.getNoteDeFrais(values)
+        AxiosCenter.updateNoteDeFrais(values)
             .then(() => {
-                notify("success", values.type);
-                actions.resetForm();
-                this.props.toggleAvance(this.props.index);
+                notify("success");
+                this.props.toggleNoteDeFrais();
             }).catch((error) => {
             console.log(error);
-            notify("error", values.type);
+            notify("error");
         });
         actions.setSubmitting(true);
     };
@@ -141,9 +135,15 @@ class ModifyNoteDeFrais extends React.Component {
             )).toISOString().slice(0, 10)
     };
 
+    toggleNoteDeFrais = () => {
+        this.props.toggleNoteDeFrais()
+    };
+
+
     render() {
-        if (!this.state.loaded) return <Loading/>
-        else return (
+        return (
+
+            this.updatePeriod(),
             <div className="App">
                 <div className="titre">
                     <MDBContainer>
@@ -152,7 +152,7 @@ class ModifyNoteDeFrais extends React.Component {
                             onSubmit={this.submit}
                             initialValues={{
                                 annee: this.props.noteDeFrais.annee,
-                                date: this.props.noteDeFrais.debutPeriode,
+                                date: this.props.noteDeFrais.date,
                                 designation: this.props.noteDeFrais.designation,
                                 employeId: this.props.noteDeFrais.employeId,
                                 etatVariablePaieId: this.props.noteDeFrais.etatVariablePaieId,
@@ -166,8 +166,9 @@ class ModifyNoteDeFrais extends React.Component {
                         >
                             {({
                                   handleSubmit,
-                                  values,
-                              }) => (
+                                values
+
+                            }) => (
                                 <Form onSubmit={handleSubmit}>
                                     <MDBCardBody style={{marginTop: "-5%", marginBottom: "-3%"}}>
                                         <MDBRow between around>
@@ -176,7 +177,8 @@ class ModifyNoteDeFrais extends React.Component {
                                                 <Field
                                                     name="date"
                                                     label="Le* :"
-                                                    date={this.state.date}
+                                                    startDate={this.state.minDate}
+                                                    endDate={this.state.maxDate}
                                                     component={ComponentDate}
                                                 />
                                                 <ErrorMessage
@@ -214,10 +216,10 @@ class ModifyNoteDeFrais extends React.Component {
                                         <MDBRow center>
                                             <MDBCol md="4">
                                                 <Field
-                                                    name="justificatifs"
+                                                    name="justificatif"
                                                     component={ComponentUpload}
                                                 />
-                                                <ErrorMessage name="justificatifs" component={ComponentError}/>
+                                                <ErrorMessage name="justificatif" component={ComponentError}/>
                                             </MDBCol>
                                             {/* ligne 3 */}
                                             <MDBBtn
@@ -231,10 +233,13 @@ class ModifyNoteDeFrais extends React.Component {
                                                 color="teal accent-3"
                                                 rounded
                                                 size="sm"
-                                                onClick={this.props.toggleNoteDeFrais}
+                                                onClick={this.toggleNoteDeFrais}
                                             >Annuler
                                             </MDBBtn>
                                         </MDBRow>
+                                        <pre>{JSON.stringify(values, null, 4)}</pre>
+
+
                                     </MDBCardBody>
                                 </Form>
                             )}

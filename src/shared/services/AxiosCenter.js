@@ -315,6 +315,14 @@ const AxiosCenter = {
     });
   },
 
+  updateNoteDeFrais(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/note-de-frais`,
+      data: values,
+    });
+  },
+
   //fin Gestion Social
 
   getReleve() {
