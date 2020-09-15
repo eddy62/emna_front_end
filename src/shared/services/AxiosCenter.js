@@ -11,7 +11,7 @@ const AxiosCenter = {
     });
   },
 
-//Get
+  //Get
   getCurrentUser() {
     return ApiBackEnd({
       method: "get",
@@ -80,6 +80,13 @@ const AxiosCenter = {
     });
   },
 
+  getAllWrapperEmployesBySociety(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/wrapperemployes/society/${id}`,
+    });
+  },
+
   getAllWrapperEmployeesBySocietyAndTypeContract(id, type) {
     return ApiBackEnd({
       method: "get",
@@ -87,7 +94,7 @@ const AxiosCenter = {
     });
   },
 
-  getAllWrapperEmployesBySocietyAndSatutEmployee(id, codestatut) {
+  getAllWrapperEmployesBySocietyAndStatutEmployee(id, codestatut) {
     return ApiBackEnd({
       method: "GET",
       url: `/wrapperemployes/society/${id}/statutemploye/${codestatut}`,
@@ -275,7 +282,7 @@ const AxiosCenter = {
     });
   },
 
-  getInfosForCreationFacture(id){
+  getInfosForCreationFacture(id) {
     return Axios.all([
       this.getLastNumFactBySociete(id),
       this.getAllClientFournisseurBySociete(id)
@@ -286,13 +293,6 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "GET",
       url: `/clauses/society/${id}`,
-    });
-  },
-
-  getAllWrapperEmployesBySociety(id) {
-    return ApiBackEnd({
-      method: "get",
-      url: `/wrapperemployes/society/${id}`,
     });
   },
 
@@ -314,11 +314,11 @@ const AxiosCenter = {
   getTypePrimeById(id) {
     return ApiBackEnd({
       method: "GET",
-      url:`/type-primes/${id}`,
+      url: `/type-primes/${id}`,
     })
   },
 
-  getNoteDeFrais(){
+  getNoteDeFrais() {
     return ApiBackEnd({
       method: "GET",
       url: "/note-de-frais",
@@ -331,9 +331,10 @@ const AxiosCenter = {
       url: `/wrappervariablespaie/employe/${idEmploye}/annee/${year}/mois/${month}`
     })
   },
-// Fin Get
+  // Fin Get
 
-//Post
+
+  //Post
   finishPasswordReset(values) {
     return ApiBackEnd({
       method: "post",
@@ -527,9 +528,9 @@ const AxiosCenter = {
     });
   },
 
-// Fin Post
+  // Fin Post
 
-//Put
+  //Put
   updateCustomerSupplier(values) {
     return ApiBackEnd({
       method: "PUT",
@@ -625,7 +626,7 @@ const AxiosCenter = {
     })
   },
 
-  confirmVariablesDePaie(values){
+  confirmVariablesDePaie(values) {
     return ApiBackEnd({
       method: "PUT",
       url: `/wrappervariablespaie/confirm-variablespaie`,
@@ -651,9 +652,9 @@ const AxiosCenter = {
 
 
 
-// Fin Put
+  // Fin Put
 
-//Delete
+  //Delete
   deleteCustomerSupplier(clientId, userId) {
     return ApiBackEnd({
       method: "delete",
@@ -724,7 +725,7 @@ const AxiosCenter = {
     })
   },
 
-  deleteNoteDeFrais(id){
+  deleteNoteDeFrais(id) {
     return ApiBackEnd({
       method: "DELETE",
       url: `/note-de-frais/${id}`,
@@ -738,7 +739,7 @@ const AxiosCenter = {
     });
   },
 
-// Fin Delete
+  // Fin Delete
 
 };
 
