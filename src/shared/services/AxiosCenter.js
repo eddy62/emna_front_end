@@ -590,6 +590,13 @@ const AxiosCenter = {
       url: `/factures/${id}`,
     });
   },
+
+  deleteClause(id) {
+    return ApiBackEnd({
+      method: "delete",
+      url: `/clauses/${id}`,
+    });
+  },
 };
 
 export default AxiosCenter;
