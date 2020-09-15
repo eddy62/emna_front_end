@@ -21,7 +21,7 @@ export default class Referentiels extends React.Component {
                 <hr />
 
                 <p>
-                  <Link to={"/articles"}>
+                  <Link to={"/article"}>
                     <button className="btn btn-success btn-block my-4">
                       Consulter mes articles
                     </button>

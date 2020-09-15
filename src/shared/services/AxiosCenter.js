@@ -288,7 +288,13 @@ const AxiosCenter = {
       url: `/clauses/society/${id}`,
     });
   },
-  
+
+  getAllArticles() {
+    return ApiBackEnd({
+      method: "GET",
+      url: '/articles',
+    })
+  },
 
 //Post
   finishPasswordReset(values) {
