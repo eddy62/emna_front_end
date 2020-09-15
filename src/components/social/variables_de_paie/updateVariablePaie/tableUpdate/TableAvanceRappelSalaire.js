@@ -68,7 +68,10 @@ export default class TableAvanceRappelSalaire extends React.Component {
                 <MDBTable>
                     <MDBTableHead color="default-color">
                     <tr>
-                        <th className="font-weight-bold">Montant Rappel/Avance sur Salaire</th>
+                        <th className="font-weight-bold">Rappels/Avances sur Salaires</th>         
+                        <th>Du</th>
+                        <th>Au</th>               
+                        <th>Montant</th>
                         <th className="w-25"></th>
                     </tr>
                     </MDBTableHead>
@@ -76,6 +79,9 @@ export default class TableAvanceRappelSalaire extends React.Component {
                     <MDBTableBody>
                     {this.props.avanceRappelSalaireList.map((avrap, index) => (
                         <tr key={index}>
+                            <td>{avrap.type}</td>
+                            <td>{avrap.debutPeriode}</td>
+                            <td>{avrap.finPeriode}</td>
                             <td>{avrap.montant} €</td>
                             {avrap.etatVariablePaieId === 1 ? (
                                 <td>
@@ -93,13 +99,13 @@ export default class TableAvanceRappelSalaire extends React.Component {
                 ) : (
                     <MDBTableBody>
                         <tr>
-                            <td  colSpan="2">Pas d'avance/rappel sur salaire ce mois</td>
+                            <td  colSpan="5">Pas d'Avance/Rappel sur Salaire ce mois</td>
                         </tr>     
                     </MDBTableBody> 
                 )}
             </MDBTable>
             {/** MODALE DELETE */}
-            <MDBModal isOpen={this.state.modaleDelete} backdrop={false} size="lg">
+            <MDBModal isOpen={this.state.modaleDelete} backdrop={false} centered size="lg">
                 <MDBModalBody>
                     Etes-vous sur de vouloir supprimer cet enregistrement ?
                     <MDBBtn
@@ -109,7 +115,7 @@ export default class TableAvanceRappelSalaire extends React.Component {
                 </MDBModalBody>
             </MDBModal>
             {/** MODALE UPDATE */}
-            <MDBModal isOpen={this.state.modalAvance} backdrop={false} size="lg">
+            <MDBModal isOpen={this.state.modalAvance} backdrop={false} centered size="lg">
                 <MDBModalBody>
                     <ModifyAvanceRappelSalaire
                         avanceRappelSalaire={this.props.avanceRappelSalaireList[this.state.index]}  

@@ -112,6 +112,7 @@ export default class Routes extends Component {
         />
         <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
 
+
         {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />

@@ -131,7 +131,7 @@ const AxiosCenter = {
   deleteAbsence(id) {
     return ApiBackEnd({
       method: "DELETE",
-      url: "/absences/${id}",
+      url: `/absences/${id}`,
     });
   },
 
@@ -210,6 +210,21 @@ const AxiosCenter = {
       data: values
     })
   },
+
+  getNoteDeFrais(){
+    return ApiBackEnd({
+      method: "GET",
+      url: "/note-de-frais",
+    });
+  },
+
+  deleteNoteDeFrais(id){
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/note-de-frais/${id}`,
+    });
+  },
+
 
   confirmVariablesDePaie(values){
     return ApiBackEnd({
@@ -312,6 +327,14 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "put",
       url: `/primes`,
+      data: values,
+    });
+  },
+
+  updateNoteDeFrais(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/note-de-frais`,
       data: values,
     });
   },

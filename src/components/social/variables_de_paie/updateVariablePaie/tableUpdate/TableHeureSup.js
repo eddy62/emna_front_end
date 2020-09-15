@@ -64,7 +64,7 @@ export default class TableHeureSup extends React.Component {
                 <MDBTable>
                     <MDBTableHead color="default-color">
                         <tr>
-                            <th className="font-weight-bold">Nombre d'heures supplémentaires</th>
+                            <th className="font-weight-bold">Heures Supplémentaires</th>
                             <th>Date</th>
                             <th className="w-25"></th>
                         </tr>
@@ -91,13 +91,13 @@ export default class TableHeureSup extends React.Component {
                     ) : (
                             <MDBTableBody>
                                 <tr>
-                                    <td colSpan="3">Pas d'heures supplémentaires ce mois</td>
+                                    <td colSpan="3">Pas d'Heure Supplémentaire ce mois</td>
                                 </tr>
                             </MDBTableBody>
                         )}
                 </MDBTable>
                 {/** MODALE DELETE */}
-                <MDBModal isOpen={this.state.modaleDelete} backdrop={false} size="lg">
+                <MDBModal isOpen={this.state.modaleDelete} backdrop={false} centered size="lg">
                     <MDBModalBody>
                         Etes-vous sur de vouloir supprimer cet enregistrement ?
                         <MDBBtn
@@ -107,7 +107,7 @@ export default class TableHeureSup extends React.Component {
                     </MDBModalBody>
                 </MDBModal>
                 {/** MODALE UPDATE */}
-                <MDBModal isOpen={this.state.modalAvance} toggle={this.state.toggleModal} size="lg">
+                <MDBModal isOpen={this.state.modalAvance} backdrop={false} centered size="lg">
                     <MDBModalBody>
                         <ModifyHeuresSupplementaires
                             heureSupplementaire={this.props.heureSupList[this.state.index]}  
