@@ -11,7 +11,7 @@ const AxiosCenter = {
     });
   },
 
-//Get
+  //Get
   getCurrentUser() {
     return ApiBackEnd({
       method: "get",
@@ -77,6 +77,13 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "get",
       url: `/wrapperemployes/${id}`,
+    });
+  },
+
+  getAllWrapperEmployesBySociety(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/wrapperemployes/society/${id}`,
     });
   },
 
@@ -275,7 +282,7 @@ const AxiosCenter = {
     });
   },
 
-  getInfosForCreationFacture(id){
+  getInfosForCreationFacture(id) {
     return Axios.all([
       this.getLastNumFactBySociete(id),
       this.getAllClientFournisseurBySociete(id)
@@ -288,9 +295,9 @@ const AxiosCenter = {
       url: `/clauses/society/${id}`,
     });
   },
-  
 
-//Post
+
+  //Post
   finishPasswordReset(values) {
     return ApiBackEnd({
       method: "post",
@@ -469,7 +476,7 @@ const AxiosCenter = {
   },
 
 
-//Put
+  //Put
   updateCustomerSupplier(values) {
     return ApiBackEnd({
       method: "PUT",
@@ -541,7 +548,7 @@ const AxiosCenter = {
     });
   },
 
-//Delete
+  //Delete
   deleteCustomerSupplier(clientId, userId) {
     return ApiBackEnd({
       method: "delete",
