@@ -16,8 +16,6 @@ import Contrat from "./contrat/Contrat";
 import DetailContrat from "./contrat/list-contract/detail-contract/DetailContrat";
 import CreerContrat from "./contrat/create-contract/CreerContrat";
 
-import ParentAddVariablePaie from "./social/variables_de_paie/addVariablePaie/ParentAddVariablePaie";
-
 //gestion ClientFournisseur imports
 import MenuClientFournisseur from "./client-fournisseur/MenuClientFournisseur";
 import ListerClients from "./client-fournisseur/list-client-fournisseur/ListClients";
@@ -92,6 +90,8 @@ import AccueilDepense from './gestion_factures/depenses/accueilDepenses';
 import ListOfClauses from "./contrat/referencial/clauses/list-of-clauses/ListOfClauses";
 
 //gestion Variables de paie
+import ParentAddVariablePaie from "./social/variables_de_paie/addVariablePaie/ParentAddVariablePaie";
+import ParentUpdateVariablePaie from "./social/variables_de_paie/updateVariablePaie/ParentUpdateVariablePaie";
 
 export default class Routes extends Component {
   render() {
@@ -111,7 +111,13 @@ export default class Routes extends Component {
           path="/variables_de_paie/addVariablePaie/ParentAddVariablePaie/:id"
           component={ParentAddVariablePaie}
         />
+        <PrivateRoute
+          path="/variables_de_paie/updateVariablePaie/ParentUpdateVariablePaie/:societyId/:id"
+          component={ParentUpdateVariablePaie}
+        />
         <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
+
+
         {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/accueildepenses" component={AccueilDepense} />

@@ -288,7 +288,43 @@ const AxiosCenter = {
       url: `/clauses/society/${id}`,
     });
   },
-  
+
+  getAllWrapperEmployesBySociety(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/wrapperemployes/society/${id}`,
+    });
+  },
+
+  //Variables de paie
+  getAllTypesAbsence() {
+    return ApiBackEnd({
+      method: "GET",
+      url: "/type-absences",
+    });
+  },
+
+  getTypePrimeById(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url:`/type-primes/${id}`,
+    })
+  },
+
+  getNoteDeFrais(){
+    return ApiBackEnd({
+      method: "GET",
+      url: "/note-de-frais",
+    });
+  },
+
+  getOneWrapperVariablesDePaie(idEmploye, year, month) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/wrappervariablespaie/employe/${idEmploye}/annee/${year}/mois/${month}`
+    })
+  },
+// Fin Get
 
 //Post
   finishPasswordReset(values) {
@@ -468,6 +504,23 @@ const AxiosCenter = {
     });
   },
 
+  createAvanceRappelSalaire(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: `/avance-rappel-salaires`,
+      data: values,
+    })
+  },
+
+  createOther(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/autres-variables",
+      data: values,
+    });
+  },
+
+// Fin Post
 
 //Put
   updateCustomerSupplier(values) {
@@ -541,6 +594,58 @@ const AxiosCenter = {
     });
   },
 
+  updateAbsence(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: "/absences",
+      data: values,
+    });
+  },
+
+  modifyHeureSupplementaire(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/heures-supplementaires`,
+      data: values,
+    })
+  },
+
+  modifyAvanceRappelSalaire(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/avance-rappel-salaires`,
+      data: values,
+    })
+  },
+
+  confirmVariablesDePaie(values){
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/wrappervariablespaie/confirm-variablespaie`,
+      data: values,
+    })
+  },
+
+  updatePrime(values) {
+    return ApiBackEnd({
+      method: "put",
+      url: `/primes`,
+      data: values,
+    });
+  },
+
+  updateNoteDeFrais(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/note-de-frais`,
+      data: values,
+    });
+  },
+
+
+
+// Fin Put
+
 //Delete
   deleteCustomerSupplier(clientId, userId) {
     return ApiBackEnd({
@@ -590,6 +695,44 @@ const AxiosCenter = {
       url: `/factures/${id}`,
     });
   },
+
+  deleteAbsence(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/absences/${id}`,
+    });
+  },
+
+  deleteHeureSupplementaire(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/heures-supplementaires/${id}`,
+    })
+  },
+
+  deleteAvanceRappelSalaire(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/avance-rappel-salaires/${id}`,
+    })
+  },
+
+  deleteNoteDeFrais(id){
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/note-de-frais/${id}`,
+    });
+  },
+
+  deletePrime(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/primes/${id}`,
+    });
+  },
+
+// Fin Delete
+
 };
 
 export default AxiosCenter;
