@@ -2,7 +2,7 @@ import React from "react";
 import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBTableHead} from "mdbreact";
 import {toast} from "react-toastify";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
-import UpdateAbsence from "../children/UpdateAbsence";
+import ModifyAbsence from "../children/ModifyAbsence";
 
 const notify = type => {
     switch (type) {
@@ -89,10 +89,10 @@ class TableAbsence extends React.Component {
                                     <td>{abs.justificatif}</td>
                                     {abs.etatVariablePaieId === 1 ? (
                                         <td>
-                                            <MDBBtn color="teal accent-3" rounded size="sm"
-                                                    onClick={() => this.toggleModalUpdateAbsence(index)}>UPDATE</MDBBtn>
                                             <MDBBtn color="danger" rounded size="sm"
-                                                    onClick={() => this.toggleModalDeleteAbsence(index)}>DELETE</MDBBtn>
+                                                    onClick={() => this.toggleModalDeleteAbsence(index)}>SUPPRIMER</MDBBtn>
+                                            <MDBBtn color="teal accent-3" rounded size="sm"
+                                                    onClick={() => this.toggleModalUpdateAbsence(index)}>MODIFIER</MDBBtn>
                                         </td>
                                     ) : (
                                         <td>Confirmé</td>
@@ -121,7 +121,7 @@ class TableAbsence extends React.Component {
                 {/** MODALE UPDATE */}
                 <MDBModal isOpen={this.state.modalUpdateAbsence} backdrop={false} centered size="lg">
                     <MDBModalBody>
-                        <UpdateAbsence
+                        <ModifyAbsence
                             absence={this.props.absenceList[this.state.index]}
                             index={this.state.index}
                             toggleModalUpdateAbsence={this.toggleModalUpdateAbsence}

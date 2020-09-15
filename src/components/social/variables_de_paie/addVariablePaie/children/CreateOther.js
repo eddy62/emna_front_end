@@ -51,24 +51,6 @@ const ComponentNumber = ({field, ...props}) => (
     />
 );
 
-// TODO refactoring selon tache upload
-const ComponentUpload = () => (
-    <div>
-        <div className="custom-control custom-checkbox">
-            <input type="checkbox" className="custom-control-input" id="defaultUnchecked"/>
-            <label className="custom-control-label" htmlFor="defaultUnchecked">Justificatif(s)</label>
-        </div>
-        <MDBBtn
-            disabled={true}
-            color="teal accent-3"
-            rounded
-            size="sm"
-            type="submit">
-            Upload
-        </MDBBtn>
-    </div>
-);
-
 const ComponentError = (props) => (
     <div className="text-danger">{props.children}</div>
 );
@@ -83,6 +65,13 @@ const notify = type => {
             );
             break;
         case "error":
+            toast.error(
+                <div className="text-center">
+                    <strong>Autre Variable de Paie NON Enregistrée &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
+        default:
             toast.error(
                 <div className="text-center">
                     <strong>Autre Variable de Paie NON Enregistrée &nbsp;&nbsp;!</strong>
@@ -191,14 +180,6 @@ class CreateOther extends React.Component {
                                         </MDBRow>
                                         <br/>
                                         <MDBRow between around className="mt-3">
-                                            <MDBCol md="4">
-                                                {/* upload justificatif */}
-                                                <Field
-                                                    name="justificatif"
-                                                    component={ComponentUpload}
-                                                />
-                                                <ErrorMessage name="justificatif" component={ComponentError}/>
-                                            </MDBCol>
                                             <MDBCol md="4" className="mt-4">
                                                 <MDBBtn
                                                     color="teal accent-3"
@@ -217,7 +198,6 @@ class CreateOther extends React.Component {
                 </MDBContainer>
         )
     }
-
 }
 
 export default CreateOther;

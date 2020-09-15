@@ -13,7 +13,6 @@ const notify = type => {
                 <div className="text-center">
                     <strong>Note de frais Enregistrée &nbsp;&nbsp;!</strong>
                 </div>,
-                //{position: "top-right"}
             );
             break;
         case "error":
@@ -21,13 +20,19 @@ const notify = type => {
                 <div className="text-center">
                     <strong>Note de frais NON Enregistrée &nbsp;&nbsp;!</strong>
                 </div>,
-                //{position: "top-right"}
+            );
+            break;
+        default:
+            toast.error(
+                <div className="text-center">
+                    <strong>Note de frais NON Enregistrée &nbsp;&nbsp;!</strong>
+                </div>,
             );
             break;
     }
 };
 
-const ComponentDesignation = ({field, form: {touched, errors}, ...props}) => (
+const ComponentDesignation = ({field, ...props}) => (
     <MDBInput
         outline
         type="text"
@@ -36,9 +41,9 @@ const ComponentDesignation = ({field, form: {touched, errors}, ...props}) => (
     />
 );
 
-const ComponentDate = ({field, form: {touched, errors}, ...props}) => (
+const ComponentDate = ({field, ...props}) => (
     <div>
-        <label style={{fontSize:"0.8rem", color:"#757575", marginLeft:"-80%"}}> {props.label} </label>
+        <label style={{fontSize: "0.8rem", color: "#757575", marginLeft: "-80%"}}> {props.label} </label>
         <MDBInput
             outline
             type="date"
@@ -51,7 +56,7 @@ const ComponentDate = ({field, form: {touched, errors}, ...props}) => (
     </div>
 );
 
-const ComponentNumber = ({field, form: {touched, errors}, ...props}) => (
+const ComponentNumber = ({field, ...props}) => (
     <MDBInput
         label={props.label}
         min="0.01"
@@ -64,18 +69,17 @@ const ComponentNumber = ({field, form: {touched, errors}, ...props}) => (
     />
 );
 
-// TODO refactoring selon tache upload
-const ComponentUpload = ({field, form: {touched, errors}, ...props}) => (
+const ComponentUpload = () => (
     <div>
         <div className="custom-control custom-checkbox">
             <input type="checkbox" className="custom-control-input" id="defaultUnchecked"/>
             <label className="custom-control-label" htmlFor="defaultUnchecked">Justificatif(s)</label>
         </div>
         <MDBBtn disabled={true}
-            color="teal accent-3"
-            rounded
-            size="sm"
-            type="submit">
+                color="teal accent-3"
+                rounded
+                size="sm"
+                type="submit">
             Upload</MDBBtn>
     </div>
 );
@@ -83,7 +87,6 @@ const ComponentUpload = ({field, form: {touched, errors}, ...props}) => (
 const ComponentError = (props) => (
     <div className="text-danger">{props.children}</div>
 );
-
 
 
 class CreateNoteDeFrais extends React.Component {
@@ -94,30 +97,21 @@ class CreateNoteDeFrais extends React.Component {
             loaded: false,
             startPeriod: '',
             endPeriod: ''
-            
-
-            //endPeriod: new Date().toISOString().slice(0, 10)
         };
     }
 
     componentDidMount() {
-            this.setState({
-                    loaded: true,
-                    
-                })
+        this.setState({
+            loaded: true
+        })
     }
 
     submit = (values, actions) => {
-        
-        console.log(new Date(new Date().setFullYear(this.props.yearSelected,this.props.monthSelected-1, 1)).toISOString().slice(0, 10));
         values.employeId = this.props.employeId;
         values.annee = this.props.yearSelected;
         values.mois = this.props.monthSelected;
-        console.log("SUBMIT : " + JSON.stringify(values, null, 4));
         AxiosCenter.createExpenseReport(values)
-            .then((response) => {
-                const noteDeFrais = response.data;
-                console.log("POST : " + JSON.stringify(noteDeFrais, null, 4));
+            .then(() => {
                 notify("success");
                 actions.resetForm();
             }).catch((error) => {
@@ -125,7 +119,6 @@ class CreateNoteDeFrais extends React.Component {
             notify("error");
         });
         actions.setSubmitting(true);
-        // TODO toast noteDeFrais enregistree
     };
 
     noteDeFraisSchema = Yup.object().shape({
@@ -135,110 +128,106 @@ class CreateNoteDeFrais extends React.Component {
     });
 
     updatePeriod() {
-        console.log("updatePeriod");
         this.state.startPeriod = new Date(new Date()
             .setFullYear(
                 this.props.yearSelected,
-                this.props.monthSelected -1,
+                this.props.monthSelected - 1,
                 1
-            )).toISOString().slice(0,10);
-            this.state.endPeriod = new Date(new Date()
+            )).toISOString().slice(0, 10);
+        this.state.endPeriod = new Date(new Date()
             .setFullYear(
                 this.props.yearSelected,
-                this.props.monthSelected ,
+                this.props.monthSelected,
                 0
-            )).toISOString().slice(0,10)
+            )).toISOString().slice(0, 10)
     }
 
     render() {
-        if (!this.state.loaded) return <Loading/> // TODO toast chargement en cours
+        if (!this.state.loaded) return <Loading/>
         else return (
             this.updatePeriod(),
-            <MDBContainer>
-                <div>
-                    <Formik initialValues={{
-                        id: null,
-                        designation: "",
-                        date: "",
-                        montant: 0,
-                        justificatif: "",
-                        mois: this.props.monthSelected,
-                        annee: this.props.yearSelected,
-                        etatVariablePaieId: 1,
-                        employeId: this.props.employeId
-                    }}
-                            onSubmit={this.submit}
-                            validationSchema={this.noteDeFraisSchema}
-                    >
-                        {({
-                              values,
-                              handleSubmit
-                          }) => (
-                            <Form onSubmit={handleSubmit}>
-                                <MDBCardBody style={{marginTop:"-5%", marginBottom:"-3%"}}>                                                                        
-                                    <MDBRow between around>
-                                        <MDBCol md="4">
-                                            {/* date note de frais */}
-                                            <Field
-                                                name="date"
-                                                startdate={this.state.startPeriod}
-                                                enddate={this.state.endPeriod}
-                                                component={ComponentDate}
-                                            />
-                                            <ErrorMessage name="date" component={ComponentError}/>
-                                        </MDBCol>
-                                        <MDBCol md="4" className="mt-4">
-                                            {/* montant */}
-                                            <Field
-                                                name="montant"
-                                                label="Montant*"
-                                                component={ComponentNumber}
-                                            />
-                                            <ErrorMessage name="montant" component={ComponentError}/>
-                                        </MDBCol>
-                                    </MDBRow>
-                                    {/* désignation */}
-                                    <MDBRow center style={{marginTop:"-3%"}}>
-                                        <MDBCol md="5">
-                                            <Field
-                                                name="designation"
-                                                label="Désignation*"
-                                                component={ComponentDesignation}
-                                            />
-                                            <ErrorMessage name="designation" component={ComponentError}/>
-                                        </MDBCol>                                            
-                                    </MDBRow>
-                                    {/* upload justificatifs */}
-                                    <MDBRow space around>
-                                        <MDBCol md="4">
-                                            <Field
-                                                name="justificatifs"
-                                                component={ComponentUpload}
-                                            />
-                                            <ErrorMessage name="justificatifs" component={ComponentError}/>
-                                        </MDBCol>
-                                    {/*<pre>{JSON.stringify(values, null, 4)}</pre>*/}
-                                        <MDBCol md="4" className="mt-4">
-                                            <div>
-                                                <MDBBtn
-                                                    color="teal accent-3"
-                                                    rounded
-                                                    size="sm"
-                                                    type="submit"
-                                                >Enregistrer
-                                                </MDBBtn>
-                                            </div>
-                                        </MDBCol>
-                                    </MDBRow>
-                                </MDBCardBody>
-                            </Form>
-                        )}
-                    </Formik>
-                </div>
-            </MDBContainer>
+                <MDBContainer>
+                    <div>
+                        <Formik initialValues={{
+                            id: null,
+                            designation: "",
+                            date: "",
+                            montant: 0,
+                            justificatif: "",
+                            mois: this.props.monthSelected,
+                            annee: this.props.yearSelected,
+                            etatVariablePaieId: 1,
+                            employeId: this.props.employeId
+                        }}
+                                onSubmit={this.submit}
+                                validationSchema={this.noteDeFraisSchema}
+                        >
+                            {({
+                                  handleSubmit
+                              }) => (
+                                <Form onSubmit={handleSubmit}>
+                                    <MDBCardBody style={{marginTop: "-5%", marginBottom: "-3%"}}>
+                                        <MDBRow between around>
+                                            <MDBCol md="4">
+                                                {/* date note de frais */}
+                                                <Field
+                                                    name="date"
+                                                    startdate={this.state.startPeriod}
+                                                    enddate={this.state.endPeriod}
+                                                    component={ComponentDate}
+                                                />
+                                                <ErrorMessage name="date" component={ComponentError}/>
+                                            </MDBCol>
+                                            <MDBCol md="4" className="mt-4">
+                                                {/* montant */}
+                                                <Field
+                                                    name="montant"
+                                                    label="Montant*"
+                                                    component={ComponentNumber}
+                                                />
+                                                <ErrorMessage name="montant" component={ComponentError}/>
+                                            </MDBCol>
+                                        </MDBRow>
+                                        {/* désignation */}
+                                        <MDBRow center style={{marginTop: "-3%"}}>
+                                            <MDBCol md="5">
+                                                <Field
+                                                    name="designation"
+                                                    label="Désignation*"
+                                                    component={ComponentDesignation}
+                                                />
+                                                <ErrorMessage name="designation" component={ComponentError}/>
+                                            </MDBCol>
+                                        </MDBRow>
+                                        {/* upload justificatifs */}
+                                        <MDBRow space around>
+                                            <MDBCol md="4">
+                                                <Field
+                                                    name="justificatifs"
+                                                    component={ComponentUpload}
+                                                />
+                                                <ErrorMessage name="justificatifs" component={ComponentError}/>
+                                            </MDBCol>
+                                            <MDBCol md="4" className="mt-4">
+                                                <div>
+                                                    <MDBBtn
+                                                        color="teal accent-3"
+                                                        rounded
+                                                        size="sm"
+                                                        type="submit"
+                                                    >Enregistrer
+                                                    </MDBBtn>
+                                                </div>
+                                            </MDBCol>
+                                        </MDBRow>
+                                    </MDBCardBody>
+                                </Form>
+                            )}
+                        </Formik>
+                    </div>
+                </MDBContainer>
         )
     }
-
 }
 
 export default CreateNoteDeFrais;

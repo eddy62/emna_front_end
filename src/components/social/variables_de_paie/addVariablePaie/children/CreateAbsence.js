@@ -47,7 +47,6 @@ const ComponentDate = ({field, ...props}) => (
 
 );
 
-// TODO refactoring selon tache upload
 const ComponentUpload = () => (
     <div>
         <div className="custom-control custom-checkbox">
@@ -79,6 +78,13 @@ const notify = type => {
             );
             break;
         case "error":
+            toast.error(
+                <div className="text-center">
+                    <strong>Absence NON Enregistrée &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
+        default:
             toast.error(
                 <div className="text-center">
                     <strong>Absence NON Enregistrée &nbsp;&nbsp;!</strong>
