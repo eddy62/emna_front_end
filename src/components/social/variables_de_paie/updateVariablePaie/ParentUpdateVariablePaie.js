@@ -13,6 +13,28 @@ import PrimeComponent from "./children/PrimeComponent";
 import TableHeureSup from "./tableUpdate/TableHeureSup";
 import TableAvanceRappelSalaire from "./tableUpdate/TableAvanceRappelSalaire";
 import ModifyAvanceRappelSalaire from "./children/ModifyAvanceRappelSalaire";
+import {toast} from "react-toastify";
+
+let messageToast = '';
+
+const notify = type => {
+    switch (type) {
+        case "success":
+            toast.success(
+                <div className="text-center">
+                    <strong>{messageToast}</strong>
+                </div>,
+            );
+            break;
+        case "error":
+            toast.error(
+                <div className="text-center">
+                    <strong>{messageToast}</strong>
+                </div>,
+            );
+            break;
+    }
+};
 
 export default class ParentUpdateVariablePaie extends Component {
 
@@ -52,10 +74,13 @@ export default class ParentUpdateVariablePaie extends Component {
         primeList: [],
         noteDeFraisList: [],
         avanceRappelSalaireList: [],
+        autresVariableList: [],
         key: '',
         idToDelete: '', 
         modalHeure: false,
-        submitForm: false
+        submitForm: false,
+        wrapperVariablesPaie: [],
+        enableBtnConfirmer: false,
         };
         this.handleClick = this.handleClick.bind(this);
         this.reloadParentAfterUpdate = this.reloadParentAfterUpdate.bind(this);
@@ -70,15 +95,62 @@ export default class ParentUpdateVariablePaie extends Component {
             const primeList = response.data.wrapperPrimeList;            
             const noteDeFraisList = response.data.noteDeFraisDTOList;
             const avanceRappelSalaireList = response.data.avanceRappelSalaireDTOList;
+            const autresVariableList = response.data.autresVariableDTOList;
+            // TODO : booléen tous les EtatVariables <> 1 pour  enableBtnConfirmer
             this.setState({
                 absenceList,
                 heureSupList,
                 primeList,
                 noteDeFraisList,
                 avanceRappelSalaireList,
+                autresVariableList,
                 loaded:true
             })
             console.log(this.state.absenceList);
+        });
+    }
+
+
+    /* Méthode de mise à jour de wrapperVariablesPaie[] par les 6 tableaux de variables pour Confirmation */
+    setWrapperVariablesPaieForConfirmation = () => {
+        const wrapperVariablesPaieToConfirm = {
+            wrapperAbsenceList: this.state.absenceList.filter(absence => absence.etatVariablePaieId === 1),
+            autresVariableDTOList: [],
+            avanceRappelSalaireDTOList: this.state.avanceRappelSalaireList.filter(avanceRappelSalaire => avanceRappelSalaire.etatVariablePaieId === 1),
+            heuresSupplementairesDTOList: this.state.heureSupList.filter(heureSup => heureSup.etatVariablePaieId === 1),
+            noteDeFraisDTOList: this.state.noteDeFraisList.filter(noteDeFrais => noteDeFrais.etatVariablePaieId === 1),
+            wrapperPrimeList: this.state.primeList.filter(prime => prime.etatVariablePaieId === 1)
+        }
+        // TODO : intégrer autresVariableList
+        // ,this.state.autresVariableList.filter(autresVariable => autresVariable.etatVariablePaieId === 1)
+        console.log("wrapperVariablesPaieToConfirm");
+        console.log(wrapperVariablesPaieToConfirm);
+        this.confirmVariablesDePaie(wrapperVariablesPaieToConfirm);
+    }
+
+
+    // Envoi au Back de wrapperVariablesPaieToConfirm
+    confirmVariablesDePaie = (envoi) => {
+        AxiosCenter.confirmVariablesDePaie(envoi).then((response) => {
+            console.log('response.data');
+            console.log(response.data);
+            console.log(response.status);
+            messageToast = response.data;
+            switch (response.status) {
+                case 201:
+                    notify("success");
+                    break;
+                case 206:
+                    notify("warning");
+                    break;
+                case 400:
+                    notify("error");
+                    break;
+            }
+            this.reloadParentAfterUpdate();
+        }).catch((error) => {
+            console.log(error);
+            notify("error");
         });
     }
 
@@ -113,14 +185,6 @@ export default class ParentUpdateVariablePaie extends Component {
             this.getOneWrapperVariablesDePaie();
         })            
     };
-
-    /*getIdToDelete(compName, key) {
-            console.log(key);
-        this.setState({render:compName, key})        }*/
-
-        /*reloadParentAfterUpdate() {
-            this.setState({submitForm: true});       
-        }*/
 
     reloadParentAfterUpdate() {
         this.getOneWrapperVariablesDePaie();
@@ -248,11 +312,12 @@ export default class ParentUpdateVariablePaie extends Component {
                             </MDBCol>
 
                             <MDBCol md="4">
-                            <Link to="/socialHome/1">
-                                    <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm">
-                                    Confirmer
-                                    </MDBBtn>
-                                </Link>
+                                <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm"
+                                    onClick={
+                                        this.setWrapperVariablesPaieForConfirmation
+                                    }>
+                                Confirmer
+                                </MDBBtn>
                             </MDBCol>
                         </MDBRow>
 

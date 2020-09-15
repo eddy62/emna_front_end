@@ -210,6 +210,15 @@ const AxiosCenter = {
       data: values
     })
   },
+
+  confirmVariablesDePaie(values){
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/wrappervariablespaie/confirm-variablespaie`,
+      data: values,
+    })
+  },
+
       //Fin Variables de paie
 
   createOther(values) {
