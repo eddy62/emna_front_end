@@ -47,24 +47,6 @@ const ComponentDate = ({field, ...props}) => (
 
 );
 
-// TODO refactoring selon tache upload
-const ComponentUpload = () => (
-    <div>
-        <div className="custom-control custom-checkbox">
-            <input type="checkbox" className="custom-control-input" id="defaultUnchecked"/>
-            <label className="custom-control-label" htmlFor="defaultUnchecked">Justificatif(s)</label>
-        </div>
-        <MDBBtn
-            disabled={true}
-            color="teal accent-3"
-            rounded
-            size="sm"
-            type="submit">
-            Upload
-        </MDBBtn>
-    </div>
-);
-
 const ComponentError = (props) => (
     <div className="text-danger">{props.children}</div>
 );
@@ -85,10 +67,17 @@ const notify = type => {
                 </div>
             );
             break;
+        default:
+            toast.error(
+                <div className="text-center">
+                    <strong>Absence NON Modifiée &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
     }
 }
 
-class UpdateAbsence extends React.Component {
+class ModifyAbsence extends React.Component {
 
     constructor(props) {
         super(props);
@@ -145,7 +134,7 @@ class UpdateAbsence extends React.Component {
         else return (
             this.updatePeriod(),
                 <MDBContainer>
-                    <div className="d-flex justify-content-center">
+                    <div>
                         <Formik initialValues={{
                             id: this.props.absence.id,
                             debutAbsence: this.props.absence.debutAbsence,
@@ -192,8 +181,9 @@ class UpdateAbsence extends React.Component {
                                             </MDBCol>
                                         </MDBRow>
                                         <br/>
-                                        <MDBRow between around style={{marginTop: "-5%"}}>
+                                        <MDBRow center style={{marginTop: "-5%"}}>
                                             {/* select type absence */}
+                                            <MDBCol md="5">
                                             <Field
                                                 name="typeAbsenceId"
                                                 label="Type :"
@@ -201,32 +191,23 @@ class UpdateAbsence extends React.Component {
                                                 component={ComponentSelect}
                                             />
                                             <ErrorMessage name="typeAbsenceId" component={ComponentError}/>
+                                            </MDBCol>
                                         </MDBRow>
-                                        <MDBRow between around className="mt-3">
-                                            <MDBCol md="4">
-                                                {/* upload justificatifs */}
-                                                <Field
-                                                    name="justificatifs"
-                                                    component={ComponentUpload}
-                                                />
-                                                <ErrorMessage name="justificatifs" component={ComponentError}/>
-                                            </MDBCol>
-                                            <MDBCol md="4" className="mt-4">
-                                                <MDBBtn
-                                                    color="teal accent-3"
-                                                    rounded
-                                                    size="sm"
-                                                    onClick={() => this.props.toggleModalUpdateAbsence(this.props.index)}>
-                                                    Annuler
-                                                </MDBBtn>
-                                                <MDBBtn
-                                                    color="teal accent-3"
-                                                    rounded
-                                                    size="sm"
-                                                    type="submit"
-                                                >Modifier
-                                                </MDBBtn>
-                                            </MDBCol>
+                                        <MDBRow center>
+                                            <MDBBtn
+                                                color="teal accent-3"
+                                                rounded
+                                                size="sm"
+                                                type="submit"
+                                            >Modifier
+                                            </MDBBtn>
+                                            <MDBBtn
+                                                color="teal accent-3"
+                                                rounded
+                                                size="sm"
+                                                onClick={() => this.props.toggleModalUpdateAbsence(this.props.index)}>
+                                                Annuler
+                                            </MDBBtn>
                                         </MDBRow>
                                     </MDBCardBody>
                                 </Form>
@@ -236,7 +217,6 @@ class UpdateAbsence extends React.Component {
                 </MDBContainer>
         )
     }
-
 }
 
-export default UpdateAbsence;
+export default ModifyAbsence;

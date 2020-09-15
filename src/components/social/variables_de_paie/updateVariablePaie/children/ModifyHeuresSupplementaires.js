@@ -1,14 +1,7 @@
 import React from "react";
-import {Formik, Form, Field, ErrorMessage} from 'formik';
+import {ErrorMessage, Field, Form, Formik} from 'formik';
 import * as Yup from "yup";
-import {
-    MDBBtn,
-    MDBCardBody,
-    MDBCol,
-    MDBContainer,
-    MDBInput,
-    MDBRow,
-} from "mdbreact";
+import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
 import {toast} from "react-toastify";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../shared/component/Loading";
@@ -20,7 +13,6 @@ const heuresSupSchema = (props) => {
             .max(props.finPeriode, "Date erronée"),
         nombreHeure: Yup.number().required("Heures obligatoires*")
             .min(1, "1 heure minimum"),
-        //justificatif: ?
     })
 };
 
@@ -61,6 +53,13 @@ const notify = type => {
             );
             break;
         case "error":
+            toast.error(
+                <div className="text-center">
+                    <strong>Heure(s) supplémentaire(s) NON Modifiée(s) &nbsp;&nbsp;!</strong>
+                </div>,
+            );
+            break;
+        default:
             toast.error(
                 <div className="text-center">
                     <strong>Heure(s) supplémentaire(s) NON Modifiée(s) &nbsp;&nbsp;!</strong>
@@ -123,8 +122,7 @@ class ModifyHeuresSupplementaires extends React.Component {
     render() {
         if (!this.state.loaded) return <Loading/>;
         else return (
-            <div className="App">
-                <div className="titre">
+            <div>
                     <MDBContainer>
                         {/* Formulaire */}
                         <Formik
@@ -196,7 +194,6 @@ class ModifyHeuresSupplementaires extends React.Component {
                         </Formik>
                     </MDBContainer>
                 </div>
-            </div>
         )
     }
 }
