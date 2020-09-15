@@ -4,18 +4,11 @@ import { MDBContainer, MDBCardHeader, MDBCardTitle, MDBRow, MDBCol, MDBBtn, MDBC
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import Loading from "../../../../shared/component/Loading"
 import { Link } from "react-router-dom";
-import AbsenceComponent from "./children/AbsenceComponent";
-import TableNoteDeFrais from "./tableUpdate/TableNoteDeFrais";
 import TableAbsence from "./tableUpdate/TableAbsence";
-import NoteDeFraisComponent from "./children/NoteDeFraisComponent";
 import TablePrime from "./tableUpdate/TablePrime"
-import PrimeComponent from "./children/PrimeComponent";
 import TableHeureSup from "./tableUpdate/TableHeureSup";
 import TableAvanceRappelSalaire from "./tableUpdate/TableAvanceRappelSalaire";
-import ModifyAvanceRappelSalaire from "./children/ModifyAvanceRappelSalaire";
 import TableNoteDefrais from "./tableUpdate/TableNoteDeFrais";
-import ModifyNoteDeFrais from "./children/ModifyNoteDeFrais";
-import UpdateAbsence from "./children/UpdateAbsence";
 import {toast} from "react-toastify";
 
 let messageToast = '';
@@ -30,6 +23,13 @@ const notify = type => {
             );
             break;
         case "error":
+            toast.error(
+                <div className="text-center">
+                    <strong>{messageToast}</strong>
+                </div>,
+            );
+            break;
+        default:
             toast.error(
                 <div className="text-center">
                     <strong>{messageToast}</strong>
@@ -89,7 +89,7 @@ export default class ParentUpdateVariablePaie extends Component {
         this.reloadParentAfterUpdate = this.reloadParentAfterUpdate.bind(this);
     }
 
-    /*Methode qui appel le wrapper variables de paie */
+    /*Methode qui appelle le wrapper variables de paie */
     getOneWrapperVariablesDePaie = () => {
         AxiosCenter.getOneWrapperVariablesDePaie(this.state.idEmploye, this.state.yearSelected, this.state.monthSelected)
         .then((response) => {         
@@ -99,7 +99,14 @@ export default class ParentUpdateVariablePaie extends Component {
             const noteDeFraisList = response.data.noteDeFraisDTOList;
             const avanceRappelSalaireList = response.data.avanceRappelSalaireDTOList;
             const autresVariableList = response.data.autresVariableDTOList;
-            // TODO : booléen tous les EtatVariables <> 1 pour  enableBtnConfirmer
+            let afficherBoutonConfirmer = false;
+            if ((absenceList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined)
+                || (heureSupList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined)
+                || (primeList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined)
+                || (noteDeFraisList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined)
+                || (avanceRappelSalaireList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined)
+                || (autresVariableList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined))
+                {afficherBoutonConfirmer = true;}
             this.setState({
                 absenceList,
                 heureSupList,
@@ -107,11 +114,11 @@ export default class ParentUpdateVariablePaie extends Component {
                 noteDeFraisList,
                 avanceRappelSalaireList,
                 autresVariableList,
+                enableBtnConfirmer:afficherBoutonConfirmer,
                 loaded:true
             })
-            console.log(this.state.absenceList);
         });
-    }
+    };
 
     /* Méthode de mise à jour de wrapperVariablesPaie[] par les 6 tableaux de variables pour Confirmation */
     setWrapperVariablesPaieForConfirmation = () => {
@@ -122,7 +129,7 @@ export default class ParentUpdateVariablePaie extends Component {
             heuresSupplementairesDTOList: this.state.heureSupList.filter(heureSup => heureSup.etatVariablePaieId === 1),
             noteDeFraisDTOList: this.state.noteDeFraisList.filter(noteDeFrais => noteDeFrais.etatVariablePaieId === 1),
             wrapperPrimeList: this.state.primeList.filter(prime => prime.etatVariablePaieId === 1)
-        }
+        };
         // TODO : intégrer autresVariableList
         // ,this.state.autresVariableList.filter(autresVariable => autresVariable.etatVariablePaieId === 1)
         console.log("wrapperVariablesPaieToConfirm");
@@ -146,6 +153,9 @@ export default class ParentUpdateVariablePaie extends Component {
                     notify("warning");
                     break;
                 case 400:
+                    notify("error");
+                    break;
+                default:
                     notify("error");
                     break;
             }
@@ -280,25 +290,25 @@ export default class ParentUpdateVariablePaie extends Component {
                         {/**FOOTER BTN */}
                         <MDBRow between around className="mt-3">
                             <MDBCol md="4">
+                                <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm"
+                                        onClick={() => {
+                                            this.props.history.push(
+                                                "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/" + this.state.society.id + "/" + this.state.idNameSelected);
+                                        }}>
+                                    Ajouter
+                                </MDBBtn>
+                            </MDBCol>
+
+                            <MDBCol md="4">
                                 <Link to="/socialHome/1">
                                     <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm">
-                                        Ajouter
+                                        Retour
                                     </MDBBtn>
                                 </Link>
                             </MDBCol>
 
                             <MDBCol md="4">
-                                <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm"
-                                    onClick={() => {
-                                        this.props.history.push(
-                                            "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/" + this.state.society.id + "/" + this.state.idNameSelected);
-                                    }}>
-                                    Retour
-                                    </MDBBtn>
-                            </MDBCol>
-
-                            <MDBCol md="4">
-                                <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm"
+                                <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm" disabled={!this.state.enableBtnConfirmer}
                                     onClick={
                                         this.setWrapperVariablesPaieForConfirmation
                                     }>

@@ -20,6 +20,13 @@ const notify = type => {
                 </div>,
             );
             break;
+        default:
+            toast.error(
+                <div className="text-center">
+                    <strong>Heure(s) supplémentaire(s) NON Supprimée(s) &nbsp;&nbsp;!</strong>
+                </div>,
+            );
+            break;
     }
 };
 

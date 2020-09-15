@@ -20,6 +20,13 @@ const notify = (type, nom) => {
                 </div>,
             );
             break;
+        default:
+            toast.error(
+                <div className="text-center">
+                    <strong>Avance/Rappel sur salaire NON Supprimé(e) &nbsp;&nbsp;!</strong>
+                </div>,
+            );
+            break;
     }
 };
 

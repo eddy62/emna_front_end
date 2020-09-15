@@ -9,16 +9,23 @@ const notify = (type) => {
     case "success":
       toast.success(
         <div className="text-center">
-          <strong>Note de frais supprimé &nbsp;&nbsp;!</strong>
+          <strong>Note de frais supprimée &nbsp;&nbsp;!</strong>
         </div>,
       );
       break;
     case "error":
       toast.error(
         <div className="text-center">
-          <strong>Note de frais NON supprimé  &nbsp;&nbsp;!</strong>
+          <strong>Note de frais NON supprimée  &nbsp;&nbsp;!</strong>
         </div>,
       );
+      break;
+      default:
+          toast.error(
+              <div className="text-center">
+                  <strong>Note de frais NON supprimée  &nbsp;&nbsp;!</strong>
+              </div>,
+          );
       break;
   }
 };

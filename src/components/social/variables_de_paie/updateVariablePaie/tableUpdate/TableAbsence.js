@@ -20,6 +20,13 @@ const notify = type => {
                 </div>,
             );
             break;
+        default:
+            toast.error(
+                <div className="text-center">
+                    <strong>Absence NON Supprimée &nbsp;&nbsp;!</strong>
+                </div>,
+            );
+            break;
     }
 };
 
