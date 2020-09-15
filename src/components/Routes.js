@@ -88,6 +88,7 @@ import AccueilDepense from './gestion_factures/depenses/accueilDepenses';
 
 //Juridique
 import ListOfClauses from "./contrat/referencial/clauses/list-of-clauses/ListOfClauses";
+import ListArticle from "./contrat/referencial/article/list-article/ListArticle";
 
 //gestion Variables de paie
 import ParentAddVariablePaie from "./social/variables_de_paie/addVariablePaie/ParentAddVariablePaie";
@@ -132,6 +133,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/detailcontrat/:id" component={DetailContrat} />
         <PrivateRoute path="/creercontrat" component={CreerContrat} />
         <PrivateRoute path="/clauses/society/:id" component={ListOfClauses} />
+        <PrivateRoute path="/article" component={ListArticle} />
 
         {/* gestionUserRoutes */}
         <PrivateRoute exact path="/users" component={Users} />

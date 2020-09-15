@@ -296,6 +296,13 @@ const AxiosCenter = {
     });
   },
 
+  getAllArticles() {
+    return ApiBackEnd({
+      method: "GET",
+      url: '/articles',
+    })
+  },
+
   //Variables de paie
   getAllTypesAbsence() {
     return ApiBackEnd({
