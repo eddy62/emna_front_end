@@ -289,7 +289,6 @@ const AxiosCenter = {
     });
   },
 
-
   getAllArticles() {
     return ApiBackEnd({
       method: "GET",
