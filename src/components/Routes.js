@@ -16,8 +16,6 @@ import Contrat from "./contrat/Contrat";
 import DetailContrat from "./contrat/list-contract/detail-contract/DetailContrat";
 import CreerContrat from "./contrat/create-contract/CreerContrat";
 
-import ParentAddVariablePaie from "./social/variables_de_paie/addVariablePaie/ParentAddVariablePaie";
-
 //gestion ClientFournisseur imports
 import MenuClientFournisseur from "./client-fournisseur/MenuClientFournisseur";
 import ListerClients from "./client-fournisseur/list-client-fournisseur/ListClients";
@@ -90,8 +88,11 @@ import AccueilDepense from './gestion_factures/depenses/accueilDepenses';
 
 //Juridique
 import ListOfClauses from "./contrat/referencial/clauses/list-of-clauses/ListOfClauses";
+import ListArticle from "./contrat/referencial/article/list-article/ListArticle";
 
 //gestion Variables de paie
+import ParentAddVariablePaie from "./social/variables_de_paie/addVariablePaie/ParentAddVariablePaie";
+import ParentUpdateVariablePaie from "./social/variables_de_paie/updateVariablePaie/ParentUpdateVariablePaie";
 
 export default class Routes extends Component {
   render() {
@@ -111,7 +112,13 @@ export default class Routes extends Component {
           path="/variables_de_paie/addVariablePaie/ParentAddVariablePaie/:id"
           component={ParentAddVariablePaie}
         />
+        <PrivateRoute
+          path="/variables_de_paie/updateVariablePaie/ParentUpdateVariablePaie/:societyId/:id"
+          component={ParentUpdateVariablePaie}
+        />
         <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
+
+
         {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/accueildepenses" component={AccueilDepense} />
@@ -126,6 +133,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/detailcontrat/:id" component={DetailContrat} />
         <PrivateRoute path="/creercontrat" component={CreerContrat} />
         <PrivateRoute path="/clauses/society/:id" component={ListOfClauses} />
+        <PrivateRoute path="/article" component={ListArticle} />
 
         {/* gestionUserRoutes */}
         <PrivateRoute exact path="/users" component={Users} />
