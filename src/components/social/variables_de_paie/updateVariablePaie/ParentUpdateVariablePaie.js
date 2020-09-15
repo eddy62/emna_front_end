@@ -181,7 +181,7 @@ export default class ParentUpdateVariablePaie extends Component {
                 this.setState({ listeEmployes: listeEmployes });
             });
 
-        AxiosCenter.getSociete(societyId)
+        AxiosCenter.getSocietyById(societyId)
             .then((response) => {
                 const society = response.data;
                 this.setState({ society });
