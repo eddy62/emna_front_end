@@ -1,5 +1,5 @@
 import React from "react";
-import { MDBTable, MDBTableBody, MDBTableHead, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader } from "mdbreact";
+import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBTableHead} from "mdbreact";
 import ModifyHeuresSupplementaires from "../children/ModifyHeuresSupplementaires";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {toast} from "react-toastify";
@@ -84,10 +84,10 @@ export default class TableHeureSup extends React.Component {
                                     <td>{hsupp.date}</td>
                                     {hsupp.etatVariablePaieId === 1 ? (
                                         <td>
-                                            <MDBBtn color="teal accent-3" rounded size="sm"
-                                                onClick={() =>this.toggleModal(index)}>UPDATE</MDBBtn>
                                             <MDBBtn color="danger" rounded size="sm"
-                                                onClick={() =>this.toggleModaleDelete(index)}>DELETE</MDBBtn>
+                                                    onClick={() =>this.toggleModaleDelete(index)}>SUPPRIMER</MDBBtn>
+                                            <MDBBtn color="teal accent-3" rounded size="sm"
+                                                onClick={() =>this.toggleModal(index)}>MODIFIER</MDBBtn>
                                         </td>
                                     ) : (
                                             <td>Confirmé</td>

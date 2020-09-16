@@ -44,46 +44,46 @@ export default class ParentUpdateVariablePaie extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          loaded: false,
-          society: {},
-          idEmploye: this.props.match.params.id,
-          listeEmployes: [],
-          yearSelected: new Date().getFullYear(),
-          monthSelected: new Date().getMonth()+1,
-          period: [
-            {id: 1, text: "Janvier"},
-            {id: 2, text: "Février"},
-            {id: 3, text: "Mars"},
-            {id: 4, text: "Avril"},
-            {id: 5, text: "Mai"},
-            {id: 6, text: "Juin"},
-            {id: 7, text: "Juillet"},
-            {id: 8, text: "Août"},
-            {id: 9, text: "Septembre"},
-            {id: 10, text: "Octobre"},
-            {id: 11, text: "Novembre"},
-            {id: 12, text: "Décembre"}
-        ],
-        year: [
-            {item: new Date().getFullYear()},
-            {item: new Date().getFullYear()-1},
-            {item: new Date().getFullYear()-2},
-            {item: new Date().getFullYear()-3},
-            {item: new Date().getFullYear()-4},
-            {item: new Date().getFullYear()-5},
-        ],
-        absenceList: [],
-        heureSupList: [],
-        primeList: [],
-        noteDeFraisList: [],
-        avanceRappelSalaireList: [],
-        autresVariableList: [],
-        key: '',
-        idToDelete: '',
-        modalHeure: false,
-        submitForm: false,
-        wrapperVariablesPaie: [],
-        enableBtnConfirmer: false,
+            loaded: false,
+            society: {},
+            idEmploye: this.props.match.params.id,
+            listeEmployes: [],
+            yearSelected: new Date().getFullYear(),
+            monthSelected: new Date().getMonth() + 1,
+            period: [
+                {id: 1, text: "Janvier"},
+                {id: 2, text: "Février"},
+                {id: 3, text: "Mars"},
+                {id: 4, text: "Avril"},
+                {id: 5, text: "Mai"},
+                {id: 6, text: "Juin"},
+                {id: 7, text: "Juillet"},
+                {id: 8, text: "Août"},
+                {id: 9, text: "Septembre"},
+                {id: 10, text: "Octobre"},
+                {id: 11, text: "Novembre"},
+                {id: 12, text: "Décembre"}
+            ],
+            year: [
+                {item: new Date().getFullYear()},
+                {item: new Date().getFullYear() - 1},
+                {item: new Date().getFullYear() - 2},
+                {item: new Date().getFullYear() - 3},
+                {item: new Date().getFullYear() - 4},
+                {item: new Date().getFullYear() - 5},
+            ],
+            absenceList: [],
+            heureSupList: [],
+            primeList: [],
+            noteDeFraisList: [],
+            avanceRappelSalaireList: [],
+            autresVariableList: [],
+            key: '',
+            idToDelete: '',
+            modalHeure: false,
+            submitForm: false,
+            wrapperVariablesPaie: [],
+            enableBtnConfirmer: false,
         };
         this.handleClick = this.handleClick.bind(this);
         this.reloadParentAfterUpdate = this.reloadParentAfterUpdate.bind(this);
@@ -132,8 +132,6 @@ export default class ParentUpdateVariablePaie extends Component {
         };
         // TODO : intégrer autresVariableList
         // ,this.state.autresVariableList.filter(autresVariable => autresVariable.etatVariablePaieId === 1)
-        console.log("wrapperVariablesPaieToConfirm");
-        console.log(wrapperVariablesPaieToConfirm);
         this.confirmPayrollVariables(wrapperVariablesPaieToConfirm);
     }
 
@@ -141,9 +139,6 @@ export default class ParentUpdateVariablePaie extends Component {
     // Envoi au Back de wrapperVariablesPaieToConfirm
     confirmPayrollVariables = (envoi) => {
         AxiosCenter.confirmPayrollVariables(envoi).then((response) => {
-            console.log('response.data');
-            console.log(response.data);
-            console.log(response.status);
             messageToast = response.data;
             switch (response.status) {
                 case 201:
@@ -203,8 +198,7 @@ export default class ParentUpdateVariablePaie extends Component {
     }
 
     handleClick(compName, key) {
-        console.log(key);
-        this.setState({ render: compName, key });
+        this.setState({render: compName, key});
     }
 
     render() {
@@ -255,9 +249,12 @@ export default class ParentUpdateVariablePaie extends Component {
                                             className="browser-default custom-select"
                                             onChange={this.changeHandler}
                                         >
-                                            <option disabled defaultValue={new Date().getMonth()}>Choisissez un mois</option>
+                                            <option disabled defaultValue={new Date().getMonth()}>Choisissez un mois
+                                            </option>
                                             {this.state.period.map((p, index) => (
-                                                <option key={index} selected={p.id === this.state.monthSelected} value={p.id} disabled={p.id > new Date().getMonth() + 1 ? (true) : (false)}>{p.text}</option>
+                                                <option key={index} selected={p.id === this.state.monthSelected}
+                                                        value={p.id}
+                                                        disabled={p.id > new Date().getMonth() + 1 ? (true) : (false)}>{p.text}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -269,21 +266,32 @@ export default class ParentUpdateVariablePaie extends Component {
                         <h3 className="card-title mb-4">Détails des Variables de Paie</h3>
                         {/**CONTENT */}
 
-                        <div style={{ display: "flex", flexDirection: "column" }}>
+                        <div style={{display: "flex", flexDirection: "column"}}>
                             <MDBCard>
-                                {<TableAbsence reloadParentAfterUpdate={this.reloadParentAfterUpdate} changeHandler={this.changeHandler} absenceList={this.state.absenceList} handleClick={this.handleClick} />}
+                                {<TableAbsence reloadParentAfterUpdate={this.reloadParentAfterUpdate}
+                                               changeHandler={this.changeHandler} absenceList={this.state.absenceList}
+                                               handleClick={this.handleClick}/>}
                             </MDBCard>
                             <MDBCard className="mt-1">
-                                {<TableNoteDefrais noteDeFraisList={this.state.noteDeFraisList} reloadParentAfterUpdate={this.reloadParentAfterUpdate} changeHandler={this.changeHandler} handleClick={this.handleClick} />}
+                                {<TableNoteDefrais noteDeFraisList={this.state.noteDeFraisList}
+                                                   reloadParentAfterUpdate={this.reloadParentAfterUpdate}
+                                                   changeHandler={this.changeHandler} handleClick={this.handleClick}/>}
                             </MDBCard>
                             <MDBCard>
-                                {<TablePrime reloadParentAfterUpdate={this.reloadParentAfterUpdate} changeHandler={this.changeHandler} primeList={this.state.primeList} handleClick={this.handleClick} />}
+                                {<TablePrime reloadParentAfterUpdate={this.reloadParentAfterUpdate}
+                                             changeHandler={this.changeHandler} primeList={this.state.primeList}
+                                             handleClick={this.handleClick}/>}
                             </MDBCard>
                             <MDBCard>
-                                {<TableHeureSup reloadParentAfterUpdate={this.reloadParentAfterUpdate} changeHandler={this.changeHandler} heureSupList={this.state.heureSupList} handleClick={this.handleClick} />}
+                                {<TableHeureSup reloadParentAfterUpdate={this.reloadParentAfterUpdate}
+                                                changeHandler={this.changeHandler}
+                                                heureSupList={this.state.heureSupList} handleClick={this.handleClick}/>}
                             </MDBCard>
                             <MDBCard>
-                                {<TableAvanceRappelSalaire reloadParentAfterUpdate={this.reloadParentAfterUpdate} changeHandler={this.changeHandler} avanceRappelSalaireList={this.state.avanceRappelSalaireList} handleClick={this.handleClick} />}
+                                {<TableAvanceRappelSalaire reloadParentAfterUpdate={this.reloadParentAfterUpdate}
+                                                           changeHandler={this.changeHandler}
+                                                           avanceRappelSalaireList={this.state.avanceRappelSalaireList}
+                                                           handleClick={this.handleClick}/>}
                             </MDBCard>
                         </div>
 
@@ -293,7 +301,8 @@ export default class ParentUpdateVariablePaie extends Component {
                                 <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm"
                                         onClick={() => {
                                             this.props.history.push(
-                                                "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/" + this.state.society.id + "/" + this.state.idNameSelected);
+                                                "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/"
+                                                + this.state.society.id + "/" + this.state.idNameSelected);
                                         }}>
                                     Ajouter
                                 </MDBBtn>
@@ -308,11 +317,12 @@ export default class ParentUpdateVariablePaie extends Component {
                             </MDBCol>
 
                             <MDBCol md="4">
-                                <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm" disabled={!this.state.enableBtnConfirmer}
-                                    onClick={
-                                        this.setWrapperVariablesPaieForConfirmation
-                                    }>
-                                Confirmer
+                                <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm"
+                                        disabled={!this.state.enableBtnConfirmer}
+                                        onClick={
+                                            this.setWrapperVariablesPaieForConfirmation
+                                        }>
+                                    Confirmer
                                 </MDBBtn>
                             </MDBCol>
                         </MDBRow>

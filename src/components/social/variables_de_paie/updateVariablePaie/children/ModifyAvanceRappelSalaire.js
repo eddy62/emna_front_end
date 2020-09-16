@@ -1,14 +1,7 @@
 import React from "react";
-import {Formik, Form, Field, ErrorMessage} from 'formik';
+import {ErrorMessage, Field, Form, Formik} from 'formik';
 import * as Yup from "yup";
-import {
-    MDBBtn,
-    MDBCardBody,
-    MDBCol,
-    MDBContainer,
-    MDBInput,
-    MDBRow,
-} from "mdbreact";
+import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
 import {toast} from "react-toastify";
 import Loading from "../../../../../shared/component/Loading";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter"
@@ -27,7 +20,6 @@ const avanceRappelSchema = (props) => {
         type: Yup.string().required("Type obligatoire*"),
         montant: Yup.number().required("Montant obligatoire*")
             .min("0.01", "Ne peut être un montant nul ou négatif"),
-        //justificatif: ?
     })
 };
 
@@ -60,7 +52,7 @@ const ComposantNumber = ({field, ...props}) => (
     />
 );
 
-const notify = (type, nom) => {
+const notify = (type) => {
     switch (type) {
         case "success":
             toast.success(
@@ -70,6 +62,13 @@ const notify = (type, nom) => {
             );
             break;
         case "error":
+            toast.error(
+                <div className="text-center">
+                    <strong>Avance/Rappel sur salaire NON Modifié(e) &nbsp;&nbsp;!</strong>
+                </div>,
+            );
+            break;
+        default:
             toast.error(
                 <div className="text-center">
                     <strong>Avance/Rappel sur salaire NON Modifié(e) &nbsp;&nbsp;!</strong>
@@ -103,12 +102,12 @@ class ModifyAvanceRappelSalaire extends React.Component {
     submit = (values, actions) => {
         AxiosCenter.modifyAvanceRappelSalaire(values)
             .then(() => {
-                notify("success", values.type);
+                notify("success");
                 actions.resetForm();
                 this.props.toggleAvance(this.props.index);
             }).catch((error) => {
             console.log(error);
-            notify("error", values.type);
+            notify("error");
         });
         actions.setSubmitting(true);
     };
@@ -131,13 +130,12 @@ class ModifyAvanceRappelSalaire extends React.Component {
     render() {
         if (!this.state.loaded) return <Loading/>
         else return (
-            <div className="App">
-                <div className="titre">
+                <div>
                     <MDBContainer>
                         {/* Formulaire */}
                         <Formik
                             onSubmit={this.submit}
-                            initialValues={{                                
+                            initialValues={{
                                 annee: this.props.avanceRappelSalaire.annee,
                                 debutPeriode: this.props.avanceRappelSalaire.debutPeriode,
                                 employeId: this.props.avanceRappelSalaire.employeId,
@@ -226,7 +224,7 @@ class ModifyAvanceRappelSalaire extends React.Component {
                                                 color="teal accent-3"
                                                 rounded
                                                 size="sm"
-                                                type="submit"                                                
+                                                type="submit"
                                             >Enregistrer
                                             </MDBBtn>
                                             <MDBBtn
@@ -243,7 +241,6 @@ class ModifyAvanceRappelSalaire extends React.Component {
                         </Formik>
                     </MDBContainer>
                 </div>
-            </div>
         )
     }
 }
