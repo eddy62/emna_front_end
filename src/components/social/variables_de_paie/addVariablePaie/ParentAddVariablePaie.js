@@ -14,9 +14,9 @@ import {
     MDBRow
 } from "mdbreact";
 import CreateAbsence from "./children/CreateAbsence";
-import CreatePrime from "./children/CreatePrime";
+import CreateBonus from "./children/CreateBonus";
 import CreateAvanceRappelSalaire from "./children/CreateAvanceRappelSalaire";
-import CreateNoteDeFrais from "./children/CreateNoteDeFrais";
+import CreateExpenseReport from "./children/CreateExpenseReport";
 import CreateHeuresSupplementaires from "./children/CreateHeuresSupplementaires";
 import CreateOther from "./children/CreateOther";
 
@@ -185,9 +185,9 @@ export default class ParentAddVariablePaie extends Component {
                                             <MDBCollapse id="collapse4" isOpen={collapseID}>
                                                 <MDBCardBody>
                                                     {this.state.idNameSelected ? (
-                                                        <CreateNoteDeFrais employeId={this.state.idNameSelected}
-                                                                           yearSelected={this.state.yearSelected}
-                                                                           monthSelected={this.state.monthSelected}/>
+                                                        <CreateExpenseReport employeId={this.state.idNameSelected}
+                                                                             yearSelected={this.state.yearSelected}
+                                                                             monthSelected={this.state.monthSelected}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}
@@ -204,7 +204,7 @@ export default class ParentAddVariablePaie extends Component {
                                             <MDBCollapse id="collapse3" isOpen={collapseID}>
                                                 <MDBCardBody>
                                                     {this.state.idNameSelected ? (
-                                                        <CreatePrime employeId={this.state.idNameSelected}
+                                                        <CreateBonus employeId={this.state.idNameSelected}
                                                                      yearSelected={this.state.yearSelected}
                                                                      monthSelected={this.state.monthSelected}/>
                                                     ) : (

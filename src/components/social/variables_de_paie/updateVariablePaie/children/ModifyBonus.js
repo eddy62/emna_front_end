@@ -71,7 +71,7 @@ class ModifyBonus extends React.Component {
     }
 
     componentDidMount() {
-        AxiosCenter.getAllTypePrimes()
+        AxiosCenter.getAllBonusTypes()
             .then((response) => {
                 const list = response.data
                 this.setState({
@@ -89,7 +89,7 @@ class ModifyBonus extends React.Component {
     }
 
     submit = (values, actions) => {
-        AxiosCenter.updatePrime(values)
+        AxiosCenter.updateBonus(values)
             .then(() => {
                 notify("success", values.type)
                 actions.resetForm();

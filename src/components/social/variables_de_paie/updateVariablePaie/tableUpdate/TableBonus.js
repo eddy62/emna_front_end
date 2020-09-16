@@ -31,7 +31,7 @@ const notify = type => {
 };
 
 
-export default class TablePrime extends React.Component {
+export default class TableBonus extends React.Component {
 
     constructor(props) {
         super(props);
@@ -57,7 +57,7 @@ export default class TablePrime extends React.Component {
     }
 
     callBackToDelete = () => {
-        AxiosCenter.deletePrime(this.props.primeList[this.state.index].id).then(() => {
+        AxiosCenter.deleteBonus(this.props.primeList[this.state.index].id).then(() => {
             this.toggleModaleDelete();
             this.props.reloadParentAfterUpdate();
             notify('success');

@@ -89,7 +89,7 @@ const ComponentError = (props) => (
 );
 
 
-class CreateNoteDeFrais extends React.Component {
+class CreateExpenseReport extends React.Component {
 
     constructor(props) {
         super(props);
@@ -230,4 +230,4 @@ class CreateNoteDeFrais extends React.Component {
     }
 }
 
-export default CreateNoteDeFrais;
+export default CreateExpenseReport;

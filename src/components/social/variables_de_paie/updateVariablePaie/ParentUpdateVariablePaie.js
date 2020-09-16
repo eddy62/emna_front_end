@@ -5,10 +5,10 @@ import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import Loading from "../../../../shared/component/Loading"
 import { Link } from "react-router-dom";
 import TableAbsence from "./tableUpdate/TableAbsence";
-import TablePrime from "./tableUpdate/TablePrime"
+import TableBonus from "./tableUpdate/TableBonus"
 import TableHeureSup from "./tableUpdate/TableHeureSup";
 import TableAvanceRappelSalaire from "./tableUpdate/TableAvanceRappelSalaire";
-import TableNoteDefrais from "./tableUpdate/TableNoteDeFrais";
+import TableNoteDefrais from "./tableUpdate/TableExpenseReport";
 import {toast} from "react-toastify";
 
 let messageToast = '';
@@ -278,7 +278,7 @@ export default class ParentUpdateVariablePaie extends Component {
                                                    changeHandler={this.changeHandler} handleClick={this.handleClick}/>}
                             </MDBCard>
                             <MDBCard>
-                                {<TablePrime reloadParentAfterUpdate={this.reloadParentAfterUpdate}
+                                {<TableBonus reloadParentAfterUpdate={this.reloadParentAfterUpdate}
                                              changeHandler={this.changeHandler} primeList={this.state.primeList}
                                              handleClick={this.handleClick}/>}
                             </MDBCard>

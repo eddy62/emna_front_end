@@ -61,7 +61,7 @@ const notify = type => {
     }
 };
 
-class CreatePrime extends React.Component {
+class CreateBonus extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -71,7 +71,7 @@ class CreatePrime extends React.Component {
     }
 
     componentDidMount() {
-        AxiosCenter.getAllTypePrimes()
+        AxiosCenter.getAllBonusTypes()
             .then((response) => {
                 const list = response.data
                 this.setState(
@@ -92,7 +92,7 @@ class CreatePrime extends React.Component {
         values.employeId = this.props.employeId;
 
         console.log(values)
-        AxiosCenter.createPrime(values)
+        AxiosCenter.createBonus(values)
             .then(() => {
                 notify("success");           
                 actions.resetForm();
@@ -170,4 +170,4 @@ class CreatePrime extends React.Component {
     }
 }
 
-export default CreatePrime;
+export default CreateBonus;

@@ -66,7 +66,7 @@ const AxiosCenter = {
     });
   },
 
-  getAllTypePrimes() {
+  getAllBonusTypes() {
     return ApiBackEnd({
       method: "GET",
       url: "/type-primes",
@@ -345,7 +345,7 @@ const AxiosCenter = {
     });
   },
 
-  createPrime(values) {
+  createBonus(values) {
     return ApiBackEnd({
       method: "POST",
       url: "/primes",
@@ -612,7 +612,7 @@ const AxiosCenter = {
     })
   },
 
-  updatePrime(values) {
+  updateBonus(values) {
     return ApiBackEnd({
       method: "put",
       url: `/primes`,
@@ -620,7 +620,7 @@ const AxiosCenter = {
     });
   },
 
-  updateNoteDeFrais(values) {
+  updateExpenseReport(values) {
     return ApiBackEnd({
       method: "PUT",
       url: `/note-de-frais`,
@@ -703,14 +703,14 @@ const AxiosCenter = {
     })
   },
 
-  deleteNoteDeFrais(id) {
+  deleteExpenseReport(id) {
     return ApiBackEnd({
       method: "DELETE",
       url: `/note-de-frais/${id}`,
     });
   },
 
-  deletePrime(id) {
+  deleteBonus(id) {
     return ApiBackEnd({
       method: "DELETE",
       url: `/primes/${id}`,

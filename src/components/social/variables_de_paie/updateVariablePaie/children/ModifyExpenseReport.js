@@ -81,7 +81,7 @@ const notify = (type) => {
     }
 };
 
-class ModifyNoteDeFrais extends React.Component {
+class ModifyExpenseReport extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -95,7 +95,7 @@ class ModifyNoteDeFrais extends React.Component {
     }
 
     submit = (values, actions) => {
-        AxiosCenter.updateNoteDeFrais(values)
+        AxiosCenter.updateExpenseReport(values)
             .then(() => {
                 notify("success");
                 this.props.toggleNoteDeFrais(this.props.index);
@@ -219,4 +219,4 @@ class ModifyNoteDeFrais extends React.Component {
     }
 }
 
-export default ModifyNoteDeFrais;
+export default ModifyExpenseReport;

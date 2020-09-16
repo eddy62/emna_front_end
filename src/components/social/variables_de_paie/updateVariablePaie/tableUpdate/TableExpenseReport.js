@@ -1,6 +1,6 @@
 import React from "react";
 import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBTableHead} from "mdbreact";
-import ModifyNoteDeFrais from "../children/ModifyNoteDeFrais";
+import ModifyExpenseReport from "../children/ModifyExpenseReport";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {toast} from "react-toastify";
 
@@ -30,7 +30,7 @@ const notify = (type) => {
     }
 };
 
-export default class TableNoteDeFrais extends React.Component {
+export default class TableExpenseReport extends React.Component {
 
     constructor(props) {
         super(props);
@@ -57,7 +57,7 @@ export default class TableNoteDeFrais extends React.Component {
     }
 
     callBackToDelete = () => {
-        AxiosCenter.deleteNoteDeFrais(this.props.noteDeFraisList[this.state.index].id).then(() => {
+        AxiosCenter.deleteExpenseReport(this.props.noteDeFraisList[this.state.index].id).then(() => {
             this.toggleModaleDelete();
             this.props.reloadParentAfterUpdate();
             notify('success');
@@ -123,7 +123,7 @@ export default class TableNoteDeFrais extends React.Component {
                 {/** MODALE UPDATE */}
                 <MDBModal isOpen={this.state.modalAvance} backdrop={false} centered size="lg">
                     <MDBModalBody>
-                        <ModifyNoteDeFrais
+                        <ModifyExpenseReport
                             noteDeFrais={this.props.noteDeFraisList[this.state.index]}
                             index={this.state.index}
                             toggleNoteDeFrais={this.toggleModal}
