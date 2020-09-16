@@ -90,10 +90,10 @@ export default class TableNoteDeFrais extends React.Component {
                                     <td>{frais.justificatif}</td>
                                     {frais.etatVariablePaieId === 1 ? (
                                         <td>
-                                            <MDBBtn color="danger" rounded size="sm"
-                                                    onClick={() => this.toggleModaleDelete(index)}>SUPPRIMER</MDBBtn>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
                                                     onClick={() => this.toggleModal(index)}>MODIFIER</MDBBtn>
+                                            <MDBBtn color="danger" rounded size="sm"
+                                                    onClick={() => this.toggleModaleDelete(index)}>SUPPRIMER</MDBBtn>                                            
                                         </td>
                                     ) : (
                                         <td>Confirmé</td>
@@ -111,13 +111,13 @@ export default class TableNoteDeFrais extends React.Component {
                 </MDBTable>
 
                 {/** MODALE DELETE */}
-                <MDBModal isOpen={this.state.modaleDelete} backdrop={false} centered size="lg">
+                <MDBModal isOpen={this.state.modaleDelete} backdrop={false} centered size="sm">
                     <MDBModalBody>
-                        Etes-vous sur de vouloir supprimer cet enregistrement ?
-                        <MDBBtn
-                            onClick={this.toggleModaleDelete}>Annuler</MDBBtn>
-                        <MDBBtn
-                            onClick={this.callBackToDelete}>Confirmer</MDBBtn>
+                        <p>Supprimer la Note de Frais ?</p>
+                        <MDBBtn color="danger" rounded size="sm"
+                            onClick={this.callBackToDelete}>SUPPRIMER</MDBBtn>
+                        <MDBBtn color="teal accent-3" rounded size="sm"
+                            onClick={this.toggleModaleDelete}>ANNULER</MDBBtn>                        
                     </MDBModalBody>
                 </MDBModal>
                 {/** MODALE UPDATE */}

@@ -1,7 +1,7 @@
 import React from "react";
 import {ErrorMessage, Field, Form, Formik} from 'formik';
 import * as Yup from "yup";
-import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
+import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow, MDBCardHeader, MDBCardTitle, MDBCard} from "mdbreact";
 import {toast} from "react-toastify";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../shared/component/Loading";
@@ -124,6 +124,11 @@ class ModifyHeuresSupplementaires extends React.Component {
         else return (
             <div>
                     <MDBContainer>
+                        <div>
+                            <MDBCardHeader color={"teal accent-4"} >
+                                <MDBCardTitle tag="h4">Heures Supplémentaires</MDBCardTitle>
+                            </MDBCardHeader>
+                        </div>
                         {/* Formulaire */}
                         <Formik
                             onSubmit={this.submit}
@@ -143,7 +148,7 @@ class ModifyHeuresSupplementaires extends React.Component {
                                   handleSubmit
                               }) => (
                                 <Form onSubmit={handleSubmit}>
-                                    <MDBCardBody style={{marginTop: "-3%", marginBottom: "-3%"}}>
+                                    <MDBCardBody>
                                         <MDBRow between around>
                                             {/* ligne 1 */}
                                             <MDBCol md="4">

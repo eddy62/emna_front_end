@@ -2,7 +2,7 @@ import React from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
-import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow} from "mdbreact";
+import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow, MDBCardHeader, MDBCardTitle} from "mdbreact";
 import Loading from "../../../../../shared/component/Loading"
 import {toast} from "react-toastify";
 
@@ -135,6 +135,11 @@ class ModifyAbsence extends React.Component {
             this.updatePeriod(),
                 <MDBContainer>
                     <div>
+                        <MDBCardHeader color={"teal accent-4"} >
+                            <MDBCardTitle tag="h4">Absences</MDBCardTitle>
+                        </MDBCardHeader>
+                    </div>
+                    <div>
                         <Formik initialValues={{
                             id: this.props.absence.id,
                             debutAbsence: this.props.absence.debutAbsence,
@@ -155,7 +160,7 @@ class ModifyAbsence extends React.Component {
                                 <Form onSubmit={handleSubmit}
                                       className="w-100"
                                 >
-                                    <MDBCardBody style={{marginTop: "-3%", marginBottom: "-3%"}}>
+                                    <MDBCardBody>
                                         <MDBRow between around>
                                             <MDBCol md="4">
                                                 {/* date debut absence */}
@@ -199,7 +204,7 @@ class ModifyAbsence extends React.Component {
                                                 rounded
                                                 size="sm"
                                                 type="submit"
-                                            >Modifier
+                                            >Enregistrer
                                             </MDBBtn>
                                             <MDBBtn
                                                 color="teal accent-3"

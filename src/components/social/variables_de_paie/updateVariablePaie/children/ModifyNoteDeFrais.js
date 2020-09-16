@@ -1,7 +1,7 @@
 import React from "react";
 import {ErrorMessage, Field, Form, Formik} from 'formik';
 import * as Yup from "yup";
-import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
+import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow, MDBCardHeader, MDBCardTitle} from "mdbreact";
 import {toast} from "react-toastify";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 
@@ -126,6 +126,11 @@ class ModifyNoteDeFrais extends React.Component {
             this.updatePeriod(),
                     <div>
                         <MDBContainer>
+                            <div>
+                                <MDBCardHeader color={"teal accent-4"} >
+                                    <MDBCardTitle tag="h4">Notes de Frais</MDBCardTitle>
+                                </MDBCardHeader>
+                            </div>
                             {/* Formulaire */}
                             <Formik
                                 onSubmit={this.submit}
@@ -147,7 +152,7 @@ class ModifyNoteDeFrais extends React.Component {
                                       handleSubmit
                                   }) => (
                                     <Form onSubmit={handleSubmit}>
-                                        <MDBCardBody style={{marginTop: "-5%", marginBottom: "-3%"}}>
+                                        <MDBCardBody>
                                             <MDBRow between around>
                                                 {/* ligne 1 */}
                                                 <MDBCol md="4" className="mt-3">

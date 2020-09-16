@@ -135,39 +135,37 @@ class ModifyBonus extends React.Component {
                               }) => (
                                 <Form onSubmit={handleSubmit}>
                                     <MDBCardBody>
-                                        <MDBCard>
-                                            <MDBRow between around>
-                                                    <Field
-                                                        name="typePrimeId"
-                                                        label="Type:"
-                                                        list={this.state.listeTypePrime}
-                                                        component={ComposantSelect}
-                                                    />
-                                                    <ErrorMessage name="typePrimeId" component={ComposantErreur}/>
-                                                    <Field
-                                                        name="montant"
-                                                        label="Montant*"
-                                                        component={ComposantNumber}
-                                                    />
-                                                    <ErrorMessage name="montant" component={ComposantErreur}/>
-                                            </MDBRow>
-                                            <MDBRow center>
-                                                <MDBBtn
-                                                    type="submit"
-                                                    color="teal accent-3"
-                                                    rounded
-                                                    size="sm"
-                                                >Enregistrer
-                                                </MDBBtn>
-                                                <MDBBtn
-                                                    color="teal accent-3"
-                                                    rounded
-                                                    size="sm"
-                                                    onClick={() => this.props.toggleAvance(this.props.index)}
-                                                >Annuler
-                                                </MDBBtn>
-                                            </MDBRow>
-                                        </MDBCard>
+                                        <MDBRow between around>
+                                                <Field
+                                                    name="typePrimeId"
+                                                    label="Type:"
+                                                    list={this.state.listeTypePrime}
+                                                    component={ComposantSelect}
+                                                />
+                                                <ErrorMessage name="typePrimeId" component={ComposantErreur}/>
+                                                <Field
+                                                    name="montant"
+                                                    label="Montant*"
+                                                    component={ComposantNumber}
+                                                />
+                                                <ErrorMessage name="montant" component={ComposantErreur}/>
+                                        </MDBRow>
+                                        <MDBRow center>
+                                            <MDBBtn
+                                                type="submit"
+                                                color="teal accent-3"
+                                                rounded
+                                                size="sm"
+                                            >Enregistrer
+                                            </MDBBtn>
+                                            <MDBBtn
+                                                color="teal accent-3"
+                                                rounded
+                                                size="sm"
+                                                onClick={() => this.props.toggleAvance(this.props.index)}
+                                            >Annuler
+                                            </MDBBtn>
+                                        </MDBRow>
                                     </MDBCardBody>
                                 </Form>
                             )}

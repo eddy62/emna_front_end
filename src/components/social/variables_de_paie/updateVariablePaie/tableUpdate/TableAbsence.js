@@ -89,10 +89,10 @@ class TableAbsence extends React.Component {
                                     <td>{abs.justificatif}</td>
                                     {abs.etatVariablePaieId === 1 ? (
                                         <td>
-                                            <MDBBtn color="danger" rounded size="sm"
-                                                    onClick={() => this.toggleModalDeleteAbsence(index)}>SUPPRIMER</MDBBtn>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
                                                     onClick={() => this.toggleModalUpdateAbsence(index)}>MODIFIER</MDBBtn>
+                                            <MDBBtn color="danger" rounded size="sm"
+                                                    onClick={() => this.toggleModalDeleteAbsence(index)}>SUPPRIMER</MDBBtn>
                                         </td>
                                     ) : (
                                         <td>Confirmé</td>
@@ -109,13 +109,13 @@ class TableAbsence extends React.Component {
                     )}
                 </MDBTable>
                 {/** MODALE DELETE */}
-                <MDBModal isOpen={this.state.modalDeleteAbsence} backdrop={false} centered size="lg">
+                <MDBModal isOpen={this.state.modalDeleteAbsence} backdrop={false} centered size="sm">
                     <MDBModalBody>
-                        Confirmer la Suppression de l'Absence ?
-                        <MDBBtn
-                            onClick={this.toggleModalDeleteAbsence}>Annuler</MDBBtn>
-                        <MDBBtn
-                            onClick={this.callBackToDeleteAbsence}>Confirmer</MDBBtn>
+                        <p>Supprimer l'Absence ?</p>
+                        <MDBBtn color="danger" rounded size="sm"
+                            onClick={this.callBackToDeleteAbsence}>Supprimer</MDBBtn>
+                        <MDBBtn color="teal accent-3" rounded size="sm"
+                            onClick={this.toggleModalDeleteAbsence}>Annuler</MDBBtn>                        
                     </MDBModalBody>
                 </MDBModal>
                 {/** MODALE UPDATE */}
