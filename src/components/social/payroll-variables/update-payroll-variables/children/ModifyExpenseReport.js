@@ -21,8 +21,8 @@ const ComponentDate = ({field, ...props}) => (
         label={props.label}
         outline
         type="date"
-        min={props.startDate}
-        max={props.endDate}
+        min={props.startdate}
+        max={props.enddate}
         {...props}
         {...field}
     />
@@ -159,8 +159,8 @@ class ModifyExpenseReport extends React.Component {
                                                     <Field
                                                         name="date"
                                                         label="Le* :"
-                                                        startDate={this.state.minDate}
-                                                        endDate={this.state.maxDate}
+                                                        startdate={this.state.minDate}
+                                                        enddate={this.state.maxDate}
                                                         component={ComponentDate}
                                                     />
                                                     <ErrorMessage
