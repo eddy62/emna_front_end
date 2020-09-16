@@ -11,7 +11,6 @@ const notify = type => {
                 <div className="text-center">
                     <strong>Prime Supprimée &nbsp;&nbsp;!</strong>
                 </div>,
-                {position: "top-right"}
             );
             break;
         case "error":
@@ -19,7 +18,6 @@ const notify = type => {
                 <div className="text-center">
                     <strong>Prime NON Supprimée &nbsp;&nbsp;!</strong>
                 </div>,
-                {position: "top-right"}
             );
             break;
         default:
