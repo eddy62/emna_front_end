@@ -1,6 +1,6 @@
 import React from "react";
 import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBTableHead} from "mdbreact";
-import ModifyHeuresSupplementaires from "../children/ModifyHeuresSupplementaires";
+import ModifyOvertime from "../children/ModifyOvertime";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {toast} from "react-toastify";
 
@@ -30,7 +30,7 @@ const notify = type => {
     }
 };
 
-export default class TableHeureSup extends React.Component {
+export default class TableOvertime extends React.Component {
 
     constructor(props) {
         super(props);
@@ -55,7 +55,7 @@ export default class TableHeureSup extends React.Component {
     }
 
     callBackToDelete = () => {
-        AxiosCenter.deleteHeureSupplementaire(this.props.heureSupList[this.state.index].id).then(() => {
+        AxiosCenter.deleteOvertime(this.props.heureSupList[this.state.index].id).then(() => {
             this.toggleModaleDelete();
             this.props.reloadParentAfterUpdate();
             notify('success');
@@ -116,7 +116,7 @@ export default class TableHeureSup extends React.Component {
                 {/** MODALE UPDATE */}
                 <MDBModal isOpen={this.state.modalAvance} backdrop={false} centered size="lg">
                     <MDBModalBody>
-                        <ModifyHeuresSupplementaires
+                        <ModifyOvertime
                             heureSupplementaire={this.props.heureSupList[this.state.index]}  
                             index={this.state.index}                          
                             toggleAvance={this.toggleModal}

@@ -91,7 +91,6 @@ class CreateBonus extends React.Component {
         values.mois = this.props.monthSelected;
         values.employeId = this.props.employeId;
 
-        console.log(values)
         AxiosCenter.createBonus(values)
             .then(() => {
                 notify("success");           

@@ -1,6 +1,6 @@
 import React from "react";
 import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBTableHead} from "mdbreact";
-import ModifyAvanceRappelSalaire from "../children/ModifyAvanceRappelSalaire"
+import ModifyPaydayAdvanceReminder from "../children/ModifyPaydayAdvanceReminder"
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {toast} from "react-toastify";
 
@@ -30,7 +30,7 @@ const notify = (type, nom) => {
     }
 };
 
-export default class TableAvanceRappelSalaire extends React.Component {
+export default class TablePaydayAdvanceReminder extends React.Component {
 
     constructor(props) {
         super(props);
@@ -57,7 +57,7 @@ export default class TableAvanceRappelSalaire extends React.Component {
     }
 
     callBackToDelete = () => {
-        AxiosCenter.deleteAvanceRappelSalaire(this.props.avanceRappelSalaireList[this.state.index].id).then(() => {
+        AxiosCenter.deletePaydayAdvanceOrReminder(this.props.avanceRappelSalaireList[this.state.index].id).then(() => {
             this.toggleModaleDelete();
             this.props.reloadParentAfterUpdate();
             notify('success');
@@ -123,7 +123,7 @@ export default class TableAvanceRappelSalaire extends React.Component {
                 {/** MODALE UPDATE */}
                 <MDBModal isOpen={this.state.modalAvance} backdrop={false} centered size="lg">
                     <MDBModalBody>
-                        <ModifyAvanceRappelSalaire
+                        <ModifyPaydayAdvanceReminder
                             avanceRappelSalaire={this.props.avanceRappelSalaireList[this.state.index]}
                             index={this.state.index}
                             toggleAvance={this.toggleModal}

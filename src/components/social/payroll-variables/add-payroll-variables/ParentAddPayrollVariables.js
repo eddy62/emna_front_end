@@ -15,12 +15,12 @@ import {
 } from "mdbreact";
 import CreateAbsence from "./children/CreateAbsence";
 import CreateBonus from "./children/CreateBonus";
-import CreateAvanceRappelSalaire from "./children/CreateAvanceRappelSalaire";
+import CreatePaydayAdvanceReminder from "./children/CreatePaydayAdvanceReminder";
 import CreateExpenseReport from "./children/CreateExpenseReport";
-import CreateHeuresSupplementaires from "./children/CreateHeuresSupplementaires";
+import CreateOvertime from "./children/CreateOvertime";
 import CreateOtherPayrollVariable from "./children/CreateOtherPayrollVariable";
 
-export default class ParentAddVariablePaie extends Component {
+export default class ParentAddPayrollVariables extends Component {
 
     constructor(props) {
         super(props);
@@ -223,7 +223,7 @@ export default class ParentAddVariablePaie extends Component {
                                             <MDBCollapse id="collapse2" isOpen={collapseID}>
                                                 <MDBCardBody>
                                                     {this.state.idNameSelected ? (
-                                                        <CreateHeuresSupplementaires
+                                                        <CreateOvertime
                                                             employeId={this.state.idNameSelected}
                                                             yearSelected={this.state.yearSelected}
                                                             monthSelected={this.state.monthSelected}/>
@@ -243,9 +243,9 @@ export default class ParentAddVariablePaie extends Component {
                                             <MDBCollapse id="collapse5" isOpen={collapseID}>
                                                 <MDBCardBody>
                                                     {this.state.idNameSelected ? (
-                                                        <CreateAvanceRappelSalaire employeId={this.state.idNameSelected}
-                                                                                   yearSelected={this.state.yearSelected}
-                                                                                   monthSelected={this.state.monthSelected}/>
+                                                        <CreatePaydayAdvanceReminder employeId={this.state.idNameSelected}
+                                                                                     yearSelected={this.state.yearSelected}
+                                                                                     monthSelected={this.state.monthSelected}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}
@@ -281,7 +281,7 @@ export default class ParentAddVariablePaie extends Component {
                                             disabled={!this.state.idNameSelected}
                                             onClick={() => {
                                                 this.props.history.push(
-                                                    "/variables_de_paie/updateVariablePaie/ParentUpdateVariablePaie/" + this.state.society.id + "/" + this.state.idNameSelected
+                                                    "/variables_de_paie/updateVariablePaie/ParentUpdatePayrollVariables/" + this.state.society.id + "/" + this.state.idNameSelected
                                                 );
                                             }}
                                     >

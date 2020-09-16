@@ -78,7 +78,7 @@ const notify = (type) => {
     }
 };
 
-class ModifyAvanceRappelSalaire extends React.Component {
+class ModifyPaydayAdvanceReminder extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -100,7 +100,7 @@ class ModifyAvanceRappelSalaire extends React.Component {
     }
 
     submit = (values, actions) => {
-        AxiosCenter.modifyAvanceRappelSalaire(values)
+        AxiosCenter.modifyPaydayAdvanceOrReminder(values)
             .then(() => {
                 notify("success");
                 actions.resetForm();
@@ -250,4 +250,4 @@ class ModifyAvanceRappelSalaire extends React.Component {
     }
 }
 
-export default ModifyAvanceRappelSalaire;
+export default ModifyPaydayAdvanceReminder;

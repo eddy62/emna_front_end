@@ -361,7 +361,7 @@ const AxiosCenter = {
     })
   },
 
-  createAdvanceRecallSalary(values) {
+  createPaydayAdvanceOrReminder(values) {
     return ApiBackEnd({
       method: "POST",
       url: '/avance-rappel-salaires',
@@ -588,7 +588,7 @@ const AxiosCenter = {
     });
   },
 
-  modifyHeureSupplementaire(values) {
+  modifyOvertime(values) {
     return ApiBackEnd({
       method: "PUT",
       url: `/heures-supplementaires`,
@@ -596,7 +596,7 @@ const AxiosCenter = {
     })
   },
 
-  modifyAvanceRappelSalaire(values) {
+  modifyPaydayAdvanceOrReminder(values) {
     return ApiBackEnd({
       method: "PUT",
       url: `/avance-rappel-salaires`,
@@ -689,14 +689,14 @@ const AxiosCenter = {
     });
   },
 
-  deleteHeureSupplementaire(id) {
+  deleteOvertime(id) {
     return ApiBackEnd({
       method: "DELETE",
       url: `/heures-supplementaires/${id}`,
     })
   },
 
-  deleteAvanceRappelSalaire(id) {
+  deletePaydayAdvanceOrReminder(id) {
     return ApiBackEnd({
       method: "DELETE",
       url: `/avance-rappel-salaires/${id}`,

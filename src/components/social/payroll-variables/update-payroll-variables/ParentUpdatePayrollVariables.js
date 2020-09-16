@@ -4,11 +4,11 @@ import { MDBContainer, MDBCardHeader, MDBCardTitle, MDBRow, MDBCol, MDBBtn, MDBC
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import Loading from "../../../../shared/component/Loading"
 import { Link } from "react-router-dom";
-import TableAbsence from "./tableUpdate/TableAbsence";
-import TableBonus from "./tableUpdate/TableBonus"
-import TableHeureSup from "./tableUpdate/TableHeureSup";
-import TableAvanceRappelSalaire from "./tableUpdate/TableAvanceRappelSalaire";
-import TableNoteDefrais from "./tableUpdate/TableExpenseReport";
+import TableAbsence from "./table-update/TableAbsence";
+import TableBonus from "./table-update/TableBonus"
+import TableOvertime from "./table-update/TableOvertime";
+import TablePaydayAdvanceReminder from "./table-update/TablePaydayAdvanceReminder";
+import TableNoteDefrais from "./table-update/TableExpenseReport";
 import {toast} from "react-toastify";
 
 let messageToast = '';
@@ -39,7 +39,7 @@ const notify = type => {
     }
 };
 
-export default class ParentUpdateVariablePaie extends Component {
+export default class ParentUpdatePayrollVariables extends Component {
 
     constructor(props) {
         super(props);
@@ -283,15 +283,15 @@ export default class ParentUpdateVariablePaie extends Component {
                                              handleClick={this.handleClick}/>}
                             </MDBCard>
                             <MDBCard>
-                                {<TableHeureSup reloadParentAfterUpdate={this.reloadParentAfterUpdate}
+                                {<TableOvertime reloadParentAfterUpdate={this.reloadParentAfterUpdate}
                                                 changeHandler={this.changeHandler}
                                                 heureSupList={this.state.heureSupList} handleClick={this.handleClick}/>}
                             </MDBCard>
                             <MDBCard>
-                                {<TableAvanceRappelSalaire reloadParentAfterUpdate={this.reloadParentAfterUpdate}
-                                                           changeHandler={this.changeHandler}
-                                                           avanceRappelSalaireList={this.state.avanceRappelSalaireList}
-                                                           handleClick={this.handleClick}/>}
+                                {<TablePaydayAdvanceReminder reloadParentAfterUpdate={this.reloadParentAfterUpdate}
+                                                             changeHandler={this.changeHandler}
+                                                             avanceRappelSalaireList={this.state.avanceRappelSalaireList}
+                                                             handleClick={this.handleClick}/>}
                             </MDBCard>
                         </div>
 
@@ -301,7 +301,7 @@ export default class ParentUpdateVariablePaie extends Component {
                                 <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm"
                                         onClick={() => {
                                             this.props.history.push(
-                                                "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/"
+                                                "/variables_de_paie/addVariablePaie/ParentAddPayrollVariables/"
                                                 + this.state.society.id + "/" + this.state.idNameSelected);
                                         }}>
                                     Ajouter
