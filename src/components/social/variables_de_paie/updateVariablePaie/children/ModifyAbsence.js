@@ -90,7 +90,7 @@ class ModifyAbsence extends React.Component {
     }
 
     componentDidMount() {
-        AxiosCenter.getAllTypesAbsence()
+        AxiosCenter.getAllAbsenceTypes()
             .then((response) => {
                 this.setState({
                     absenceTypesList: response.data,

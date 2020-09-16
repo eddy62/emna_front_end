@@ -304,7 +304,7 @@ const AxiosCenter = {
   },
 
   //Variables de paie
-  getAllTypesAbsence() {
+  getAllAbsenceTypes() {
     return ApiBackEnd({
       method: "GET",
       url: "/type-absences",
@@ -498,7 +498,7 @@ const AxiosCenter = {
     });
   },
 
-  createOther(values) {
+  createOtherPayrollVariable(values) {
     return ApiBackEnd({
       method: "POST",
       url: "/autres-variables",

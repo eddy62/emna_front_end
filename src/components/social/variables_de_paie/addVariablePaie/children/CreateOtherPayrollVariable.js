@@ -81,7 +81,7 @@ const notify = type => {
     }
 }
 
-class CreateOther extends React.Component {
+class CreateOtherPayrollVariable extends React.Component {
 
     constructor(props) {
         super(props);
@@ -95,7 +95,7 @@ class CreateOther extends React.Component {
         values.annee = this.props.yearSelected;
         values.mois = this.props.monthSelected;
         values.employeId = this.props.employeId;
-        AxiosCenter.createOther(values)
+        AxiosCenter.createOtherPayrollVariable(values)
             .then(() => {
                 notify("success");
                 actions.resetForm();
@@ -200,4 +200,4 @@ class CreateOther extends React.Component {
     }
 }
 
-export default CreateOther;
+export default CreateOtherPayrollVariable;

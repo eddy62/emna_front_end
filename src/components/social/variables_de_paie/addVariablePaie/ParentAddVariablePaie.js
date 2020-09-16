@@ -18,7 +18,7 @@ import CreateBonus from "./children/CreateBonus";
 import CreateAvanceRappelSalaire from "./children/CreateAvanceRappelSalaire";
 import CreateExpenseReport from "./children/CreateExpenseReport";
 import CreateHeuresSupplementaires from "./children/CreateHeuresSupplementaires";
-import CreateOther from "./children/CreateOther";
+import CreateOtherPayrollVariable from "./children/CreateOtherPayrollVariable";
 
 export default class ParentAddVariablePaie extends Component {
 
@@ -262,9 +262,9 @@ export default class ParentAddVariablePaie extends Component {
                                             <MDBCollapse id="collapse6" isOpen={collapseID}>
                                                 <MDBCardBody>
                                                     {this.state.idNameSelected ? (
-                                                        <CreateOther employeId={this.state.idNameSelected}
-                                                                     yearSelected={this.state.yearSelected}
-                                                                     monthSelected={this.state.monthSelected}/>
+                                                        <CreateOtherPayrollVariable employeId={this.state.idNameSelected}
+                                                                                    yearSelected={this.state.yearSelected}
+                                                                                    monthSelected={this.state.monthSelected}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}
