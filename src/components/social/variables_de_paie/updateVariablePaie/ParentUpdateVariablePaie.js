@@ -90,8 +90,8 @@ export default class ParentUpdateVariablePaie extends Component {
     }
 
     /*Methode qui appelle le wrapper variables de paie */
-    getOneWrapperVariablesDePaie = () => {
-        AxiosCenter.getOneWrapperVariablesDePaie(this.state.idEmploye, this.state.yearSelected, this.state.monthSelected)
+    getWrapperPayrollVariablesByEmployeIdByYearByMonth = () => {
+        AxiosCenter.getWrapperPayrollVariablesByEmployeIdByYearByMonth(this.state.idEmploye, this.state.yearSelected, this.state.monthSelected)
         .then((response) => {         
             const absenceList = response.data.wrapperAbsenceList;
             const heureSupList = response.data.heuresSupplementairesDTOList;
@@ -134,13 +134,13 @@ export default class ParentUpdateVariablePaie extends Component {
         // ,this.state.autresVariableList.filter(autresVariable => autresVariable.etatVariablePaieId === 1)
         console.log("wrapperVariablesPaieToConfirm");
         console.log(wrapperVariablesPaieToConfirm);
-        this.confirmVariablesDePaie(wrapperVariablesPaieToConfirm);
+        this.confirmPayrollVariables(wrapperVariablesPaieToConfirm);
     }
 
 
     // Envoi au Back de wrapperVariablesPaieToConfirm
-    confirmVariablesDePaie = (envoi) => {
-        AxiosCenter.confirmVariablesDePaie(envoi).then((response) => {
+    confirmPayrollVariables = (envoi) => {
+        AxiosCenter.confirmPayrollVariables(envoi).then((response) => {
             console.log('response.data');
             console.log(response.data);
             console.log(response.status);
@@ -171,7 +171,7 @@ export default class ParentUpdateVariablePaie extends Component {
         const societyId = this.props.match.params.societyId;
         const employeId = this.props.match.params.id;
         this.setState({ societyId, idEmploye: employeId }, () => {
-            this.getOneWrapperVariablesDePaie()
+            this.getWrapperPayrollVariablesByEmployeIdByYearByMonth()
         })
 
         //Récupération de la liste des employés à travers l'id de la société
@@ -194,12 +194,12 @@ export default class ParentUpdateVariablePaie extends Component {
     //Méthode permettant de setter le State des selects qui sont transmis aux composants enfant
     changeHandler = event => {
         this.setState({ [event.target.name]: event.target.value }, () => {
-            this.getOneWrapperVariablesDePaie();
+            this.getWrapperPayrollVariablesByEmployeIdByYearByMonth();
         })
     };
 
     reloadParentAfterUpdate() {
-        this.getOneWrapperVariablesDePaie();
+        this.getWrapperPayrollVariablesByEmployeIdByYearByMonth();
     }
 
     handleClick(compName, key) {

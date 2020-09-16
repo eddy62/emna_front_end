@@ -325,7 +325,7 @@ const AxiosCenter = {
     });
   },
 
-  getOneWrapperVariablesDePaie(idEmploye, year, month) {
+  getWrapperPayrollVariablesByEmployeIdByYearByMonth(idEmploye, year, month) {
     return ApiBackEnd({
       method: "GET",
       url: `/wrappervariablespaie/employe/${idEmploye}/annee/${year}/mois/${month}`
@@ -626,7 +626,7 @@ const AxiosCenter = {
     })
   },
 
-  confirmVariablesDePaie(values) {
+  confirmPayrollVariables(values) {
     return ApiBackEnd({
       method: "PUT",
       url: `/wrappervariablespaie/confirm-variablespaie`,
