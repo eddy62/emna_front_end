@@ -498,14 +498,6 @@ const AxiosCenter = {
     });
   },
 
-  createAvanceRappelSalaire(values) {
-    return ApiBackEnd({
-      method: "POST",
-      url: `/avance-rappel-salaires`,
-      data: values,
-    })
-  },
-
   createOther(values) {
     return ApiBackEnd({
       method: "POST",
