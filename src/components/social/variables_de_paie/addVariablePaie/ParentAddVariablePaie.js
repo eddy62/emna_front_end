@@ -234,11 +234,6 @@ export default class ParentAddVariablePaie extends Component {
                                             </MDBCollapse>
                                         </MDBCard>
 
-
-
-
-
-
                                         <MDBCard>
                                             <MDBCollapseHeader onClick={this.toggleCollapse("collapse5")}
                                                                className="bg-transparent">

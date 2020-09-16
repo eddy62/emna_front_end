@@ -311,20 +311,6 @@ const AxiosCenter = {
     });
   },
 
-  getTypePrimeById(id) {
-    return ApiBackEnd({
-      method: "GET",
-      url: `/type-primes/${id}`,
-    })
-  },
-
-  getNoteDeFrais() {
-    return ApiBackEnd({
-      method: "GET",
-      url: "/note-de-frais",
-    });
-  },
-
   getWrapperPayrollVariablesByEmployeIdByYearByMonth(idEmploye, year, month) {
     return ApiBackEnd({
       method: "GET",
