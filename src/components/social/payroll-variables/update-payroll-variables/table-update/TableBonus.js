@@ -11,7 +11,6 @@ const notify = type => {
                 <div className="text-center">
                     <strong>Prime Supprimée &nbsp;&nbsp;!</strong>
                 </div>,
-                {position: "top-right"}
             );
             break;
         case "error":
@@ -19,7 +18,6 @@ const notify = type => {
                 <div className="text-center">
                     <strong>Prime NON Supprimée &nbsp;&nbsp;!</strong>
                 </div>,
-                {position: "top-right"}
             );
             break;
         default:
@@ -33,7 +31,7 @@ const notify = type => {
 };
 
 
-export default class TablePrime extends React.Component {
+export default class TableBonus extends React.Component {
 
     constructor(props) {
         super(props);
@@ -59,7 +57,7 @@ export default class TablePrime extends React.Component {
     }
 
     callBackToDelete = () => {
-        AxiosCenter.deletePrime(this.props.primeList[this.state.index].id).then(() => {
+        AxiosCenter.deleteBonus(this.props.primeList[this.state.index].id).then(() => {
             this.toggleModaleDelete();
             this.props.reloadParentAfterUpdate();
             notify('success');
@@ -89,10 +87,10 @@ export default class TablePrime extends React.Component {
                                     <td>{prime.montant} €</td>
                                     {prime.etatVariablePaieId === 1 ? (
                                         <td>
-                                            <MDBBtn color="danger" rounded size="sm"
-                                                    onClick={() => this.toggleModaleDelete(index)}>SUPPRIMER</MDBBtn>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
                                                     onClick={() => this.toggleModal(index)}>MODIFIER</MDBBtn>
+                                            <MDBBtn color="danger" rounded size="sm"
+                                                    onClick={() => this.toggleModaleDelete(index)}>SUPPRIMER</MDBBtn>                                            
                                         </td>
                                     ) : (
                                         <td>Confirmé</td>
@@ -110,13 +108,13 @@ export default class TablePrime extends React.Component {
 
                 </MDBTable>
                 {/** MODALE DELETE */}
-                <MDBModal isOpen={this.state.modaleDelete} backdrop={false} centered size="lg">
+                <MDBModal isOpen={this.state.modaleDelete} backdrop={false} centered size="sm">
                     <MDBModalBody>
-                        Etes-vous sur de vouloir supprimer cet enregistrement ?
-                        <MDBBtn
-                            onClick={this.toggleModaleDelete}>Annuler</MDBBtn>
-                        <MDBBtn
-                            onClick={this.callBackToDelete}>Confirmer</MDBBtn>
+                        <p>Supprimer la Prime ?</p>
+                        <MDBBtn color="danger" rounded size="sm"
+                            onClick={this.callBackToDelete}>SUPPRIMER</MDBBtn>
+                        <MDBBtn color="teal accent-3" rounded size="sm"
+                            onClick={this.toggleModaleDelete}>ANNULER</MDBBtn>                        
                     </MDBModalBody>
                 </MDBModal>
                 {/** MODALE UPDATE */}

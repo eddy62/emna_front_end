@@ -91,8 +91,8 @@ import ListOfClauses from "./contrat/referencial/clauses/list-of-clauses/ListOfC
 import ListArticle from "./contrat/referencial/article/list-article/ListArticle";
 
 //gestion Variables de paie
-import ParentAddVariablePaie from "./social/variables_de_paie/addVariablePaie/ParentAddVariablePaie";
-import ParentUpdateVariablePaie from "./social/variables_de_paie/updateVariablePaie/ParentUpdateVariablePaie";
+import ParentAddPayrollVariables from "./social/payroll-variables/add-payroll-variables/ParentAddPayrollVariables";
+import ParentUpdatePayrollVariables from "./social/payroll-variables/update-payroll-variables/ParentUpdatePayrollVariables";
 
 export default class Routes extends Component {
   render() {
@@ -109,12 +109,12 @@ export default class Routes extends Component {
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
         <PrivateRoute path="/deleteEmploye/:id" component={DeleteEmploye} />
         <PrivateRoute
-          path="/variables_de_paie/addVariablePaie/ParentAddVariablePaie/:id"
-          component={ParentAddVariablePaie}
+          path="/variables_de_paie/addVariablePaie/ParentAddPayrollVariables/:id"
+          component={ParentAddPayrollVariables}
         />
         <PrivateRoute
-          path="/variables_de_paie/updateVariablePaie/ParentUpdateVariablePaie/:societyId/:id"
-          component={ParentUpdateVariablePaie}
+          path="/variables_de_paie/updateVariablePaie/ParentUpdatePayrollVariables/:societyId/:id"
+          component={ParentUpdatePayrollVariables}
         />
         <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
 

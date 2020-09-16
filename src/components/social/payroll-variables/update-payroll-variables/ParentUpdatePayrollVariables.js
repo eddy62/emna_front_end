@@ -1,14 +1,14 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import "./../style2.scss";
-import {MDBContainer, MDBCardHeader, MDBCardTitle, MDBRow, MDBCol, MDBBtn, MDBCard} from "mdbreact";
+import { MDBContainer, MDBCardHeader, MDBCardTitle, MDBRow, MDBCol, MDBBtn, MDBCard } from "mdbreact";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import Loading from "../../../../shared/component/Loading"
-import {Link} from "react-router-dom";
-import TableAbsence from "./tableUpdate/TableAbsence";
-import TablePrime from "./tableUpdate/TablePrime"
-import TableHeureSup from "./tableUpdate/TableHeureSup";
-import TableAvanceRappelSalaire from "./tableUpdate/TableAvanceRappelSalaire";
-import TableNoteDefrais from "./tableUpdate/TableNoteDeFrais";
+import { Link } from "react-router-dom";
+import TableAbsence from "./table-update/TableAbsence";
+import TableBonus from "./table-update/TableBonus"
+import TableOvertime from "./table-update/TableOvertime";
+import TablePaydayAdvanceReminder from "./table-update/TablePaydayAdvanceReminder";
+import TableNoteDefrais from "./table-update/TableExpenseReport";
 import {toast} from "react-toastify";
 
 let messageToast = '';
@@ -39,7 +39,7 @@ const notify = type => {
     }
 };
 
-export default class ParentUpdateVariablePaie extends Component {
+export default class ParentUpdatePayrollVariables extends Component {
 
     constructor(props) {
         super(props);
@@ -90,35 +90,34 @@ export default class ParentUpdateVariablePaie extends Component {
     }
 
     /*Methode qui appelle le wrapper variables de paie */
-    getOneWrapperVariablesDePaie = () => {
-        AxiosCenter.getOneWrapperVariablesDePaie(this.state.idEmploye, this.state.yearSelected, this.state.monthSelected)
-            .then((response) => {
-                const absenceList = response.data.wrapperAbsenceList;
-                const heureSupList = response.data.heuresSupplementairesDTOList;
-                const primeList = response.data.wrapperPrimeList;
-                const noteDeFraisList = response.data.noteDeFraisDTOList;
-                const avanceRappelSalaireList = response.data.avanceRappelSalaireDTOList;
-                const autresVariableList = response.data.autresVariableDTOList;
-                let afficherBoutonConfirmer = false;
-                if ((absenceList.find(variablePaie => variablePaie.etatVariablePaieId === 1) !== undefined)
-                    || (heureSupList.find(variablePaie => variablePaie.etatVariablePaieId === 1) !== undefined)
-                    || (primeList.find(variablePaie => variablePaie.etatVariablePaieId === 1) !== undefined)
-                    || (noteDeFraisList.find(variablePaie => variablePaie.etatVariablePaieId === 1) !== undefined)
-                    || (avanceRappelSalaireList.find(variablePaie => variablePaie.etatVariablePaieId === 1) !== undefined)
-                    || (autresVariableList.find(variablePaie => variablePaie.etatVariablePaieId === 1) !== undefined)) {
-                    afficherBoutonConfirmer = true;
-                }
-                this.setState({
-                    absenceList,
-                    heureSupList,
-                    primeList,
-                    noteDeFraisList,
-                    avanceRappelSalaireList,
-                    autresVariableList,
-                    enableBtnConfirmer: afficherBoutonConfirmer,
-                    loaded: true
-                })
-            });
+    getWrapperPayrollVariablesByEmployeIdByYearByMonth = () => {
+        AxiosCenter.getWrapperPayrollVariablesByEmployeIdByYearByMonth(this.state.idEmploye, this.state.yearSelected, this.state.monthSelected)
+        .then((response) => {         
+            const absenceList = response.data.wrapperAbsenceList;
+            const heureSupList = response.data.heuresSupplementairesDTOList;
+            const primeList = response.data.wrapperPrimeList;            
+            const noteDeFraisList = response.data.noteDeFraisDTOList;
+            const avanceRappelSalaireList = response.data.avanceRappelSalaireDTOList;
+            const autresVariableList = response.data.autresVariableDTOList;
+            let afficherBoutonConfirmer = false;
+            if ((absenceList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined)
+                || (heureSupList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined)
+                || (primeList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined)
+                || (noteDeFraisList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined)
+                || (avanceRappelSalaireList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined)
+                || (autresVariableList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined))
+                {afficherBoutonConfirmer = true;}
+            this.setState({
+                absenceList,
+                heureSupList,
+                primeList,
+                noteDeFraisList,
+                avanceRappelSalaireList,
+                autresVariableList,
+                enableBtnConfirmer:afficherBoutonConfirmer,
+                loaded:true
+            })
+        });
     };
 
     /* Méthode de mise à jour de wrapperVariablesPaie[] par les 6 tableaux de variables pour Confirmation */
@@ -133,13 +132,13 @@ export default class ParentUpdateVariablePaie extends Component {
         };
         // TODO : intégrer autresVariableList
         // ,this.state.autresVariableList.filter(autresVariable => autresVariable.etatVariablePaieId === 1)
-        this.confirmVariablesDePaie(wrapperVariablesPaieToConfirm);
+        this.confirmPayrollVariables(wrapperVariablesPaieToConfirm);
     }
 
 
     // Envoi au Back de wrapperVariablesPaieToConfirm
-    confirmVariablesDePaie = (envoi) => {
-        AxiosCenter.confirmVariablesDePaie(envoi).then((response) => {
+    confirmPayrollVariables = (envoi) => {
+        AxiosCenter.confirmPayrollVariables(envoi).then((response) => {
             messageToast = response.data;
             switch (response.status) {
                 case 201:
@@ -166,21 +165,21 @@ export default class ParentUpdateVariablePaie extends Component {
         //Récupération de l'id de la société
         const societyId = this.props.match.params.societyId;
         const employeId = this.props.match.params.id;
-        this.setState({societyId, idEmploye: employeId}, () => {
-            this.getOneWrapperVariablesDePaie()
+        this.setState({ societyId, idEmploye: employeId }, () => {
+            this.getWrapperPayrollVariablesByEmployeIdByYearByMonth()
         })
 
         //Récupération de la liste des employés à travers l'id de la société
         AxiosCenter.getAllWrapperEmployesBySociety(societyId)
             .then((response) => {
                 const listeEmployes = response.data;
-                this.setState({listeEmployes: listeEmployes});
+                this.setState({ listeEmployes: listeEmployes });
             });
 
         AxiosCenter.getSocietyById(societyId)
             .then((response) => {
                 const society = response.data;
-                this.setState({society});
+                this.setState({ society });
             })
             .catch((error) => {
                 console.log(error);
@@ -189,13 +188,13 @@ export default class ParentUpdateVariablePaie extends Component {
 
     //Méthode permettant de setter le State des selects qui sont transmis aux composants enfant
     changeHandler = event => {
-        this.setState({[event.target.name]: event.target.value}, () => {
-            this.getOneWrapperVariablesDePaie();
+        this.setState({ [event.target.name]: event.target.value }, () => {
+            this.getWrapperPayrollVariablesByEmployeIdByYearByMonth();
         })
     };
 
     reloadParentAfterUpdate() {
-        this.getOneWrapperVariablesDePaie();
+        this.getWrapperPayrollVariablesByEmployeIdByYearByMonth();
     }
 
     handleClick(compName, key) {
@@ -203,7 +202,7 @@ export default class ParentUpdateVariablePaie extends Component {
     }
 
     render() {
-        if (!this.state.loaded) return <Loading/>
+        if (!this.state.loaded) return <Loading />
         else return (
             <div className="App">
                 <div className="social">
@@ -216,8 +215,7 @@ export default class ParentUpdateVariablePaie extends Component {
                         {/**SELECTS */}
                         <div className="selects">
                             <MDBRow>
-                                <form className="d-flex flex-row p-4"
-                                      style={{width: "100%", justifyContent: "space-around"}}>
+                                <form className="d-flex flex-row p-4" style={{ width: "100%", justifyContent: "space-around" }}>
                                     <div>
                                         <label>Nom de l'employé</label>
                                         <select
@@ -280,20 +278,20 @@ export default class ParentUpdateVariablePaie extends Component {
                                                    changeHandler={this.changeHandler} handleClick={this.handleClick}/>}
                             </MDBCard>
                             <MDBCard>
-                                {<TablePrime reloadParentAfterUpdate={this.reloadParentAfterUpdate}
+                                {<TableBonus reloadParentAfterUpdate={this.reloadParentAfterUpdate}
                                              changeHandler={this.changeHandler} primeList={this.state.primeList}
                                              handleClick={this.handleClick}/>}
                             </MDBCard>
                             <MDBCard>
-                                {<TableHeureSup reloadParentAfterUpdate={this.reloadParentAfterUpdate}
+                                {<TableOvertime reloadParentAfterUpdate={this.reloadParentAfterUpdate}
                                                 changeHandler={this.changeHandler}
                                                 heureSupList={this.state.heureSupList} handleClick={this.handleClick}/>}
                             </MDBCard>
                             <MDBCard>
-                                {<TableAvanceRappelSalaire reloadParentAfterUpdate={this.reloadParentAfterUpdate}
-                                                           changeHandler={this.changeHandler}
-                                                           avanceRappelSalaireList={this.state.avanceRappelSalaireList}
-                                                           handleClick={this.handleClick}/>}
+                                {<TablePaydayAdvanceReminder reloadParentAfterUpdate={this.reloadParentAfterUpdate}
+                                                             changeHandler={this.changeHandler}
+                                                             avanceRappelSalaireList={this.state.avanceRappelSalaireList}
+                                                             handleClick={this.handleClick}/>}
                             </MDBCard>
                         </div>
 
@@ -303,7 +301,7 @@ export default class ParentUpdateVariablePaie extends Component {
                                 <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm"
                                         onClick={() => {
                                             this.props.history.push(
-                                                "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/"
+                                                "/variables_de_paie/addVariablePaie/ParentAddPayrollVariables/"
                                                 + this.state.society.id + "/" + this.state.idNameSelected);
                                         }}>
                                     Ajouter

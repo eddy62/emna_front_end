@@ -66,7 +66,7 @@ const AxiosCenter = {
     });
   },
 
-  getAllTypePrimes() {
+  getAllBonusTypes() {
     return ApiBackEnd({
       method: "GET",
       url: "/type-primes",
@@ -304,28 +304,14 @@ const AxiosCenter = {
   },
 
   //Variables de paie
-  getAllTypesAbsence() {
+  getAllAbsenceTypes() {
     return ApiBackEnd({
       method: "GET",
       url: "/type-absences",
     });
   },
 
-  getTypePrimeById(id) {
-    return ApiBackEnd({
-      method: "GET",
-      url: `/type-primes/${id}`,
-    })
-  },
-
-  getNoteDeFrais() {
-    return ApiBackEnd({
-      method: "GET",
-      url: "/note-de-frais",
-    });
-  },
-
-  getOneWrapperVariablesDePaie(idEmploye, year, month) {
+  getWrapperPayrollVariablesByEmployeIdByYearByMonth(idEmploye, year, month) {
     return ApiBackEnd({
       method: "GET",
       url: `/wrappervariablespaie/employe/${idEmploye}/annee/${year}/mois/${month}`
@@ -359,7 +345,7 @@ const AxiosCenter = {
     });
   },
 
-  createPrime(values) {
+  createBonus(values) {
     return ApiBackEnd({
       method: "POST",
       url: "/primes",
@@ -375,7 +361,7 @@ const AxiosCenter = {
     })
   },
 
-  createAdvanceRecallSalary(values) {
+  createPaydayAdvanceOrReminder(values) {
     return ApiBackEnd({
       method: "POST",
       url: '/avance-rappel-salaires',
@@ -512,15 +498,7 @@ const AxiosCenter = {
     });
   },
 
-  createAvanceRappelSalaire(values) {
-    return ApiBackEnd({
-      method: "POST",
-      url: `/avance-rappel-salaires`,
-      data: values,
-    })
-  },
-
-  createOther(values) {
+  createOtherPayrollVariable(values) {
     return ApiBackEnd({
       method: "POST",
       url: "/autres-variables",
@@ -610,7 +588,7 @@ const AxiosCenter = {
     });
   },
 
-  modifyHeureSupplementaire(values) {
+  modifyOvertime(values) {
     return ApiBackEnd({
       method: "PUT",
       url: `/heures-supplementaires`,
@@ -618,7 +596,7 @@ const AxiosCenter = {
     })
   },
 
-  modifyAvanceRappelSalaire(values) {
+  modifyPaydayAdvanceOrReminder(values) {
     return ApiBackEnd({
       method: "PUT",
       url: `/avance-rappel-salaires`,
@@ -626,7 +604,7 @@ const AxiosCenter = {
     })
   },
 
-  confirmVariablesDePaie(values) {
+  confirmPayrollVariables(values) {
     return ApiBackEnd({
       method: "PUT",
       url: `/wrappervariablespaie/confirm-variablespaie`,
@@ -634,7 +612,7 @@ const AxiosCenter = {
     })
   },
 
-  updatePrime(values) {
+  updateBonus(values) {
     return ApiBackEnd({
       method: "put",
       url: `/primes`,
@@ -642,7 +620,7 @@ const AxiosCenter = {
     });
   },
 
-  updateNoteDeFrais(values) {
+  updateExpenseReport(values) {
     return ApiBackEnd({
       method: "PUT",
       url: `/note-de-frais`,
@@ -711,28 +689,28 @@ const AxiosCenter = {
     });
   },
 
-  deleteHeureSupplementaire(id) {
+  deleteOvertime(id) {
     return ApiBackEnd({
       method: "DELETE",
       url: `/heures-supplementaires/${id}`,
     })
   },
 
-  deleteAvanceRappelSalaire(id) {
+  deletePaydayAdvanceOrReminder(id) {
     return ApiBackEnd({
       method: "DELETE",
       url: `/avance-rappel-salaires/${id}`,
     })
   },
 
-  deleteNoteDeFrais(id) {
+  deleteExpenseReport(id) {
     return ApiBackEnd({
       method: "DELETE",
       url: `/note-de-frais/${id}`,
     });
   },
 
-  deletePrime(id) {
+  deleteBonus(id) {
     return ApiBackEnd({
       method: "DELETE",
       url: `/primes/${id}`,

@@ -1,10 +1,10 @@
 import React from "react";
 import {ErrorMessage, Field, Form, Formik} from 'formik';
 import * as Yup from "yup";
-import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
-import {toast} from "react-toastify";
-import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../shared/component/Loading";
+import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
+import AxiosCenter from "../../../../../shared/services/AxiosCenter";
+import {toast} from "react-toastify";
 
 const heuresSupSchema = (props) => {
     return Yup.object().shape({
@@ -38,6 +38,7 @@ const ComposantNumber = ({field, ...props}) => (
         min="1"
         outline
         type="number"
+        valueDefault="1"
         {...props}
         {...field}
     />
@@ -48,35 +49,33 @@ const notify = type => {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) Modifiée(s) &nbsp;&nbsp;!</strong>
+                    <strong>Heure(s) supplémentaire(s) Enregistrée(s) &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) NON Modifiée(s) &nbsp;&nbsp;!</strong>
+                    <strong>Heure(s) supplémentaire(s) NON Enregistrée(s) &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) NON Modifiée(s) &nbsp;&nbsp;!</strong>
+                    <strong>Heure(s) supplémentaire(s) NON Enregistrée(s) &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
     }
 };
 
-class ModifyHeuresSupplementaires extends React.Component {
+class CreateOvertime extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            debutPeriode: "",
-            finPeriode: "",
-            loaded: false,
-            btnDisabled: true
+            debutPeriode: '',
+            finPeriode: '',
         }
     };
 
@@ -84,19 +83,17 @@ class ModifyHeuresSupplementaires extends React.Component {
         this.setState({
             loaded: true
         });
-        this.updatePeriod();
-    }
-
-    componentWillUnmount() {
-        this.props.reloadParentAfterUpdate();
     }
 
     submit = (values, actions) => {
-        AxiosCenter.modifyHeureSupplementaire(values)
+        values.annee = this.props.yearSelected
+        values.mois = this.props.monthSelected
+        values.employeId = this.props.employeId
+
+        AxiosCenter.createOvertime(values)
             .then(() => {
                 notify('success');
                 actions.resetForm();
-                this.props.toggleAvance(this.props.index);
             }).catch((error) => {
             console.log(error);
             notify('error');
@@ -107,35 +104,37 @@ class ModifyHeuresSupplementaires extends React.Component {
     updatePeriod() {
         this.state.debutPeriode = new Date(new Date()
             .setFullYear(
-                this.props.heureSupplementaire.annee,
-                this.props.heureSupplementaire.mois - 1,
+                this.props.yearSelected,
+                this.props.monthSelected -1,
                 1
-            )).toISOString().slice(0, 10);
-        this.state.finPeriode = new Date(new Date()
+            )).toISOString().slice(0,10);
+            this.state.finPeriode = new Date(new Date()
             .setFullYear(
-                this.props.heureSupplementaire.annee,
-                this.props.heureSupplementaire.mois,
+                this.props.yearSelected,
+                this.props.monthSelected ,
                 0
-            )).toISOString().slice(0, 10)
+            )).toISOString().slice(0,10)
     }
-
+    
     render() {
-        if (!this.state.loaded) return <Loading/>;
+        if (!this.state.loaded) return <Loading/>
         else return (
-            <div>
+            this.updatePeriod(),
+            <div className="App">
+                <div className="titre">
                     <MDBContainer>
                         {/* Formulaire */}
                         <Formik
                             onSubmit={this.submit}
                             initialValues={{
-                                annee: this.props.heureSupplementaire.annee,
-                                date: this.props.heureSupplementaire.date,
-                                employeId: this.props.heureSupplementaire.employeId,
-                                etatVariablePaieId: this.props.heureSupplementaire.etatVariablePaieId,
-                                id: this.props.heureSupplementaire.id,
-                                justificatif: this.props.heureSupplementaire.justificatif,
-                                mois: this.props.heureSupplementaire.mois,
-                                nombreHeure: this.props.heureSupplementaire.nombreHeure,
+                                annee: "",
+                                date: "",
+                                employeId: "",
+                                etatVariablePaieId: 1,
+                                id: null,
+                                justificatif: "",
+                                mois: "",
+                                nombreHeure: 1,
                             }}
                             validationSchema={heuresSupSchema(this.state)}
                         >
@@ -143,7 +142,7 @@ class ModifyHeuresSupplementaires extends React.Component {
                                   handleSubmit
                               }) => (
                                 <Form onSubmit={handleSubmit}>
-                                    <MDBCardBody style={{marginTop: "-3%", marginBottom: "-3%"}}>
+                                    <MDBCardBody style={{marginTop:"-3%", marginBottom:"-3%"}}>
                                         <MDBRow between around>
                                             {/* ligne 1 */}
                                             <MDBCol md="4">
@@ -180,13 +179,6 @@ class ModifyHeuresSupplementaires extends React.Component {
                                                 type="submit"
                                             >Enregistrer
                                             </MDBBtn>
-                                            <MDBBtn
-                                                color="teal accent-3"
-                                                rounded
-                                                size="sm"
-                                                onClick={() => this.props.toggleAvance(this.props.index)}
-                                            >Annuler
-                                            </MDBBtn>
                                         </MDBRow>
                                     </MDBCardBody>
                                 </Form>
@@ -194,8 +186,9 @@ class ModifyHeuresSupplementaires extends React.Component {
                         </Formik>
                     </MDBContainer>
                 </div>
+            </div>
         )
     }
 }
 
-export default ModifyHeuresSupplementaires;
+export default CreateOvertime;

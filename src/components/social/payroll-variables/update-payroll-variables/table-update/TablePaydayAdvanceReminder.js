@@ -1,36 +1,36 @@
 import React from "react";
 import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBTableHead} from "mdbreact";
-import ModifyNoteDeFrais from "../children/ModifyNoteDeFrais";
+import ModifyPaydayAdvanceReminder from "../children/ModifyPaydayAdvanceReminder"
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {toast} from "react-toastify";
 
-const notify = (type) => {
+const notify = (type, nom) => {
     switch (type) {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Note de frais supprimée &nbsp;&nbsp;!</strong>
+                    <strong>Avance/Rappel sur salaire Supprimé(e) &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Note de frais NON supprimée  &nbsp;&nbsp;!</strong>
+                    <strong>Avance/Rappel sur salaire NON Supprimé(e) &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>Note de frais NON supprimée  &nbsp;&nbsp;!</strong>
+                    <strong>Avance/Rappel sur salaire NON Supprimé(e) &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
     }
 };
 
-export default class TableNoteDeFrais extends React.Component {
+export default class TablePaydayAdvanceReminder extends React.Component {
 
     constructor(props) {
         super(props);
@@ -57,7 +57,7 @@ export default class TableNoteDeFrais extends React.Component {
     }
 
     callBackToDelete = () => {
-        AxiosCenter.deleteNoteDeFrais(this.props.noteDeFraisList[this.state.index].id).then(() => {
+        AxiosCenter.deletePaydayAdvanceOrReminder(this.props.avanceRappelSalaireList[this.state.index].id).then(() => {
             this.toggleModaleDelete();
             this.props.reloadParentAfterUpdate();
             notify('success');
@@ -68,32 +68,33 @@ export default class TableNoteDeFrais extends React.Component {
     }
 
     render() {
+        const reloadParent = this.props.reloadParentAfterUpdate;
         return (
             <div>
                 <MDBTable>
                     <MDBTableHead color="default-color">
                         <tr>
-                            <th className="font-weight-bold">Notes de Frais</th>
-                            <th>Date</th>
+                            <th className="font-weight-bold">Rappels/Avances sur Salaire</th>
+                            <th>Du</th>
+                            <th>Au</th>
                             <th>Montant</th>
-                            <th>Justificatif(s)</th>
                             <th className="w-25"></th>
                         </tr>
                     </MDBTableHead>
-                    {this.props.noteDeFraisList.length ? (
+                    {this.props.avanceRappelSalaireList.length ? (
                         <MDBTableBody>
-                            {this.props.noteDeFraisList.map((frais, index) => (
+                            {this.props.avanceRappelSalaireList.map((avrap, index) => (
                                 <tr key={index}>
-                                    <td>{frais.designation}</td>
-                                    <td>{frais.date}</td>
-                                    <td>{frais.montant} €</td>
-                                    <td>{frais.justificatif}</td>
-                                    {frais.etatVariablePaieId === 1 ? (
+                                    <td>{avrap.type}</td>
+                                    <td>{avrap.debutPeriode}</td>
+                                    <td>{avrap.finPeriode}</td>
+                                    <td>{avrap.montant} €</td>
+                                    {avrap.etatVariablePaieId === 1 ? (
                                         <td>
-                                            <MDBBtn color="danger" rounded size="sm"
-                                                    onClick={() => this.toggleModaleDelete(index)}>SUPPRIMER</MDBBtn>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
                                                     onClick={() => this.toggleModal(index)}>MODIFIER</MDBBtn>
+                                            <MDBBtn color="danger" rounded size="sm"
+                                                    onClick={() => this.toggleModaleDelete(index)}>SUPPRIMER</MDBBtn>                                            
                                         </td>
                                     ) : (
                                         <td>Confirmé</td>
@@ -104,30 +105,29 @@ export default class TableNoteDeFrais extends React.Component {
                     ) : (
                         <MDBTableBody>
                             <tr>
-                                <td colSpan="5">Pas de Note de Frais ce mois</td>
+                                <td colSpan="5">Pas d'Avance/Rappel sur Salaire ce mois</td>
                             </tr>
                         </MDBTableBody>
                     )}
                 </MDBTable>
-
                 {/** MODALE DELETE */}
-                <MDBModal isOpen={this.state.modaleDelete} backdrop={false} centered size="lg">
+                <MDBModal isOpen={this.state.modaleDelete} backdrop={false} centered size="sm">
                     <MDBModalBody>
-                        Etes-vous sur de vouloir supprimer cet enregistrement ?
-                        <MDBBtn
-                            onClick={this.toggleModaleDelete}>Annuler</MDBBtn>
-                        <MDBBtn
-                            onClick={this.callBackToDelete}>Confirmer</MDBBtn>
+                        <p>Supprimer l'Avance/Rappel sur Salaire ?</p>
+                        <MDBBtn color="danger" rounded size="sm"
+                            onClick={this.callBackToDelete}>SUPPRIMER</MDBBtn>
+                        <MDBBtn color="teal accent-3" rounded size="sm"
+                            onClick={this.toggleModaleDelete}>ANNULER</MDBBtn>                        
                     </MDBModalBody>
                 </MDBModal>
                 {/** MODALE UPDATE */}
                 <MDBModal isOpen={this.state.modalAvance} backdrop={false} centered size="lg">
                     <MDBModalBody>
-                        <ModifyNoteDeFrais
-                            noteDeFrais={this.props.noteDeFraisList[this.state.index]}
+                        <ModifyPaydayAdvanceReminder
+                            avanceRappelSalaire={this.props.avanceRappelSalaireList[this.state.index]}
                             index={this.state.index}
-                            toggleNoteDeFrais={this.toggleModal}
-                            reloadParentAfterUpdate={this.props.reloadParentAfterUpdate}
+                            toggleAvance={this.toggleModal}
+                            reloadParentAfterUpdate={reloadParent}
                         />
                     </MDBModalBody>
                 </MDBModal>

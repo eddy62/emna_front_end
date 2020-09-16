@@ -1,7 +1,7 @@
 import React from "react";
 import {ErrorMessage, Field, Form, Formik} from 'formik';
 import * as Yup from "yup";
-import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
+import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow, MDBCardHeader, MDBCardTitle} from "mdbreact";
 import {toast} from "react-toastify";
 import Loading from "../../../../../shared/component/Loading";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter"
@@ -78,7 +78,7 @@ const notify = (type) => {
     }
 };
 
-class ModifyAvanceRappelSalaire extends React.Component {
+class ModifyPaydayAdvanceReminder extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -100,7 +100,7 @@ class ModifyAvanceRappelSalaire extends React.Component {
     }
 
     submit = (values, actions) => {
-        AxiosCenter.modifyAvanceRappelSalaire(values)
+        AxiosCenter.modifyPaydayAdvanceOrReminder(values)
             .then(() => {
                 notify("success");
                 actions.resetForm();
@@ -132,6 +132,11 @@ class ModifyAvanceRappelSalaire extends React.Component {
         else return (
                 <div>
                     <MDBContainer>
+                    <div>
+                        <MDBCardHeader color={"teal accent-4"}>
+                            <MDBCardTitle tag="h4">Rappels/Avances sur Salaire</MDBCardTitle>
+                        </MDBCardHeader>
+                    </div>
                         {/* Formulaire */}
                         <Formik
                             onSubmit={this.submit}
@@ -155,7 +160,7 @@ class ModifyAvanceRappelSalaire extends React.Component {
                                   values,
                               }) => (
                                 <Form onSubmit={handleSubmit}>
-                                    <MDBCardBody style={{marginTop: "-5%", marginBottom: "-3%"}}>
+                                    <MDBCardBody>
                                         <MDBRow between around>
                                             {/* ligne 1 */}
                                             <MDBCol md="4" className="mt-3">
@@ -245,4 +250,4 @@ class ModifyAvanceRappelSalaire extends React.Component {
     }
 }
 
-export default ModifyAvanceRappelSalaire;
+export default ModifyPaydayAdvanceReminder;

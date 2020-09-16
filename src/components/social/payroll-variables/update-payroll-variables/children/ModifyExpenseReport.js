@@ -1,7 +1,7 @@
 import React from "react";
 import {ErrorMessage, Field, Form, Formik} from 'formik';
 import * as Yup from "yup";
-import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
+import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow, MDBCardHeader, MDBCardTitle} from "mdbreact";
 import {toast} from "react-toastify";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 
@@ -21,8 +21,8 @@ const ComponentDate = ({field, ...props}) => (
         label={props.label}
         outline
         type="date"
-        min={props.startDate}
-        max={props.endDate}
+        min={props.startdate}
+        max={props.enddate}
         {...props}
         {...field}
     />
@@ -81,7 +81,7 @@ const notify = (type) => {
     }
 };
 
-class ModifyNoteDeFrais extends React.Component {
+class ModifyExpenseReport extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -95,7 +95,7 @@ class ModifyNoteDeFrais extends React.Component {
     }
 
     submit = (values, actions) => {
-        AxiosCenter.updateNoteDeFrais(values)
+        AxiosCenter.updateExpenseReport(values)
             .then(() => {
                 notify("success");
                 this.props.toggleNoteDeFrais(this.props.index);
@@ -126,6 +126,11 @@ class ModifyNoteDeFrais extends React.Component {
             this.updatePeriod(),
                     <div>
                         <MDBContainer>
+                            <div>
+                                <MDBCardHeader color={"teal accent-4"} >
+                                    <MDBCardTitle tag="h4">Notes de Frais</MDBCardTitle>
+                                </MDBCardHeader>
+                            </div>
                             {/* Formulaire */}
                             <Formik
                                 onSubmit={this.submit}
@@ -147,15 +152,15 @@ class ModifyNoteDeFrais extends React.Component {
                                       handleSubmit
                                   }) => (
                                     <Form onSubmit={handleSubmit}>
-                                        <MDBCardBody style={{marginTop: "-5%", marginBottom: "-3%"}}>
+                                        <MDBCardBody>
                                             <MDBRow between around>
                                                 {/* ligne 1 */}
                                                 <MDBCol md="4" className="mt-3">
                                                     <Field
                                                         name="date"
                                                         label="Le* :"
-                                                        startDate={this.state.minDate}
-                                                        endDate={this.state.maxDate}
+                                                        startdate={this.state.minDate}
+                                                        enddate={this.state.maxDate}
                                                         component={ComponentDate}
                                                     />
                                                     <ErrorMessage
@@ -214,4 +219,4 @@ class ModifyNoteDeFrais extends React.Component {
     }
 }
 
-export default ModifyNoteDeFrais;
+export default ModifyExpenseReport;

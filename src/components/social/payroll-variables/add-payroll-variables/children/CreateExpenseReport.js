@@ -89,7 +89,7 @@ const ComponentError = (props) => (
 );
 
 
-class CreateNoteDeFrais extends React.Component {
+class CreateExpenseReport extends React.Component {
 
     constructor(props) {
         super(props);
@@ -200,7 +200,7 @@ class CreateNoteDeFrais extends React.Component {
                                             </MDBCol>
                                         </MDBRow>
                                         {/* upload justificatifs */}
-                                        <MDBRow space around>
+                                        <MDBRow around>
                                             <MDBCol md="4">
                                                 <Field
                                                     name="justificatifs"
@@ -230,4 +230,4 @@ class CreateNoteDeFrais extends React.Component {
     }
 }
 
-export default CreateNoteDeFrais;
+export default CreateExpenseReport;

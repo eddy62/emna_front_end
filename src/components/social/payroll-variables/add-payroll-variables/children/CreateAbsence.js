@@ -47,6 +47,23 @@ const ComponentDate = ({field, ...props}) => (
 
 );
 
+const ComponentUpload = () => (
+    <div>
+        <div className="custom-control custom-checkbox">
+            <input type="checkbox" className="custom-control-input" id="defaultUnchecked"/>
+            <label className="custom-control-label" htmlFor="defaultUnchecked">Justificatif(s)</label>
+        </div>
+        <MDBBtn
+            disabled={true}
+            color="teal accent-3"
+            rounded
+            size="sm"
+            type="submit">
+            Upload
+        </MDBBtn>
+    </div>
+);
+
 const ComponentError = (props) => (
     <div className="text-danger">{props.children}</div>
 );
@@ -56,28 +73,28 @@ const notify = type => {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Absence Modifiée &nbsp;&nbsp;!</strong>
+                    <strong>Absence Enregistrée &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Absence NON Modifiée &nbsp;&nbsp;!</strong>
+                    <strong>Absence NON Enregistrée &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>Absence NON Modifiée &nbsp;&nbsp;!</strong>
+                    <strong>Absence NON Enregistrée &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
     }
 }
 
-class ModifyAbsence extends React.Component {
+class CreateAbsence extends React.Component {
 
     constructor(props) {
         super(props);
@@ -85,12 +102,12 @@ class ModifyAbsence extends React.Component {
             absenceTypesList: [],
             loaded: false,
             startPeriod: "",
-            endPeriod: "",
+            endPeriod: ""
         };
     }
 
     componentDidMount() {
-        AxiosCenter.getAllTypesAbsence()
+        AxiosCenter.getAllAbsenceTypes()
             .then((response) => {
                 this.setState({
                     absenceTypesList: response.data,
@@ -102,11 +119,13 @@ class ModifyAbsence extends React.Component {
     }
 
     submit = (values, actions) => {
-        AxiosCenter.updateAbsence(values)
+        values.annee = this.props.yearSelected;
+        values.mois = this.props.monthSelected;
+        values.employeId = this.props.employeId;
+        AxiosCenter.createAbsence(values)
             .then(() => {
-                this.props.toggleModalUpdateAbsence(this.props.index);
-                this.props.reloadParentAfterUpdate();
                 notify("success");
+                actions.resetForm();
             }).catch((error) => {
             console.log(error);
             notify("error");
@@ -117,34 +136,35 @@ class ModifyAbsence extends React.Component {
     updatePeriod() {
         this.state.startPeriod = new Date(new Date()
             .setFullYear(
-                this.props.absence.annee,
-                this.props.absence.mois - 1,
+                this.props.yearSelected,
+                this.props.monthSelected - 1,
                 1
             )).toISOString().slice(0, 10);
         this.state.endPeriod = new Date(new Date()
             .setFullYear(
-                this.props.absence.annee,
-                this.props.absence.mois,
+                this.props.yearSelected,
+                this.props.monthSelected,
                 0
             )).toISOString().slice(0, 10);
     }
+
 
     render() {
         if (!this.state.loaded) return <Loading/>
         else return (
             this.updatePeriod(),
                 <MDBContainer>
-                    <div>
+                    <div className="d-flex justify-content-center">
                         <Formik initialValues={{
-                            id: this.props.absence.id,
-                            debutAbsence: this.props.absence.debutAbsence,
-                            finAbsence: this.props.absence.finAbsence,
-                            justificatif: this.props.absence.justificatif,
-                            typeAbsenceId: this.props.absence.typeAbsenceId,
-                            etatVariablePaieId: this.props.absence.etatVariablePaieId,
-                            employeId: this.props.absence.employeId,
-                            mois: this.props.absence.mois,
-                            annee: this.props.absence.annee
+                            id: null,
+                            debutAbsence: "",
+                            finAbsence: "",
+                            justificatif: "",
+                            typeAbsenceId: 1,
+                            etatVariablePaieId: 1,
+                            employeId: "",
+                            mois: "",
+                            annee: ""
                         }}
                                 onSubmit={this.submit}
                                 validationSchema={absenceSchema(this.state)}
@@ -181,9 +201,8 @@ class ModifyAbsence extends React.Component {
                                             </MDBCol>
                                         </MDBRow>
                                         <br/>
-                                        <MDBRow center style={{marginTop: "-5%"}}>
+                                        <MDBRow between around style={{marginTop: "-5%"}}>
                                             {/* select type absence */}
-                                            <MDBCol md="5">
                                             <Field
                                                 name="typeAbsenceId"
                                                 label="Type :"
@@ -191,23 +210,25 @@ class ModifyAbsence extends React.Component {
                                                 component={ComponentSelect}
                                             />
                                             <ErrorMessage name="typeAbsenceId" component={ComponentError}/>
-                                            </MDBCol>
                                         </MDBRow>
-                                        <MDBRow center>
-                                            <MDBBtn
-                                                color="teal accent-3"
-                                                rounded
-                                                size="sm"
-                                                type="submit"
-                                            >Modifier
-                                            </MDBBtn>
-                                            <MDBBtn
-                                                color="teal accent-3"
-                                                rounded
-                                                size="sm"
-                                                onClick={() => this.props.toggleModalUpdateAbsence(this.props.index)}>
-                                                Annuler
-                                            </MDBBtn>
+                                        <MDBRow between around className="mt-3">
+                                            <MDBCol md="4">
+                                                {/* upload justificatifs */}
+                                                <Field
+                                                    name="justificatifs"
+                                                    component={ComponentUpload}
+                                                />
+                                                <ErrorMessage name="justificatifs" component={ComponentError}/>
+                                            </MDBCol>
+                                            <MDBCol md="4" className="mt-4">
+                                                <MDBBtn
+                                                    color="teal accent-3"
+                                                    rounded
+                                                    size="sm"
+                                                    type="submit"
+                                                >Enregistrer
+                                                </MDBBtn>
+                                            </MDBCol>
                                         </MDBRow>
                                     </MDBCardBody>
                                 </Form>
@@ -217,6 +238,7 @@ class ModifyAbsence extends React.Component {
                 </MDBContainer>
         )
     }
+
 }
 
-export default ModifyAbsence;
+export default CreateAbsence;

@@ -78,7 +78,7 @@ const ComposantNumber = ({field, ...props}) => (
     />
 );
 
-class CreateAvanceRappelSalaire extends React.Component {
+class CreatePaydayAdvanceReminder extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -99,7 +99,7 @@ class CreateAvanceRappelSalaire extends React.Component {
         values.mois = this.props.monthSelected;
         values.employeId = this.props.employeId;
 
-        AxiosCenter.createAdvanceRecallSalary(values)
+        AxiosCenter.createPaydayAdvanceOrReminder(values)
             .then(() => {
                 notify("success", values.type);
                 actions.resetForm();
@@ -239,4 +239,4 @@ class CreateAvanceRappelSalaire extends React.Component {
     }
 }
 
-export default CreateAvanceRappelSalaire;
+export default CreatePaydayAdvanceReminder;
