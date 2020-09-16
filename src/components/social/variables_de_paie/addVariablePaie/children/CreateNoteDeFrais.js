@@ -200,7 +200,7 @@ class CreateNoteDeFrais extends React.Component {
                                             </MDBCol>
                                         </MDBRow>
                                         {/* upload justificatifs */}
-                                        <MDBRow space around>
+                                        <MDBRow around>
                                             <MDBCol md="4">
                                                 <Field
                                                     name="justificatifs"

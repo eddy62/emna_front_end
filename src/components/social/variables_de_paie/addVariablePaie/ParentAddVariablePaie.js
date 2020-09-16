@@ -115,7 +115,7 @@ export default class ParentAddVariablePaie extends Component {
                                         >
                                             <option disabled selected>Choisissez employé</option>
                                             {this.state.listeEmployes.map((employe) => (
-                                                <option value={employe.id}>{employe.nomUsage}</option>
+                                                <option key={employe.id} value={employe.id}>{employe.nomUsage}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -127,8 +127,8 @@ export default class ParentAddVariablePaie extends Component {
                                             onChange={this.changeHandler}
                                         >
                                             <option disabled>Choisissez une année</option>
-                                            {this.state.year.map((y) => (
-                                                <option value={y.item}>{y.item}</option>
+                                            {this.state.year.map((y, index) => (
+                                                <option key={index} value={y.item}>{y.item}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -141,8 +141,8 @@ export default class ParentAddVariablePaie extends Component {
                                         >
                                             <option disabled defaultValue={new Date().getMonth()}>Choisissez un mois
                                             </option>
-                                            {this.state.period.map((p) => (
-                                                <option selected={p.id === this.state.monthSelected} value={p.id}
+                                            {this.state.period.map((p, index) => (
+                                                <option key={index} selected={p.id === this.state.monthSelected} value={p.id}
                                                         disabled={p.id > new Date().getMonth() + 1 ? (true) : (false)}>{p.text}</option>
                                             ))}
                                         </select>
@@ -160,7 +160,7 @@ export default class ParentAddVariablePaie extends Component {
                                         <MDBCard className="mt-3">
                                             <MDBCollapseHeader onClick={this.toggleCollapse("collapse1")}
                                                                className="bg-transparent">
-                                                Absences
+                                                Absence
                                                 <i className={collapseID === "collapse1" ? "fa fa-angle-up" : "fa fa-angle-down"}/>
                                             </MDBCollapseHeader>
                                             <MDBCollapse id="collapse1" isOpen={collapseID}>
@@ -179,7 +179,7 @@ export default class ParentAddVariablePaie extends Component {
                                         <MDBCard>
                                             <MDBCollapseHeader onClick={this.toggleCollapse("collapse4")}
                                                                className="bg-transparent">
-                                                Note de frais
+                                                Note de Frais
                                                 <i className={collapseID === "collapse4" ? "fa fa-angle-up" : "fa fa-angle-down"}/>
                                             </MDBCollapseHeader>
                                             <MDBCollapse id="collapse4" isOpen={collapseID}>
@@ -217,7 +217,7 @@ export default class ParentAddVariablePaie extends Component {
                                         <MDBCard>
                                             <MDBCollapseHeader onClick={this.toggleCollapse("collapse2")}
                                                                className="bg-transparent">
-                                                Heures supplémentaires
+                                                Heure(s) Supplémentaire(s)
                                                 <i className={collapseID === "collapse2" ? "fa fa-angle-up" : "fa fa-angle-down"}/>
                                             </MDBCollapseHeader>
                                             <MDBCollapse id="collapse2" isOpen={collapseID}>
@@ -237,7 +237,7 @@ export default class ParentAddVariablePaie extends Component {
                                         <MDBCard>
                                             <MDBCollapseHeader onClick={this.toggleCollapse("collapse5")}
                                                                className="bg-transparent">
-                                                Rappel/Avance sur salaire
+                                                Rappel/Avance sur Salaire
                                                 <i className={collapseID === "collapse5" ? "fa fa-angle-up" : "fa fa-angle-down"}/>
                                             </MDBCollapseHeader>
                                             <MDBCollapse id="collapse5" isOpen={collapseID}>
@@ -256,7 +256,7 @@ export default class ParentAddVariablePaie extends Component {
                                         <MDBCard className="mb-3">
                                             <MDBCollapseHeader onClick={this.toggleCollapse("collapse6")}
                                                                className="bg-transparent">
-                                                Autres
+                                                Autre
                                                 <i className={collapseID === "collapse6" ? "fa fa-angle-up" : "fa fa-angle-down"}/>
                                             </MDBCollapseHeader>
                                             <MDBCollapse id="collapse6" isOpen={collapseID}>
