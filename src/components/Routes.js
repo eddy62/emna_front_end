@@ -136,8 +136,9 @@ export default class Routes extends Component {
         <PrivateRoute path="/article" component={ListArticle} />
 
         {/* gestionUserRoutes */}
-        <PrivateRoute exact path="/users" component={Users} />
-        <PrivateRoute exact path="/users/add" component={AddUser} />
+        {/* <PrivateRoute exact path="/users" component={Users} />
+        <PrivateRoute exact path="/users/add" component={AddUser} /> */}
+
         <PrivateRoute exact path="/users/edit/:id" component={EditUser} />
         <PrivateRoute exact path="/users/view/:id" component={ViewUser} />
         <PrivateRoute exact path="/users/stvu/admins" component={ListUser} />
