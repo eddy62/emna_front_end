@@ -1,15 +1,16 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import "./../style2.scss";
-import { MDBContainer, MDBCardHeader, MDBCardTitle, MDBRow, MDBCol, MDBBtn, MDBCard } from "mdbreact";
+import {MDBBtn, MDBCard, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer, MDBRow} from "mdbreact";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import Loading from "../../../../shared/component/Loading"
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import TableAbsence from "./table-update/TableAbsence";
 import TableBonus from "./table-update/TableBonus"
 import TableOvertime from "./table-update/TableOvertime";
 import TablePaydayAdvanceReminder from "./table-update/TablePaydayAdvanceReminder";
 import TableNoteDefrais from "./table-update/TableExpenseReport";
 import {toast} from "react-toastify";
+import TableOtherPayrollVariable from "./table-update/TableOtherPayrollVariable";
 
 let messageToast = '';
 
@@ -291,6 +292,12 @@ export default class ParentUpdatePayrollVariables extends Component {
                                 {<TablePaydayAdvanceReminder reloadParentAfterUpdate={this.reloadParentAfterUpdate}
                                                              changeHandler={this.changeHandler}
                                                              avanceRappelSalaireList={this.state.avanceRappelSalaireList}
+                                                             handleClick={this.handleClick}/>}
+                            </MDBCard>
+                            <MDBCard>
+                                {<TableOtherPayrollVariable reloadParentAfterUpdate={this.reloadParentAfterUpdate}
+                                                             changeHandler={this.changeHandler}
+                                                             autresVariablesList={this.state.autresVariableList}
                                                              handleClick={this.handleClick}/>}
                             </MDBCard>
                         </div>
