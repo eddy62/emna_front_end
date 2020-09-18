@@ -20,7 +20,6 @@ const avanceRappelSchema = (props) => {
         type: Yup.string().required("Type obligatoire*"),
         montant: Yup.number().required("Montant obligatoire*")
             .min("0.01", "Ne peut être un montant nul ou négatif"),
-        //justificatif: ?
     })
 };
 
@@ -40,6 +39,13 @@ const notify = (type, nom) => {
                 </div>,
             );
             break;
+        default:
+            toast.error(
+                <div className="text-center">
+                    <strong>{nom} sur salaire NON Enregistré(e) &nbsp;&nbsp;!</strong>
+                </div>,
+            );
+            break;
     }
 };
 
@@ -47,7 +53,7 @@ const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
 );
 
-const ComposantDate = ({field, form: {touched, errors}, ...props}) => (
+const ComposantDate = ({field, ...props}) => (
     <MDBInput
         label={props.label}
         outline
@@ -59,7 +65,7 @@ const ComposantDate = ({field, form: {touched, errors}, ...props}) => (
     />
 );
 
-const ComposantNumber = ({field, form: {touched, errors}, ...props}) => (
+const ComposantNumber = ({field, ...props}) => (
     <MDBInput
         label={props.label}
         min="0.01"
@@ -72,7 +78,7 @@ const ComposantNumber = ({field, form: {touched, errors}, ...props}) => (
     />
 );
 
-class CreateAvanceRappelSalaire extends React.Component {
+class CreatePaydayAdvanceReminder extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -93,9 +99,8 @@ class CreateAvanceRappelSalaire extends React.Component {
         values.mois = this.props.monthSelected;
         values.employeId = this.props.employeId;
 
-        AxiosCenter.createAdvanceRecallSalary(values)
-            .then((response) => {
-                const AVANCERAPPELSALAIRE = response.data
+        AxiosCenter.createPaydayAdvanceOrReminder(values)
+            .then(() => {
                 notify("success", values.type);
                 actions.resetForm();
             }).catch((error) => {
@@ -234,4 +239,4 @@ class CreateAvanceRappelSalaire extends React.Component {
     }
 }
 
-export default CreateAvanceRappelSalaire;
+export default CreatePaydayAdvanceReminder;

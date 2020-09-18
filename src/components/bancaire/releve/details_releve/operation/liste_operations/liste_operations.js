@@ -34,6 +34,10 @@ export default class ListeOperations extends React.Component {
       .catch((err) => console.log(err));
   }
 
+  deleteConfirm = (id) => {
+    this.deleteOperation(id);
+  };
+
   deleteOperation = (id) => {
     AxiosCenter.deleteOperation(id).then((res) => this.componentDidMount());
   };
@@ -64,8 +68,8 @@ export default class ListeOperations extends React.Component {
           </td>
         <td>
           {(UserService.isSociety() || UserService.isAdmin()) &&
-          <DeletionConfirmationModal deleteOperation={() => {
-            props.deleteOperation(operation.id)
+          <DeletionConfirmationModal deleteConfirm={() => {
+            props.deleteConfirm(operation.id)
           }}/>
           }
           </td>
@@ -106,7 +110,7 @@ export default class ListeOperations extends React.Component {
       return (
         <this.listerLesOperations 
           operations={this.state.operations} 
-          deleteOperation={this.deleteOperation}
+          deleteConfirm={this.deleteConfirm}
           roleUser={this.state.roleUser}
           isReleveUnvalid={this.state.isReleveUnvalid}
         />

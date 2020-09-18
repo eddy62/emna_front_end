@@ -16,8 +16,6 @@ import Contrat from "./contrat/Contrat";
 import DetailContrat from "./contrat/list-contract/detail-contract/DetailContrat";
 import CreerContrat from "./contrat/create-contract/CreerContrat";
 
-import ParentAddVariablePaie from "./social/variables_de_paie/addVariablePaie/ParentAddVariablePaie";
-
 //gestion ClientFournisseur imports
 import MenuClientFournisseur from "./client-fournisseur/MenuClientFournisseur";
 import ListerClients from "./client-fournisseur/list-client-fournisseur/ListClients";
@@ -46,6 +44,7 @@ import BankReconciliation from "./bancaire/releve/gestion_releves/rapprochement_
 import ListOfOperations from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfOperations";
 import ListOfInvoices from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfInvoices";
 import EditStatement from "./bancaire/releve/details_releve/edit-statement/EditStatement";
+import QuotesHome from "./quotes/quotes-home/QuotesHome";
 
 
 // gestionUserRoutesImports
@@ -93,6 +92,8 @@ import ListOfClauses from "./contrat/referencial/clauses/list-of-clauses/ListOfC
 import ListArticle from "./contrat/referencial/article/list-article/ListArticle";
 
 //gestion Variables de paie
+import ParentAddPayrollVariables from "./social/payroll-variables/add-payroll-variables/ParentAddPayrollVariables";
+import ParentUpdatePayrollVariables from "./social/payroll-variables/update-payroll-variables/ParentUpdatePayrollVariables";
 
 export default class Routes extends Component {
   render() {
@@ -109,15 +110,25 @@ export default class Routes extends Component {
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
         <PrivateRoute path="/deleteEmploye/:id" component={DeleteEmploye} />
         <PrivateRoute
-          path="/variables_de_paie/addVariablePaie/ParentAddVariablePaie/:id"
-          component={ParentAddVariablePaie}
+          path="/variables_de_paie/addVariablePaie/ParentAddPayrollVariables/:id"
+          component={ParentAddPayrollVariables}
+        />
+        <PrivateRoute
+          path="/variables_de_paie/updateVariablePaie/ParentUpdatePayrollVariables/:societyId/:id"
+          component={ParentUpdatePayrollVariables}
         />
         <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
+
+        {/* Espace Comptabilité */}
+
         {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/accueildepenses" component={AccueilDepense} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />
         <PrivateRoute path="/newdepense" component={CreerDepense} />
+
+        {/* Gestion Devis */}
+        <PrivateRoute path="/devis/accueil" component={QuotesHome} />
 
         {/* Juridique  */}
 
@@ -130,8 +141,9 @@ export default class Routes extends Component {
         <PrivateRoute path="/article" component={ListArticle} />
 
         {/* gestionUserRoutes */}
-        <PrivateRoute exact path="/users" component={Users} />
-        <PrivateRoute exact path="/users/add" component={AddUser} />
+        {/* <PrivateRoute exact path="/users" component={Users} />
+        <PrivateRoute exact path="/users/add" component={AddUser} /> */}
+
         <PrivateRoute exact path="/users/edit/:id" component={EditUser} />
         <PrivateRoute exact path="/users/view/:id" component={ViewUser} />
         <PrivateRoute exact path="/users/stvu/admins" component={ListUser} />

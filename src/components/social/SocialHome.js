@@ -169,7 +169,7 @@ class AccueilSocial extends React.Component {
                               size="sm"
                               onClick={() => {
                                 this.props.history.push(
-                                  "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/" + this.state.societe.id
+                                  "/variables_de_paie/addVariablePaie/ParentAddPayrollVariables/" + this.state.societe.id
                                 );
                               }}
                             >

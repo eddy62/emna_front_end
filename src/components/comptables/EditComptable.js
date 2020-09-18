@@ -179,8 +179,9 @@ const EditComptable = () => {
         return result.data;
     }
    
+
+    
     const loadUser= () => {
-        //const comptableId =
             getComptableID(id).then( async (res) => {
             const result = await AxiosCenter.getAccountant(res.id)
             setUser(result.data)
@@ -221,12 +222,12 @@ const EditComptable = () => {
                         </div>
                         <div className="form-group col-md-6">
                             <label htmlFor="inputFirstName"><span class="font-weight-bold"> Nom </span></label>
-                            <input type="text" className="form-control" pattern="[A-Za-zàâéêèìôùûç\s]{2,35}"  id="lastName" name="lastName" value={lastName} onChange={e => onInputChange(e)} required />
+                            <input type="text" className="form-control" pattern="[A-Za-zàâéêèìôùûç\s'-]{2,35}"  id="lastName" name="lastName" value={lastName} onChange={e => onInputChange(e)} required />
                         </div>
 
                         <div className="form-group col-md-6">
                             <label htmlFor="inputLastName"><span class="font-weight-bold">Prénom</span></label>
-                            <input type="text" className="form-control" id="firstNmae" pattern="[A-Za-zàâéêèìôùûç\s]{2,35}"  name="firstName" value={firstName} onChange={e => onInputChange(e)} required />
+                            <input type="text" className="form-control" pattern="[A-Za-zàâéêèìôùûç\s'-]{2,35}"   name="firstName" value={firstName} onChange={e => onInputChange(e)} required />
                         </div>
 
                         <div className="form-group col-md-6">
@@ -296,12 +297,12 @@ const EditComptable = () => {
 
                         <div className="form-group col-md-4">
                             <label for="inputNomDeRue"><span class="font-weight-bold"> Nom de la rue </span></label>
-                            <input type="text" className="form-control" pattern="[A-Za-zàâéêèìôùûç]{2,30}" value={nomRue} onChange={e => onInputChange(e)} name="nomRue" id="nomRue" required></input>
+                            <input type="text" className="form-control"  pattern="[A-Za-zàâéêèìôùûç\s]{2,35}" value={nomRue} onChange={e => onInputChange(e)} name="nomRue" id="nomRue" required></input>
                         </div>
 
                         <div className="form-group col-md-4">
                             <label for="inputVille"><span class="font-weight-bold"> Ville</span></label>
-                            <input type="text" className="form-control" pattern="[A-Za-zàâéêèìôùûç]{2,30}" value={ville} onChange={e => onInputChange(e)} name="ville" id="ville" required></input>
+                            <input type="text" className="form-control"  pattern="[A-Za-zàâéêèìôùûç\s'-]{2,35}"  value={ville} onChange={e => onInputChange(e)} name="ville" id="ville" required></input>
                         </div>
 
                         <div className="form-group col-md-4">
@@ -369,15 +370,14 @@ const EditComptable = () => {
 
                         <div className="form-group col-md-4">
                             <label for="inputRasionSociale"><span class="font-weight-bold"> Raison sociale </span></label>
-                            <input type="text" className="form-control" value={raisonSociale} pattern="[A-Za-zàâéêèìôùûç]{2,30}" onChange={e => onInputChange(e)} id="raisonSociale" name="raisonSociale" required ></input>
+                            <input type="text" className="form-control" value={raisonSociale} pattern="[A-Za-zàâéêèìôùûç\s'-]{2,30}" onChange={e => onInputChange(e)} id="raisonSociale" name="raisonSociale" required ></input>
                         </div>
 
                         <div class="form-group col-md-12">
                             <label for="inputDescription"><span class="font-weight-bold"> Description </span></label>
-                            <textarea class="form-control" rows="5" value={description} pattern="[A-Za-zàâéêèìôùûç0-9]{4, 2000}" onChange={e => onInputChange(e)} id="description" name="description" ></textarea>
+                            <textarea class="form-control" rows="5" value={description}  onChange={e => onInputChange(e)} id="description" name="description" ></textarea>
                         </div>
                     </div>
-
                     <Link className="btn btn-outline-danger" to="/users/stvu/comptables">Annulez</Link>
                     <button type="submit" href={user.activated ? "/users/stvu/comptables/active" : "/users/stvu/comptables/desactive"} className="btn btn-success"> Modifiez </button>
 
