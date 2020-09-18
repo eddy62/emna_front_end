@@ -2,7 +2,7 @@ import React from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
-import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow} from "mdbreact";
+import {MDBBtn, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer, MDBInput, MDBRow} from "mdbreact";
 import {toast} from "react-toastify";
 
 const otherSchema = (props) => {
@@ -60,28 +60,28 @@ const notify = type => {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Autre Variable de Paie Enregistrée &nbsp;&nbsp;!</strong>
+                    <strong>Autre Variable de Paie Modifiée &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Autre Variable de Paie NON Enregistrée &nbsp;&nbsp;!</strong>
+                    <strong>Autre Variable de Paie NON Modifiée &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>Autre Variable de Paie NON Enregistrée &nbsp;&nbsp;!</strong>
+                    <strong>Autre Variable de Paie NON Modifiée &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
     }
 }
 
-class CreateOtherPayrollVariable extends React.Component {
+class ModifyOtherPayrollVariable extends React.Component {
 
     constructor(props) {
         super(props);
@@ -92,13 +92,11 @@ class CreateOtherPayrollVariable extends React.Component {
     }
 
     submit = (values, actions) => {
-        values.annee = this.props.yearSelected;
-        values.mois = this.props.monthSelected;
-        values.employeId = this.props.employeId;
-        AxiosCenter.createOtherPayrollVariable(values)
+        AxiosCenter.modifyOtherPayrollVariable(values)
             .then(() => {
+                this.props.toggleModalUpdateOther(this.props.index);
+                this.props.reloadParentAfterUpdate();
                 notify("success");
-                actions.resetForm();
             }).catch((error) => {
             console.log(error);
             notify("error");
@@ -109,14 +107,14 @@ class CreateOtherPayrollVariable extends React.Component {
     updatePeriod() {
         this.state.startPeriod = new Date(new Date()
             .setFullYear(
-                this.props.yearSelected,
-                this.props.monthSelected - 1,
+                this.props.other.annee,
+                this.props.other.mois - 1,
                 1
             )).toISOString().slice(0, 10);
         this.state.endPeriod = new Date(new Date()
             .setFullYear(
-                this.props.yearSelected,
-                this.props.monthSelected,
+                this.props.other.annee,
+                this.props.other.mois,
                 0
             )).toISOString().slice(0, 10);
     }
@@ -125,17 +123,22 @@ class CreateOtherPayrollVariable extends React.Component {
         return (
             this.updatePeriod(),
                 <MDBContainer>
+                    <div>
+                        <MDBCardHeader color={"teal accent-4"}>
+                            <MDBCardTitle tag="h4">Autres</MDBCardTitle>
+                        </MDBCardHeader>
+                    </div>
                     <div className="d-flex justify-content-center">
                         <Formik initialValues={{
-                            id: null,
-                            date: "",
-                            description: "",
-                            montant: 0,
-                            justificatif: "",
-                            etatVariablePaieId: 1,
-                            employeId: "",
-                            mois: "",
-                            annee: ""
+                            id: this.props.other.id,
+                            date: this.props.other.date,
+                            description: this.props.other.description,
+                            montant: this.props.other.montant,
+                            justificatif: this.props.other.justificatif,
+                            etatVariablePaieId: this.props.other.etatVariablePaieId,
+                            employeId: this.props.other.employeId,
+                            mois: this.props.other.mois,
+                            annee: this.props.other.annee
                         }}
                                 onSubmit={this.submit}
                                 validationSchema={otherSchema(this.state)}
@@ -176,17 +179,23 @@ class CreateOtherPayrollVariable extends React.Component {
                                                 <ErrorMessage name="montant" component={ComponentError}/>
                                             </MDBCol>
                                         </MDBRow>
-                                        <br/>
-                                        <MDBRow between around className="mt-3">
-                                            <MDBCol md="4" className="mt-4">
-                                                <MDBBtn
-                                                    color="teal accent-3"
-                                                    rounded
-                                                    size="sm"
-                                                    type="submit"
-                                                >Enregistrer
-                                                </MDBBtn>
-                                            </MDBCol>
+                                        <MDBRow center>
+                                            <MDBBtn
+                                                color="teal accent-3"
+                                                rounded
+                                                size="sm"
+                                                type="submit"
+                                            >
+                                                Enregistrer
+                                            </MDBBtn>
+                                            <MDBBtn
+                                                color="teal accent-3"
+                                                rounded
+                                                size="sm"
+                                                onClick={() => this.props.toggleModalUpdateOther(this.props.index)}
+                                            >
+                                                Annuler
+                                            </MDBBtn>
                                         </MDBRow>
                                     </MDBCardBody>
                                 </Form>
@@ -198,4 +207,4 @@ class CreateOtherPayrollVariable extends React.Component {
     }
 }
 
-export default CreateOtherPayrollVariable;
+export default ModifyOtherPayrollVariable;

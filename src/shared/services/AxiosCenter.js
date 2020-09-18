@@ -580,10 +580,18 @@ const AxiosCenter = {
     });
   },
 
-  updateAbsence(values) {
+  modifyAbsence(values) {
     return ApiBackEnd({
       method: "PUT",
       url: "/absences",
+      data: values,
+    });
+  },
+
+  modifyOtherPayrollVariable(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: "/autres-variables",
       data: values,
     });
   },
@@ -686,6 +694,13 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "DELETE",
       url: `/absences/${id}`,
+    });
+  },
+
+  deleteOtherPayrollVariable(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/autres-variables/${id}`,
     });
   },
 
