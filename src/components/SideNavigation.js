@@ -88,7 +88,7 @@ class SideNavigation extends React.Component {
             >
               {this.rSNL("/accueilfactures", "Facture")}
               {this.rSNL("/accueildepenses", "Depense")}
-              {this.rSNL("/devis", "Devis")}
+              {this.rSNL("/devis/accueil", "Devis")}
               {this.rSNL("/bancaire", "Relevé Bancaire")}
             </MDBSideNavCat>
 
