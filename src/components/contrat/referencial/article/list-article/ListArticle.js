@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {MDBCardTitle, MDBTable, MDBTableBody, MDBTableHead} from 'mdbreact';
-import Axios from "../../../../../shared/services/AxiosCenter";
+import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../shared/component/Loading";
 import ArticleElement from "./ArticleElement";
 import RedirectionBtn from "../../../../../shared/component/RedirectionBtn";
@@ -20,7 +20,7 @@ export default class ListOfOperations extends Component {
 
     componentDidMount() {
         if (this.state.roleUser === "ROLE_ADMIN") {
-            Axios.getAllArticles(this.props.article).then((res) => {
+            AxiosCenter.getAllArticles(this.props.article).then((res) => {
                 const articles = res.data;
                 this.setState({articles, loaded: true});
             })
