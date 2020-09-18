@@ -717,6 +717,12 @@ const AxiosCenter = {
     });
   },
 
+  deleteClause(id) {
+    return ApiBackEnd({
+      method: "delete",
+      url: `/clauses/${id}`,
+    });
+  },
   // Fin Delete
 
 };
