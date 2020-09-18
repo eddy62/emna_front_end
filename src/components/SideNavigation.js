@@ -104,7 +104,7 @@ class SideNavigation extends React.Component {
                 "Employés"
               )}
               {this.rSNL(
-                "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/" + UserService.getSocietyId(),
+                "/variables_de_paie/addVariablePaie/ParentAddPayrollVariables/" + UserService.getSocietyId(),
                 "Variable Paie"
               )}
               {this.rSNL(

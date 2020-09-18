@@ -12,7 +12,7 @@ const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
 );
 
-const ComposantNumber = ({field, form: {touched, errors}, ...props}) => (
+const ComposantNumber = ({field, ...props}) => (
     <MDBInput
         label={props.label}
         min="0.01"
@@ -25,7 +25,7 @@ const ComposantNumber = ({field, form: {touched, errors}, ...props}) => (
     />
 );
 
-const ComposantSelect = ({field, form: {touched, errors}, ...props}) => (
+const ComposantSelect = ({field, ...props}) => (
     <div>
         <label style={{fontSize:"0.8rem", color:"#757575", marginLeft:"-70%"}}>{props.label}</label>
         <select className="form-control browser-default custom-select" name={props.name} {...props} {...field}>
@@ -42,7 +42,6 @@ const notify = type => {
                 <div className="text-center">
                     <strong>Prime Enregistrée &nbsp;&nbsp;!</strong>
                 </div>,
-                //{position: "top-right"}
             );
             break;
         case "error":
@@ -50,24 +49,29 @@ const notify = type => {
                 <div className="text-center">
                     <strong>Prime NON Enregistrée &nbsp;&nbsp;!</strong>
                 </div>,
-                //{position: "top-right"}
+            );
+            break;
+        default:
+            toast.error(
+                <div className="text-center">
+                    <strong>Prime NON Enregistrée &nbsp;&nbsp;!</strong>
+                </div>,
             );
             break;
     }
 };
 
-class CreatePrime extends React.Component {
+class CreateBonus extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             listeTypePrime: [],
             loaded: false
-
         };
     }
 
-    componentDidMount() { /*se lance apres le render*/
-        AxiosCenter.getAllTypePrimes()
+    componentDidMount() {
+        AxiosCenter.getAllBonusTypes()
             .then((response) => {
                 const list = response.data
                 this.setState(
@@ -79,7 +83,6 @@ class CreatePrime extends React.Component {
             }).catch((error) => {
             console.log(error)
         })
-
     }
 
 
@@ -87,19 +90,17 @@ class CreatePrime extends React.Component {
         values.annee = this.props.yearSelected;
         values.mois = this.props.monthSelected;
         values.employeId = this.props.employeId;
-        console.log(values);
-        AxiosCenter.createPrime(values)
-            .then((response) => {
-                const prime = response.data
-                console.log(prime)    
+
+        AxiosCenter.createBonus(values)
+            .then(() => {
                 notify("success");           
                 actions.resetForm();
             }).catch((error) => {
-            console.log(error)
+            console.log(error);
             notify("error");
-        })
+        });
         actions.setSubmitting(true)
-    }
+    };
 
     primeSchema = Yup.object().shape({
         montant: Yup.number().positive("Le montant doit être positif")
@@ -114,21 +115,18 @@ class CreatePrime extends React.Component {
                     <MDBContainer>
                         <Formik
                             onSubmit={this.submit}
-                            initialValues={{/* a prendre dans le back, deux accodales liste d'expression */
-                                annee: "",  //Props reçu du composant parent
-                                employeId: "", //Props reçu du composant parent
+                            initialValues={{
+                                annee: "",
+                                employeId: "",
                                 etatVariablePaieId: 1,
                                 id: null,
-                                mois: "", //Props reçu du composant parent
+                                mois: "",
                                 montant: 0,
-                                type: "",
                                 typePrimeId: 1
-
                             }}
                             validationSchema={this.primeSchema}
                         >
                             {({
-                                values,
                                   handleSubmit
                               }) => (
                                 <Form onSubmit={handleSubmit}>
@@ -151,7 +149,6 @@ class CreatePrime extends React.Component {
                                             <ErrorMessage name="montant" component={ComposantErreur}/>
                                         </div>
                                     </MDBRow>
-                                    {/*<pre>{JSON.stringify(values, null, 4)}</pre>*/}
                                     <MDBRow center>
                                         {/* ligne3 */}
                                         <MDBBtn
@@ -169,8 +166,7 @@ class CreatePrime extends React.Component {
                 </div>
             </div>
         )
-
     }
 }
 
-export default CreatePrime;
+export default CreateBonus;

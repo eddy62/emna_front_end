@@ -13,7 +13,6 @@ const heuresSupSchema = (props) => {
             .max(props.finPeriode, "Date erronée"),
         nombreHeure: Yup.number().required("Heures obligatoires*")
             .min(1, "1 heure minimum"),
-        //justificatif: ?
     })
 };
 
@@ -21,7 +20,7 @@ const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
 );
 
-const ComposantDate = ({field, form: {touched, errors}, ...props}) => (
+const ComposantDate = ({field, ...props}) => (
     <MDBInput
         label={props.label}
         outline
@@ -33,7 +32,7 @@ const ComposantDate = ({field, form: {touched, errors}, ...props}) => (
     />
 );
 
-const ComposantNumber = ({field, form: {touched, errors}, ...props}) => (
+const ComposantNumber = ({field, ...props}) => (
     <MDBInput
         label={props.label}
         min="1"
@@ -50,21 +49,28 @@ const notify = type => {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) Modifié(s) &nbsp;&nbsp;!</strong>
+                    <strong>Heure(s) supplémentaire(s) Enregistrée(s) &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) NON Modifié(s) &nbsp;&nbsp;!</strong>
+                    <strong>Heure(s) supplémentaire(s) NON Enregistrée(s) &nbsp;&nbsp;!</strong>
+                </div>,
+            );
+            break;
+        default:
+            toast.error(
+                <div className="text-center">
+                    <strong>Heure(s) supplémentaire(s) NON Enregistrée(s) &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
     }
 };
 
-class CreateHeuresSupplementaires extends React.Component {
+class CreateOvertime extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -85,8 +91,7 @@ class CreateHeuresSupplementaires extends React.Component {
         values.employeId = this.props.employeId
 
         AxiosCenter.createOvertime(values)
-            .then((response) => {
-                const HEURESUP = response.data;
+            .then(() => {
                 notify('success');
                 actions.resetForm();
             }).catch((error) => {
@@ -186,4 +191,4 @@ class CreateHeuresSupplementaires extends React.Component {
     }
 }
 
-export default CreateHeuresSupplementaires;
+export default CreateOvertime;

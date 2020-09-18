@@ -11,7 +11,7 @@ const AxiosCenter = {
     });
   },
 
-//Get
+  //Get
   getCurrentUser() {
     return ApiBackEnd({
       method: "get",
@@ -66,7 +66,7 @@ const AxiosCenter = {
     });
   },
 
-  getAllTypePrimes() {
+  getAllBonusTypes() {
     return ApiBackEnd({
       method: "GET",
       url: "/type-primes",
@@ -80,6 +80,13 @@ const AxiosCenter = {
     });
   },
 
+  getAllWrapperEmployesBySociety(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/wrapperemployes/society/${id}`,
+    });
+  },
+
   getAllWrapperEmployeesBySocietyAndTypeContract(id, type) {
     return ApiBackEnd({
       method: "get",
@@ -87,7 +94,7 @@ const AxiosCenter = {
     });
   },
 
-  getAllWrapperEmployesBySocietyAndSatutEmployee(id, codestatut) {
+  getAllWrapperEmployesBySocietyAndStatutEmployee(id, codestatut) {
     return ApiBackEnd({
       method: "GET",
       url: `/wrapperemployes/society/${id}/statutemploye/${codestatut}`,
@@ -275,14 +282,45 @@ const AxiosCenter = {
     });
   },
 
-  getInfosForCreationFacture(id){
+  getInfosForCreationFacture(id) {
     return Axios.all([
       this.getLastNumFactBySociete(id),
       this.getAllClientFournisseurBySociete(id)
     ])
   },
 
-//Post
+  getAllClausesBySocietyId(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/clauses/society/${id}`,
+    });
+  },
+
+  getAllArticles() {
+    return ApiBackEnd({
+      method: "GET",
+      url: '/articles',
+    })
+  },
+
+  //Variables de paie
+  getAllAbsenceTypes() {
+    return ApiBackEnd({
+      method: "GET",
+      url: "/type-absences",
+    });
+  },
+
+  getWrapperPayrollVariablesByEmployeIdByYearByMonth(idEmploye, year, month) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/wrappervariablespaie/employe/${idEmploye}/annee/${year}/mois/${month}`
+    })
+  },
+  // Fin Get
+
+
+  //Post
   finishPasswordReset(values) {
     return ApiBackEnd({
       method: "post",
@@ -307,7 +345,7 @@ const AxiosCenter = {
     });
   },
 
-  createPrime(values) {
+  createBonus(values) {
     return ApiBackEnd({
       method: "POST",
       url: "/primes",
@@ -323,7 +361,7 @@ const AxiosCenter = {
     })
   },
 
-  createAdvanceRecallSalary(values) {
+  createPaydayAdvanceOrReminder(values) {
     return ApiBackEnd({
       method: "POST",
       url: '/avance-rappel-salaires',
@@ -460,8 +498,17 @@ const AxiosCenter = {
     });
   },
 
+  createOtherPayrollVariable(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/autres-variables",
+      data: values,
+    });
+  },
 
-//Put
+  // Fin Post
+
+  //Put
   updateCustomerSupplier(values) {
     return ApiBackEnd({
       method: "PUT",
@@ -533,7 +580,59 @@ const AxiosCenter = {
     });
   },
 
-//Delete
+  updateAbsence(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: "/absences",
+      data: values,
+    });
+  },
+
+  modifyOvertime(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/heures-supplementaires`,
+      data: values,
+    })
+  },
+
+  modifyPaydayAdvanceOrReminder(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/avance-rappel-salaires`,
+      data: values,
+    })
+  },
+
+  confirmPayrollVariables(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/wrappervariablespaie/confirm-variablespaie`,
+      data: values,
+    })
+  },
+
+  updateBonus(values) {
+    return ApiBackEnd({
+      method: "put",
+      url: `/primes`,
+      data: values,
+    });
+  },
+
+  updateExpenseReport(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/note-de-frais`,
+      data: values,
+    });
+  },
+
+
+
+  // Fin Put
+
+  //Delete
   deleteCustomerSupplier(clientId, userId) {
     return ApiBackEnd({
       method: "delete",
@@ -582,6 +681,44 @@ const AxiosCenter = {
       url: `/factures/${id}`,
     });
   },
+
+  deleteAbsence(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/absences/${id}`,
+    });
+  },
+
+  deleteOvertime(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/heures-supplementaires/${id}`,
+    })
+  },
+
+  deletePaydayAdvanceOrReminder(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/avance-rappel-salaires/${id}`,
+    })
+  },
+
+  deleteExpenseReport(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/note-de-frais/${id}`,
+    });
+  },
+
+  deleteBonus(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/primes/${id}`,
+    });
+  },
+
+  // Fin Delete
+
 };
 
 export default AxiosCenter;
