@@ -1,8 +1,9 @@
 import React from "react";
-import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBTableHead} from "mdbreact";
+import {MDBBtn, MDBRow, MDBListGroupItem, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBTableHead, MDBContainer, MDBListGroup, MDBCardHeader, MDBCardTitle} from "mdbreact";
 import {toast} from "react-toastify";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import ModifyAbsence from "../children/ModifyAbsence";
+import { Page, Document } from '@react-pdf/renderer';
 
 const notify = type => {
     switch (type) {
@@ -37,7 +38,12 @@ class TableAbsence extends React.Component {
         this.state = {
             modalUpdateAbsence: false,
             modalDeleteAbsence: false,
+            modaleDetails: false,
             index: null,
+            docsAbsence: [],
+            pdf: [],
+            numPages: null,
+            pageNumber: 1
         }
     }
 
@@ -55,6 +61,23 @@ class TableAbsence extends React.Component {
         });
     }
 
+    toggleModalDetails = (key) => {
+        console.log(key);
+        this.setState({
+            index: key,
+            modaleDetails: !this.state.modaleDetails,
+        }, () => {
+            this.getDocumentsByAbsencesId();
+        });
+    }
+
+    closeToggleModalDetail = (key) => {
+        this.setState({
+            index: key,
+            modaleDetails: !this.state.modaleDetails,
+        });
+    }
+
     callBackToDeleteAbsence = () => {
         AxiosCenter.deleteAbsence(this.props.absenceList[this.state.index].id).then(() => {
             this.toggleModalDeleteAbsence();
@@ -64,6 +87,32 @@ class TableAbsence extends React.Component {
             console.log(error);
             notify('error');
         });
+    }
+
+    getDocumentsByAbsencesId = () => {
+        const id = this.props.absenceList[this.state.index].id;
+        AxiosCenter.getDocumentsByAbsencesId(id)
+        .then((response) => {
+            const docsAbsence = response.data;
+            this.setState({ docsAbsence });
+        })
+    }
+
+    getPdf = (index) => {
+        console.log(this.state.docsAbsence[this.state.index].cheminFichier)
+        AxiosCenter.getPdfFileByPath(this.state.docsAbsence[index].nom)
+        .then((response) => {
+            const pdf = response.data;
+            this.setState({ pdf, modaleDetails: !this.state.modaleDetails });
+            //Create a Blob from the PDF Stream
+            const file = new Blob(
+                [response.data], 
+                {type: 'application/pdf'});
+            //Build a URL from the file
+            const fileURL = URL.createObjectURL(file);
+            //Open the URL on new Window
+            window.open(fileURL);
+        })        
     }
 
     render() {
@@ -86,7 +135,14 @@ class TableAbsence extends React.Component {
                                     <td>{abs.intitule}</td>
                                     <td>{abs.debutAbsence}</td>
                                     <td>{abs.finAbsence}</td>
-                                    <td>{abs.justificatif}</td>
+                                    {abs.justificatif ? (
+                                        <td>
+                                            <MDBBtn color="teal accent-3" rounded size="sm"
+                                                    onClick={() => this.toggleModalDetails(index)}>VOIR</MDBBtn>
+                                        </td>
+                                    ) : (
+                                        <td>Pas de justificatif</td>
+                                    )}
                                     {abs.etatVariablePaieId === 1 ? (
                                         <td>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
@@ -127,6 +183,32 @@ class TableAbsence extends React.Component {
                             toggleModalUpdateAbsence={this.toggleModalUpdateAbsence}
                             reloadParentAfterUpdate={this.props.reloadParentAfterUpdate}
                         />
+                    </MDBModalBody>
+                </MDBModal>
+                {/** MODALE DETAILS */}
+                <MDBModal isOpen={this.state.modaleDetails} backdrop={false} centered size="lg">
+                    <MDBCardHeader color={"teal accent-4"} >
+                        <MDBCardTitle tag="h4">Documents justificatifs</MDBCardTitle>
+                    </MDBCardHeader>
+                    <MDBModalBody> 
+                        <MDBContainer>
+                            {console.log(this.state.docsAbsence)}
+                            <MDBListGroup>
+                                {this.state.docsAbsence.map((doc, index) => (
+                                    <MDBListGroupItem style={{cursor:'pointer'}} hover onClick={() => this.getPdf(index)}>{doc.nom}</MDBListGroupItem>
+                                ))}
+                            </MDBListGroup>
+                            <MDBRow center>
+                            <MDBBtn
+                                color="teal accent-3"
+                                className="mt-3"
+                                rounded
+                                size="sm"
+                                onClick={() => this.closeToggleModalDetail(this.state.index)}>
+                                Annuler
+                            </MDBBtn>
+                            </MDBRow>
+                        </MDBContainer>                     
                     </MDBModalBody>
                 </MDBModal>
             </div>
