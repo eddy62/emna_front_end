@@ -19,7 +19,7 @@ class BankReconciliation extends Component {
     }
 
     componentDidMount() {
-        AxiosCenter.getReleveById(this.props.match.params.id)
+        AxiosCenter.getStatementById(this.props.match.params.id)
             .then((res) => {
                 const releve = res.data;
                 this.setState({
@@ -43,7 +43,7 @@ class BankReconciliation extends Component {
                 <MDBRow className='py-5'>
                     <MDBCol>
                         <MDBCard>
-                            <ListOfOperations/>
+                            <ListOfOperations idReleve={this.state.releve.id}/>
                         </MDBCard>
                     </MDBCol>
                     <MDBCol>

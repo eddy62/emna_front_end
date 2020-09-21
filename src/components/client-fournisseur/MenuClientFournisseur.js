@@ -31,7 +31,7 @@ class MenuClientFournisseur extends Component {
 
   componentDidMount() {
     if (this.state.roleUser === "ROLE_SOCIETY") {
-      AxiosCenter.getWrapperSociete(this.state.societeId)
+      AxiosCenter.getWrapperSociety(this.state.societeId)
         .then((response) => {
           const societeNom = response.data.raisonSociale
           this.setState({ societeNom: societeNom });
@@ -45,7 +45,7 @@ class MenuClientFournisseur extends Component {
 
   search = async val => {
     this.setState({ loading: true });
-    AxiosCenter.getClientFournisseurByNom(val)
+    AxiosCenter.getCustomerSupplierByName(val)
       .then((response) => {
         const clientFournisseur = response.data;
         this.setState({

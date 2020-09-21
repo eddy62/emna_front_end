@@ -13,27 +13,30 @@ export default class ListeOperations extends React.Component {
     this.state = {
       loaded: false,
       operations: [],
-      roleUser: UserService.getRole(),
       isReleveUnvalid: false
     };
   }
 
   componentDidMount() {
-    AxiosCenter.getOperationByReleveId(this.props.releveId)
+    AxiosCenter.getOperationsByReleveId(this.props.releveId)
       .then((res) => {
         const operations = res.data;
-        this.setState({ operations, loaded: true });
+        this.setState({ operations} );
       })
       .catch((err) => console.log(err));
 
-      AxiosCenter.getReleveById(this.props.releveId)
+      AxiosCenter.getStatementById(this.props.releveId)
       .then((res) => {
         const releve = res.data;
-        const isReleveUnvalid = releve.etatReleveId !== 2;
+        const isReleveUnvalid = releve.etatReleveId === 1;
         this.setState({ isReleveUnvalid, loaded: true });
       })
       .catch((err) => console.log(err));
   }
+
+  deleteConfirm = (id) => {
+    this.deleteOperation(id);
+  };
 
   deleteOperation = (id) => {
     AxiosCenter.deleteOperation(id).then((res) => this.componentDidMount());
@@ -54,19 +57,19 @@ export default class ListeOperations extends React.Component {
             </Link>
           </td>
           <td>
-            { (props.roleUser === "ROLE_SOCIETY" || props.roleUser === "ROLE_ADMIN") &&
-              !props.isReleveUnvalid &&
+            { (UserService.isSociety() || UserService.isAdmin()) &&
+              props.isReleveUnvalid &&
               <RedirectionBtn
-                route ={"/editoperation/" + operation.id} 
+                route ={"/editoperation/" + operation.id}
                 msg   = "Modifier"
                 color ="default-color"
               />
             }
           </td>
         <td>
-          {(props.roleUser === "ROLE_SOCIETY" || props.roleUser === "ROLE_ADMIN") &&
-          <DeletionConfirmationModal deleteOperation={() => {
-            props.deleteOperation(operation.id)
+          {(UserService.isSociety() || UserService.isAdmin()) &&
+          <DeletionConfirmationModal deleteConfirm={() => {
+            props.deleteConfirm(operation.id)
           }}/>
           }
           </td>
@@ -107,8 +110,9 @@ export default class ListeOperations extends React.Component {
       return (
         <this.listerLesOperations 
           operations={this.state.operations} 
-          deleteOperation={this.deleteOperation}
+          deleteConfirm={this.deleteConfirm}
           roleUser={this.state.roleUser}
+          isReleveUnvalid={this.state.isReleveUnvalid}
         />
       );  
     } else {

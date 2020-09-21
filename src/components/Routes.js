@@ -11,12 +11,10 @@ import UpdateEmploye from "./social/employee-management/UpdateEmploye";
 import DeleteEmploye from "./social/employee-management/DeleteEmploye";
 import ArchiveEmploye from "./social/employee-management/ArchiveEmploye";
 
-import ListeContrat from "./contrat/listeContrat/ListeContrat";
+import ListeContrat from "./contrat/list-contract/ListeContrat";
 import Contrat from "./contrat/Contrat";
-import DetailContrat from "./contrat/detailContrat/DetailContrat";
-import CreerContrat from "./contrat/creerContrat/CreerContrat";
-
-import ParentAddVariablePaie from "./social/variables_de_paie/addVariablePaie/ParentAddVariablePaie";
+import DetailContrat from "./contrat/list-contract/detail-contract/DetailContrat";
+import CreerContrat from "./contrat/create-contract/CreerContrat";
 
 //gestion ClientFournisseur imports
 import MenuClientFournisseur from "./client-fournisseur/MenuClientFournisseur";
@@ -45,6 +43,9 @@ import PageAddOperationStatement
 import BankReconciliation from "./bancaire/releve/gestion_releves/rapprochement_bancaire/BankReconciliation";
 import ListOfOperations from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfOperations";
 import ListOfInvoices from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfInvoices";
+import EditStatement from "./bancaire/releve/details_releve/edit-statement/EditStatement";
+import QuotesHome from "./quotes/quotes-home/QuotesHome";
+
 
 // gestionUserRoutesImports
 import Users from "./users/Users";
@@ -78,15 +79,23 @@ import AddProduit from "./produits/add-produit/AddProduit";
 import UpdateProduit from "./produits/update-produit/UpdateProduit";
 //finGestionProduits
 //GestionReferentiels
-import Referentiels from "./referentiels/Referentiels";
+import Referentiels from "./contrat/referencial/Referentiels";
 
 //GestionFactures
-import AccueilFacture from "./gestion_factures/accueilFactures";
-import CreerFacture from "./gestion_factures/creerFacture";
-import CreerDepense from "./gestion_factures/creerDepense";
-import DetailFacture from "./gestion_factures/detailFacture";
+import AccueilFacture from "./gestion_factures/factures/accueilFactures";
+import CreerFacture from "./gestion_factures/factures/creerFacture";
+import CreerDepense from "./gestion_factures/depenses/creerDepense";
+import AccueilDepense from './gestion_factures/depenses/accueilDepenses';
+import CreateArticle from "./contrat/referencial/article/create-article/CreateArticle";
+import EditArticle from "./contrat/referencial/article/edit-article/EditArticle";
+
+//Juridique
+import ListOfClauses from "./contrat/referencial/clauses/list-of-clauses/ListOfClauses";
+import ListArticle from "./contrat/referencial/article/list-article/ListArticle";
 
 //gestion Variables de paie
+import ParentAddPayrollVariables from "./social/payroll-variables/add-payroll-variables/ParentAddPayrollVariables";
+import ParentUpdatePayrollVariables from "./social/payroll-variables/update-payroll-variables/ParentUpdatePayrollVariables";
 
 export default class Routes extends Component {
   render() {
@@ -103,24 +112,43 @@ export default class Routes extends Component {
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
         <PrivateRoute path="/deleteEmploye/:id" component={DeleteEmploye} />
         <PrivateRoute
-          path="/variables_de_paie/addVariablePaie/ParentAddVariablePaie/:id"
-          component={ParentAddVariablePaie}
+          path="/variables_de_paie/addVariablePaie/ParentAddPayrollVariables/:id"
+          component={ParentAddPayrollVariables}
+        />
+        <PrivateRoute
+          path="/variables_de_paie/updateVariablePaie/ParentUpdatePayrollVariables/:societyId/:id"
+          component={ParentUpdatePayrollVariables}
         />
         <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
+
+        {/* Espace Comptabilité */}
+
         {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
-        <PrivateRoute path="/newfacture" component={CreerFacture} />
-        <PrivateRoute path="/detailfacture" component={DetailFacture} />
+        <PrivateRoute path="/accueildepenses" component={AccueilDepense} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />
         <PrivateRoute path="/newdepense" component={CreerDepense} />
+
+        {/* Gestion Devis */}
+        <PrivateRoute path="/devis/accueil" component={QuotesHome} />
+
+        {/* Juridique  */}
+
         {/* Gestion des Contrats*/}
         <PrivateRoute path="/listcontrat" component={ListeContrat} />
         <PrivateRoute path="/contrat" component={Contrat} />
         <PrivateRoute path="/detailcontrat/:id" component={DetailContrat} />
         <PrivateRoute path="/creercontrat" component={CreerContrat} />
+        <PrivateRoute path="/clauses/society/:id" component={ListOfClauses} />
+        <PrivateRoute exact path="/articles" component={ListArticle} />
+        <PrivateRoute exact path="/articles/create" component={CreateArticle} />
+        <PrivateRoute exact path="/articles/edit/:id" component={EditArticle} />
+        { /* <PrivateRoute exact path="/articles/delete/:id" component={DeleteArticle}/> */}
+
         {/* gestionUserRoutes */}
-        <PrivateRoute exact path="/users" component={Users} />
-        <PrivateRoute exact path="/users/add" component={AddUser} />
+        {/* <PrivateRoute exact path="/users" component={Users} />
+        <PrivateRoute exact path="/users/add" component={AddUser} /> */}
+
         <PrivateRoute exact path="/users/edit/:id" component={EditUser} />
         <PrivateRoute exact path="/users/view/:id" component={ViewUser} />
         <PrivateRoute exact path="/users/stvu/admins" component={ListUser} />
@@ -228,6 +256,9 @@ export default class Routes extends Component {
           path="/detailsreleveinvalide/:id"
           component={DetailsReleveInvalide}
         />
+        
+        <PrivateRoute path="/modification/:id" component={EditStatement} />
+
         <PrivateRoute
           path="/detailsrelevenonarchive/:id"
           component={DetailsReleveNonArchive}

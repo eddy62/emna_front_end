@@ -134,7 +134,7 @@ class CreateEmploye extends React.Component {
   componentDidMount() {
     const idSociete = this.props.match.params.id;
     console.log(idSociete);
-    AxiosCenter.getAllTypeContrats()
+    AxiosCenter.getAllTypeContracts()
       .then((response) => {
         const listeTypeContrat = response.data;
         console.log(listeTypeContrat);
@@ -143,7 +143,7 @@ class CreateEmploye extends React.Component {
       .catch((error) => {
         console.log(error);
       });
-    AxiosCenter.getAllStatutEmployes()
+    AxiosCenter.getAllStatutEmployees()
       .then((response) => {
         const listeStatutEmploye = response.data;
         console.log(listeStatutEmploye);
@@ -152,7 +152,7 @@ class CreateEmploye extends React.Component {
       .catch((error) => {
         console.log(error);
       });
-    AxiosCenter.getWrapperSociete(idSociete)
+    AxiosCenter.getWrapperSociety(idSociete)
       .then((response) => {
         const societe = response.data;
         console.log(societe);
@@ -171,7 +171,7 @@ class CreateEmploye extends React.Component {
     );
     console.log(diff);
     if (diff >= 14) {
-      AxiosCenter.createWrapperEmploye(values)
+      AxiosCenter.createWrapperEmployee(values)
         .then((response) => {
           console.log(response);
           const employe = response.data;

@@ -19,7 +19,7 @@ const ComposantInput = ({ field, form: { touched, errors }, ...props }) => (
 
 class AddClientFournisseur extends React.Component {
   submit = (values, actions) => {
-    AxiosCenter.createClientFournisseur(values)
+    AxiosCenter.createCustomerSupplier(values)
       .then((response) => {
         toast.success(
           <div className="text-center">
@@ -61,8 +61,8 @@ class AddClientFournisseur extends React.Component {
       .matches(/^[0-9]+$/, "Numero doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
     nomRue: Yup.string().required("Le champ est obligatoire"),
     codePostal: Yup.string().matches(/^[a-zA-Z0-9\s]+$/, "Code postal invalide").required("Le champ est obligatoire"),
-    ville: Yup.string().matches(/^[a-zA-Zéçèùàêû\s]+$/, "Ville doit être composé uniquement de littres").required("Le champ est obligatoire"),
-    pays: Yup.string().matches(/^[a-zA-Zéçèùàêû\s]+$/, "Pays doit être composé uniquement de littres").required("Le champ est obligatoire"),
+    ville: Yup.string().matches(/^[a-zA-Zéçèùàêû\s]+$/, "Ville doit être composé uniquement de lettres").required("Le champ est obligatoire"),
+    pays: Yup.string().matches(/^[a-zA-Zéçèùàêû\s]+$/, "Pays doit être composé uniquement de lettres").required("Le champ est obligatoire"),
   });
 
   render() {

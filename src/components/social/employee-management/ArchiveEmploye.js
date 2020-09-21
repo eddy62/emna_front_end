@@ -28,7 +28,7 @@ class ArchiveEmploye extends Component {
   archive = () => {
     const employe = this.props.employe;
     console.log(employe);
-    AxiosCenter.archiveWrapperEmploye(employe)
+    AxiosCenter.archiveWrapperEmployee(employe)
       .then((response) => {
         console.log(response);
         toast.success(

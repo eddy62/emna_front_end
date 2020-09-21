@@ -26,7 +26,7 @@ class AccueilSocial extends React.Component {
   componentDidMount() {
     const idSociete = this.props.match.params.id;
     console.log(idSociete);
-    AxiosCenter.getWrapperSociete(idSociete)
+    AxiosCenter.getWrapperSociety(idSociete)
       .then((response) => {
         const societe = response.data;
         console.log(societe);
@@ -169,7 +169,7 @@ class AccueilSocial extends React.Component {
                               size="sm"
                               onClick={() => {
                                 this.props.history.push(
-                                  "/variables_de_paie/addVariablePaie/ParentAddVariablePaie/" + this.state.societe.id
+                                  "/variables_de_paie/addVariablePaie/ParentAddPayrollVariables/" + this.state.societe.id
                                 );
                               }}
                             >

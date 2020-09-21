@@ -1,20 +1,20 @@
 import React from "react";
 import * as dateFns from "date-fns";
-import {fr} from "date-fns/esm/locale";
+import { fr } from "date-fns/esm/locale";
 import "./gestionEmploye.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
 import Loading from "../../../shared/component/Loading";
 import {
-    MDBBtn,
-    MDBCardHeader,
-    MDBCardTitle,
-    MDBCol,
-    MDBContainer,
-    MDBRow,
-    MDBTable,
-    MDBTableBody,
-    MDBTableHead,
+  MDBBtn,
+  MDBCardHeader,
+  MDBCardTitle,
+  MDBCol,
+  MDBContainer,
+  MDBRow,
+  MDBTable,
+  MDBTableBody,
+  MDBTableHead,
 } from "mdbreact";
 
 class ListEmployes extends React.Component {
@@ -32,7 +32,7 @@ class ListEmployes extends React.Component {
   componentDidMount() {
     const idSociete = this.props.match.params.id;
     console.log(idSociete);
-    AxiosCenter.getSociete(idSociete)
+    AxiosCenter.getSocietyById(idSociete)
       .then((response) => {
         const societe = response.data;
         console.log(societe);
@@ -140,55 +140,55 @@ class ListEmployes extends React.Component {
       axios = AxiosCenter.getAllWrapperEmployesBySociety(idSociete);
     }
     if (option === "EMPEMB") {
-      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndSatutEmploye(
+      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndStatutEmployee(
         idSociete,
         option
       );
     }
     if (option === "EMPEND") {
-      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndSatutEmploye(
+      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndStatutEmployee(
         idSociete,
         option
       );
     }
     if (option === "EMPNEMB") {
-      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndSatutEmploye(
+      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndStatutEmployee(
         idSociete,
         option
       );
     }
     if (option === "CDD") {
-      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndTypeContrat(
+      axios = AxiosCenter.getAllWrapperEmployeesBySocietyAndTypeContract(
         idSociete,
         option
       );
     }
     if (option === "CDI") {
-      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndTypeContrat(
+      axios = AxiosCenter.getAllWrapperEmployeesBySocietyAndTypeContract(
         idSociete,
         option
       );
     }
     if (option === "CDDTP") {
-      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndTypeContrat(
+      axios = AxiosCenter.getAllWrapperEmployeesBySocietyAndTypeContract(
         idSociete,
         option
       );
     }
     if (option === "CDITP") {
-      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndTypeContrat(
+      axios = AxiosCenter.getAllWrapperEmployeesBySocietyAndTypeContract(
         idSociete,
         option
       );
     }
     if (option === "ALTER") {
-      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndTypeContrat(
+      axios = AxiosCenter.getAllWrapperEmployeesBySocietyAndTypeContract(
         idSociete,
         option
       );
     }
     if (option === "STAGE") {
-      axios = AxiosCenter.getAllWrapperEmployesBySocietyAndTypeContrat(
+      axios = AxiosCenter.getAllWrapperEmployeesBySocietyAndTypeContract(
         idSociete,
         option
       );

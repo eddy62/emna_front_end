@@ -11,7 +11,7 @@ const ListComptableByType = (props) => {
     //for the pagination
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage, setPostPerPage] = useState(50);
+    const [postsPerPage] = useState(50);
 
 
     useEffect(() => {

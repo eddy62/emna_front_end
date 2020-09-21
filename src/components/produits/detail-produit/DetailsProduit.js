@@ -16,7 +16,7 @@ class DetailsProduit extends Component {
     }
 
     componentDidMount() {
-        AxiosCenter.getProduitById(this.state.idProduit)
+        AxiosCenter.getProductById(this.state.idProduit)
             .then((response) => {
                 const produit = response.data;
                 this.setState({

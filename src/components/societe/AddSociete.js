@@ -55,7 +55,7 @@ const AddSociete = () => {
         
         try {
             e.preventDefault();
-            await AxiosCenter.addSociete(user);
+            await AxiosCenter.addSociety(user);
             if(user.activated){
                 history.push("/users/stvu/societes/active")
             }
@@ -195,12 +195,12 @@ const AddSociete = () => {
                         </div>
                         <div className="form-group col-md-6">
                             <label htmlFor="inputFirstName"><span class="font-weight-bold"> Nom </span></label>
-                            <input type="text" className="form-control" pattern="[A-Za-zàâéêèìôùûç\s]{2,35}"  id="lastName" name="lastName" value={lastName} onChange={e => onInputChange(e)} required />
+                            <input type="text" className="form-control" pattern="[A-Za-zàâéêèìôùûç\s'-]{2,35}"  id="lastName" name="lastName" value={lastName} onChange={e => onInputChange(e)} required />
                         </div>
 
                         <div className="form-group col-md-6">
                             <label htmlFor="inputLastName"><span class="font-weight-bold">Prénom</span></label>
-                            <input type="text" className="form-control" id="firstNmae" pattern="[A-Za-zàâéêèìôùûç\s]{2,35}"  name="firstName" value={firstName} onChange={e => onInputChange(e)} required />
+                            <input type="text" className="form-control" pattern="[A-Za-zàâéêèìôùûç\s'-]{2,35}"   name="firstName" value={firstName} onChange={e => onInputChange(e)} required />
                         </div>
 
                         <div className="form-group col-md-6">
@@ -270,17 +270,19 @@ const AddSociete = () => {
 
                         <div className="form-group col-md-4">
                             <label for="inputNomDeRue"><span class="font-weight-bold"> Nom de la rue </span></label>
-                            <input type="text" className="form-control" pattern="[A-Za-zàâéêèìôùûç]{2,30}" value={nomRue} onChange={e => onInputChange(e)} name="nomRue" id="nomRue" required></input>
+                            <input type="text" className="form-control"  pattern="[A-Za-zàâéêèìôùûç\s]{2,35}" value={nomRue} onChange={e => onInputChange(e)} name="nomRue" id="nomRue" required></input>
                         </div>
 
                         <div className="form-group col-md-4">
                             <label for="inputVille"><span class="font-weight-bold"> Ville</span></label>
-                            <input type="text" className="form-control" pattern="[A-Za-zàâéêèìôùûç]{2,30}" value={ville} onChange={e => onInputChange(e)} name="ville" id="ville" required></input>
+                            <input type="text" className="form-control"  pattern="[A-Za-zàâéêèìôùûç\s'-]{2,35}"  value={ville} onChange={e => onInputChange(e)} name="ville" id="ville" required></input>
                         </div>
+
                         <div className="form-group col-md-4">
-                            <label for="inputPays"><span class="font-weight-bold">Pays</span></label>
-                            <input type="text" className="form-control" value={pays} onChange={e => onInputChange(e)} name="pays" id="pays" required></input>
+                            <label for="inputPays"><span class="font-weight-bold"> Pays</span></label>
+                            <input type="text" className="form-control" pattern="[A-Za-zàâéêèìôùûç]{2,30}" value={pays} onChange={e => onInputChange(e)} name="pays" id="pays" required></input>
                         </div>
+                        
                         <div className="form-group col-md-4">
                             <label for="inputCodePostal"><span class="font-weight-bold"> Code postal </span></label>
                             <input type="text" className="form-control" pattern="[0-9]{5,6}" value={codePostal} onChange={e => onInputChange(e)} name="codePostal" id="codePostal" required></input>
@@ -341,15 +343,14 @@ const AddSociete = () => {
 
                         <div className="form-group col-md-4">
                             <label for="inputRasionSociale"><span class="font-weight-bold"> Raison sociale </span></label>
-                            <input type="text" className="form-control" value={raisonSociale} pattern="[A-Za-zàâéêèìôùûç]{2,30}" onChange={e => onInputChange(e)} id="raisonSociale" name="raisonSociale" required ></input>
+                            <input type="text" className="form-control" value={raisonSociale} pattern="[A-Za-zàâéêèìôùûç\s'-]{2,30}" onChange={e => onInputChange(e)} id="raisonSociale" name="raisonSociale" required ></input>
                         </div>
 
                         <div class="form-group col-md-12">
                             <label for="inputDescription"><span class="font-weight-bold"> Description </span></label>
-                            <textarea class="form-control" rows="5" value={description} pattern="[A-Za-zàâéêèìôùûç0-9]{4, 2000}" onChange={e => onInputChange(e)} id="description" name="description" ></textarea>
+                            <textarea class="form-control" rows="5" value={description}  onChange={e => onInputChange(e)} id="description" name="description" ></textarea>
                         </div>
                     </div>
-
                     <Link className="btn btn-outline-danger" to="/users/stvu/societes">Annulez</Link>
                     <button type="submit" href={user.activated ? "/users/stvu/societes/active" : "/users/stvu/societes/desactive"} className="btn btn-success"> Créez </button>
                 </div>
