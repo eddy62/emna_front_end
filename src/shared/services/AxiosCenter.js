@@ -275,6 +275,13 @@ const AxiosCenter = {
     });
   },
 
+  getAllQuotesBySociety(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `devis/societe/${id}`
+    });
+  },
+
   getLastNumFactBySociete(id) {
     return ApiBackEnd({
       method: "GET",
@@ -763,6 +770,12 @@ const AxiosCenter = {
     });
   },
 
+  deleteClause(id) {
+    return ApiBackEnd({
+      method: "delete",
+      url: `/clauses/${id}`,
+    });
+  },
   // Fin Delete
 
 };

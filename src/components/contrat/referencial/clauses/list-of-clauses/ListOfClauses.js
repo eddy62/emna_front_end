@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import Axios from '../../../../../shared/services/AxiosCenter'
 import {MDBCardTitle, MDBTable, MDBTableBody, MDBTableHead} from 'mdbreact';
 import Loading from '../../../../../shared/component/Loading'
-import ClauseElement from './ClauseElement';
+import AxiosCenter from '../../../../../shared/services/AxiosCenter';
+import DeletionConfirmationModal from '../../../../../shared/component/DeletionConfirmationModal';
 
 export default class ListOfClauses extends Component {
 
@@ -21,6 +22,14 @@ export default class ListOfClauses extends Component {
     });
   }
 
+  deleteConfirm = (id) => {
+    this.deleteClause(id);
+  };
+
+  deleteClause = (id) => {
+    AxiosCenter.deleteClause(id).then((res) => this.componentDidMount());
+  }
+
   render(){
     if (!this.state.loaded) return <Loading/>
     return (
@@ -37,9 +46,18 @@ export default class ListOfClauses extends Component {
               </tr>
             </MDBTableHead>
             <MDBTableBody>
-              {this.state.clauses.map((clause, index) => (
-                  <ClauseElement key={clause.id} clause={clause}/>
-              ))}
+            {this.state.clauses.map((clause, index) => (    
+              <tr key={index}>
+                <td>{clause.id}</td>
+                <td>{clause.reference}</td>
+                <td>{clause.description}</td>
+                <td>
+                  <DeletionConfirmationModal deleteConfirm={() => {
+                    this.deleteConfirm(clause.id)
+                  }}/>
+                </td>
+              </tr>
+              ))}  
             </MDBTableBody>
           </MDBTable>
         </div>

@@ -44,6 +44,7 @@ import BankReconciliation from "./bancaire/releve/gestion_releves/rapprochement_
 import ListOfOperations from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfOperations";
 import ListOfInvoices from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfInvoices";
 import EditStatement from "./bancaire/releve/details_releve/edit-statement/EditStatement";
+import QuotesHome from "./quotes/quotes-home/QuotesHome";
 
 
 // gestionUserRoutesImports
@@ -118,12 +119,16 @@ export default class Routes extends Component {
         />
         <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
 
+        {/* Espace Comptabilité */}
 
         {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/accueildepenses" component={AccueilDepense} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />
         <PrivateRoute path="/newdepense" component={CreerDepense} />
+
+        {/* Gestion Devis */}
+        <PrivateRoute path="/devis/accueil" component={QuotesHome} />
 
         {/* Juridique  */}
 
