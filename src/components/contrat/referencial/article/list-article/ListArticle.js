@@ -17,11 +17,11 @@ export default class ListOfArticles extends Component {
     }
 
     componentDidMount() {
-            AxiosCenter.getAllArticles(this.props.article).then((res) => {
-                const articles = res.data;
-                this.setState({articles, loaded: true});
-            })
-                .catch((err) => console.log(err));
+        AxiosCenter.getAllArticles().then((res) => {
+            const articles = res.data;
+            this.setState({articles, loaded: true});
+        })
+            .catch((err) => console.log(err));
 
     }
 
@@ -41,18 +41,23 @@ export default class ListOfArticles extends Component {
                             </tr>
                         </MDBTableHead>
                         <MDBTableBody>
-                            {this.state.articles.map((article, index) => (
-                                <ArticleElement key={article.id} article={article}/>
-                            ))}
+                            {
+                                this.state.articles.map((article, index) => (
+                                    <ArticleElement key={article.id} article={article}/>
+                                ))
+                            }
                         </MDBTableBody>
-                        {/*<td>
-                            <RedirectionBtn
-                                route ={"/createarticle"}
-                                msg   = "Creer"
-                                color ="default-color"
-                            />
-                        </td>*/}
                     </MDBTable>
+                    {
+                        UserService.isAdmin() &&
+                        <td>
+                            <RedirectionBtn
+                                route={"/articles/create"}
+                                msg="Ajouter un nouvel article"
+                                color="default-color"
+                            />
+                        </td>
+                    }
                 </div>
             );
         } else {
