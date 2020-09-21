@@ -303,6 +303,13 @@ const AxiosCenter = {
     })
   },
 
+  getArticleById(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/articles/${id}`
+    })
+  },
+
   //Variables de paie
   getAllAbsenceTypes() {
     return ApiBackEnd({
@@ -506,6 +513,14 @@ const AxiosCenter = {
     });
   },
 
+  createArticle(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/articles",
+      data: values,
+    });
+  },
+
   // Fin Post
 
   //Put
@@ -628,7 +643,13 @@ const AxiosCenter = {
     });
   },
 
-
+  editArticle(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/articles`,
+      data: values,
+    });
+  },
 
   // Fin Put
 
