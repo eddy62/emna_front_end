@@ -607,10 +607,19 @@ const AxiosCenter = {
   confirmPayrollVariables(values) {
     return ApiBackEnd({
       method: "PUT",
-      url: `/wrappervariablespaie/confirm-variablespaie`,
+      url: `/wrappervariablespaie/process-variablespaie/1`,
       data: values,
     })
   },
+
+  validatePayrollVariables(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/wrappervariablespaie/process-variablespaie/2`,
+      data: values,
+    })
+  },
+
 
   updateBonus(values) {
     return ApiBackEnd({
