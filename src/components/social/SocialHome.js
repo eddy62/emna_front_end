@@ -80,7 +80,9 @@ class AccueilSocial extends React.Component {
                             color="teal accent-3"
                             onClick={() => {
                               this.props.history.push(
-                                "/listEmployes/" + this.state.societe.id
+                                "/listEmployes/"
+                                  /* l'id de la société est undefined sur le compte accountant
+                                  + this.state.societe.id*/
                               );
                             }}
                           >
@@ -137,7 +139,7 @@ class AccueilSocial extends React.Component {
                               size="sm"
                               onClick={() => {
                                 this.props.history.push(
-                                  "/socialHome/" + this.state.societe.id
+                                    "/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants/" + this.state.societe.id
                                 );
                               }}
                             >
