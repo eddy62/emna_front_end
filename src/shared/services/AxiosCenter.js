@@ -506,6 +506,21 @@ const AxiosCenter = {
     });
   },
 
+  createFile(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/documents",
+      data: values,
+    });
+  },
+
+  uploadFile(values){
+    return ApiBackEnd({
+      method: "POST",
+      url: `/upload-file`,
+      data: values
+    })
+  },
   // Fin Post
 
   //Put
