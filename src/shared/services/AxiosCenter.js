@@ -317,6 +317,22 @@ const AxiosCenter = {
       url: `/wrappervariablespaie/employe/${idEmploye}/annee/${year}/mois/${month}`
     })
   },
+
+  getDocumentsByAbsencesId(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/documentsAbsence/${id}`,
+    })
+  },
+
+  getPdfFileByPath(path) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/getPdfFile/${path}`,
+      responseType: 'blob'
+    })
+  },
+
   // Fin Get
 
 
