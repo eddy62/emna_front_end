@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 
 import ListOfInvoices from './ListOfInvoices';
 import ListOfOperations from './ListOfOperations';
+import OperationsMerger from "./OperationsMerger";
 import ReleveDetailsCard from "../../details_releve/ReleveDetailsCard";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../shared/component/Loading";
@@ -51,7 +52,7 @@ class BankReconciliation extends Component {
                         </MDBCard>
                     </MDBCol>
                 </MDBRow>
-                <Link to={"/menurelevenon"} className='d-flex justify-content-center'>
+                <Link to={"/relevevalide"} className='d-flex justify-content-center'>
                     <MDBBtn color=" teal lighten-2" rounded size="sm">
                         <span id="color-button">Retour</span>
                     </MDBBtn>
