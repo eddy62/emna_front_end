@@ -537,11 +537,11 @@ const AxiosCenter = {
     });
   },
 
-  uploadFile(values){
+  uploadFile(file){
     return ApiBackEnd({
       method: "POST",
-      url: `/upload-file`,
-      data: values
+      url: "/upload",
+      data: file
     })
   },
   // Fin Post

@@ -122,7 +122,7 @@ class CreateAbsence extends React.Component {
         values.employeId = this.props.employeId;
         AxiosCenter.createAbsence(values)
             .then((response) => {
-                this.initializeJsonFiles(response.data.id, "Type test"); /* TODO A AUTOMATISER */
+                this.initializeJsonFiles(response.data.id, "Type test"); /* TODO TYPE A AUTOMATISER */
                 actions.resetForm();
             }).catch((error) => {
             console.log(error);
@@ -150,17 +150,30 @@ class CreateAbsence extends React.Component {
                     "factureId": null,
                     "id": null,
                     "nom": file.name,
-                    "noteDeFraisId": null, /* TODO NULL AFTER TESTS */
+                    "noteDeFraisId": null,
                     "releveId": null,
                     "type": type
                 }
             }, () => {
-                this.postFiles(absenceId);
+                this.uploadFile(file);
+                this.postFile(absenceId);
             })
         })
     }
 
-    postFiles = (absenceId) => {
+    uploadFile = (file) => {
+        let formData = new FormData();
+        formData.append("file", file)
+        AxiosCenter.uploadFile(formData)
+            .then((response) => {
+                console.log(response)
+            })
+            .catch((error) =>{
+                console.log(error);
+            })
+    }
+
+    postFile = (absenceId) => {
         AxiosCenter.createFile(this.state.jsonData)
             .then((response) => {
                 notify("success");
@@ -177,20 +190,6 @@ class CreateAbsence extends React.Component {
                 console.log(error2);
             })
         });
-    }
-
-    uploadFiles = (file) => {
-        const formData = new FormData();
-        formData.append(
-            "testFile",
-            file,
-            file.name
-        );
-        console.log(file);
-        AxiosCenter.uploadFile(file).catch((error) =>{
-            notify("error");
-            console.log(error);
-        })
     }
 
     updatePeriod() {
