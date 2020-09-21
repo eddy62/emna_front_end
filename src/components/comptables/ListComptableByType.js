@@ -9,7 +9,7 @@ const ListComptableByType = (props) => {
 
     const [users, setUser] = useState([]);
     //for the pagination
-    const [setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [postsPerPage] = useState(50);
 

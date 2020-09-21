@@ -275,6 +275,13 @@ const AxiosCenter = {
     });
   },
 
+  getAllQuotesBySociety(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `devis/societe/${id}`
+    });
+  },
+
   getLastNumFactBySociete(id) {
     return ApiBackEnd({
       method: "GET",
@@ -317,6 +324,22 @@ const AxiosCenter = {
       url: `/wrappervariablespaie/employe/${idEmploye}/annee/${year}/mois/${month}`
     })
   },
+
+  getDocumentsByAbsencesId(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/documentsAbsence/${id}`,
+    })
+  },
+
+  getPdfFileByPath(path) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/getPdfFile/${path}`,
+      responseType: 'blob'
+    })
+  },
+
   // Fin Get
 
 
@@ -506,6 +529,21 @@ const AxiosCenter = {
     });
   },
 
+  createFile(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/documents",
+      data: values,
+    });
+  },
+
+  uploadFile(values){
+    return ApiBackEnd({
+      method: "POST",
+      url: `/upload-file`,
+      data: values
+    })
+  },
   // Fin Post
 
   //Put
@@ -580,10 +618,18 @@ const AxiosCenter = {
     });
   },
 
-  updateAbsence(values) {
+  modifyAbsence(values) {
     return ApiBackEnd({
       method: "PUT",
       url: "/absences",
+      data: values,
+    });
+  },
+
+  modifyOtherPayrollVariable(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: "/autres-variables",
       data: values,
     });
   },
@@ -698,6 +744,13 @@ const AxiosCenter = {
     });
   },
 
+  deleteOtherPayrollVariable(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/autres-variables/${id}`,
+    });
+  },
+
   deleteOvertime(id) {
     return ApiBackEnd({
       method: "DELETE",
@@ -726,6 +779,12 @@ const AxiosCenter = {
     });
   },
 
+  deleteClause(id) {
+    return ApiBackEnd({
+      method: "delete",
+      url: `/clauses/${id}`,
+    });
+  },
   // Fin Delete
 
 };

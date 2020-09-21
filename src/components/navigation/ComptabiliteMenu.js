@@ -77,7 +77,7 @@ class ComptabiliteMenu extends React.Component {
                     <MDBCardText>Accéder à mes devis</MDBCardText>
                     <br />
                     <div className="boutton">
-                      <Link to="/devis">
+                      <Link to="/devis/accueil">
                         <MDBBtn className="boutton" rounded size="sm">
                           Gerer
                         </MDBBtn>

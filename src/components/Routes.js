@@ -44,6 +44,7 @@ import BankReconciliation from "./bancaire/releve/gestion_releves/rapprochement_
 import ListOfOperations from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfOperations";
 import ListOfInvoices from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfInvoices";
 import EditStatement from "./bancaire/releve/details_releve/edit-statement/EditStatement";
+import QuotesHome from "./quotes/quotes-home/QuotesHome";
 
 
 // gestionUserRoutesImports
@@ -121,16 +122,19 @@ export default class Routes extends Component {
           component={ParentUpdatePayrollVariables}
         />
         <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
-
           <PrivateRoute path="/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants/:id" component={ParentUpdatePayrollVariablesAccountants} />
 
 
+          {/* Espace Comptabilité */}
 
           {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/accueildepenses" component={AccueilDepense} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />
         <PrivateRoute path="/newdepense" component={CreerDepense} />
+
+        {/* Gestion Devis */}
+        <PrivateRoute path="/devis/accueil" component={QuotesHome} />
 
         {/* Juridique  */}
 
@@ -143,8 +147,9 @@ export default class Routes extends Component {
         <PrivateRoute path="/article" component={ListArticle} />
 
         {/* gestionUserRoutes */}
-        <PrivateRoute exact path="/users" component={Users} />
-        <PrivateRoute exact path="/users/add" component={AddUser} />
+        {/* <PrivateRoute exact path="/users" component={Users} />
+        <PrivateRoute exact path="/users/add" component={AddUser} /> */}
+
         <PrivateRoute exact path="/users/edit/:id" component={EditUser} />
         <PrivateRoute exact path="/users/view/:id" component={ViewUser} />
         <PrivateRoute exact path="/users/stvu/admins" component={ListUser} />

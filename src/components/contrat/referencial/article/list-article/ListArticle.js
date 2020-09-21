@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import {MDBCardTitle, MDBTable, MDBTableBody, MDBTableHead} from 'mdbreact';
-import Axios from "../../../../../shared/services/AxiosCenter";
+import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../shared/component/Loading";
 import ArticleElement from "./ArticleElement";
 import RedirectionBtn from "../../../../../shared/component/RedirectionBtn";
-import DeletionConfirmationModal from "../../../../../shared/component/DeletionConfirmationModal";
 import UserService from "../../../../../shared/services/UserService";
-import {Link} from "react-router-dom";
 
-export default class ListOfOperations extends Component {
+export default class ListOfArticles extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,13 +17,12 @@ export default class ListOfOperations extends Component {
     }
 
     componentDidMount() {
-        if (this.state.roleUser === "ROLE_ADMIN") {
-            Axios.getAllArticles(this.props.article).then((res) => {
+            AxiosCenter.getAllArticles(this.props.article).then((res) => {
                 const articles = res.data;
                 this.setState({articles, loaded: true});
             })
                 .catch((err) => console.log(err));
-        }
+
     }
 
     render() {
@@ -38,9 +35,8 @@ export default class ListOfOperations extends Component {
                     <MDBTable striped scrollY maxHeight="500px">
                         <MDBTableHead>
                             <tr>
-                                <td><strong>Id</strong></td>
-                                <td><strong>Référence</strong></td>
                                 <td><strong>Titre</strong></td>
+                                <td><strong>Intitulé</strong></td>
                                 <td><strong>Description</strong></td>
                             </tr>
                         </MDBTableHead>
@@ -51,8 +47,8 @@ export default class ListOfOperations extends Component {
                         </MDBTableBody>
                         {/*<td>
                             <RedirectionBtn
-                                route ={"/editarticle/" + this.state.article.id}
-                                msg   = "Modifier"
+                                route ={"/createarticle"}
+                                msg   = "Creer"
                                 color ="default-color"
                             />
                         </td>*/}
