@@ -37,7 +37,7 @@ render() {
     <MDBContainer>
       <MDBBtn color="default-color" onClick={this.toggle}>Supprimer</MDBBtn>
       <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
-        <MDBModalHeader toggle={this.toggle}>Confirmer la suppression ?</MDBModalHeader>
+        <MDBModalHeader toggle={this.toggle}>Confirmer la suppression {this.props.name} ?</MDBModalHeader>
         <MDBModalFooter>
           <MDBBtn color="secondary" onClick={this.toggle}>Annuler</MDBBtn>
           <MDBBtn color="primary" onClick={this.props.deleteConfirm}>Confirmer</MDBBtn>

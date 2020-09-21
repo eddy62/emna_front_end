@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import RedirectionBtn from "../../../../../shared/component/RedirectionBtn";
 import {MDBTable} from "mdbreact";
 import UserService from "../../../../../shared/services/UserService";
+import DeletionConfirmationModal from "../../../../../shared/component/DeletionConfirmationModal";
+import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 
 export default class ArticleElement extends Component {
 
@@ -22,11 +24,9 @@ export default class ArticleElement extends Component {
                 }
                 {UserService.isAdmin() &&
                     <td>
-                        <RedirectionBtn
-                            route={"/articles/delete/" + this.props.article.id}
-                            msg="Supprimer"
-                            color="default-color"
-                        />
+                        <DeletionConfirmationModal name={this.props.article.titre} deleteConfirm={() => {
+                            AxiosCenter.deleteArticle(this.props.article.id);
+                        }}/>
                     </td>
                 }
             </tr>

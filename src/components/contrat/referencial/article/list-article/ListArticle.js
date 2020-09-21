@@ -9,6 +9,7 @@ import UserService from "../../../../../shared/services/UserService";
 export default class ListOfArticles extends Component {
     constructor(props) {
         super(props);
+        this.componentDidMount = null;
         this.state = {
             roleUser: UserService.getRole(),
             articles: {},
