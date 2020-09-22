@@ -3,7 +3,6 @@ import {MDBBtn, MDBRow, MDBListGroupItem, MDBModal, MDBModalBody, MDBTable, MDBT
 import {toast} from "react-toastify";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import ModifyAbsence from "../children/ModifyAbsence";
-import { Page, Document } from '@react-pdf/renderer';
 
 const notify = type => {
     switch (type) {
@@ -40,10 +39,6 @@ class TableAbsence extends React.Component {
             modalDeleteAbsence: false,
             modaleDetails: false,
             index: null,
-            docsAbsence: [],
-            pdf: [],
-            numPages: null,
-            pageNumber: 1
         }
     }
 
@@ -61,17 +56,7 @@ class TableAbsence extends React.Component {
         });
     }
 
-    toggleModalDetails = (key) => {
-        console.log(key);
-        this.setState({
-            index: key,
-            modaleDetails: !this.state.modaleDetails,
-        }, () => {
-            this.getDocumentsByAbsencesId();
-        });
-    }
-
-    closeToggleModalDetail = (key) => {
+    toggleModalDocument = (key) => {
         this.setState({
             index: key,
             modaleDetails: !this.state.modaleDetails,
@@ -89,21 +74,10 @@ class TableAbsence extends React.Component {
         });
     }
 
-    getDocumentsByAbsencesId = () => {
-        const id = this.props.absenceList[this.state.index].id;
-        AxiosCenter.getDocumentsByAbsencesId(id)
+    getPdf = (pdfName) => {
+        AxiosCenter.getPdfFileByPath(pdfName)
         .then((response) => {
-            const docsAbsence = response.data;
-            this.setState({ docsAbsence });
-        })
-    }
-
-    getPdf = (index) => {
-        console.log(this.state.docsAbsence[this.state.index].cheminFichier)
-        AxiosCenter.getPdfFileByPath(this.state.docsAbsence[index].nom)
-        .then((response) => {
-            const pdf = response.data;
-            this.setState({ pdf, modaleDetails: !this.state.modaleDetails });
+            this.setState({ modaleDetails: !this.state.modaleDetails });
             //Create a Blob from the PDF Stream
             const file = new Blob(
                 [response.data], 
@@ -135,10 +109,10 @@ class TableAbsence extends React.Component {
                                     <td>{abs.intitule}</td>
                                     <td>{abs.debutAbsence}</td>
                                     <td>{abs.finAbsence}</td>
-                                    {abs.justificatif ? (
+                                    {abs.documentDTOList.length ? (
                                         <td>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
-                                                    onClick={() => this.toggleModalDetails(index)}>VOIR</MDBBtn>
+                                                    onClick={() => this.toggleModalDocument(index)}>VOIR</MDBBtn>
                                         </td>
                                     ) : (
                                         <td>Pas de justificatif</td>
@@ -185,28 +159,24 @@ class TableAbsence extends React.Component {
                         />
                     </MDBModalBody>
                 </MDBModal>
-                {/** MODALE DETAILS */}
+                {/** MODALE DOCUMENT PDF */}
                 <MDBModal isOpen={this.state.modaleDetails} backdrop={false} centered size="lg">
                     <MDBCardHeader color={"teal accent-4"} >
                         <MDBCardTitle tag="h4">Documents justificatifs</MDBCardTitle>
                     </MDBCardHeader>
                     <MDBModalBody> 
-                        <MDBContainer>
-                            {console.log(this.state.docsAbsence)}
+                        <MDBContainer>                            
                             <MDBListGroup>
-                                {this.state.docsAbsence.map((doc, index) => (
-                                    <MDBListGroupItem style={{cursor:'pointer'}} hover onClick={() => this.getPdf(index)}>{doc.nom}</MDBListGroupItem>
+                                {this.props.absenceList.map((abs) => (
+                                    abs.documentDTOList.map((doc, index) => (
+                                        <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.nom)}>{doc.nom}</MDBListGroupItem>
+                                    ))                                    
                                 ))}
                             </MDBListGroup>
                             <MDBRow center>
-                            <MDBBtn
-                                color="teal accent-3"
-                                className="mt-3"
-                                rounded
-                                size="sm"
-                                onClick={() => this.closeToggleModalDetail(this.state.index)}>
-                                Annuler
-                            </MDBBtn>
+                                <MDBBtn color="teal accent-3" className="mt-3" rounded size="sm" onClick={() => this.toggleModalDocument(this.state.index)}>
+                                    Annuler
+                                </MDBBtn>
                             </MDBRow>
                         </MDBContainer>                     
                     </MDBModalBody>

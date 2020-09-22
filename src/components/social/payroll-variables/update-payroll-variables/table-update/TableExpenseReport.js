@@ -37,7 +37,8 @@ export default class TableExpenseReport extends React.Component {
         this.state = {
             modalAvance: false,
             index: null,
-            modaleDelete: false,
+            modaleDelete: false,            
+            //modaleDetails: false,
         }
     }
 
@@ -56,6 +57,14 @@ export default class TableExpenseReport extends React.Component {
         });
     }
 
+    /*toggleModalDocument = (key) => {
+        console.log(key);
+        this.setState({
+            index: key,
+            modaleDetails: !this.state.modaleDetails,
+        });
+    }*/
+
     callBackToDelete = () => {
         AxiosCenter.deleteExpenseReport(this.props.noteDeFraisList[this.state.index].id).then(() => {
             this.toggleModaleDelete();
@@ -66,6 +75,21 @@ export default class TableExpenseReport extends React.Component {
             notify('error');
         });
     }
+
+    /*getPdf = (pdfName) => {
+        AxiosCenter.getPdfFileByPath(pdfName)
+        .then((response) => {
+            this.setState({ modaleDetails: !this.state.modaleDetails });
+            //Create a Blob from the PDF Stream
+            const file = new Blob(
+                [response.data], 
+                {type: 'application/pdf'});
+            //Build a URL from the file
+            const fileURL = URL.createObjectURL(file);
+            //Open the URL on new Window
+            window.open(fileURL);
+        })        
+    }*/
 
     render() {
         return (
@@ -87,7 +111,15 @@ export default class TableExpenseReport extends React.Component {
                                     <td>{frais.designation}</td>
                                     <td>{frais.date}</td>
                                     <td>{frais.montant} €</td>
-                                    <td>{frais.justificatif}</td>
+                                    <td>{frais.justificatif}</td> {/**lighe à supprimer lorsque le reste du code est décommenté */}
+                                    {/*frais.documentDTOList.length ? (
+                                        <td>
+                                            <MDBBtn color="teal accent-3" rounded size="sm"
+                                                    onClick={() => this.toggleModalDocument(index)}>VOIR</MDBBtn>
+                                        </td>
+                                    ) : (
+                                        <td>Pas de justificatif</td>
+                                    )*/}
                                     {frais.etatVariablePaieId === 1 ? (
                                         <td>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
@@ -131,6 +163,28 @@ export default class TableExpenseReport extends React.Component {
                         />
                     </MDBModalBody>
                 </MDBModal>
+                {/** MODALE DOCUMENT PDF */}
+                {/*<MDBModal isOpen={this.state.modaleDetails} backdrop={false} centered size="lg">
+                    <MDBCardHeader color={"teal accent-4"} >
+                        <MDBCardTitle tag="h4">Documents justificatifs</MDBCardTitle>
+                    </MDBCardHeader>
+                    <MDBModalBody> 
+                        <MDBContainer>                            
+                            <MDBListGroup>
+                                {this.props.noteDeFraisList.map((nFList) => (
+                                    nFList.documentDTOList.map((doc, index) => (
+                                        <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.nom)}>{doc.nom}</MDBListGroupItem>
+                                    ))                                    
+                                ))}
+                            </MDBListGroup>
+                            <MDBRow center>
+                                <MDBBtn color="teal accent-3" className="mt-3" rounded size="sm" onClick={() => this.toggleModalDocument(this.state.index)}>
+                                    Annuler
+                                </MDBBtn>
+                            </MDBRow>
+                        </MDBContainer>                     
+                    </MDBModalBody>
+                                    </MDBModal>*/}
             </div>
         );
     }

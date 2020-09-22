@@ -325,13 +325,6 @@ const AxiosCenter = {
     })
   },
 
-  getDocumentsByAbsencesId(id) {
-    return ApiBackEnd({
-      method: "GET",
-      url: `/documentsAbsence/${id}`,
-    })
-  },
-
   getPdfFileByPath(path) {
     return ApiBackEnd({
       method: "GET",

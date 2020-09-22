@@ -201,7 +201,7 @@ class AccueilSocial extends React.Component {
                                 size="sm"
                                 onClick={() => {
                                   this.props.history.push(
-                                    "/socialHome/" + this.state.societe.id
+                                    "/payslip/ParentPayslip/" + this.state.societe.id
                                   );
                                 }}
                               >
