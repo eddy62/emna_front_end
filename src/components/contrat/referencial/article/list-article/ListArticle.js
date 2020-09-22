@@ -25,6 +25,15 @@ export default class ListOfArticles extends Component {
 
     }
 
+    deleteConfirm = (id) => {
+        this.deleteArticle(id);
+    }
+
+    deleteArticle = (id) => {
+        AxiosCenter.deleteArticle(id)
+            .then(() => this.componentDidMount());
+    }
+
     render() {
         if (this.state.loaded) {
             return (
@@ -42,8 +51,9 @@ export default class ListOfArticles extends Component {
                         </MDBTableHead>
                         <MDBTableBody>
                             {
-                                this.state.articles.map((article, index) => (
-                                    <ArticleElement key={article.id} article={article}/>
+                                this.state.articles.map((article) => (
+                                    <ArticleElement key={article.id} article={article}
+                                                    deleteConfirm={this.deleteConfirm}/>
                                 ))
                             }
                         </MDBTableBody>

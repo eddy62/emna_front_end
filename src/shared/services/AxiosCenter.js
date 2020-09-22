@@ -751,6 +751,13 @@ const AxiosCenter = {
       url: `/clauses/${id}`,
     });
   },
+
+  deleteArticle(id){
+    return ApiBackEnd({
+      method: "delete",
+      url: `/articles/${id}`,
+    })
+  }
   // Fin Delete
 
 };
