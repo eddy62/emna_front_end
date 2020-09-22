@@ -25,7 +25,8 @@ const notify = type => {
         case "formatError":
             toast.error(
                 <div className="text-center">
-                    <strong>Absence NON Enregistrée &nbsp;&nbsp;! <br/>Format de fichier invalide &nbsp;&nbsp;!</strong>
+                    <strong>Absence NON Enregistrée &nbsp;&nbsp;! <br/>Format de fichier invalide &nbsp;&nbsp;!
+                        <br/>Seuls les formats PDF, PNG, JPEG et JPG sont acceptés.</strong>
                 </div>
             );
             break;

@@ -83,7 +83,8 @@ const notify = type => {
         case "formatError":
             toast.error(
                 <div className="text-center">
-                    <strong>Absence NON Enregistrée &nbsp;&nbsp;! <br/>Format de fichier invalide &nbsp;&nbsp;!</strong>
+                    <strong>Absence NON Enregistrée &nbsp;&nbsp;! <br/>Format de fichier invalide &nbsp;&nbsp;!
+                        <br/>Seuls les formats PDF, PNG, JPEG et JPG sont acceptés.</strong>
                 </div>
             );
             break;
@@ -130,7 +131,8 @@ class CreateAbsence extends React.Component {
         if (!this.checkFormat()) {
             AxiosCenter.createAbsence(values)
                 .then((response) => {
-                    this.uploadFiles(response.data.id);
+                    this.uploadFiles(response.data.id)
+                    /* TODO : Execute success only if there is no error after previous function */
                     notify("success");
                     actions.resetForm();
                 }).catch((error) => {
@@ -154,13 +156,12 @@ class CreateAbsence extends React.Component {
 
     uploadFiles = (absenceId) => {
         Array.from(this.state.fileList).forEach(file => {
-            this.uploadFile(file, absenceId);
+            this.uploadFile(file, absenceId)
         })
     }
 
     uploadFile = (file, absenceId) => {
         let formData = new FormData();
-
         formData.append("file", file);
         formData.append("absenceId", absenceId);
         formData.append("noteDeFraisId", "-1");
@@ -171,9 +172,9 @@ class CreateAbsence extends React.Component {
             })
     }
 
-    fileInputHandler = (value) => {
+    fileInputHandler = (files) => {
         this.setState({
-            fileList: value
+            fileList: files
         })
     }
 
