@@ -2,7 +2,7 @@ import React from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
-import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow} from "mdbreact";
+import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBFileInput, MDBInput, MDBRow} from "mdbreact";
 import {toast} from "react-toastify";
 
 const otherSchema = (props) => {
@@ -55,31 +55,51 @@ const ComponentError = (props) => (
     <div className="text-danger">{props.children}</div>
 );
 
+const ComponentUploadFiles = ({field, ...props}) => (
+    <div>
+        <MDBFileInput
+            btnTitle="Télécharger"
+            textFieldTitle="Justificatif(s)"
+            multiple
+            reset
+            btnColor="teal accent-3"
+            getValue={props.fileInputHandler}
+        />
+    </div>
+);
+
 const notify = type => {
     switch (type) {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Autre Variable de Paie Enregistrée &nbsp;&nbsp;!</strong>
+                    <strong>Absence Enregistrée &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Autre Variable de Paie NON Enregistrée &nbsp;&nbsp;!</strong>
+                    <strong>Absence NON Enregistrée &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
+        case "formatError":
+            toast.error(
+                <div className="text-center">
+                    <strong>Absence NON Enregistrée &nbsp;&nbsp;! <br/>Format de fichier invalide &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>Autre Variable de Paie NON Enregistrée &nbsp;&nbsp;!</strong>
+                    <strong>Absence NON Enregistrée &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
     }
-}
+};
 
 class CreateOtherPayrollVariable extends React.Component {
 
@@ -95,15 +115,54 @@ class CreateOtherPayrollVariable extends React.Component {
         values.annee = this.props.yearSelected;
         values.mois = this.props.monthSelected;
         values.employeId = this.props.employeId;
-        AxiosCenter.createOtherPayrollVariable(values)
-            .then(() => {
-                notify("success");
-                actions.resetForm();
-            }).catch((error) => {
-            console.log(error);
-            notify("error");
-        });
+        if (!this.checkFormat()) {
+            AxiosCenter.createOtherPayrollVariable(values)
+                .then((response) => {
+                    this.uploadFiles(response.data.id);
+                    notify("success");
+                    actions.resetForm();
+                }).catch((error) => {
+                console.log(error);
+                notify("error");
+            });
+        } else
+            notify("formatError");
         actions.setSubmitting(true);
+    }
+
+    checkFormat = () => {
+        const acceptedFormats = ["application/pdf", "image/png", "image/jpg", "image/jpeg"]
+        let wrongFormat = false;
+        Array.from(this.state.fileList).forEach(file => {
+            if (acceptedFormats.indexOf(file.type) === -1)
+                wrongFormat = true;
+        })
+        return wrongFormat;
+    }
+
+    uploadFiles = (autresVariableId) => {
+        Array.from(this.state.fileList).forEach(file => {
+            this.uploadFile(file, autresVariableId);
+        })
+    }
+
+    uploadFile = (file, autresVariableId) => {
+        let formData = new FormData();
+
+        formData.append("file", file);
+        formData.append("absenceId", "-1");
+        formData.append("noteDeFraisId", "-1");
+        formData.append("autresVariableId", autresVariableId);
+        AxiosCenter.uploadFile(formData)
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    fileInputHandler = (value) => {
+        this.setState({
+            fileList: value
+        })
     }
 
     updatePeriod() {
@@ -177,6 +236,11 @@ class CreateOtherPayrollVariable extends React.Component {
                                             </MDBCol>
                                         </MDBRow>
                                         <br/>
+                                        {/* upload */}
+                                        <Field
+                                            fileInputHandler={this.fileInputHandler}
+                                            component={ComponentUploadFiles}
+                                        />
                                         <MDBRow between around className="mt-3">
                                             <MDBCol md="4" className="mt-4">
                                                 <MDBBtn
