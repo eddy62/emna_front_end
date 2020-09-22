@@ -1,5 +1,5 @@
 import React from "react";
-import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBTableHead} from "mdbreact";
+import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBTableHead, MDBCardHeader, MDBCardTitle, MDBContainer, MDBListGroup, MDBRow, MDBListGroupItem} from "mdbreact";
 import ModifyExpenseReport from "../children/ModifyExpenseReport";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {toast} from "react-toastify";
@@ -38,7 +38,7 @@ export default class TableExpenseReport extends React.Component {
             modalAvance: false,
             index: null,
             modaleDelete: false,            
-            //modaleDetails: false,
+            modaleDetails: false,
         }
     }
 
@@ -57,13 +57,13 @@ export default class TableExpenseReport extends React.Component {
         });
     }
 
-    /*toggleModalDocument = (key) => {
+    toggleModalDocument = (key) => {
         console.log(key);
         this.setState({
             index: key,
             modaleDetails: !this.state.modaleDetails,
         });
-    }*/
+    }
 
     callBackToDelete = () => {
         AxiosCenter.deleteExpenseReport(this.props.noteDeFraisList[this.state.index].id).then(() => {
@@ -76,7 +76,7 @@ export default class TableExpenseReport extends React.Component {
         });
     }
 
-    /*getPdf = (pdfName) => {
+    getPdf = (pdfName) => {
         AxiosCenter.getPdfFileByPath(pdfName)
         .then((response) => {
             this.setState({ modaleDetails: !this.state.modaleDetails });
@@ -89,7 +89,7 @@ export default class TableExpenseReport extends React.Component {
             //Open the URL on new Window
             window.open(fileURL);
         })        
-    }*/
+    }
 
     render() {
         return (
@@ -111,15 +111,15 @@ export default class TableExpenseReport extends React.Component {
                                     <td>{frais.designation}</td>
                                     <td>{frais.date}</td>
                                     <td>{frais.montant} €</td>
-                                    <td>{frais.justificatif}</td> {/**lighe à supprimer lorsque le reste du code est décommenté */}
-                                    {/*frais.documentDTOList.length ? (
+                                     {/**lighe à supprimer lorsque le reste du code est décommenté */}
+                                    {frais.documentDTOList.length ? (
                                         <td>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
                                                     onClick={() => this.toggleModalDocument(index)}>VOIR</MDBBtn>
                                         </td>
                                     ) : (
                                         <td>Pas de justificatif</td>
-                                    )*/}
+                                    )}
                                     {frais.etatVariablePaieId === 1 ? (
                                         <td>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
@@ -164,7 +164,7 @@ export default class TableExpenseReport extends React.Component {
                     </MDBModalBody>
                 </MDBModal>
                 {/** MODALE DOCUMENT PDF */}
-                {/*<MDBModal isOpen={this.state.modaleDetails} backdrop={false} centered size="lg">
+                <MDBModal isOpen={this.state.modaleDetails} backdrop={false} centered size="lg">
                     <MDBCardHeader color={"teal accent-4"} >
                         <MDBCardTitle tag="h4">Documents justificatifs</MDBCardTitle>
                     </MDBCardHeader>
@@ -184,7 +184,7 @@ export default class TableExpenseReport extends React.Component {
                             </MDBRow>
                         </MDBContainer>                     
                     </MDBModalBody>
-                                    </MDBModal>*/}
+                </MDBModal>
             </div>
         );
     }
