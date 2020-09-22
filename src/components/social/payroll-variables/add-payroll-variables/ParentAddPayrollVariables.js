@@ -29,6 +29,7 @@ export default class ParentAddPayrollVariables extends Component {
             society: {},
             listeEmployes: [],
             idNameSelected: '',
+            currentYear: new Date().getFullYear(),
             yearSelected: new Date().getFullYear(),
             monthSelected: new Date().getMonth() + 1,
             period: [
@@ -143,7 +144,7 @@ export default class ParentAddPayrollVariables extends Component {
                                             </option>
                                             {this.state.period.map((p, index) => (
                                                 <option key={index} selected={p.id === this.state.monthSelected} value={p.id}
-                                                        disabled={p.id > new Date().getMonth() + 1 ? (true) : (false)}>{p.text}</option>
+                                                        disabled={this.state.yearSelected == this.state.currentYear && p.id > new Date().getMonth() + 1 ? (true) : (false)}>{p.text}</option>
                                             ))}
                                         </select>
                                     </div>
