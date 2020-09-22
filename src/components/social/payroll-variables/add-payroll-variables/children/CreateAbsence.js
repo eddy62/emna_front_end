@@ -122,7 +122,8 @@ class CreateAbsence extends React.Component {
         values.employeId = this.props.employeId;
         AxiosCenter.createAbsence(values)
             .then((response) => {
-                this.initializeJsonFiles(response.data.id, "Type test"); /* TODO TYPE A AUTOMATISER */
+                this.uploadFiles(response.data.id);
+                notify("success");
                 actions.resetForm();
             }).catch((error) => {
             console.log(error);
@@ -131,39 +132,16 @@ class CreateAbsence extends React.Component {
         actions.setSubmitting(true);
     }
 
-    fileInputHandler = (value) => {
-        this.setState({
-            fileList: value
-        })
-    }
-
-    initializeJsonFiles = (absenceId, type) => {
+    uploadFiles = (absenceId) => {
         Array.from(this.state.fileList).forEach(file => {
-            this.setState({
-                jsonData: {
-                    "absenceId": absenceId,
-                    "autresVariablesId": null,
-                    "cheminFichier": "./fichiers/",
-                    "contratId": null,
-                    "depenseId": null,
-                    "employeId": null,
-                    "factureId": null,
-                    "id": null,
-                    "nom": file.name,
-                    "noteDeFraisId": null,
-                    "releveId": null,
-                    "type": type
-                }
-            }, () => {
-                this.uploadFile(file);
-                this.postFile(absenceId);
-            })
+            this.uploadFile(file, absenceId);
         })
     }
 
-    uploadFile = (file) => {
+    uploadFile = (file, absenceId) => {
         let formData = new FormData();
         formData.append("file", file)
+        formData.append("absenceId", absenceId)
         AxiosCenter.uploadFile(formData)
             .then((response) => {
                 console.log(response)
@@ -173,23 +151,10 @@ class CreateAbsence extends React.Component {
             })
     }
 
-    postFile = (absenceId) => {
-        AxiosCenter.createFile(this.state.jsonData)
-            .then((response) => {
-                notify("success");
-            }).catch((error1) => {
-            notify("error");
-            console.log(error1);
-
-            /** If one file triggers an error, everything is deleted **/
-            /* TODO DELETE ALL FILES RELATED TO THIS ABSENCE
-            *   GETDOCUMENTSBYABSENCEID + DELETEDOCUMENTBYID */
-
-            AxiosCenter.deleteAbsence(absenceId).catch((error2) => {
-                notify("error");
-                console.log(error2);
-            })
-        });
+    fileInputHandler = (value) => {
+        this.setState({
+            fileList: value
+        })
     }
 
     updatePeriod() {
