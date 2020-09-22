@@ -98,7 +98,7 @@ export default class ParentUpdatePayrollVariables extends Component {
             const absenceList = response.data.wrapperAbsenceList;
             const heureSupList = response.data.heuresSupplementairesDTOList;
             const primeList = response.data.wrapperPrimeList;            
-            const noteDeFraisList = response.data.noteDeFraisDTOList;
+            const noteDeFraisList = response.data.wrapperNoteDeFraisList;
             const avanceRappelSalaireList = response.data.avanceRappelSalaireDTOList;
             const autresVariableList = response.data.autresVariableDTOList;
             
