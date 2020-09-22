@@ -101,7 +101,7 @@ export default class ParentUpdatePayrollVariables extends Component {
             const primeList = response.data.wrapperPrimeList;            
             const noteDeFraisList = response.data.wrapperNoteDeFraisList;
             const avanceRappelSalaireList = response.data.avanceRappelSalaireDTOList;
-            const autresVariableList = response.data.autresVariableDTOList;
+            const autresVariableList = response.data.wrapperAutresVariableList;
             
             let afficherBoutonConfirmer = false;
             if ((absenceList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined)

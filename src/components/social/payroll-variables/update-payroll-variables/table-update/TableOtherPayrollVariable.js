@@ -1,5 +1,5 @@
 import React from "react";
-import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBTableHead/**, MDBCardTitle, MDBContainer, MDBListGroup, MDBRow, MDBListGroupItem */} from "mdbreact";
+import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBCardHeader, MDBTableHead, MDBCardTitle, MDBContainer, MDBListGroup, MDBRow, MDBListGroupItem } from "mdbreact";
 import {toast} from "react-toastify";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import ModifyOtherPayrollVariable from "../children/ModifyOtherPayrollVariable";
@@ -37,7 +37,7 @@ class TableOtherPayrollVariable extends React.Component {
         this.state = {
             modalUpdateOther: false,
             modalDeleteOther: false,
-            //modaleDetails: false,
+            modaleDetails: false,
             index: null,
         }
     }
@@ -56,12 +56,12 @@ class TableOtherPayrollVariable extends React.Component {
         });
     }
 
-    /*toggleModalDocument = (key) => {
+    toggleModalDocument = (key) => {
         this.setState({
             index: key,
             modaleDetails: !this.state.modaleDetails,
         });
-    }*/
+    }
 
     callBackToDeleteOther = () => {
         AxiosCenter.deleteOtherPayrollVariable(this.props.autresVariablesList[this.state.index].id).then(() => {
@@ -74,20 +74,21 @@ class TableOtherPayrollVariable extends React.Component {
         });
     }
 
-    /*getPdf = (pdfName) => {
+    getPdf = (pdfName) => {
         AxiosCenter.getPdfFileByPath(pdfName)
         .then((response) => {
+            console.log(response.config.url);
             this.setState({ modaleDetails: !this.state.modaleDetails });
             //Create a Blob from the PDF Stream
             const file = new Blob(
                 [response.data], 
-                {type: 'application/pdf'});
+                {type: 'image/png'});
             //Build a URL from the file
             const fileURL = URL.createObjectURL(file);
             //Open the URL on new Window
             window.open(fileURL);
         })        
-    }*/
+    }
 
     render() {
         return (
@@ -109,15 +110,14 @@ class TableOtherPayrollVariable extends React.Component {
                                     <td>{other.description}</td>
                                     <td>{other.date}</td>
                                     <td>{other.montant} €</td>
-                                    <td>{other.justificatif}</td> {/**lighe à supprimer lorsque le reste du code est décommenté */}
-                                    {/*other.documentDTOList.length ? (
+                                    {other.documentDTOList.length ? (
                                         <td>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
                                                     onClick={() => this.toggleModalDocument(index)}>VOIR</MDBBtn>
                                         </td>
                                     ) : (
                                         <td>Pas de justificatif</td>
-                                    )*/}
+                                    )}
                                     {other.etatVariablePaieId === 1 ? (
                                         <td>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
@@ -161,7 +161,7 @@ class TableOtherPayrollVariable extends React.Component {
                     </MDBModalBody>
                 </MDBModal>
                 {/** MODALE DOCUMENT PDF */}
-                {/*<MDBModal isOpen={this.state.modaleDetails} backdrop={false} centered size="lg">
+                <MDBModal isOpen={this.state.modaleDetails} backdrop={false} centered size="lg">
                     <MDBCardHeader color={"teal accent-4"} >
                         <MDBCardTitle tag="h4">Documents justificatifs</MDBCardTitle>
                     </MDBCardHeader>
@@ -181,7 +181,7 @@ class TableOtherPayrollVariable extends React.Component {
                             </MDBRow>
                         </MDBContainer>                     
                     </MDBModalBody>
-                                    </MDBModal>*/}
+                </MDBModal>
             </div>
         );
     }
