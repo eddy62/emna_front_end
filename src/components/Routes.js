@@ -86,6 +86,8 @@ import AccueilFacture from "./gestion_factures/factures/accueilFactures";
 import CreerFacture from "./gestion_factures/factures/creerFacture";
 import CreerDepense from "./gestion_factures/depenses/creerDepense";
 import AccueilDepense from './gestion_factures/depenses/accueilDepenses';
+import CreateArticle from "./contrat/referencial/article/create-article/CreateArticle";
+import EditArticle from "./contrat/referencial/article/edit-article/EditArticle";
 
 //Juridique
 import ListOfClauses from "./contrat/referencial/clauses/list-of-clauses/ListOfClauses";
@@ -144,7 +146,10 @@ export default class Routes extends Component {
         <PrivateRoute path="/detailcontrat/:id" component={DetailContrat} />
         <PrivateRoute path="/creercontrat" component={CreerContrat} />
         <PrivateRoute path="/clauses/society/:id" component={ListOfClauses} />
-        <PrivateRoute path="/article" component={ListArticle} />
+        <PrivateRoute exact path="/articles" component={ListArticle} />
+        <PrivateRoute exact path="/articles/create" component={CreateArticle} />
+        <PrivateRoute exact path="/articles/edit/:id" component={EditArticle} />
+        {/*<PrivateRoute exact path="/articles/delete/:id" component={DeleteArticle}/>*/}
 
         {/* gestionUserRoutes */}
         {/* <PrivateRoute exact path="/users" component={Users} />

@@ -52,7 +52,7 @@ export default class ListeRelevesArchives extends React.Component {
             </MDBCardHeader>
           </div>
           <div>
-            <hr></hr>
+            <hr/>
           </div>
           <div>
             <MDBCol>

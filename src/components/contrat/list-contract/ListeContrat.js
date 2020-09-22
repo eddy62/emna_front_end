@@ -12,7 +12,6 @@ export default class ListeContrat extends React.Component {
         };
     }
 
-
     componentDidMount(){
         ContratService.getContrat(1).then((resultat) => {
             const contrats = resultat.data;
