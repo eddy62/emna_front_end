@@ -5,6 +5,7 @@ import {MDBBtn, MDBContainer, MDBModal, MDBModalFooter, MDBModalHeader} from 'md
  * Composant permettant de supprimer un élément via une modal de confirmation
  * 
  * @param deleteConfirm : Appelle la méthode de suppression propre à l'élément à supprimer
+ * @param name : affiche le nom de l'élément a supprimer
  * @param id : id de l'élément à supprimer
  * @example <DeletionConfirmationModal deleteConfirm={() => {
               this.deleteConfirm(clause.id)

@@ -9,7 +9,6 @@ import UserService from "../../../../../shared/services/UserService";
 export default class ListOfArticles extends Component {
     constructor(props) {
         super(props);
-        this.componentDidMount = null;
         this.state = {
             roleUser: UserService.getRole(),
             articles: {},
@@ -24,6 +23,15 @@ export default class ListOfArticles extends Component {
         })
             .catch((err) => console.log(err));
 
+    }
+
+    deleteConfirm = (id) => {
+        this.deleteArticle(id);
+    }
+
+    deleteArticle = (id) => {
+        AxiosCenter.deleteArticle(id)
+            .then(() => this.componentDidMount());
     }
 
     render() {
@@ -43,8 +51,9 @@ export default class ListOfArticles extends Component {
                         </MDBTableHead>
                         <MDBTableBody>
                             {
-                                this.state.articles.map((article, index) => (
-                                    <ArticleElement key={article.id} article={article}/>
+                                this.state.articles.map((article) => (
+                                    <ArticleElement key={article.id} article={article}
+                                                    deleteConfirm={this.deleteConfirm}/>
                                 ))
                             }
                         </MDBTableBody>
