@@ -4,18 +4,18 @@ import {Link} from "react-router-dom";
 import AxiosCenter from "../../shared/services/AxiosCenter";
 import UserService from "../../shared/services/UserService";
 import {
-  MDBBtn,
-  MDBCard,
-  MDBCardBody,
-  MDBCardHeader,
-  MDBCardText,
-  MDBCardTitle,
-  MDBCol,
-  MDBContainer,
-  MDBRow,
+    MDBBtn,
+    MDBCard,
+    MDBCardBody,
+    MDBCardHeader,
+    MDBCardText,
+    MDBCardTitle,
+    MDBCol,
+    MDBContainer,
+    MDBRow,
 } from "mdbreact";
 
-class AccueilSocial extends React.Component {
+class SocialHome extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,13 +25,9 @@ class AccueilSocial extends React.Component {
     }
 
     componentDidMount() {
-        const idSociete = this.props.match.params.id;
-        console.log(idSociete);
-        AxiosCenter.getWrapperSociety(idSociete)
+        AxiosCenter.getWrapperSociety(this.props.match.params.id)
             .then((response) => {
-                const societe = response.data;
-                console.log(societe);
-                this.setState({societe: societe});
+                this.setState({societe: response.data});
             })
             .catch((error) => {
                 console.log(error);
@@ -112,7 +108,7 @@ class AccueilSocial extends React.Component {
                                                             color="teal accent-3"
                                                             onClick={() => {
                                                                 this.props.history.push(
-                                                                    "/socialHome/" + this.state.societe.id
+                                                                    "/add-declaration-of-employment/" + this.state.societe.id
                                                                 );
                                                             }}
                                                         >
@@ -171,7 +167,7 @@ class AccueilSocial extends React.Component {
                                                             size="sm"
                                                             onClick={() => {
                                                                 this.props.history.push(
-                                                                    "/variables_de_paie/addVariablePaie/ParentAddPayrollVariables/" + this.state.societe.id
+                                                                    "/add-payroll-variables/" + this.state.societe.id
                                                                 );
                                                             }}
                                                         >
@@ -229,4 +225,4 @@ class AccueilSocial extends React.Component {
     }
 }
 
-export default AccueilSocial;
+export default SocialHome;
