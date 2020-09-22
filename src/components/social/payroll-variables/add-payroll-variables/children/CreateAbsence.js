@@ -80,6 +80,13 @@ const notify = type => {
                 </div>
             );
             break;
+        case "formatError":
+            toast.error(
+                <div className="text-center">
+                    <strong>Absence NON Enregistrée &nbsp;&nbsp;! <br/>Format de fichier invalide &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
         default:
             toast.error(
                 <div className="text-center">
@@ -122,14 +129,27 @@ class CreateAbsence extends React.Component {
         values.employeId = this.props.employeId;
         AxiosCenter.createAbsence(values)
             .then((response) => {
-                this.uploadFiles(response.data.id);
-                notify("success");
-                actions.resetForm();
+                if (!this.checkFormat()) {
+                    //this.uploadFiles(response.data.id);
+                    notify("success");
+                    actions.resetForm();
+                }
+                else notify("formatError");
             }).catch((error) => {
             console.log(error);
             notify("error");
         });
         actions.setSubmitting(true);
+    }
+
+    checkFormat = () => {
+        const acceptedFormat = ["application/pdf", "image/png", "image/jpg", "image/jpeg"]
+        let wrongFormat = false;
+        Array.from(this.state.fileList).forEach(file => {
+            if (acceptedFormat.indexOf(file.type) === -1)
+                wrongFormat = true;
+        })
+        return wrongFormat;
     }
 
     uploadFiles = (absenceId) => {
@@ -143,10 +163,7 @@ class CreateAbsence extends React.Component {
         formData.append("file", file)
         formData.append("absenceId", absenceId)
         AxiosCenter.uploadFile(formData)
-            .then((response) => {
-                console.log(response)
-            })
-            .catch((error) =>{
+            .catch((error) => {
                 console.log(error);
             })
     }
