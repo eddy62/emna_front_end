@@ -3,7 +3,7 @@ import { Switch } from "react-router-dom";
 import { PrivateRoute } from "../helpers/PrivateRoute";
 
 //Gestion Social import
-import AccueilSocial from "./social/SocialHome";
+import SocialHome from "./social/SocialHome";
 import ListEmployes from "./social/employee-management/ListEmployes";
 import DetailEmploye from "./social/employee-management/DetailEmploye";
 import CreateEmploye from "./social/employee-management/CreateEmploye";
@@ -15,6 +15,8 @@ import ListeContrat from "./contrat/list-contract/ListeContrat";
 import Contrat from "./contrat/Contrat";
 import DetailContrat from "./contrat/list-contract/detail-contract/DetailContrat";
 import CreerContrat from "./contrat/create-contract/CreerContrat";
+
+import CreateDeclarationOfEmployment from "./social/declaration-of-employment/add-declaration-of-employment/CreateDeclarationOfEmployment";
 
 //gestion ClientFournisseur imports
 import MenuClientFournisseur from "./client-fournisseur/MenuClientFournisseur";
@@ -111,26 +113,22 @@ export default class Routes extends Component {
         <PrivateRoute path="/menu/comptabilite" component={ComptabiliteMenu} />
         <PrivateRoute path="/menu/juridique" component={JuridiqueMenu} />
         {/* Gestion Social */}
-        <PrivateRoute path="/socialHome/:id" component={AccueilSocial} />
+        <PrivateRoute path="/socialHome/:id" component={SocialHome} />
         <PrivateRoute path="/listEmployes/:id" component={ListEmployes} />
         <PrivateRoute path="/detailEmploye/:id" component={DetailEmploye} />
         <PrivateRoute path="/newEmploye/:id" component={CreateEmploye} />
         <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
         <PrivateRoute path="/deleteEmploye/:id" component={DeleteEmploye} />
+        <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
         <PrivateRoute
-          path="/variables_de_paie/addVariablePaie/ParentAddPayrollVariables/:id"
-          component={ParentAddPayrollVariables}
-        />
+          path="/add-payroll-variables/:id" component={ParentAddPayrollVariables} />
         <PrivateRoute
-          path="/variables_de_paie/updateVariablePaie/ParentUpdatePayrollVariables/:societyId/:id"
+          path="/modify-payroll-variables/:societyId/:id"
           component={ParentUpdatePayrollVariables}
         />
-        <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
-          <PrivateRoute path="/payslip/ParentPayslip/:id" component={ParentPayslip} />
-          <PrivateRoute path="/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants/:id" component={ParentUpdatePayrollVariablesAccountants} />
-
-
-          {/* Espace Comptabilité */}
+        <PrivateRoute path="/add-declaration-of-employment/:id" component={CreateDeclarationOfEmployment} />
+        <PrivateRoute path="/payslip/ParentPayslip/:id" component={ParentPayslip} />
+        <PrivateRoute path="/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants/:id" component={ParentUpdatePayrollVariablesAccountants} />
 
           {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />

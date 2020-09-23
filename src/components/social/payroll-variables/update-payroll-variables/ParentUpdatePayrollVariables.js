@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import "./../style2.scss";
+import "../PayrollVariables.scss";
 import {MDBBtn, MDBCard, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer, MDBRow} from "mdbreact";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import Loading from "../../../../shared/component/Loading"
