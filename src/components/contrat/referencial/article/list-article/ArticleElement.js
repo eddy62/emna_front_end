@@ -24,7 +24,7 @@ export default class ArticleElement extends Component {
                 {UserService.isAdmin() &&
                     <td>
                         <DeletionConfirmationModal name={this.props.article.titre} deleteConfirm={() => {
-                           this.props.deleteConfirm(this.props.article.id);
+                           this.props.deleteArticle(this.props.article.id);
                         }}/>
                     </td>
                 }
