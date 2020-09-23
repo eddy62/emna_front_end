@@ -2,7 +2,7 @@ import React from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
-import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow, MDBCardHeader, MDBCardTitle} from "mdbreact";
+import {MDBBtn, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer, MDBInput, MDBRow} from "mdbreact";
 import Loading from "../../../../../shared/component/Loading"
 import {toast} from "react-toastify";
 
@@ -102,7 +102,7 @@ class ModifyAbsence extends React.Component {
     }
 
     submit = (values, actions) => {
-        AxiosCenter.updateAbsence(values)
+        AxiosCenter.modifyAbsence(values)
             .then(() => {
                 this.props.toggleModalUpdateAbsence(this.props.index);
                 this.props.reloadParentAfterUpdate();

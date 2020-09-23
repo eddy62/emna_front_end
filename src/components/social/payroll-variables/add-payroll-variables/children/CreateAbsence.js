@@ -2,7 +2,7 @@ import React from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
-import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow} from "mdbreact";
+import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBFileInput, MDBInput, MDBRow} from "mdbreact";
 import Loading from "../../../../../shared/component/Loading"
 import {toast} from "react-toastify";
 
@@ -47,25 +47,21 @@ const ComponentDate = ({field, ...props}) => (
 
 );
 
-const ComponentUpload = () => (
-    <div>
-        <div className="custom-control custom-checkbox">
-            <input type="checkbox" className="custom-control-input" id="defaultUnchecked"/>
-            <label className="custom-control-label" htmlFor="defaultUnchecked">Justificatif(s)</label>
-        </div>
-        <MDBBtn
-            disabled={true}
-            color="teal accent-3"
-            rounded
-            size="sm"
-            type="submit">
-            Upload
-        </MDBBtn>
-    </div>
-);
-
 const ComponentError = (props) => (
     <div className="text-danger">{props.children}</div>
+);
+
+const ComponentUploadFiles = ({field, ...props}) => (
+    <div>
+        <MDBFileInput
+            btnTitle="Télécharger"
+            textFieldTitle="Justificatif(s)"
+            multiple
+            reset
+            btnColor="teal accent-3"
+            getValue={props.fileInputHandler}
+        />
+    </div>
 );
 
 const notify = type => {
@@ -81,6 +77,13 @@ const notify = type => {
             toast.error(
                 <div className="text-center">
                     <strong>Absence NON Enregistrée &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
+        case "formatError":
+            toast.error(
+                <div className="text-center">
+                    <strong>Absence NON Enregistrée &nbsp;&nbsp;! <br/>Format de fichier invalide &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
@@ -102,7 +105,9 @@ class CreateAbsence extends React.Component {
             absenceTypesList: [],
             loaded: false,
             startPeriod: "",
-            endPeriod: ""
+            endPeriod: "",
+            fileList: [],
+            jsonData: {}
         };
     }
 
@@ -114,7 +119,7 @@ class CreateAbsence extends React.Component {
                     loaded: true
                 })
             }).catch((error) => {
-            console.log(error)
+            console.log(error);
         });
     }
 
@@ -123,14 +128,50 @@ class CreateAbsence extends React.Component {
         values.mois = this.props.monthSelected;
         values.employeId = this.props.employeId;
         AxiosCenter.createAbsence(values)
-            .then(() => {
-                notify("success");
-                actions.resetForm();
+            .then((response) => {
+                if (!this.checkFormat()) {
+                    //this.uploadFiles(response.data.id);
+                    notify("success");
+                    actions.resetForm();
+                }
+                else notify("formatError");
             }).catch((error) => {
             console.log(error);
             notify("error");
         });
         actions.setSubmitting(true);
+    }
+
+    checkFormat = () => {
+        const acceptedFormat = ["application/pdf", "image/png", "image/jpg", "image/jpeg"]
+        let wrongFormat = false;
+        Array.from(this.state.fileList).forEach(file => {
+            if (acceptedFormat.indexOf(file.type) === -1)
+                wrongFormat = true;
+        })
+        return wrongFormat;
+    }
+
+    uploadFiles = (absenceId) => {
+        Array.from(this.state.fileList).forEach(file => {
+            this.uploadFile(file, absenceId);
+        })
+    }
+
+    uploadFile = (file, absenceId) => {
+        let formData = new FormData();
+        formData.append("file", file)
+        formData.append("absenceId", absenceId)
+        AxiosCenter.uploadFile(formData)
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    fileInputHandler = (value) => {
+        this.setState({
+            fileList: value
+        })
     }
 
     updatePeriod() {
@@ -202,6 +243,11 @@ class CreateAbsence extends React.Component {
                                         </MDBRow>
                                         <br/>
                                         <MDBRow between around style={{marginTop: "-5%"}}>
+                                            {/* upload */}
+                                            <Field
+                                                fileInputHandler={this.fileInputHandler}
+                                                component={ComponentUploadFiles}
+                                            />
                                             {/* select type absence */}
                                             <Field
                                                 name="typeAbsenceId"
@@ -212,14 +258,6 @@ class CreateAbsence extends React.Component {
                                             <ErrorMessage name="typeAbsenceId" component={ComponentError}/>
                                         </MDBRow>
                                         <MDBRow between around className="mt-3">
-                                            <MDBCol md="4">
-                                                {/* upload justificatifs */}
-                                                <Field
-                                                    name="justificatifs"
-                                                    component={ComponentUpload}
-                                                />
-                                                <ErrorMessage name="justificatifs" component={ComponentError}/>
-                                            </MDBCol>
                                             <MDBCol md="4" className="mt-4">
                                                 <MDBBtn
                                                     color="teal accent-3"

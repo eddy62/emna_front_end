@@ -97,6 +97,10 @@ import ListArticle from "./contrat/referencial/article/list-article/ListArticle"
 import ParentAddPayrollVariables from "./social/payroll-variables/add-payroll-variables/ParentAddPayrollVariables";
 import ParentUpdatePayrollVariables from "./social/payroll-variables/update-payroll-variables/ParentUpdatePayrollVariables";
 
+import ParentUpdatePayrollVariablesAccountants
+    from "./social/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants";
+
+
 export default class Routes extends Component {
   render() {
     return (
@@ -120,10 +124,12 @@ export default class Routes extends Component {
           component={ParentUpdatePayrollVariables}
         />
         <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
+          <PrivateRoute path="/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants/:id" component={ParentUpdatePayrollVariablesAccountants} />
 
-        {/* Espace Comptabilité */}
 
-        {/* Gestion Facture */}
+          {/* Espace Comptabilité */}
+
+          {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/accueildepenses" component={AccueilDepense} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />

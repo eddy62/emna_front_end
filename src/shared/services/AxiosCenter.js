@@ -331,6 +331,15 @@ const AxiosCenter = {
       url: `/wrappervariablespaie/employe/${idEmploye}/annee/${year}/mois/${month}`
     })
   },
+
+  getPdfFileByPath(path) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/getPdfFile/${path}`,
+      responseType: 'blob'
+    })
+  },
+
   // Fin Get
 
 
@@ -520,6 +529,13 @@ const AxiosCenter = {
     });
   },
 
+  createFile(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/documents",
+    });
+  },
+  
   createArticle(values) {
     return ApiBackEnd({
       method: "POST",
@@ -528,6 +544,13 @@ const AxiosCenter = {
     });
   },
 
+  uploadFile(file){
+    return ApiBackEnd({
+      method: "POST",
+      url: "/upload",
+      data: file
+    })
+  },
   // Fin Post
 
   //Put
@@ -602,10 +625,18 @@ const AxiosCenter = {
     });
   },
 
-  updateAbsence(values) {
+  modifyAbsence(values) {
     return ApiBackEnd({
       method: "PUT",
       url: "/absences",
+      data: values,
+    });
+  },
+
+  modifyOtherPayrollVariable(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: "/autres-variables",
       data: values,
     });
   },
@@ -629,10 +660,19 @@ const AxiosCenter = {
   confirmPayrollVariables(values) {
     return ApiBackEnd({
       method: "PUT",
-      url: `/wrappervariablespaie/confirm-variablespaie`,
+      url: `/wrappervariablespaie/process-variablespaie/1`,
       data: values,
     })
   },
+
+  validatePayrollVariables(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/wrappervariablespaie/process-variablespaie/2`,
+      data: values,
+    })
+  },
+
 
   updateBonus(values) {
     return ApiBackEnd({
@@ -714,6 +754,13 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "DELETE",
       url: `/absences/${id}`,
+    });
+  },
+
+  deleteOtherPayrollVariable(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/autres-variables/${id}`,
     });
   },
 

@@ -69,21 +69,6 @@ const ComponentNumber = ({field, ...props}) => (
     />
 );
 
-const ComponentUpload = () => (
-    <div>
-        <div className="custom-control custom-checkbox">
-            <input type="checkbox" className="custom-control-input" id="defaultUnchecked"/>
-            <label className="custom-control-label" htmlFor="defaultUnchecked">Justificatif(s)</label>
-        </div>
-        <MDBBtn disabled={true}
-                color="teal accent-3"
-                rounded
-                size="sm"
-                type="submit">
-            Upload</MDBBtn>
-    </div>
-);
-
 const ComponentError = (props) => (
     <div className="text-danger">{props.children}</div>
 );
@@ -201,13 +186,6 @@ class CreateExpenseReport extends React.Component {
                                         </MDBRow>
                                         {/* upload justificatifs */}
                                         <MDBRow around>
-                                            <MDBCol md="4">
-                                                <Field
-                                                    name="justificatifs"
-                                                    component={ComponentUpload}
-                                                />
-                                                <ErrorMessage name="justificatifs" component={ComponentError}/>
-                                            </MDBCol>
                                             <MDBCol md="4" className="mt-4">
                                                 <div>
                                                     <MDBBtn
