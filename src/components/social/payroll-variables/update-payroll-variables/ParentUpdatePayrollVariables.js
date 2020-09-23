@@ -309,7 +309,7 @@ export default class ParentUpdatePayrollVariables extends Component {
                                 <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm"
                                         onClick={() => {
                                             this.props.history.push(
-                                                "/variables_de_paie/addVariablePaie/ParentAddPayrollVariables/"
+                                                "/add-payroll-variables/"
                                                 + this.state.society.id + "/" + this.state.idNameSelected);
                                         }}>
                                     Ajouter

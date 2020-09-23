@@ -156,17 +156,20 @@ class CreateAbsence extends React.Component {
     }
 
     uploadFiles = (absenceId) => {
+        let nbFiles = 0;
         Array.from(this.state.fileList).forEach(file => {
-            this.uploadFile(file, absenceId)
+            nbFiles++;
+            this.uploadFile(file, absenceId, nbFiles)
         })
     }
 
-    uploadFile = (file, absenceId) => {
+    uploadFile = (file, absenceId, fileNumber) => {
         let formData = new FormData();
         formData.append("file", file);
         formData.append("absenceId", absenceId);
         formData.append("noteDeFraisId", "-1");
         formData.append("autresVariableId", "-1");
+        formData.append("fileNumber", fileNumber);
         AxiosCenter.uploadFile(formData)
             .catch((error) => {
                 console.log(error);

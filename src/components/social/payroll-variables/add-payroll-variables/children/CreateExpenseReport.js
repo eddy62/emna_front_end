@@ -150,18 +150,20 @@ class CreateExpenseReport extends React.Component {
     }
 
     uploadFiles = (noteDeFraisId) => {
+        let nbFiles = 0;
         Array.from(this.state.fileList).forEach(file => {
-            this.uploadFile(file, noteDeFraisId);
+            nbFiles++;
+            this.uploadFile(file, noteDeFraisId, nbFiles);
         })
     }
 
-    uploadFile = (file, noteDeFraisId) => {
+    uploadFile = (file, noteDeFraisId, fileNumber) => {
         let formData = new FormData();
-
         formData.append("file", file);
         formData.append("absenceId", "-1");
         formData.append("noteDeFraisId", noteDeFraisId);
         formData.append("autresVariableId", "-1");
+        formData.append("fileNumber", fileNumber);
         AxiosCenter.uploadFile(formData)
             .catch((error) => {
                 console.log(error);

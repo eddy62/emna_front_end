@@ -145,18 +145,20 @@ class CreateOtherPayrollVariable extends React.Component {
     }
 
     uploadFiles = (autresVariableId) => {
+        let nbFiles = 0;
         Array.from(this.state.fileList).forEach(file => {
-            this.uploadFile(file, autresVariableId);
+            nbFiles++;
+            this.uploadFile(file, autresVariableId, nbFiles);
         })
     }
 
-    uploadFile = (file, autresVariableId) => {
+    uploadFile = (file, autresVariableId, fileNumber) => {
         let formData = new FormData();
-
         formData.append("file", file);
         formData.append("absenceId", "-1");
         formData.append("noteDeFraisId", "-1");
         formData.append("autresVariableId", autresVariableId);
+        formData.append("fileNumber", fileNumber);
         AxiosCenter.uploadFile(formData)
             .catch((error) => {
                 console.log(error);
