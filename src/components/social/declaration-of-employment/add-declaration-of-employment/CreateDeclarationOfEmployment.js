@@ -210,7 +210,7 @@ class CreateDeclarationOfEmployment extends React.Component {
                                 <Form onSubmit={handleSubmit}
                                       className="w-100"
                                 >
-                                    <pre>{JSON.stringify(values, null, 4)}</pre>
+                                    {/*<pre>{JSON.stringify(values, null, 4)}</pre>*/}
                                     {/*employeur*/}
                                     <MDBCardBody>
                                         <MDBCardTitle className="text" tag="h5">Employeur</MDBCardTitle>

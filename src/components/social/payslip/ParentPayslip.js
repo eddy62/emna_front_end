@@ -231,7 +231,7 @@ export default class ParentPayslip extends React.Component {
                                                         <td>{this.state.period [paySlip.mois-1].text }</td>
                                                         <td>{paySlip.debutPeriode}</td>
                                                         <td>{paySlip.finPeriode}</td>
-                                                        {paySlip.documentDTOList.length ? (
+                                                        {true ? (
                                                             <td>
                                                                 <MDBBtn color="teal accent-3" rounded size="sm"
                                                                         onClick={() => this.newWindowPdfFile(index)}>VOIR</MDBBtn>
