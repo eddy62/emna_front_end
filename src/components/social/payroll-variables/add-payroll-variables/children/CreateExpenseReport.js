@@ -118,15 +118,18 @@ class CreateExpenseReport extends React.Component {
         if (!this.checkFormat()) {
             AxiosCenter.createExpenseReport(values)
                 .then((response) => {
-                    this.uploadFiles(response.data.id);
+                    this.uploadFiles(response.data.id)
+                    /* TODO : Execute success only if there is no error after previous function */
                     notify("success");
                     actions.resetForm();
                 }).catch((error) => {
                 console.log(error);
                 notify("error");
             });
-        } else
+        } else {
+            this.setState({fileList: []});
             notify("formatError");
+        }
         actions.setSubmitting(true);
     };
 
