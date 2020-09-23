@@ -39,6 +39,7 @@ class TableOtherPayrollVariable extends React.Component {
             modalDeleteOther: false,
             modaleDetails: false,
             index: null,
+            idOtherPayrollVariableSelected: null,
         }
     }
 
@@ -56,10 +57,11 @@ class TableOtherPayrollVariable extends React.Component {
         });
     }
 
-    toggleModalDocument = (key) => {
+    toggleModalDocument = (key, id) => {
         this.setState({
             index: key,
             modaleDetails: !this.state.modaleDetails,
+            idOtherPayrollVariableSelected: id
         });
     }
 
@@ -76,17 +78,70 @@ class TableOtherPayrollVariable extends React.Component {
 
     getPdf = (pdfName) => {
         AxiosCenter.getPdfFileByPath(pdfName)
-        .then((response) => {
-            console.log(response.config.url);
+        .then((response) => {            
+            const url = response.config.url;
+            const urlTab = url.split('.');
+            const ext = urlTab[1];
             this.setState({ modaleDetails: !this.state.modaleDetails });
+            
+            if(ext === "pdf") {
+                const file = new Blob(
+                    [response.data],
+                    {type: 'application/pdf'});
+                    //Build a URL from the file
+                    const fileURL = URL.createObjectURL(file);
+                    //Open the URL on new Window
+                    window.open(fileURL);
+            }
+            else if(ext === "png") {
+                const file = new Blob(
+                    [response.data], 
+                    {type: 'image/png'});
+                //Build a URL from the file
+                const fileURL = URL.createObjectURL(file);
+                //Open the URL on new Window
+                window.open(fileURL);
+            }
+            else {
+                const file = new Blob(
+                    [response.data], 
+                    {type: 'image/jpeg'});
+                //Build a URL from the file
+                const fileURL = URL.createObjectURL(file);
+                //Open the URL on new Window
+                window.open(fileURL);
+            }
+            
             //Create a Blob from the PDF Stream
-            const file = new Blob(
-                [response.data], 
-                {type: 'image/png'});
-            //Build a URL from the file
-            const fileURL = URL.createObjectURL(file);
-            //Open the URL on new Window
-            window.open(fileURL);
+            /*switch(ext) {
+                case "pdf":
+                    const file = new Blob(
+                        [response.data],
+                        {type: 'application/pdf'});
+                        //Build a URL from the file
+                        const fileURL = URL.createObjectURL(file);
+                        //Open the URL on new Window
+                        window.open(fileURL);
+                    break;
+                case "png":
+                    const file = new Blob(
+                        [response.data], 
+                        {type: 'image/png'});
+                    //Build a URL from the file
+                    const fileURL = URL.createObjectURL(file);
+                    //Open the URL on new Window
+                    window.open(fileURL);
+                break;
+                case "jpg":
+                    const file = new Blob(
+                        [response.data], 
+                        {type: 'image/jpeg'});
+                    //Build a URL from the file
+                    const fileURL = URL.createObjectURL(file);
+                    //Open the URL on new Window
+                    window.open(fileURL);
+                break;
+            }     */       
         })        
     }
 
@@ -113,7 +168,7 @@ class TableOtherPayrollVariable extends React.Component {
                                     {other.documentDTOList.length ? (
                                         <td>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
-                                                    onClick={() => this.toggleModalDocument(index)}>VOIR</MDBBtn>
+                                                    onClick={() => this.toggleModalDocument(index, other.id)}>VOIR</MDBBtn>
                                         </td>
                                     ) : (
                                         <td>Pas de justificatif</td>
@@ -169,9 +224,13 @@ class TableOtherPayrollVariable extends React.Component {
                         <MDBContainer>                            
                             <MDBListGroup>
                                 {this.props.autresVariablesList.map((aVList) => (
-                                    aVList.documentDTOList.map((doc, index) => (
-                                        <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.nom)}>{doc.nom}</MDBListGroupItem>
-                                    ))                                    
+                                    aVList.id == this.state.idOtherPayrollVariableSelected ? (
+                                        aVList.documentDTOList.map((doc, index) => (
+                                            <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.nom)}>{doc.nom}</MDBListGroupItem>
+                                        ))
+                                    ) : (
+                                        null
+                                    )                                    
                                 ))}
                             </MDBListGroup>
                             <MDBRow center>

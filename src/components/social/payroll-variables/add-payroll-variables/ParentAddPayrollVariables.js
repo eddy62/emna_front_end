@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import "./../style2.scss";
+import "../PayrollVariables.scss";
 import {Link} from "react-router-dom";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import {
@@ -282,7 +282,7 @@ export default class ParentAddPayrollVariables extends Component {
                                             disabled={!this.state.idNameSelected}
                                             onClick={() => {
                                                 this.props.history.push(
-                                                    "/variables_de_paie/updateVariablePaie/ParentUpdatePayrollVariables/" + this.state.society.id + "/" + this.state.idNameSelected
+                                                    "/modify-payroll-variables/" + this.state.society.id + "/" + this.state.idNameSelected
                                                 );
                                             }}
                                     >

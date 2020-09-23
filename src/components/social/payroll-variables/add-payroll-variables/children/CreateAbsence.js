@@ -57,7 +57,6 @@ const ComponentUploadFiles = ({field, ...props}) => (
             btnTitle="Télécharger"
             textFieldTitle="Justificatif(s)"
             multiple
-            reset
             btnColor="teal accent-3"
             getValue={props.fileInputHandler}
         />
@@ -83,7 +82,8 @@ const notify = type => {
         case "formatError":
             toast.error(
                 <div className="text-center">
-                    <strong>Absence NON Enregistrée &nbsp;&nbsp;! <br/>Format de fichier invalide &nbsp;&nbsp;!</strong>
+                    <strong>Absence NON Enregistrée &nbsp;&nbsp;! <br/>Format de fichier invalide &nbsp;&nbsp;!
+                        <br/>Seuls les formats PDF, PNG, JPEG et JPG sont acceptés.</strong>
                 </div>
             );
             break;
@@ -95,7 +95,7 @@ const notify = type => {
             );
             break;
     }
-}
+};
 
 class CreateAbsence extends React.Component {
 
@@ -127,26 +127,29 @@ class CreateAbsence extends React.Component {
         values.annee = this.props.yearSelected;
         values.mois = this.props.monthSelected;
         values.employeId = this.props.employeId;
-        AxiosCenter.createAbsence(values)
-            .then((response) => {
-                if (!this.checkFormat()) {
-                    //this.uploadFiles(response.data.id);
+        if (!this.checkFormat()) {
+            AxiosCenter.createAbsence(values)
+                .then((response) => {
+                    this.uploadFiles(response.data.id)
+                    /* TODO : Execute success only if there is no error after previous function */
                     notify("success");
                     actions.resetForm();
-                }
-                else notify("formatError");
-            }).catch((error) => {
-            console.log(error);
-            notify("error");
-        });
+                }).catch((error) => {
+                console.log(error);
+                notify("error");
+            });
+        } else {
+            this.setState({fileList: []});
+            notify("formatError");
+        }
         actions.setSubmitting(true);
     }
 
     checkFormat = () => {
-        const acceptedFormat = ["application/pdf", "image/png", "image/jpg", "image/jpeg"]
+        const acceptedFormats = ["application/pdf", "image/png", "image/jpg", "image/jpeg"]
         let wrongFormat = false;
         Array.from(this.state.fileList).forEach(file => {
-            if (acceptedFormat.indexOf(file.type) === -1)
+            if (acceptedFormats.indexOf(file.type) === -1)
                 wrongFormat = true;
         })
         return wrongFormat;
@@ -154,23 +157,25 @@ class CreateAbsence extends React.Component {
 
     uploadFiles = (absenceId) => {
         Array.from(this.state.fileList).forEach(file => {
-            this.uploadFile(file, absenceId);
+            this.uploadFile(file, absenceId)
         })
     }
 
     uploadFile = (file, absenceId) => {
         let formData = new FormData();
-        formData.append("file", file)
-        formData.append("absenceId", absenceId)
+        formData.append("file", file);
+        formData.append("absenceId", absenceId);
+        formData.append("noteDeFraisId", "-1");
+        formData.append("autresVariableId", "-1");
         AxiosCenter.uploadFile(formData)
             .catch((error) => {
                 console.log(error);
             })
     }
 
-    fileInputHandler = (value) => {
+    fileInputHandler = (files) => {
         this.setState({
-            fileList: value
+            fileList: files
         })
     }
 

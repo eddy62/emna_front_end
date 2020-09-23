@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import "./../style2.scss";
+import "../PayrollVariables.scss";
 import {MDBBtn, MDBCard, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer, MDBRow} from "mdbreact";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import Loading from "../../../../shared/component/Loading"
@@ -129,14 +129,12 @@ export default class ParentUpdatePayrollVariables extends Component {
     setWrapperVariablesPaieForConfirmation = () => {
         const wrapperVariablesPaieToConfirm = {
             wrapperAbsenceList: this.state.absenceList.filter(absence => absence.etatVariablePaieId === 1),
-            autresVariableDTOList: [],
+            wrapperAutresVariableList: this.state.autresVariableList.filter(autresVariable => autresVariable.etatVariablePaieId === 1),
             avanceRappelSalaireDTOList: this.state.avanceRappelSalaireList.filter(avanceRappelSalaire => avanceRappelSalaire.etatVariablePaieId === 1),
             heuresSupplementairesDTOList: this.state.heureSupList.filter(heureSup => heureSup.etatVariablePaieId === 1),
-            noteDeFraisDTOList: this.state.noteDeFraisList.filter(noteDeFrais => noteDeFrais.etatVariablePaieId === 1),
+            wrapperNoteDeFraisList: this.state.noteDeFraisList.filter(noteDeFrais => noteDeFrais.etatVariablePaieId === 1),
             wrapperPrimeList: this.state.primeList.filter(prime => prime.etatVariablePaieId === 1)
         };
-        // TODO : intégrer autresVariableList
-        // ,this.state.autresVariableList.filter(autresVariable => autresVariable.etatVariablePaieId === 1)
         this.confirmPayrollVariables(wrapperVariablesPaieToConfirm);
     }
 
@@ -254,8 +252,7 @@ export default class ParentUpdatePayrollVariables extends Component {
                                             className="browser-default custom-select"
                                             onChange={this.changeHandler}
                                         >
-                                            <option disabled defaultValue={new Date().getMonth()}>Choisissez un mois
-                                            </option>
+                                            <option disabled defaultValue={new Date().getMonth()}>Choisissez un mois  </option>
                                             {this.state.period.map((p, index) => (
                                                 <option key={index} selected={p.id === this.state.monthSelected}
                                                         value={p.id}
