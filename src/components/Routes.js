@@ -98,6 +98,8 @@ import ParentUpdatePayrollVariables from "./social/payroll-variables/update-payr
 import ParentUpdatePayrollVariablesAccountants
     from "./social/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants";
 
+import ParentPayslip from "./social/payslip/ParentPayslip";
+
 
 export default class Routes extends Component {
   render() {
@@ -122,6 +124,7 @@ export default class Routes extends Component {
           component={ParentUpdatePayrollVariables}
         />
         <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
+          <PrivateRoute path="/payslip/ParentPayslip/:id" component={ParentPayslip} />
           <PrivateRoute path="/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants/:id" component={ParentUpdatePayrollVariablesAccountants} />
 
 
