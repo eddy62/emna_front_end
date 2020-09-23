@@ -39,6 +39,7 @@ export default class TableExpenseReport extends React.Component {
             index: null,
             modaleDelete: false,            
             modaleDetails: false,
+            idExpenseReportSelected: null,
         }
     }
 
@@ -57,11 +58,12 @@ export default class TableExpenseReport extends React.Component {
         });
     }
 
-    toggleModalDocument = (key) => {
+    toggleModalDocument = (key, id) => {
         console.log(key);
         this.setState({
             index: key,
             modaleDetails: !this.state.modaleDetails,
+            idExpenseReportSelected: id,
         });
     }
 
@@ -79,15 +81,38 @@ export default class TableExpenseReport extends React.Component {
     getPdf = (pdfName) => {
         AxiosCenter.getPdfFileByPath(pdfName)
         .then((response) => {
+            const url = response.config.url;
+            const urlTab = url.split('.');
+            const ext = urlTab[1];
             this.setState({ modaleDetails: !this.state.modaleDetails });
-            //Create a Blob from the PDF Stream
-            const file = new Blob(
-                [response.data], 
-                {type: 'application/pdf'});
-            //Build a URL from the file
-            const fileURL = URL.createObjectURL(file);
-            //Open the URL on new Window
-            window.open(fileURL);
+
+            if(ext === "pdf") {
+                const file = new Blob(
+                    [response.data],
+                    {type: 'application/pdf'});
+                    //Build a URL from the file
+                    const fileURL = URL.createObjectURL(file);
+                    //Open the URL on new Window
+                    window.open(fileURL);
+            }
+            else if(ext === "png") {
+                const file = new Blob(
+                    [response.data], 
+                    {type: 'image/png'});
+                //Build a URL from the file
+                const fileURL = URL.createObjectURL(file);
+                //Open the URL on new Window
+                window.open(fileURL);
+            }
+            else {
+                const file = new Blob(
+                    [response.data], 
+                    {type: 'image/jpeg'});
+                //Build a URL from the file
+                const fileURL = URL.createObjectURL(file);
+                //Open the URL on new Window
+                window.open(fileURL);
+            }
         })        
     }
 
@@ -111,11 +136,10 @@ export default class TableExpenseReport extends React.Component {
                                     <td>{frais.designation}</td>
                                     <td>{frais.date}</td>
                                     <td>{frais.montant} €</td>
-                                     {/**lighe à supprimer lorsque le reste du code est décommenté */}
                                     {frais.documentDTOList.length ? (
                                         <td>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
-                                                    onClick={() => this.toggleModalDocument(index)}>VOIR</MDBBtn>
+                                                    onClick={() => this.toggleModalDocument(index, frais.id)}>VOIR</MDBBtn>
                                         </td>
                                     ) : (
                                         <td>Pas de justificatif</td>
@@ -172,9 +196,12 @@ export default class TableExpenseReport extends React.Component {
                         <MDBContainer>                            
                             <MDBListGroup>
                                 {this.props.noteDeFraisList.map((nFList) => (
-                                    nFList.documentDTOList.map((doc, index) => (
-                                        <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.nom)}>{doc.nom}</MDBListGroupItem>
-                                    ))                                    
+                                    nFList.id == this.state.idExpenseReportSelected ? (
+                                        nFList.documentDTOList.map((doc, index) => (
+                                            <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.nom)}>{doc.nom}</MDBListGroupItem>                                      
+                                        ))) : (
+                                            null
+                                    )                                    
                                 ))}
                             </MDBListGroup>
                             <MDBRow center>
