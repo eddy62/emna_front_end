@@ -57,7 +57,6 @@ const ComponentUploadFiles = ({field, ...props}) => (
             btnTitle="Télécharger"
             textFieldTitle="Justificatif(s)"
             multiple
-            reset
             btnColor="teal accent-3"
             getValue={props.fileInputHandler}
         />
@@ -139,8 +138,10 @@ class CreateAbsence extends React.Component {
                 console.log(error);
                 notify("error");
             });
-        } else
+        } else {
+            this.setState({fileList: []});
             notify("formatError");
+        }
         actions.setSubmitting(true);
     }
 
