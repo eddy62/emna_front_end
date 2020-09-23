@@ -340,6 +340,22 @@ const AxiosCenter = {
     })
   },
 
+
+  getAllPaySlip() {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/fiche-paies`,
+    });
+  },
+
+  getAllPayslipByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd){
+    return ApiBackEnd({
+      method: "GET",
+      url: `/fiche-paies/employe/${idEmploye}/annee/${year}/moisDu/${monthStart}/moisFin/${monthEnd}`,
+    });
+  },
+
+
   // Fin Get
 
 

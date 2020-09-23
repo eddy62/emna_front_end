@@ -254,8 +254,7 @@ export default class ParentUpdatePayrollVariables extends Component {
                                             className="browser-default custom-select"
                                             onChange={this.changeHandler}
                                         >
-                                            <option disabled defaultValue={new Date().getMonth()}>Choisissez un mois
-                                            </option>
+                                            <option disabled defaultValue={new Date().getMonth()}>Choisissez un mois  </option>
                                             {this.state.period.map((p, index) => (
                                                 <option key={index} selected={p.id === this.state.monthSelected}
                                                         value={p.id}
