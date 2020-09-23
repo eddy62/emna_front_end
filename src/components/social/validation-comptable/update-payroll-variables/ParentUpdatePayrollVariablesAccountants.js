@@ -44,7 +44,6 @@ export default class ParentUpdatePayrollVariablesAccountants extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            /*TODO : pourquoi loaded = false ne fonctionne pas*/
             loaded: false,
             society: {},
             idEmploye: 1,
@@ -88,7 +87,7 @@ export default class ParentUpdatePayrollVariablesAccountants extends Component {
         };
 
         this.handleClick = this.handleClick.bind(this);
-       /* this.reloadParentAfterUpdate = this.reloadParentAfterUpdate.bind(this);*/
+       this.reloadParentAfterUpdate = this.reloadParentAfterUpdate.bind(this);
     }
 
     /*Methode qui appelle le wrapper variables de paie */
@@ -98,9 +97,9 @@ export default class ParentUpdatePayrollVariablesAccountants extends Component {
             const absenceList = response.data.wrapperAbsenceList;
             const heureSupList = response.data.heuresSupplementairesDTOList;
             const primeList = response.data.wrapperPrimeList;            
-            const noteDeFraisList = response.data.noteDeFraisDTOList;
+            const noteDeFraisList = response.data.wrapperNoteDeFraisList;
             const avanceRappelSalaireList = response.data.avanceRappelSalaireDTOList;
-            const autresVariableList = response.data.autresVariableDTOList;
+            const autresVariableList = response.data.wrapperAutresVariableList;
             let afficherBoutonValider = false;
             if ((absenceList.find(variablePaie =>  variablePaie.etatVariablePaieId === 2) !== undefined)
                 || (heureSupList.find(variablePaie =>  variablePaie.etatVariablePaieId === 2) !== undefined)
@@ -126,15 +125,14 @@ export default class ParentUpdatePayrollVariablesAccountants extends Component {
     setWrapperVariablesPaieForValidation = () => {
         const wrapperVariablesPaieToValidate = {
             wrapperAbsenceList: this.state.absenceList.filter(absence => absence.etatVariablePaieId === 2),
-            autresVariableDTOList: [],
+            wrapperAutresVariableList: this.state.autresVariableList.filter(autresVariable => autresVariable.etatVariablePaieId === 2),
             avanceRappelSalaireDTOList: this.state.avanceRappelSalaireList.filter(avanceRappelSalaire => avanceRappelSalaire.etatVariablePaieId === 2),
             heuresSupplementairesDTOList: this.state.heureSupList.filter(heureSup => heureSup.etatVariablePaieId === 2),
-            noteDeFraisDTOList: this.state.noteDeFraisList.filter(noteDeFrais => noteDeFrais.etatVariablePaieId === 2),
+            wrapperNoteDeFraisList: this.state.noteDeFraisList.filter(noteDeFrais => noteDeFrais.etatVariablePaieId === 2),
             wrapperPrimeList: this.state.primeList.filter(prime => prime.etatVariablePaieId === 2)
 
         };
-        // TODO : intégrer autresVariableList
-        // ,this.state.autresVariableList.filter(autresVariable => autresVariable.etatVariablePaieId === 2)
+
         this.validatePayrollVariables(wrapperVariablesPaieToValidate);
     }
 
@@ -157,6 +155,7 @@ export default class ParentUpdatePayrollVariablesAccountants extends Component {
                     notify("error");
                     break;
             }
+            this.reloadParentAfterUpdate();
         }).catch((error) => {
             console.log(error);
             notify("error");

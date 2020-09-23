@@ -129,14 +129,12 @@ export default class ParentUpdatePayrollVariables extends Component {
     setWrapperVariablesPaieForConfirmation = () => {
         const wrapperVariablesPaieToConfirm = {
             wrapperAbsenceList: this.state.absenceList.filter(absence => absence.etatVariablePaieId === 1),
-            autresVariableDTOList: [],
+            wrapperAutresVariableList: this.state.autresVariableList.filter(autresVariable => autresVariable.etatVariablePaieId === 1),
             avanceRappelSalaireDTOList: this.state.avanceRappelSalaireList.filter(avanceRappelSalaire => avanceRappelSalaire.etatVariablePaieId === 1),
             heuresSupplementairesDTOList: this.state.heureSupList.filter(heureSup => heureSup.etatVariablePaieId === 1),
-            noteDeFraisDTOList: this.state.noteDeFraisList.filter(noteDeFrais => noteDeFrais.etatVariablePaieId === 1),
+            wrapperNoteDeFraisList: this.state.noteDeFraisList.filter(noteDeFrais => noteDeFrais.etatVariablePaieId === 1),
             wrapperPrimeList: this.state.primeList.filter(prime => prime.etatVariablePaieId === 1)
         };
-        // TODO : intégrer autresVariableList
-        // ,this.state.autresVariableList.filter(autresVariable => autresVariable.etatVariablePaieId === 1)
         this.confirmPayrollVariables(wrapperVariablesPaieToConfirm);
     }
 
