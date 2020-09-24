@@ -53,7 +53,10 @@ export default class ParentAddPayrollVariables extends Component {
                 {item: new Date().getFullYear() - 3},
                 {item: new Date().getFullYear() - 4},
                 {item: new Date().getFullYear() - 5},
-            ]
+            ],
+            keyAbsence: 0,
+            keyExpenseReport: 0,
+            keyOtherPayrollVariable: 0
         };
     }
 
@@ -89,6 +92,26 @@ export default class ParentAddPayrollVariables extends Component {
         this.setState({[event.target.name]: event.target.value}, function () {
         });
     };
+
+    handleReset = (type) => {
+        switch (type) {
+            case "Absence":
+                this.setState(prevState => ({
+                    keyAbsence: prevState.keyAbsence + 1
+                }));
+                break;
+            case "ExpenseReport":
+                this.setState(prevState => ({
+                    keyExpenseReport: prevState.keyExpenseReport + 1
+                }));
+                break;
+            case "OtherPayrollVariable":
+                this.setState(prevState => ({
+                    keyOtherPayrollVariable: prevState.keyOtherPayrollVariable + 1
+                }));
+        };
+    };
+
 
     render() {
         const {collapseID} = this.state;
@@ -169,7 +192,9 @@ export default class ParentAddPayrollVariables extends Component {
                                                     {this.state.idNameSelected ? (
                                                         <CreateAbsence employeId={this.state.idNameSelected}
                                                                        yearSelected={this.state.yearSelected}
-                                                                       monthSelected={this.state.monthSelected}/>
+                                                                       monthSelected={this.state.monthSelected}
+                                                                       key={this.state.keyAbsence}
+                                                                       handleReset={this.handleReset}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}
@@ -188,7 +213,9 @@ export default class ParentAddPayrollVariables extends Component {
                                                     {this.state.idNameSelected ? (
                                                         <CreateExpenseReport employeId={this.state.idNameSelected}
                                                                              yearSelected={this.state.yearSelected}
-                                                                             monthSelected={this.state.monthSelected}/>
+                                                                             monthSelected={this.state.monthSelected}
+                                                                             key={this.state.keyExpenseReport}
+                                                                             handleReset={this.handleReset}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}
@@ -207,7 +234,8 @@ export default class ParentAddPayrollVariables extends Component {
                                                     {this.state.idNameSelected ? (
                                                         <CreateBonus employeId={this.state.idNameSelected}
                                                                      yearSelected={this.state.yearSelected}
-                                                                     monthSelected={this.state.monthSelected}/>
+                                                                     monthSelected={this.state.monthSelected}
+                                                                     />
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}
@@ -265,7 +293,9 @@ export default class ParentAddPayrollVariables extends Component {
                                                     {this.state.idNameSelected ? (
                                                         <CreateOtherPayrollVariable employeId={this.state.idNameSelected}
                                                                                     yearSelected={this.state.yearSelected}
-                                                                                    monthSelected={this.state.monthSelected}/>
+                                                                                    monthSelected={this.state.monthSelected}
+                                                                                    key={this.state.keyOtherPayrollVariable}
+                                                                                    handleReset={this.handleReset}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}

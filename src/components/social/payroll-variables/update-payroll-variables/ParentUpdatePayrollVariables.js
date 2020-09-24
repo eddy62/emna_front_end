@@ -94,8 +94,7 @@ export default class ParentUpdatePayrollVariables extends Component {
     /*Methode qui appelle le wrapper variables de paie */
     getWrapperPayrollVariablesByEmployeIdByYearByMonth = () => {
         AxiosCenter.getWrapperPayrollVariablesByEmployeIdByYearByMonth(this.state.idEmploye, this.state.yearSelected, this.state.monthSelected)
-        .then((response) => {     
-            console.log(response.data);    
+        .then((response) => {
             const absenceList = response.data.wrapperAbsenceList;
             const heureSupList = response.data.heuresSupplementairesDTOList;
             const primeList = response.data.wrapperPrimeList;            
