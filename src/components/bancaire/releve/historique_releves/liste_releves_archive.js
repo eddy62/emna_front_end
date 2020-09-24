@@ -25,6 +25,16 @@ export default class ListeRelevesArchives extends React.Component {
       .catch((err) => console.log(err));
   }
 
+  getAsPDF = (statementId) => {
+    AxiosCenter.getPDFArchivedStatement(statementId)
+        .then((res) => {
+          const file = new Blob([res.data], {type: 'application/pdf'});
+          const fileURL = URL.createObjectURL(file);
+          window.open(fileURL);
+        })
+        .catch((err) => console.log(err));
+  }
+
   listerLesReleves(props) {
     const Releves = props.releves.map((releve, index) => {
       return (
@@ -35,6 +45,14 @@ export default class ListeRelevesArchives extends React.Component {
           <td>{releve.banque}</td>
           <td>
             <Link to={"/detailsreleve/" + releve.id}> voir le détail</Link>
+          </td>
+          <td>
+            <button type="button"
+                    className="btn btn-primary"
+                    onClick={() => {props.getAsPDF(releve.id);}}
+            >
+              <i className="fas fa-file-pdf" />
+            </button>
           </td>
         </tr>
       );
@@ -99,7 +117,7 @@ export default class ListeRelevesArchives extends React.Component {
 
   render() {
     if (this.state.loaded) {
-      return <this.listerLesReleves releves={this.state.releves} />;
+      return <this.listerLesReleves releves={this.state.releves} getAsPDF={this.getAsPDF}/>;
     } else {
       return <Loading />;
     }
