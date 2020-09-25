@@ -1,10 +1,9 @@
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import React from "react";
-import {Link} from "react-router-dom";
 import Loading from "../../../../shared/component/Loading";
 import ReleveConstants from "../releve_constants"
 import UserService from '../../../../shared/services/UserService';
-import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer,} from "mdbreact";
+import ListReleve from "./ListReleve";
 
 export default class ListeRelevesArchives extends React.Component {
   constructor(props) {
@@ -25,99 +24,18 @@ export default class ListeRelevesArchives extends React.Component {
       .catch((err) => console.log(err));
   }
 
-  getAsPDF = (statementId) => {
-    AxiosCenter.getPDFArchivedStatement(statementId)
-        .then((res) => {
-          const file = new Blob([res.data], {type: 'application/pdf'});
-          const fileURL = URL.createObjectURL(file);
-          window.open(fileURL);
-        })
-        .catch((err) => console.log(err));
-  }
-
-  listerLesReleves(props) {
-    const Releves = props.releves.map((releve, index) => {
-      return (
-        <tr key={releve.id} className="alert alert-success" role="alert">
-          <td> {releve.dateDebut}</td>
-          <td>{releve.dateFin}</td>
-          <td>{releve.solde}</td>
-          <td>{releve.banque}</td>
-          <td>
-            <Link to={"/detailsreleve/" + releve.id}> voir le détail</Link>
-          </td>
-          <td>
-            <button type="button"
-                    className="btn btn-primary"
-                    onClick={() => {props.getAsPDF(releve.id);}}
-            >
-              <i className="fas fa-file-pdf" />
-            </button>
-          </td>
-        </tr>
-      );
-    });
-
-    return (
-      <div className="containerDetailsReleve">
-        <MDBContainer>
-          <div>
-            <MDBCardHeader color="default-color">
-              <MDBCardTitle tag="h1">
-                Historique de vos relevés bancaire
-              </MDBCardTitle>
-              <br />
-            </MDBCardHeader>
-          </div>
-          <div>
-            <hr/>
-          </div>
-          <div>
-            <MDBCol>
-              <MDBCard>
-                <MDBCardBody>
-                  <MDBCardTitle className="MDBCardTitle">
-                    <div>
-                      <table className="table table-striped">
-                        <thead>
-                          <tr>
-                            <th scope="col">Date de création</th>
-                            <th scope="col">Date de fin</th>
-                            <th scope="col">Solde</th>
-                            <th scope="col">Banque</th>
-                          </tr>
-                        </thead>
-                        <tbody>{Releves}</tbody>
-                      </table>
-
-                      <p>
-                        <Link to={"/menureleve"}>
-                          {" "}
-                          <MDBBtn
-                            className="boutton"
-                            color=" teal lighten-2"
-                            rounded
-                            size="sm"
-                          >
-                            <span id="color-button"> Retour</span>
-                          </MDBBtn>
-                        </Link>
-                      </p>
-                    </div>
-                  </MDBCardTitle>
-                </MDBCardBody>
-              </MDBCard>
-            </MDBCol>
-            <br />
-          </div>
-        </MDBContainer>
-      </div>
-    );
-  }
-
   render() {
     if (this.state.loaded) {
-      return <this.listerLesReleves releves={this.state.releves} getAsPDF={this.getAsPDF}/>;
+      return(
+      <ListReleve
+          deleteReleve={this.deleteReleve}
+          releves={this.state.releves}
+          titre={"Historique de vos relevés bancaire"}
+          chemin={"/detailsreleve/"}
+          goBack={this.props.history.goBack}
+          getAsPDF={this.getAsPDF}
+      />
+      )
     } else {
       return <Loading />;
     }
