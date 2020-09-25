@@ -48,6 +48,7 @@ export default class ListeRelevesValide extends React.Component {
                     titre={"Liste des relevés"}
                     chemin="/gestionReleves/rapprochementBancaire/"
                     goBack={this.props.history.goBack}
+                    isPdf={false}
                 />
             );
         } else {

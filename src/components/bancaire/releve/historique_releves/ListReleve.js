@@ -1,6 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer} from "mdbreact";
+import AxiosCenter from "../../../../shared/services/AxiosCenter";
 
 const ListReleve = (props) => {
     const releves = props.releves.map((wrapperReleve) => {
@@ -21,14 +22,17 @@ const ListReleve = (props) => {
                         X
                     </button>
                 </td>
+                {
+                    props.isPdf &&
                 <td>
                     <button type="button"
                             className="btn btn-primary"
-                            onClick={getAsPDF(wrapperReleve.releve.id)}
+                            onClick={() => props.getAsPDF(wrapperReleve.releve.id)}
                     >
                         <i className="fas fa-file-pdf" />
                     </button>
                 </td>
+                }
             </tr>
         );
     });
@@ -36,16 +40,6 @@ const ListReleve = (props) => {
 function goBack(){
     return props.goBack;
 }
-
-  function getAsPDF (statementId){
-        AxiosCenter.getPDFArchivedStatement(statementId)
-            .then((res) => {
-                const file = new Blob([res.data], {type: 'application/pdf'});
-                const fileURL = URL.createObjectURL(file);
-                window.open(fileURL);
-            })
-            .catch((err) => console.log(err));
-    }
 
     return (
         <div className="containerDetailsReleve">
