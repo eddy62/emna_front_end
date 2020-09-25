@@ -26,6 +26,7 @@ import DetailsClient from "./client-fournisseur/detail-client-founisseur/DetailC
 
 //gestionBancaire
 import Bancaire from "./bancaire/index";
+import OperationsMerger from "./bancaire/releve/gestion_releves/rapprochement_bancaire/OperationsMerger";
 import Releve from "./bancaire/releve/releve";
 import ListeReleves from "./bancaire/releve/historique_releves/liste_releves_archive";
 import DetailsReleve from "./bancaire/releve/details_releve/details_releve";
@@ -268,12 +269,14 @@ export default class Routes extends Component {
           path="/detailsoperation/:id"
           component={DetailsOperation}
         />
+
         <PrivateRoute path="/editoperation/:id" component={EditOperation} />
         <PrivateRoute path="/menurelevenon" component={MenuReleveNon} />
         {/* Rapprochement bancaire */}
         <PrivateRoute path="/gestionReleves/rapprochementBancaire/:id" component={BankReconciliation} />
         <PrivateRoute path="/gestionReleves/rapprochementBancaire/listeOperations" component={ListOfOperations} />
         <PrivateRoute path="/gestionReleves/rapprochementBancaire/listeFactures" component={ListOfInvoices} />
+        <PrivateRoute path="/operationsmerger/:id" component={OperationsMerger} />
 
         <PrivateRoute
           path="/gestionReleves/rapprochementBancaire"

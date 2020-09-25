@@ -34,7 +34,7 @@ export default class ListeRelevesArchives extends React.Component {
           <td>{releve.solde}</td>
           <td>{releve.banque}</td>
           <td>
-            <Link to={"/detailsreleve/" + releve.id}> voir le détail</Link>
+            <Link to={"/detailopération/" + releve.id}> voir le détail</Link>
           </td>
         </tr>
       );

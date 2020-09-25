@@ -261,6 +261,9 @@ const AxiosCenter = {
     });
   },
 
+
+
+
   getInvoicesByStatement(id) {
     return ApiBackEnd({
       method: "GET",
@@ -553,6 +556,20 @@ const AxiosCenter = {
       url: `/wrapperemploye/archive`,
       data: values,
     });
+  },
+
+  updateRapprochementOperation(idOperation) {
+    return ApiBackEnd({
+      method:"put",
+      url:`/operations/${idOperation}`,
+    })
+  },
+
+  mergeOperationToInvoices(idOperation,idFacture){
+    return ApiBackEnd({
+      method:"put",
+      url:`/facture/${idOperation}/${idFacture}`,
+    })
   },
 
   updateOperation(values) {

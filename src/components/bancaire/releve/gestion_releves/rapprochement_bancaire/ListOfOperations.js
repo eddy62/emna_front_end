@@ -3,13 +3,14 @@ import {MDBCardTitle, MDBTable, MDBTableBody, MDBTableHead} from 'mdbreact';
 import Axios from "../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../shared/component/Loading";
 import StatementOperation from "../StatementOperation";
+import {Link} from "react-router-dom";
 
 export default class ListOfOperations extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            operation: {},
+            operations: {},
             loaded: false,
         }
     }
@@ -23,6 +24,7 @@ export default class ListOfOperations extends Component {
 
     render() {
         if (!this.state.loaded) return <Loading/>
+
         return (
             <div>
                 <MDBCardTitle className="card-title text-center py-2">
@@ -40,11 +42,17 @@ export default class ListOfOperations extends Component {
                     </MDBTableHead>
                     <MDBTableBody>
                         {this.state.operations.map((operation, index) => (
-                            <StatementOperation key={operation.id} operation={operation}/>
+                            <StatementOperation key={operation.id} operation={operation}
+                                                isCheckBoxVisible={this.props.isCheckBoxVisible}
+                                                changeCheckboxVisible={this.props.changeCheckboxVisible}
+                                                selectedFactures={this.props.selectedFactures}
+                                                bankRefreshComponentDidMount={this.props.bankRefreshComponentDidMount}/>
+
                         ))}
                     </MDBTableBody>
                 </MDBTable>
             </div>
         );
+
     }
 }
