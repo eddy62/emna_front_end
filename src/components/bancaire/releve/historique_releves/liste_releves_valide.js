@@ -35,7 +35,7 @@ export default class ListeRelevesValide extends React.Component {
     }
 
     deleteReleve = (id) => {
-        AxiosCenter.deleteReleve(id).then((res) => this.componentDidMount());
+        AxiosCenter.deleteStatement(id).then((res) => this.componentDidMount());
     };
 
 
