@@ -312,7 +312,7 @@ export default class ParentAddPayrollVariables extends Component {
                                             disabled={!this.state.idNameSelected}
                                             onClick={() => {
                                                 this.props.history.push(
-                                                    "/modify-payroll-variables/" + this.state.society.id + "/" + this.state.idNameSelected
+                                                    "/modify-payroll-variables/" + this.state.society.id + "/" + this.state.idNameSelected  + "/" + this.state.yearSelected + "/" + this.state.monthSelected
                                                 );
                                             }}
                                     >

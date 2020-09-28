@@ -123,7 +123,7 @@ export default class Routes extends Component {
         <PrivateRoute
           path="/add-payroll-variables/:id" component={ParentAddPayrollVariables} />
         <PrivateRoute
-          path="/modify-payroll-variables/:societyId/:id"
+          path="/modify-payroll-variables/:societyId/:id/:yearSelected/:monthSelected"
           component={ParentUpdatePayrollVariables}
         />
         <PrivateRoute path="/add-declaration-of-employment/:id" component={CreateDeclarationOfEmployment} />

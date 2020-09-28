@@ -50,8 +50,8 @@ export default class ParentUpdatePayrollVariables extends Component {
             idEmploye: this.props.match.params.id,
             listeEmployes: [],
             currentYear: new Date().getFullYear(),
-            yearSelected: new Date().getFullYear(),
-            monthSelected: new Date().getMonth() + 1,
+            yearSelected: this.props.match.params.yearSelected,
+            monthSelected: this.props.match.params.monthSelected,
             period: [
                 {id: 1, text: "Janvier"},
                 {id: 2, text: "Février"},
@@ -237,6 +237,7 @@ export default class ParentUpdatePayrollVariables extends Component {
                                             name="yearSelected"
                                             className="browser-default custom-select"
                                             onChange={this.changeHandler}
+                                            value={this.state.yearSelected}
                                         >
                                             <option disabled>Choisissez une année</option>
                                             {this.state.year.map((y, index) => (
@@ -250,6 +251,7 @@ export default class ParentUpdatePayrollVariables extends Component {
                                             name="monthSelected"
                                             className="browser-default custom-select"
                                             onChange={this.changeHandler}
+                                            value={this.state.monthSelected}
                                         >
                                             <option disabled defaultValue={new Date().getMonth()}>Choisissez un mois  </option>
                                             {this.state.period.map((p, index) => (
@@ -309,7 +311,7 @@ export default class ParentUpdatePayrollVariables extends Component {
                                         onClick={() => {
                                             this.props.history.push(
                                                 "/add-payroll-variables/"
-                                                + this.state.society.id + "/" + this.state.idNameSelected);
+                                                + this.state.society.id + "/" + this.state.idEmploye);
                                         }}>
                                     Ajouter
                                 </MDBBtn>
