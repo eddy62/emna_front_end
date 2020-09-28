@@ -1,23 +1,22 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer} from "mdbreact";
-import AxiosCenter from "../../../../shared/services/AxiosCenter";
 
 const ListReleve = (props) => {
     const releves = props.releves.map((wrapperReleve) => {
         return (
-            <tr key={wrapperReleve.releve.id} className="alert alert-success" role="alert">
-                <td> {wrapperReleve.releve.dateDebut}</td>
-                <td>{wrapperReleve.releve.dateFin}</td>
+            <tr key={wrapperReleve.id} className="alert alert-success" role="alert">
+                <td> {wrapperReleve.dateDebut}</td>
+                <td>{wrapperReleve.dateFin}</td>
                 <td>{wrapperReleve.solde}</td>
-                <td>{wrapperReleve.releve.banque}</td>
+                <td>{wrapperReleve.banque}</td>
                 <td>
-                    <Link to={props.chemin + wrapperReleve.releve.id}>voir le détail</Link>
+                    <Link to={props.chemin + wrapperReleve.id}>voir le détail</Link>
                 </td>
                 <td>
                     <button
                         //className="btn btn-small btn-danger"
-                        onClick={() => props.deleteReleve(wrapperReleve.releve.id)}
+                        onClick={() => props.deleteReleve(wrapperReleve.id)}
                     >
                         X
                     </button>
@@ -27,7 +26,7 @@ const ListReleve = (props) => {
                 <td>
                     <button type="button"
                             className="btn btn-primary"
-                            onClick={() => props.getAsPDF(wrapperReleve.releve.id)}
+                            onClick={() => props.getAsPDF(wrapperReleve.id)}
                     >
                         <i className="fas fa-file-pdf" />
                     </button>
@@ -36,10 +35,6 @@ const ListReleve = (props) => {
             </tr>
         );
     });
-
-function goBack(){
-    return props.goBack;
-}
 
     return (
         <div className="containerDetailsReleve">
@@ -70,7 +65,7 @@ function goBack(){
                                             color=" teal lighten-2"
                                             rounded
                                             size="sm"
-                                            onClick={goBack()}
+                                            onClick={()=>props.goBack()}
                                         >
                                             <span id="color-button"> Retour</span>
                                         </MDBBtn>
