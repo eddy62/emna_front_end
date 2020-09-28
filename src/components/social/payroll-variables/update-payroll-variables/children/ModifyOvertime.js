@@ -87,16 +87,13 @@ class ModifyOvertime extends React.Component {
         this.updatePeriod();
     }
 
-    componentWillUnmount() {
-        this.props.reloadParentAfterUpdate();
-    }
-
     submit = (values, actions) => {
         AxiosCenter.modifyOvertime(values)
             .then(() => {
                 notify('success');
                 actions.resetForm();
                 this.props.toggleAvance(this.props.index);
+                this.props.reloadParentAfterUpdate();
             }).catch((error) => {
             console.log(error);
             notify('error');

@@ -97,11 +97,11 @@ export default class ParentUpdatePayrollVariables extends Component {
         .then((response) => {
             const absenceList = response.data.wrapperAbsenceList;
             const heureSupList = response.data.heuresSupplementairesDTOList;
-            const primeList = response.data.wrapperPrimeList;            
+            const primeList = response.data.wrapperPrimeList;
             const noteDeFraisList = response.data.wrapperNoteDeFraisList;
             const avanceRappelSalaireList = response.data.avanceRappelSalaireDTOList;
             const autresVariableList = response.data.wrapperAutresVariableList;
-            
+
             let afficherBoutonConfirmer = false;
             if ((absenceList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined)
                 || (heureSupList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined)
@@ -190,7 +190,13 @@ export default class ParentUpdatePayrollVariables extends Component {
 
     //Méthode permettant de setter le State des selects qui sont transmis aux composants enfant
     changeHandler = event => {
-        this.setState({ [event.target.name]: event.target.value }, () => {
+        this.setState({ [event.target.name]: event.target.value }, async () => {
+            const currentMonth = new Date().getMonth() + 1;
+            if (this.state.yearSelected === "2020" && this.state.monthSelected > currentMonth){
+                await this.setState({
+                    monthSelected: currentMonth
+                })
+            }
             this.getWrapperPayrollVariablesByEmployeIdByYearByMonth();
         })
     };
@@ -255,7 +261,7 @@ export default class ParentUpdatePayrollVariables extends Component {
                                         >
                                             <option disabled defaultValue={new Date().getMonth()}>Choisissez un mois  </option>
                                             {this.state.period.map((p, index) => (
-                                                <option key={index} selected={p.id === this.state.monthSelected}
+                                                <option key={index}
                                                         value={p.id}
                                                         disabled={this.state.yearSelected == this.state.currentYear && p.id > new Date().getMonth() + 1 ? (true) : (false)}>{p.text}</option>
                                             ))}
