@@ -17,14 +17,14 @@ export default class ListeRelevesValide extends React.Component {
     }
     componentDidMount() {
         console.log(this.state.societyId)
-        // if (this.state.userRole == "ROLE_ADMIN"){
-        //     AxiosCenter.getStatementByState(ReleveConstants.RELEVE_ETAT_NON_ARCHIVE)
-        //         .then((res) => {
-        //             const releves = res.data;
-        //             this.setState({ releves, loaded: true });
-        //         })
-        //         .catch((err) => console.log(err));
-        // }else {
+         if (this.state.userRole == "ROLE_ADMIN"){
+             AxiosCenter.getStatementByState(ReleveConstants.RELEVE_ETAT_NON_ARCHIVE)
+                 .then((res) => {
+                     const releves = res.data;
+                     this.setState({ releves, loaded: true });
+                 })
+                 .catch((err) => console.log(err));
+         }else {
             AxiosCenter.getStatementsByStateAndSociety(ReleveConstants.RELEVE_ETAT_NON_ARCHIVE, this.state.societyId)
                 .then((res) => {
                     const releves = res.data;
@@ -32,7 +32,7 @@ export default class ListeRelevesValide extends React.Component {
                 })
                 .catch((err) => console.log(err));
         }
-    // }
+     }
 
     deleteReleve = (id) => {
         AxiosCenter.deleteStatement(id).then((res) => this.componentDidMount());
