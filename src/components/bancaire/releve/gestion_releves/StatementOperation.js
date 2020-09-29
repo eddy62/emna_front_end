@@ -35,7 +35,7 @@ export default class StatementOperation extends Component {
                 {(UserService.isAdmin() || UserService.isAccountant()) &&
                 <td>
                     {
-                        this.props.isCheckBoxVisible &&
+                        this.props.isCheckBoxVisible &&  this.props.operation.rapproche == false &&
                         <MDBBtn onClick={this.mergeProcess}
                                 color=" teal lighten-2" rounded size="sm">
                             <span id={this.props.operation.id}>Valider</span>
