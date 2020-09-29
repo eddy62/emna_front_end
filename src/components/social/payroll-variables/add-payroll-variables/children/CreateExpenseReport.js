@@ -2,7 +2,7 @@ import React from "react";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
-import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow} from "mdbreact";
+import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBFileInput, MDBInput, MDBRow} from "mdbreact";
 import Loading from "../../../../../shared/component/Loading";
 import {toast} from "react-toastify";
 
@@ -11,22 +11,30 @@ const notify = type => {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Note de frais Enregistrée &nbsp;&nbsp;!</strong>
-                </div>,
+                    <strong>Absence Enregistrée &nbsp;&nbsp;!</strong>
+                </div>
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Note de frais NON Enregistrée &nbsp;&nbsp;!</strong>
-                </div>,
+                    <strong>Absence NON Enregistrée &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
+        case "formatError":
+            toast.error(
+                <div className="text-center">
+                    <strong>Absence NON Enregistrée &nbsp;&nbsp;! <br/>Format de fichier invalide &nbsp;&nbsp;!
+                        <br/>Seuls les formats PDF, PNG, JPEG et JPG sont acceptés.</strong>
+                </div>
             );
             break;
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>Note de frais NON Enregistrée &nbsp;&nbsp;!</strong>
-                </div>,
+                    <strong>Absence NON Enregistrée &nbsp;&nbsp;!</strong>
+                </div>
             );
             break;
     }
@@ -69,25 +77,22 @@ const ComponentNumber = ({field, ...props}) => (
     />
 );
 
-const ComponentUpload = () => (
-    <div>
-        <div className="custom-control custom-checkbox">
-            <input type="checkbox" className="custom-control-input" id="defaultUnchecked"/>
-            <label className="custom-control-label" htmlFor="defaultUnchecked">Justificatif(s)</label>
-        </div>
-        <MDBBtn disabled={true}
-                color="teal accent-3"
-                rounded
-                size="sm"
-                type="submit">
-            Upload</MDBBtn>
-    </div>
-);
-
 const ComponentError = (props) => (
     <div className="text-danger">{props.children}</div>
 );
 
+const ComponentUploadFiles = ({field, ...props}) => (
+    <div>
+        <MDBFileInput
+            btnTitle="Télécharger"
+            textFieldTitle="Justificatif(s)"
+            multiple
+            reset
+            btnColor="teal accent-3"
+            getValue={props.fileInputHandler}
+        />
+    </div>
+);
 
 class CreateExpenseReport extends React.Component {
 
@@ -110,14 +115,21 @@ class CreateExpenseReport extends React.Component {
         values.employeId = this.props.employeId;
         values.annee = this.props.yearSelected;
         values.mois = this.props.monthSelected;
-        AxiosCenter.createExpenseReport(values)
-            .then(() => {
-                notify("success");
-                actions.resetForm();
-            }).catch((error) => {
-            console.log(error);
-            notify("error");
-        });
+        if (!this.checkFormat()) {
+            AxiosCenter.createExpenseReport(values)
+                .then((response) => {
+                    this.uploadFiles(response.data.id)
+                    /* TODO : Execute success only if there is no error after previous function */
+                    notify("success");
+                    actions.resetForm();
+                }).catch((error) => {
+                console.log(error);
+                notify("error");
+            });
+        } else {
+            this.setState({fileList: []});
+            notify("formatError");
+        }
         actions.setSubmitting(true);
     };
 
@@ -126,6 +138,43 @@ class CreateExpenseReport extends React.Component {
         date: Yup.date().required("Date obligatoire"),
         montant: Yup.number().required("Montant obligatoire").min("0.01", "Montant positif"),
     });
+
+    checkFormat = () => {
+        const acceptedFormats = ["application/pdf", "image/png", "image/jpg", "image/jpeg"]
+        let wrongFormat = false;
+        Array.from(this.state.fileList).forEach(file => {
+            if (acceptedFormats.indexOf(file.type) === -1)
+                wrongFormat = true;
+        })
+        return wrongFormat;
+    }
+
+    uploadFiles = (noteDeFraisId) => {
+        let nbFiles = 0;
+        Array.from(this.state.fileList).forEach(file => {
+            nbFiles++;
+            this.uploadFile(file, noteDeFraisId, nbFiles);
+        })
+    }
+
+    uploadFile = (file, noteDeFraisId, fileNumber) => {
+        let formData = new FormData();
+        formData.append("file", file);
+        formData.append("absenceId", "-1");
+        formData.append("noteDeFraisId", noteDeFraisId);
+        formData.append("autresVariableId", "-1");
+        formData.append("fileNumber", fileNumber);
+        AxiosCenter.uploadFile(formData)
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    fileInputHandler = (value) => {
+        this.setState({
+            fileList: value
+        })
+    }
 
     updatePeriod() {
         this.state.startPeriod = new Date(new Date()
@@ -189,7 +238,12 @@ class CreateExpenseReport extends React.Component {
                                             </MDBCol>
                                         </MDBRow>
                                         {/* désignation */}
-                                        <MDBRow center style={{marginTop: "-3%"}}>
+                                        <MDBRow between around style={{marginTop: "-5%"}}>
+                                            {/* upload */}
+                                            <Field
+                                                fileInputHandler={this.fileInputHandler}
+                                                component={ComponentUploadFiles}
+                                            />
                                             <MDBCol md="5">
                                                 <Field
                                                     name="designation"
@@ -201,13 +255,6 @@ class CreateExpenseReport extends React.Component {
                                         </MDBRow>
                                         {/* upload justificatifs */}
                                         <MDBRow around>
-                                            <MDBCol md="4">
-                                                <Field
-                                                    name="justificatifs"
-                                                    component={ComponentUpload}
-                                                />
-                                                <ErrorMessage name="justificatifs" component={ComponentError}/>
-                                            </MDBCol>
                                             <MDBCol md="4" className="mt-4">
                                                 <div>
                                                     <MDBBtn

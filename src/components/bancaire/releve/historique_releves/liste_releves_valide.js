@@ -1,18 +1,10 @@
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import React from "react";
-import { Link } from "react-router-dom";
 import Loading from "../../../../shared/component/Loading";
 import ReleveConstants from "../releve_constants"
 import UserService from '../../../../shared/services/UserService';
-import {
-    MDBCard,
-    MDBCardBody,
-    MDBCardTitle,
-    MDBCardHeader,
-    MDBContainer,
-    MDBBtn,
-    MDBCol,
-} from "mdbreact";
+import ListReleve from "./ListReleve";
+
 export default class ListeRelevesValide extends React.Component {
     constructor(props) {
         super(props);
@@ -25,14 +17,14 @@ export default class ListeRelevesValide extends React.Component {
     }
     componentDidMount() {
         console.log(this.state.societyId)
-        if (this.state.userRole == "ROLE_ADMIN"){
-            AxiosCenter.getStatementByState(ReleveConstants.RELEVE_ETAT_NON_ARCHIVE)
-                .then((res) => {
-                    const releves = res.data;
-                    this.setState({ releves, loaded: true });
-                })
-                .catch((err) => console.log(err));
-        }else {
+        // if (this.state.userRole == "ROLE_ADMIN"){
+        //     AxiosCenter.getStatementByState(ReleveConstants.RELEVE_ETAT_NON_ARCHIVE)
+        //         .then((res) => {
+        //             const releves = res.data;
+        //             this.setState({ releves, loaded: true });
+        //         })
+        //         .catch((err) => console.log(err));
+        // }else {
             AxiosCenter.getStatementsByStateAndSociety(ReleveConstants.RELEVE_ETAT_NON_ARCHIVE, this.state.societyId)
                 .then((res) => {
                     const releves = res.data;
@@ -40,93 +32,23 @@ export default class ListeRelevesValide extends React.Component {
                 })
                 .catch((err) => console.log(err));
         }
-    }
+    // }
 
     deleteReleve = (id) => {
-        AxiosCenter.deleteReleve(id).then((res) => this.componentDidMount());
+        AxiosCenter.deleteStatement(id).then((res) => this.componentDidMount());
     };
 
-    listerLesReleves(props) {
-        const Releves = props.releves.map((releve, index) => {
-            return (
-                <tr key={releve.id} className="alert alert-success" role="alert">
-                    <td> {releve.dateDebut}</td>
-                    <td>{releve.dateFin}</td>
-                    <td>{releve.solde}</td>
-                    <td>{releve.banque}</td>
-                    <td>
-                        <Link to={"/gestionReleves/rapprochementBancaire/" + releve.id}>
-                            {" "}
-                            voir le détail
-                        </Link>
-                    </td>
-                    <td>
-                        <button
-                            //className="btn btn-small btn-danger"
-                            onClick={() => props.deleteReleve(releve.id)}
-                        >
-                            X
-                        </button>
-                    </td>
-                </tr>
-            );
-        });
-
-        return (
-            <div className="containerDetailsReleve">
-                <MDBContainer>
-                    <div>
-                        <MDBCardHeader color="default-color">
-                            <MDBCardTitle>Liste des relevés</MDBCardTitle>
-                            <br />
-                        </MDBCardHeader>
-                    </div>
-                    <div></div>
-                    <div>
-                        <MDBCol>
-                            <MDBCard>
-                                <MDBCardBody>
-                                    <table className="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">Date de création</th>
-                                            <th scope="col">Date de fin</th>
-                                            <th scope="col">Solde</th>
-                                            <th scope="col">Banque</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>{Releves}</tbody>
-                                    </table>
-
-                                    <p>
-                                        <Link to={"/menureleve"}>
-                                            {" "}
-                                            <MDBBtn
-                                                className="boutton"
-                                                color=" teal lighten-2"
-                                                rounded
-                                                size="sm"
-                                            >
-                                                <span id="color-button"> Retour</span>
-                                            </MDBBtn>
-                                        </Link>
-                                    </p>
-                                </MDBCardBody>
-                            </MDBCard>
-                        </MDBCol>
-                        <br />
-                    </div>
-                </MDBContainer>
-            </div>
-        );
-    }
 
     render() {
         if (this.state.loaded) {
             return (
-                <this.listerLesReleves
+                <ListReleve
                     deleteReleve={this.deleteReleve}
                     releves={this.state.releves}
+                    titre={"Liste des relevés"}
+                    chemin="/gestionReleves/rapprochementBancaire/"
+                    goBack={this.props.history.goBack}
+                    isPdf={false}
                 />
             );
         } else {

@@ -1,59 +1,59 @@
 import React from "react";
-import {MDBBtn, MDBRow, MDBListGroupItem, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBTableHead, MDBContainer, MDBListGroup, MDBCardHeader, MDBCardTitle} from "mdbreact";
+import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBCardHeader, MDBTableHead, MDBCardTitle, MDBContainer, MDBListGroup, MDBRow, MDBListGroupItem } from "mdbreact";
 import {toast} from "react-toastify";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
-import ModifyAbsence from "../children/ModifyAbsence";
+import ModifyOtherPayrollVariable from "../children/ModifyOtherPayrollVariable";
 
 const notify = type => {
     switch (type) {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Absence Supprimée &nbsp;&nbsp;!</strong>
+                    <strong>Autre Variable de Paie Supprimée &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Absence NON Supprimée &nbsp;&nbsp;!</strong>
+                    <strong>Autre Variable de Paie NON Supprimée &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>Absence NON Supprimée &nbsp;&nbsp;!</strong>
+                    <strong>Autre Variable de Paie NON Supprimée &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
     }
 };
 
-class TableAbsence extends React.Component {
+class TableOtherPayrollVariable extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            modalUpdateAbsence: false,
-            modalDeleteAbsence: false,
+            modalUpdateOther: false,
+            modalDeleteOther: false,
             modaleDetails: false,
             index: null,
-            idAbsenceSelected: null
+            idOtherPayrollVariableSelected: null,
         }
     }
 
-    toggleModalUpdateAbsence = (key) => {
+    toggleModalUpdateOther = (key) => {
         this.setState({
             index: key,
-            modalUpdateAbsence: !this.state.modalUpdateAbsence,
+            modalUpdateOther: !this.state.modalUpdateOther,
         });
     }
 
-    toggleModalDeleteAbsence = (key) => {
+    toggleModalDeleteOther = (key) => {
         this.setState({
             index: key,
-            modalDeleteAbsence: !this.state.modalDeleteAbsence,
+            modalDeleteOther: !this.state.modalDeleteOther,
         });
     }
 
@@ -61,13 +61,13 @@ class TableAbsence extends React.Component {
         this.setState({
             index: key,
             modaleDetails: !this.state.modaleDetails,
-            idAbsenceSelected: id,
+            idOtherPayrollVariableSelected: id
         });
     }
 
-    callBackToDeleteAbsence = () => {
-        AxiosCenter.deleteAbsence(this.props.absenceList[this.state.index].id).then(() => {
-            this.toggleModalDeleteAbsence();
+    callBackToDeleteOther = () => {
+        AxiosCenter.deleteOtherPayrollVariable(this.props.autresVariablesList[this.state.index].id).then(() => {
+            this.toggleModalDeleteOther();
             this.props.reloadParentAfterUpdate();
             notify('success');
         }).catch((error) => {
@@ -78,7 +78,7 @@ class TableAbsence extends React.Component {
 
     getPdf = (pdfName) => {
         AxiosCenter.getPdfFileByPath(pdfName)
-        .then((response) => {
+        .then((response) => {            
             const url = response.config.url;
             const urlTab = url.split('.');
             const ext = urlTab[1];
@@ -111,6 +111,37 @@ class TableAbsence extends React.Component {
                 //Open the URL on new Window
                 window.open(fileURL);
             }
+            
+            //Create a Blob from the PDF Stream
+            /*switch(ext) {
+                case "pdf":
+                    const file = new Blob(
+                        [response.data],
+                        {type: 'application/pdf'});
+                        //Build a URL from the file
+                        const fileURL = URL.createObjectURL(file);
+                        //Open the URL on new Window
+                        window.open(fileURL);
+                    break;
+                case "png":
+                    const file = new Blob(
+                        [response.data], 
+                        {type: 'image/png'});
+                    //Build a URL from the file
+                    const fileURL = URL.createObjectURL(file);
+                    //Open the URL on new Window
+                    window.open(fileURL);
+                break;
+                case "jpg":
+                    const file = new Blob(
+                        [response.data], 
+                        {type: 'image/jpeg'});
+                    //Build a URL from the file
+                    const fileURL = URL.createObjectURL(file);
+                    //Open the URL on new Window
+                    window.open(fileURL);
+                break;
+            }     */       
         })        
     }
 
@@ -120,34 +151,34 @@ class TableAbsence extends React.Component {
                 <MDBTable>
                     <MDBTableHead color="default-color">
                         <tr>
-                            <th className="font-weight-bold">Absences</th>
-                            <th>Du</th>
-                            <th>Au</th>
+                            <th className="font-weight-bold">Autres</th>
+                            <th>Date</th>
+                            <th>Montant</th>
                             <th>Justificatif(s)</th>
                             <th className="w-25"></th>
                         </tr>
                     </MDBTableHead>
-                    {this.props.absenceList.length ? (
+                    {this.props.autresVariablesList.length ? (
                         <MDBTableBody>
-                            {this.props.absenceList.map((abs, index) => (
+                            {this.props.autresVariablesList.map((other, index) => (
                                 <tr key={index}>
-                                    <td>{abs.intitule}</td>
-                                    <td>{abs.debutAbsence}</td>
-                                    <td>{abs.finAbsence}</td>
-                                    {abs.documentDTOList.length ? (
+                                    <td>{other.description}</td>
+                                    <td>{other.date}</td>
+                                    <td>{other.montant} €</td>
+                                    {other.documentDTOList.length ? (
                                         <td>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
-                                                    onClick={() => this.toggleModalDocument(index, abs.id)}>VOIR</MDBBtn>
+                                                    onClick={() => this.toggleModalDocument(index, other.id)}>VOIR</MDBBtn>
                                         </td>
                                     ) : (
                                         <td>Pas de justificatif</td>
                                     )}
-                                    {abs.etatVariablePaieId === 1 ? (
+                                    {other.etatVariablePaieId === 1 ? (
                                         <td>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
-                                                    onClick={() => this.toggleModalUpdateAbsence(index)}>MODIFIER</MDBBtn>
+                                                    onClick={() => this.toggleModalUpdateOther(index)}>MODIFIER</MDBBtn>
                                             <MDBBtn color="danger" rounded size="sm"
-                                                    onClick={() => this.toggleModalDeleteAbsence(index)}>SUPPRIMER</MDBBtn>
+                                                    onClick={() => this.toggleModalDeleteOther(index)}>SUPPRIMER</MDBBtn>
                                         </td>
                                     ) : (
                                         <td>Confirmé</td>
@@ -158,28 +189,28 @@ class TableAbsence extends React.Component {
                     ) : (
                         <MDBTableBody>
                             <tr>
-                                <td colSpan="5">Pas d'Absence ce mois</td>
+                                <td colSpan="5">Pas de Variable de Paie Autre ce mois</td>
                             </tr>
                         </MDBTableBody>
                     )}
                 </MDBTable>
                 {/** MODALE DELETE */}
-                <MDBModal isOpen={this.state.modalDeleteAbsence} backdrop={false} centered size="sm">
+                <MDBModal isOpen={this.state.modalDeleteOther} backdrop={false} centered size="sm">
                     <MDBModalBody>
-                        <p>Supprimer l'Absence ?</p>
+                        <p>Supprimer la Variable de Paie Autre ?</p>
                         <MDBBtn color="danger" rounded size="sm"
-                            onClick={this.callBackToDeleteAbsence}>Supprimer</MDBBtn>
+                                onClick={this.callBackToDeleteOther}>SUPPRIMER</MDBBtn>
                         <MDBBtn color="teal accent-3" rounded size="sm"
-                            onClick={this.toggleModalDeleteAbsence}>Annuler</MDBBtn>                        
+                                onClick={this.toggleModalDeleteOther}>ANNULER</MDBBtn>
                     </MDBModalBody>
                 </MDBModal>
                 {/** MODALE UPDATE */}
-                <MDBModal isOpen={this.state.modalUpdateAbsence} backdrop={false} centered size="lg">
+                <MDBModal isOpen={this.state.modalUpdateOther} backdrop={false} centered size="lg">
                     <MDBModalBody>
-                        <ModifyAbsence
-                            absence={this.props.absenceList[this.state.index]}
+                        <ModifyOtherPayrollVariable
+                            other={this.props.autresVariablesList[this.state.index]}
                             index={this.state.index}
-                            toggleModalUpdateAbsence={this.toggleModalUpdateAbsence}
+                            toggleModalUpdateOther={this.toggleModalUpdateOther}
                             reloadParentAfterUpdate={this.props.reloadParentAfterUpdate}
                         />
                     </MDBModalBody>
@@ -192,15 +223,14 @@ class TableAbsence extends React.Component {
                     <MDBModalBody> 
                         <MDBContainer>                            
                             <MDBListGroup>
-                                {this.props.absenceList.map((abs) => (
-                                    abs.id == this.state.idAbsenceSelected ? (
-                                        abs.documentDTOList.map((doc, index) => (
+                                {this.props.autresVariablesList.map((aVList) => (
+                                    aVList.id == this.state.idOtherPayrollVariableSelected ? (
+                                        aVList.documentDTOList.map((doc, index) => (
                                             <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.nom)}>{doc.nom}</MDBListGroupItem>
-                                        ))   
+                                        ))
                                     ) : (
                                         null
-                                    )
-                                                                     
+                                    )                                    
                                 ))}
                             </MDBListGroup>
                             <MDBRow center>
@@ -216,4 +246,4 @@ class TableAbsence extends React.Component {
     }
 }
 
-export default TableAbsence;
+export default TableOtherPayrollVariable;
