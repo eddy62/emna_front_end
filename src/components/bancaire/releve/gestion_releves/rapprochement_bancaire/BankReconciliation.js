@@ -4,22 +4,21 @@ import {Link} from "react-router-dom";
 
 import ListOfInvoices from './ListOfInvoices';
 import ListOfOperations from './ListOfOperations';
-import OperationsMerger from "./OperationsMerger";
 import ReleveDetailsCard from "../../details_releve/ReleveDetailsCard";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
+import Axios from "../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../shared/component/Loading";
 import UserService from "../../../../../shared/services/UserService";
-import Axios from "../../../../../shared/services/AxiosCenter";
 
 class BankReconciliation extends Component {
     constructor(props) {
         super(props);
         this.state = {
             factures: {},
-            loaded: false,
             releve: [],
             isCheckBoxVisible: false,
             selectedFactures: [],
+            loaded: false,
         };
     }
 
@@ -42,14 +41,10 @@ class BankReconciliation extends Component {
         }
     }
 
-
-    returnComponenDidMount = () => {
-
-        this.setState({loaded: false})
-        console.log("RCD",this.state.loaded,this.state.factures)
+    refreshBankReconciliation = () => {
+        this.setState({loaded: false, selectedFactures: []})
         this.componentDidMount()
     }
-
 
     componentDidMount() {
         AxiosCenter.getStatementById(this.props.match.params.id)
@@ -63,10 +58,7 @@ class BankReconciliation extends Component {
                     const factures = res.data;
                     this.setState({factures, loaded: true});
                 });
-                console.log("RCDM",this.state.loaded,this.state.factures)
             })
-
-
             .catch((err) => console.log(err));
     }
 
@@ -87,17 +79,17 @@ class BankReconciliation extends Component {
                                               isCheckBoxVisible={this.state.isCheckBoxVisible}
                                               selectedFactures={this.state.selectedFactures}
                                               countInvoicesSum={this.countInvoicesSum}
-                                              bankRefreshComponentDidMount={this.returnComponenDidMount}/>
+                                              bankRefreshComponentDidMount={this.refreshBankReconciliation}/>
                         </MDBCard>
                     </MDBCol>
                     <MDBCol>
                         <MDBCard>
-                                <ListOfInvoices idReleve={this.state.releve.id}
-                                             isCheckBoxVisible={this.state.isCheckBoxVisible}
-                                             selectedFactures={this.state.selectedFactures}
-                                             addOrRemoveSelectedFacture={this.addOrRemoveSelectedFacture}
-                                             factures={this.state.factures}/>
-                            }
+                            <ListOfInvoices idReleve={this.state.releve.id}
+                                            isCheckBoxVisible={this.state.isCheckBoxVisible}
+                                            selectedFactures={this.state.selectedFactures}
+                                            addOrRemoveSelectedFacture={this.addOrRemoveSelectedFacture}
+                                            factures={this.state.factures}
+                            />
                         </MDBCard>
                     </MDBCol>
                 </MDBRow>
@@ -108,15 +100,16 @@ class BankReconciliation extends Component {
                     </Link>
                 </MDBBtn>
 
-                {(UserService.isAdmin() || UserService.isAccountant()) &&
-                <MDBBtn onClick={
-                    () => {
-                        this.changeCheckboxVisible()
+                {
+                    (UserService.isAdmin() || UserService.isAccountant()) &&
+                    <MDBBtn onClick={
+                        () => {
+                            this.changeCheckboxVisible()
+                        }
                     }
-                }
-                        color=" teal lighten-2" rounded size="sm">
-                    <span>Rapprocher</span>
-                </MDBBtn>
+                            color=" teal lighten-2" rounded size="sm">
+                        <span>Rapprocher</span>
+                    </MDBBtn>
                 }
             </MDBContainer>
         );

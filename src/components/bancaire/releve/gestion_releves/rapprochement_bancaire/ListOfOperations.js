@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {MDBCardTitle, MDBTable, MDBTableBody, MDBTableHead} from 'mdbreact';
-import Axios from "../../../../../shared/services/AxiosCenter";
+import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../shared/component/Loading";
 import StatementOperation from "../StatementOperation";
-import {Link} from "react-router-dom";
 
 export default class ListOfOperations extends Component {
 
@@ -16,7 +15,7 @@ export default class ListOfOperations extends Component {
     }
 
     componentDidMount() {
-        Axios.getOperationsByReleveId(this.props.idReleve).then((res) => {
+        AxiosCenter.getOperationsByReleveId(this.props.idReleve).then((res) => {
             const operations = res.data;
             this.setState({operations, loaded: true});
         });
