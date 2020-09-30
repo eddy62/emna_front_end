@@ -79,13 +79,10 @@ class ModifyBonus extends React.Component {
                         loaded: true
                     }
                 )
+                this.props.reloadParentAfterUpdate();
             }).catch((error) => {
             console.log(error)
         })
-    }
-
-    componentWillUnmount() {
-        this.props.reloadParentAfterUpdate();
     }
 
     submit = (values, actions) => {

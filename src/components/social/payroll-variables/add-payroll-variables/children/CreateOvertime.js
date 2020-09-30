@@ -139,7 +139,10 @@ class CreateOvertime extends React.Component {
                             validationSchema={heuresSupSchema(this.state)}
                         >
                             {({
-                                  handleSubmit
+                                  dirty,
+                                  handleReset,
+                                  handleSubmit,
+                                  isSubmitting
                               }) => (
                                 <Form onSubmit={handleSubmit}>
                                     <MDBCardBody style={{marginTop:"-3%", marginBottom:"-3%"}}>
@@ -178,6 +181,14 @@ class CreateOvertime extends React.Component {
                                                 size="sm"
                                                 type="submit"
                                             >Enregistrer
+                                            </MDBBtn>
+                                            <MDBBtn
+                                                color="teal accent-3"
+                                                rounded
+                                                size="sm"
+                                                disabled={!dirty || isSubmitting}
+                                                onClick={handleReset}
+                                            >Réinitialiser
                                             </MDBBtn>
                                         </MDBRow>
                                     </MDBCardBody>

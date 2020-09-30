@@ -254,7 +254,7 @@ export default class ParentUpdatePayrollVariablesAccountants extends Component {
                                             {this.state.period.map((p, index) => (
                                                 <option key={index} selected={p.id === this.state.monthSelected}
                                                         value={p.id}
-                                                        disabled={p.id > new Date().getMonth() + 1 ? (true) : (false)}>{p.text}</option>
+                                                        disabled={(((this.state.yearSelected ==  (new Date().getFullYear())&&p.id > new Date().getMonth() + 1)  )) ? (true) : (false)}>{p.text}</option>
                                             ))}
                                         </select>
                                     </div>

@@ -54,7 +54,6 @@ class TableAbsenceAccountant extends React.Component {
           AxiosCenter.modifyAbsence(this.props.absenceList[this.state.index]).then(() => {
             this.toggleModalRejectAbsence();
             notify('success');
-            this.reloadParentAfterUpdate();
         }).catch((error) => {
             console.log(error);
             notify('error');

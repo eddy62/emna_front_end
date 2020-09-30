@@ -61,7 +61,6 @@ const ComponentUploadFiles = ({field, ...props}) => (
             btnTitle="Télécharger"
             textFieldTitle="Justificatif(s)"
             multiple
-            reset
             btnColor="teal accent-3"
             getValue={props.fileInputHandler}
         />
@@ -69,26 +68,35 @@ const ComponentUploadFiles = ({field, ...props}) => (
 );
 
 const notify = type => {
+    const variable = "Autre Variable"
     switch (type) {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Autre Variable Enregistrée &nbsp;&nbsp;!</strong>
+                    <strong>{variable} Enregistrée &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Autre Variable NON Enregistrée &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
         case "formatError":
             toast.error(
                 <div className="text-center">
-                    <strong>Autre Variable NON Enregistrée &nbsp;&nbsp;! <br/>Format de fichier invalide &nbsp;&nbsp;!
+                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;! <br/>Format de fichier invalide &nbsp;&nbsp;!
                         <br/>Seuls les formats PDF, PNG, JPEG et JPG sont acceptés.</strong>
+                </div>
+            );
+            break;
+        case "fileError":
+            toast.error(
+                <div className="text-center">
+                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;!
+                        <br/>Un problème est survenu à cause du fichier.</strong>
                 </div>
             );
             break;
@@ -108,7 +116,8 @@ class CreateOtherPayrollVariable extends React.Component {
         super(props);
         this.state = {
             startPeriod: "",
-            endPeriod: ""
+            endPeriod: "",
+            fileList: []
         };
     }
 
@@ -118,20 +127,30 @@ class CreateOtherPayrollVariable extends React.Component {
         values.employeId = this.props.employeId;
         if (!this.checkFormat()) {
             AxiosCenter.createOtherPayrollVariable(values)
-                .then((response) => {
-                    this.uploadFiles(response.data.id)
-                    /* TODO : Execute success only if there is no error after previous function */
-                    notify("success");
-                    actions.resetForm();
+                .then(async (response) => {
+                    const errorDetected = await this.uploadFiles(response.data.id)
+                    if (errorDetected) {
+                        /* TODO Une fois deleteFile OK, supprimer en cascade toutes les entités + files
+                            (en cas d'envoi de multiples document en 1 variable) */
+                        AxiosCenter.deleteOtherPayrollVariable(response.data.id).catch((error) => {
+                            console.log(error);
+                        })
+                        notify("fileError");
+                        this.props.handleReset("OtherPayrollVariable");
+                    } else {
+                        actions.setSubmitting(true);
+                        notify("success");
+                        this.props.handleReset("OtherPayrollVariable");
+                    }
                 }).catch((error) => {
                 console.log(error);
                 notify("error");
+                this.props.handleReset("OtherPayrollVariable");
             });
         } else {
-            this.setState({fileList: []});
             notify("formatError");
+            this.props.handleReset("OtherPayrollVariable");
         }
-        actions.setSubmitting(true);
     }
 
     checkFormat = () => {
@@ -144,25 +163,30 @@ class CreateOtherPayrollVariable extends React.Component {
         return wrongFormat;
     }
 
-    uploadFiles = (autresVariableId) => {
+    uploadFiles = async (autresVariableId) => {
+        let errorDetected = false;
         let nbFiles = 0;
-        Array.from(this.state.fileList).forEach(file => {
+        for await (const file of this.state.fileList) {
             nbFiles++;
-            this.uploadFile(file, autresVariableId, nbFiles);
-        })
+            errorDetected = await this.uploadFile(file, autresVariableId, nbFiles);
+        }
+        return errorDetected;
     }
 
-    uploadFile = (file, autresVariableId, fileNumber) => {
+    uploadFile = async (file, autresVariableId, fileNumber) => {
+        let errorDetected = false;
         let formData = new FormData();
         formData.append("file", file);
         formData.append("absenceId", "-1");
         formData.append("noteDeFraisId", "-1");
         formData.append("autresVariableId", autresVariableId);
         formData.append("fileNumber", fileNumber);
-        AxiosCenter.uploadFile(formData)
+        await AxiosCenter.uploadFile(formData)
             .catch((error) => {
+                errorDetected = true;
                 console.log(error);
             })
+        return errorDetected;
     }
 
     fileInputHandler = (value) => {
@@ -206,7 +230,9 @@ class CreateOtherPayrollVariable extends React.Component {
                                 validationSchema={otherSchema(this.state)}
                         >
                             {({
-                                  handleSubmit
+                                  dirty,
+                                  handleSubmit,
+                                  isSubmitting
                               }) => (
                                 <Form onSubmit={handleSubmit}
                                       className="w-100"
@@ -248,7 +274,6 @@ class CreateOtherPayrollVariable extends React.Component {
                                             component={ComponentUploadFiles}
                                         />
                                         <MDBRow between around className="mt-3">
-                                            <MDBCol md="4" className="mt-4">
                                                 <MDBBtn
                                                     color="teal accent-3"
                                                     rounded
@@ -256,7 +281,14 @@ class CreateOtherPayrollVariable extends React.Component {
                                                     type="submit"
                                                 >Enregistrer
                                                 </MDBBtn>
-                                            </MDBCol>
+                                                <MDBBtn
+                                                    color="teal accent-3"
+                                                    rounded
+                                                    size="sm"
+                                                    disabled={(!dirty || isSubmitting) && this.state.fileList.length === 0}
+                                                    onClick={() => {this.props.handleReset("OtherPayrollVariable")}}
+                                                >Réinitialiser
+                                                </MDBBtn>
                                         </MDBRow>
                                     </MDBCardBody>
                                 </Form>

@@ -63,7 +63,7 @@ export default class ParentPayslip extends React.Component {
                 this.setState({
                     listPaySlip,
                     loaded:true
-                })
+                }, () => {console.log(this.state.listPaySlip)})
             });
     };
 
@@ -105,9 +105,12 @@ export default class ParentPayslip extends React.Component {
 
     //Méthode appelée au clique sur le bouton voir dans la liste des fiches de paie
     newWindowPdfFile = (key) => {
-
-        (AxiosCenter.getPdfFileByPath(this.state.listPaySlip[key].lienDocument))
+        const fullLink = this.state.listPaySlip[key].lienDocument;
+        const tabFullLink = fullLink.split('/');
+        const pdfName = tabFullLink[2];
+        AxiosCenter.getPdfFileByPath(pdfName)
             .then((response) => {
+                console.log(response);
                 const file = new Blob(
                     [response.data],
                     {type: 'application/pdf'});
@@ -231,14 +234,10 @@ export default class ParentPayslip extends React.Component {
                                                         <td>{this.state.period [paySlip.mois-1].text }</td>
                                                         <td>{paySlip.debutPeriode}</td>
                                                         <td>{paySlip.finPeriode}</td>
-                                                        {true ? (
                                                             <td>
                                                                 <MDBBtn color="teal accent-3" rounded size="sm"
                                                                         onClick={() => this.newWindowPdfFile(index)}>VOIR</MDBBtn>
                                                             </td>
-                                                        ) : (
-                                                            <td>pas de document</td>
-                                                        )}
 
 
                                                     </tr>

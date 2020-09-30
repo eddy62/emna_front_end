@@ -85,7 +85,6 @@ class CreateBonus extends React.Component {
         })
     }
 
-
     submit = (values, actions) => {
         values.annee = this.props.yearSelected;
         values.mois = this.props.monthSelected;
@@ -127,7 +126,10 @@ class CreateBonus extends React.Component {
                             validationSchema={this.primeSchema}
                         >
                             {({
-                                  handleSubmit
+                                  dirty,
+                                  handleReset,
+                                  handleSubmit,
+                                  isSubmitting
                               }) => (
                                 <Form onSubmit={handleSubmit}>
                                     <MDBRow between around>
@@ -157,6 +159,14 @@ class CreateBonus extends React.Component {
                                             rounded
                                             size="sm"
                                         >Enregistrer
+                                        </MDBBtn>
+                                        <MDBBtn
+                                            color="teal accent-3"
+                                            rounded
+                                            size="sm"
+                                            disabled={!dirty || isSubmitting}
+                                            onClick={handleReset}
+                                        >Réinitialiser
                                         </MDBBtn>
                                     </MDBRow>
                                 </Form>

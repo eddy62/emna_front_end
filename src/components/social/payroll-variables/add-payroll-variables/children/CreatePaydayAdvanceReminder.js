@@ -149,10 +149,13 @@ class CreatePaydayAdvanceReminder extends React.Component {
                                 validationSchema={avanceRappelSchema(this.state)}
                             >
                                 {({
+                                      dirty,
                                       handleBlur,
                                       handleChange,
+                                      handleReset,
                                       handleSubmit,
                                       values,
+                                      isSubmitting
                                   }) => (
                                     <Form onSubmit={handleSubmit}>
                                         <MDBCardBody style={{marginTop: "-5%", marginBottom: "-3%"}}>
@@ -226,6 +229,14 @@ class CreatePaydayAdvanceReminder extends React.Component {
                                                     size="sm"
                                                     type="submit"
                                                 >Enregistrer
+                                                </MDBBtn>
+                                                <MDBBtn
+                                                    color="teal accent-3"
+                                                    rounded
+                                                    size="sm"
+                                                    disabled={!dirty || isSubmitting}
+                                                    onClick={handleReset}
+                                                >Réinitialiser
                                                 </MDBBtn>
                                             </MDBRow>
                                         </MDBCardBody>
