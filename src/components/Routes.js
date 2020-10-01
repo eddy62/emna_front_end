@@ -93,7 +93,7 @@ import CreateArticle from "./contrat/referencial/article/create-article/CreateAr
 import EditArticle from "./contrat/referencial/article/edit-article/EditArticle";
 
 //Juridique
-import ListOfClauses from "./contrat/referencial/clauses/list-of-clauses/ListOfClauses";
+//import ListOfClauses from "./contrat/referencial/clauses/list-of-clauses/ListOfClauses";
 import ListArticle from "./contrat/referencial/article/list-article/ListArticle";
 
 //gestion Variables de paie
@@ -147,7 +147,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/contrat" component={Contrat} />
         <PrivateRoute path="/detailcontrat/:id" component={DetailContrat} />
         <PrivateRoute path="/creercontrat" component={CreerContrat} />
-        <PrivateRoute path="/clauses/society/:id" component={ListOfClauses} />
+        {/*<PrivateRoute path="/clauses/society/:id" component={ListOfClauses} />*/}
         <PrivateRoute exact path="/articles" component={ListArticle} />
         <PrivateRoute exact path="/articles/create" component={CreateArticle} />
         <PrivateRoute exact path="/articles/edit/:id" component={EditArticle} />

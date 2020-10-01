@@ -334,6 +334,13 @@ const AxiosCenter = {
       url: `/wrappervariablespaie/employe/${idEmploye}/annee/${year}/mois/${month}`
     })
   },
+
+  getAllContrats() {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/contrats`
+    })
+  },
   // Fin Get
 
 
@@ -768,6 +775,14 @@ const AxiosCenter = {
       url: `/clauses/${id}`,
     });
   },
+
+  deleteArticle(id) {
+    return ApiBackEnd({
+      method: "delete",
+      url: `/articles/${id}`
+    });
+  },
+
   // Fin Delete
 
 };

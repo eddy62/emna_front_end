@@ -30,7 +30,7 @@ export default class Referentiels extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="accueil">
+                    {/*<div className="accueil">
                         <div className="card testimonial-card">
                             <div className="card-up default-color lighten-1"/>
                             <div className="avatar mx-auto white">
@@ -50,7 +50,7 @@ export default class Referentiels extends React.Component {
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </div>*/}
                 </div>
             </div>
         );
