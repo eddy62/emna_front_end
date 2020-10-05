@@ -12,6 +12,7 @@ import {
     MDBContainer,
     MDBRow, MDBTable, MDBTableBody, MDBTableHead
 } from "mdbreact";
+import {toast} from "react-toastify";
 
 export default class ParentPayslip extends React.Component {
 
@@ -49,15 +50,15 @@ export default class ParentPayslip extends React.Component {
             ]
         }
 
-/*
+        /*
 
-        this.handleClick = this.handleClick.bind(this);*/
+                this.handleClick = this.handleClick.bind(this);*/
     }
 
     /*Methode qui récupère les fiches de paie*/
     getAllPayslipByEmployeIdMonthStartMonthEnd = () => {
         AxiosCenter.getAllPayslipByEmployeIdMonthStartMonthEnd(this.state.idEmployeSelected, this.state.yearSelected, this.state.firstMonthSelected,this.state.secondMonthSelected)
-        /*AxiosCenter.getAllPaySlip()*/
+            /*AxiosCenter.getAllPaySlip()*/
             .then((response) => {
                 const listPaySlip = response.data;
                 this.setState({
@@ -80,7 +81,7 @@ export default class ParentPayslip extends React.Component {
             });
 
         //Récupération de la liste des employés à travers l'id de la société
-        AxiosCenter.getAllWrapperEmployesBySociety(idSociete)
+        AxiosCenter.getAllEmployesBySociety(idSociete)
             .then((response) => {
                 const listeEmployes = response.data;
                 this.setState({ listeEmployes: listeEmployes });
@@ -103,24 +104,39 @@ export default class ParentPayslip extends React.Component {
         })
     };
 
+
+
     //Méthode appelée au clique sur le bouton voir dans la liste des fiches de paie
     newWindowPdfFile = (key) => {
-        const fullLink = this.state.listPaySlip[key].lienDocument;
-        const tabFullLink = fullLink.split('/');
-        const pdfName = tabFullLink[2];
-        AxiosCenter.getPdfFileByPath(pdfName)
+        AxiosCenter.getDocumentByIdPayslip(this.state.listPaySlip[key].id)
             .then((response) => {
-                console.log(response);
-                const file = new Blob(
-                    [response.data],
-                    {type: 'application/pdf'});
-                const fileURL = URL.createObjectURL(file);
-                window.open(fileURL);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-       ;
+                const lienDocument = response.data;
+                const fullLink = lienDocument.cheminFichier;
+                if (fullLink != null) {
+                    const tabFullLink = fullLink.split('./fichiers/social/variablesdepaie/');
+                    const pdfName = tabFullLink[1];
+                    AxiosCenter.getPdfFileByPath(pdfName)
+                        .then((response) => {
+                            const file = new Blob(
+                                [response.data],
+                                {type: 'application/pdf'});
+                            const fileURL = URL.createObjectURL(file);
+                            window.open(fileURL);
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                }else{
+                    toast.error(
+                        <div className="text-center">
+                            <strong>Erreur de chargement du fichier &nbsp;&nbsp;!</strong>
+                        </div>,
+                    );
+                }
+            });;
+
+
+        ;
     }
 
 
@@ -228,28 +244,28 @@ export default class ParentPayslip extends React.Component {
                                                 </tr>
                                             </MDBTableHead>
                                             {this.state.listPaySlip.length ? (
-                                            <MDBTableBody>
-                                                {this.state.listPaySlip.map((paySlip, index) => (
-                                                    <tr key={index}>
-                                                        <td>{this.state.period [paySlip.mois-1].text }</td>
-                                                        <td>{paySlip.debutPeriode}</td>
-                                                        <td>{paySlip.finPeriode}</td>
+                                                <MDBTableBody>
+                                                    {this.state.listPaySlip.map((paySlip, index) => (
+                                                        <tr key={index}>
+                                                            <td>{this.state.period [paySlip.mois-1].text }</td>
+                                                            <td>{paySlip.debutPeriode}</td>
+                                                            <td>{paySlip.finPeriode}</td>
                                                             <td>
                                                                 <MDBBtn color="teal accent-3" rounded size="sm"
                                                                         onClick={() => this.newWindowPdfFile(index)}>VOIR</MDBBtn>
                                                             </td>
 
 
-                                                    </tr>
-                                                ))}
+                                                        </tr>
+                                                    ))}
 
-                                            </MDBTableBody>
+                                                </MDBTableBody>
                                             ) : (
-                                            <MDBTableBody>
-                                                <tr>
-                                                    <td colSpan="5">Pas de fiche de paie pour cette période</td>
-                                                </tr>
-                                            </MDBTableBody>
+                                                <MDBTableBody>
+                                                    <tr>
+                                                        <td colSpan="5">Pas de fiche de paie pour cette période</td>
+                                                    </tr>
+                                                </MDBTableBody>
                                             )}
 
                                         </MDBTable>

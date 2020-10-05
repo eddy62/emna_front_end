@@ -80,6 +80,13 @@ const AxiosCenter = {
     });
   },
 
+  getAllEmployesBySociety(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/employes/society/${id}`,
+  });
+  },
+
   getAllWrapperEmployesBySociety(id) {
     return ApiBackEnd({
       method: "get",
@@ -335,10 +342,32 @@ const AxiosCenter = {
     })
   },
 
+  getPdfFileByPath(path) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/getPdfFile/${path}`,
+      responseType: 'blob'
+    })
+  },
+
   getAllContrats() {
     return ApiBackEnd({
       method: "GET",
       url: `/contrats`
+    })
+  },
+
+  getAllPayslipByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/fiche-paies/employe/${idEmploye}/annee/${year}/moisDu/${monthStart}/moisFin/${monthEnd}`,
+  });
+  },
+
+  getDocumentByIdPayslip(idPayslip) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/documents/idPaySlip/${idPayslip}`
     })
   },
   // Fin Get
