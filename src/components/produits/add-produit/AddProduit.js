@@ -7,24 +7,25 @@ import {MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput,} from "mdbr
 import UserService from '../../../shared/services/UserService';
 import {toast} from "react-toastify";
 import RegexService from "../../../shared/services/RegexService";
+import BackBtn from "../../../shared/component/buttons/BackBtn";
 
 
 const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
 );
 
-const ComposantInput = ({ field, form: { touched, errors }, ...props }) => (
-    <div >
+const ComposantInput = ({field, form: {touched, errors}, ...props}) => (
+    <div>
         <MDBInput label={props.label} type="text" {...props} className="form-control" {...field} />
     </div>
 );
-const ComposantTextarea = ({ field, form: { touched, errors }, ...props }) => (
-    <div >
+const ComposantTextarea = ({field, form: {touched, errors}, ...props}) => (
+    <div>
         <MDBInput type="textarea" label={props.label} rows="4"  {...props} className="form-control" {...field} />
     </div>
 );
-const ComposantSelect = ({ field, form: { touched, errors }, ...props }) => (
-    <div >
+const ComposantSelect = ({field, form: {touched, errors}, ...props}) => (
+    <div>
         <label> {props.label} </label>
         <select className=" form-control browser-default custom-select" name="unite"  {...props} {...field} >
             <option value="" disabled selected> Unité *</option>
@@ -48,7 +49,7 @@ class AddProduit extends React.Component {
                     <div className="text-center">
                         <strong>Le nouveau produit {response.data.nom} a été bien crée</strong>
                     </div>,
-                    { position: "top-right" }
+                    {position: "top-right"}
                 );
                 this.props.history.push("/produits/detail/" + response.data.id);
             })
@@ -57,9 +58,9 @@ class AddProduit extends React.Component {
                 toast.error(
                     <div className="text-center">
                         <strong>Erreur lors de la création d'un nouveau Client Fournisseur &nbsp;&nbsp;!</strong>
-                        <br />
+                        <br/>
                     </div>,
-                    { position: "top-right" }
+                    {position: "top-right"}
                 );
             });
 
@@ -102,20 +103,20 @@ class AddProduit extends React.Component {
                         }}
                         validationSchema={this.userSchema}
                     >
-                        {({ handleSubmit, isSubmitting }) => (
+                        {({handleSubmit, isSubmitting}) => (
                             <form
                                 onSubmit={handleSubmit}
                                 className="bg-white border p-5 d-flex flex-column"
                             >
-                                <div >
+                                <div>
                                     <Field
                                         name="nom"
                                         label="Nom Produit"
                                         component={ComposantInput}
                                     />
-                                    <ErrorMessage name="nom" component={ComposantErreur} />
+                                    <ErrorMessage name="nom" component={ComposantErreur}/>
 
-                                    <Field name="reference" label="Reference" component={ComposantInput} />
+                                    <Field name="reference" label="Reference" component={ComposantInput}/>
                                     <ErrorMessage
                                         name="reference"
                                         type="numbre"
@@ -123,40 +124,36 @@ class AddProduit extends React.Component {
                                     />
 
                                     <Field name="tva" label="Tva"
-                                        component={ComposantInput} />
+                                           component={ComposantInput}/>
                                     <ErrorMessage
                                         name="tva"
                                         type="numbre"
                                         component={ComposantErreur}
                                     />
-                                    <Field name="unite" component={ComposantSelect} />
-                                    <ErrorMessage name="unite" component={ComposantErreur} />
+                                    <Field name="unite" component={ComposantSelect}/>
+                                    <ErrorMessage name="unite" component={ComposantErreur}/>
 
-                                    <Field name="prix" label="Prix" component={ComposantInput} />
-                                    <ErrorMessage name="prix" type="number" component={ComposantErreur} />
+                                    <Field name="prix" label="Prix" component={ComposantInput}/>
+                                    <ErrorMessage name="prix" type="number" component={ComposantErreur}/>
 
                                     <Field name="description" label="Description" component={ComposantTextarea}
-                                        rows="2" />
-                                    <ErrorMessage name="description" component={ComposantErreur} />
+                                           rows="2"/>
+                                    <ErrorMessage name="description" component={ComposantErreur}/>
 
 
                                 </div>
-                                <br></br>
+                                <br/>
                                 <div className="row d-flex justify-content-center ">
                                     <MDBBtn rounded type="submit" color="primary">
                                         Enregistrer
-              </MDBBtn>
-                                    <Link to="/client-fournisseur">
-                                        <MDBBtn rounded color="teal accent-3">
-                                            Retour
-                  </MDBBtn>
-                                    </Link>
+                                    </MDBBtn>
+                                    <BackBtn history={this.props.history}/>
                                 </div>
                             </form>
                         )}
                     </Formik>
-                </div >
-            </MDBContainer >
+                </div>
+            </MDBContainer>
         );
     }
 }
