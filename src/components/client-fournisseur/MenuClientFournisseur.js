@@ -135,7 +135,7 @@ class MenuClientFournisseur extends Component {
                       Voir La Liste
                           </MDBBtn>
                   </Link>
-                  <Link name={this.state.societeNom} to="/produit/creer">
+                  <Link name={this.state.societeNom} to="/produits/create">
                     <MDBBtn color="teal accent-3" rounded size="sm" >
                       +Ajouter
                           </MDBBtn>

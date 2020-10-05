@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { ErrorMessage, Field, Formik } from "formik";
+import React, {Component} from 'react';
+import {ErrorMessage, Field, Formik} from "formik";
 import * as Yup from "yup"
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import { Link } from 'react-router-dom';
-import { MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput, } from "mdbreact";
-import { toast } from "react-toastify";
+import {Link} from 'react-router-dom';
+import {MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput,} from "mdbreact";
+import {toast} from "react-toastify";
 
 const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
@@ -26,7 +26,7 @@ const ComposantSelect = ({ field, form: { touched, errors }, ...props }) => (
         <select className=" form-control browser-default custom-select" name="unite"  {...props} {...field} >
             <option value="" disabled selected>
                 Unite*
-                                </option>
+            </option>
             <option value="h">H</option>
             <option value="j">J</option>
             <option value="m">M</option>
@@ -78,7 +78,7 @@ class UpdateProduit extends Component {
                     </div>,
                     { position: "top-right" }
                 );
-                this.props.history.push("/produit/detail/" + response.data.id);
+                this.props.history.push("/produits/detail/" + response.data.id);
             })
             .catch((error) => {
                 console.log(error);

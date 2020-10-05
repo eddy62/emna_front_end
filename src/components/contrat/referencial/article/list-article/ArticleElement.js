@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import RedirectionBtn from "../../../../../shared/component/RedirectionBtn";
+import RedirectionBtn from "../../../../../shared/component/buttons/RedirectionBtn";
 import UserService from "../../../../../shared/services/UserService";
 import DeletionConfirmationModal from "../../../../../shared/component/DeletionConfirmationModal";
 
@@ -15,8 +15,8 @@ export default class ArticleElement extends Component {
                 {UserService.isAdmin() &&
                     <td>
                         <RedirectionBtn
-                            route={"/articles/edit/" + this.props.article.id}
-                            msg="Modifier"
+                            to={"/articles/edit/" + this.props.article.id}
+                            txt="Modifier"
                             color="default-color"
                         />
                     </td>

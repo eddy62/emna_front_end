@@ -1,15 +1,14 @@
 import React from 'react';
-import {MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer, MDBDataTable} from 'mdbreact';
+import {MDBCardHeader, MDBCardTitle, MDBContainer, MDBDataTable} from 'mdbreact';
 import AxiosCenter from '../../../shared/services/AxiosCenter';
-import {Link} from "react-router-dom";
 import UserService from '../../../shared/services/UserService';
+import BackBtn from "../../../shared/component/buttons/BackBtn";
 
 class ListeProduits extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             societeId: UserService.getSocietyId(),
-            roleUser: UserService.getRole(),
             nomSociete: this.props.societeNom,
             listeProduits: [],
             loaded: false,
@@ -19,7 +18,7 @@ class ListeProduits extends React.Component {
     }
 
     componentDidMount() {
-        if (this.state.roleUser === "ROLE_SOCIETY") {
+        if (UserService.isSociety() || UserService.isAdmin()) {
             AxiosCenter.getProduct(this.state.societeId)
                 .then((response) => {
                     const columns = [
@@ -61,14 +60,14 @@ class ListeProduits extends React.Component {
                             unite: element.unite,
                             // quantite: element.quantite,
                             clickEvent: () => {
-                                this.props.history.push("/produit/detail/" + element.id);
+                                this.props.history.push("/produits/detail/" + element.id);
                             },
                         };
                         rows.push(produits);
                     });
                     this.setState({
                         listeProduits: listeProduits,
-                        data: { columns, rows },
+                        data: {columns, rows},
                         loaded: true,
                     });
                 })
@@ -92,16 +91,10 @@ class ListeProduits extends React.Component {
                     />
                 </div>
                 <div className="row d-flex justify-content-center">
-                    <Link to="/client-fournisseur">
-                        <MDBBtn rounded color="teal accent-3">
-                            Retour
-                      </MDBBtn>
-                    </Link>
+                    <BackBtn history={this.props.history}/>
                 </div>
             </MDBContainer>);
     }
 }
-
-
 
 export default ListeProduits;
