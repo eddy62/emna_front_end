@@ -341,6 +341,14 @@ const AxiosCenter = {
       url: `/contrats`
     })
   },
+
+  getPDFArchivedStatement(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/releves/pdf/${id}`,
+      responseType: 'arraybuffer'
+    });
+  },
   // Fin Get
 
 

@@ -16,8 +16,7 @@ export default class ListeRelevesValide extends React.Component {
         };
     }
     componentDidMount() {
-        console.log(this.state.societyId)
-         if (this.state.userRole == "ROLE_ADMIN"){
+         if (UserService.isAdmin()){
              AxiosCenter.getStatementByState(ReleveConstants.RELEVE_ETAT_NON_ARCHIVE)
                  .then((res) => {
                      const releves = res.data;
@@ -35,7 +34,7 @@ export default class ListeRelevesValide extends React.Component {
      }
 
     deleteReleve = (id) => {
-        AxiosCenter.deleteStatement(id).then((res) => this.componentDidMount());
+        AxiosCenter.deleteStatement(id).then(() => this.componentDidMount());
     };
 
 
