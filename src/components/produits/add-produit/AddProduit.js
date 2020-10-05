@@ -1,11 +1,12 @@
 import React from "react";
-import { ErrorMessage, Field, Formik } from "formik";
+import {ErrorMessage, Field, Formik} from "formik";
 import * as Yup from "yup";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import { Link } from "react-router-dom";
-import { MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput, } from "mdbreact";
+import {Link} from "react-router-dom";
+import {MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput,} from "mdbreact";
 import UserService from '../../../shared/services/UserService';
-import { toast } from "react-toastify";
+import {toast} from "react-toastify";
+import RegexService from "../../../shared/services/RegexService";
 
 
 const ComposantErreur = (props) => (
@@ -37,6 +38,8 @@ const ComposantSelect = ({ field, form: { touched, errors }, ...props }) => (
     </div>
 );
 
+const regOnlyNumbers = RegexService.onlyNumbers();
+
 class AddProduit extends React.Component {
     submit = (values, actions) => {
         AxiosCenter.createProduct(values)
@@ -47,7 +50,7 @@ class AddProduit extends React.Component {
                     </div>,
                     { position: "top-right" }
                 );
-                this.props.history.push("/client-fournisseur");
+                this.props.history.push("/produits/detail/" + response.data.id);
             })
             .catch((error) => {
                 console.log(error);
@@ -61,18 +64,17 @@ class AddProduit extends React.Component {
             });
 
         actions.setSubmitting(true);
-
     };
 
     userSchema = Yup.object().shape({
         nom: Yup.string().min(3, "Le Nom ne peut contient moins que 3 caractères")
             .max(20, "Le nom ne peut dépasser 20 caractères ").required("Le champ est obligatoire"),
         reference: Yup.string()
-            .matches(/^[0-9]+$/, "Reference doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
+            .matches(regOnlyNumbers, "Reference doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
         tva: Yup.string()
-            .matches(/^[0-9.]+$/, "Tva doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
+            .matches(regOnlyNumbers, "Tva doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
         prix: Yup.string()
-            .matches(/^[0-9.]+$/, "Prix doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
+            .matches(regOnlyNumbers, "Prix doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
         description: Yup.string().max(200, "200 caractères maximum"),
         unite: Yup.string().required("Le champ est obligatoire"),
     });
@@ -83,9 +85,9 @@ class AddProduit extends React.Component {
             <MDBContainer>
                 <div>
                     <MDBCardHeader color="default-color">Gestion Produits</MDBCardHeader>
-                    <br></br>
+                    <br/>
                     <MDBCardTitle tag="h3">Enregister un Nouveau Produit </MDBCardTitle>
-                    <hr></hr>
+                    <hr/>
                     <Formik
                         onSubmit={this.submit}
                         initialValues={{

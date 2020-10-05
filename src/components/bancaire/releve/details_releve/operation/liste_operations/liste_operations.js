@@ -5,7 +5,7 @@ import Loading from "../../../../../../shared/component/Loading";
 import UserService from "../../../../../../shared/services/UserService";
 import DeletionConfirmationModal from "../../../../../../shared/component/DeletionConfirmationModal";
 import {MDBCard, MDBCardBody, MDBCardTitle, MDBCol, MDBContainer} from "mdbreact";
-import RedirectionBtn from "../../../../../../shared/component/RedirectionBtn";
+import RedirectionBtn from "../../../../../../shared/component/buttons/RedirectionBtn";
 
 export default class ListeOperations extends React.Component {
   constructor(props) {
@@ -60,9 +60,9 @@ export default class ListeOperations extends React.Component {
             { (UserService.isSociety() || UserService.isAdmin()) &&
               props.isReleveUnvalid &&
               <RedirectionBtn
-                route ={"/editoperation/" + operation.id}
-                msg   = "Modifier"
-                color ="default-color"
+                to={"/editoperation/" + operation.id}
+                txt= "Modifier"
+                color="default-color"
               />
             }
           </td>

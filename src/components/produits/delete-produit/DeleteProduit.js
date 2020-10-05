@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { MDBBtn, MDBContainer, MDBModal, MDBModalBody, MDBModalFooter, MDBModalHeader } from 'mdbreact';
+import React, {Component} from 'react';
+import {MDBBtn, MDBContainer, MDBModal, MDBModalBody, MDBModalFooter, MDBModalHeader} from 'mdbreact';
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
-import { toast } from "react-toastify";
-import { Redirect } from "react-router-dom";
+import {toast} from "react-toastify";
+import {Redirect} from "react-router-dom";
 
 class DeleteProduit extends Component {
     state = {
@@ -26,7 +26,7 @@ class DeleteProduit extends Component {
                     <div className="text-center">
                         <strong> Le Produit {this.props.produit.nom} a été bien Supprimé</strong>
                     </div>,
-                    { position: "top-right" }
+                    {position: "top-right"}
                 );
                 this.setState({
                     modal: !this.state.modal,
@@ -38,32 +38,37 @@ class DeleteProduit extends Component {
                 toast.error(
                     <div className="text-center">
                         <strong>Erreur lors la suppression &nbsp;&nbsp;!</strong>
-                        <br />
+                        <br/>
                     </div>,
-                    { position: "top-right" }
+                    {position: "top-right"}
                 );
             });
 
     };
-    redirection = () => this.setState({ redirect: true });
+    redirection = () => this.setState({redirect: true});
 
     render() {
         return (
             <MDBContainer>
-                <MDBBtn onClick={this.toggle} rounded size="sm" color="secondary">Supprimer</MDBBtn>
-                <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
-                    <MDBModalHeader toggle={this.toggle}>Confirmation de suppression
-</MDBModalHeader>
+                <MDBBtn onClick={this.toggle} rounded color="secondary">Supprimer</MDBBtn>
+                <MDBModal isOpen={this.state.modal}>
+                    <MDBModalHeader>
+                        Confirmation de suppression
+                    </MDBModalHeader>
                     <MDBModalBody>
                         Etes-vous certain de vouloir supprimer le Produit {this.props.produit.nom} ?
-        </MDBModalBody>
+                    </MDBModalBody>
                     <MDBModalFooter>
-                        <MDBBtn rounded type="button" circle="true" size="sm" onClick={this.toggle}>Annuler</MDBBtn>
+                        <MDBBtn rounded type="button" circle="true" size="sm" onClick={this.toggle}>
+                            Annuler
+                        </MDBBtn>
 
-                        <MDBBtn rounded toggle={this.toggle} color="secondary" onClick={() => this.supprimerProduit()} circle="true" size="sm" >
-                            Supprimer</MDBBtn>
+                        <MDBBtn rounded color="secondary" onClick={() => this.supprimerProduit()}
+                                circle="true" size="sm">
+                            Supprimer
+                        </MDBBtn>
                         {this.state.redirect && (
-                            <Redirect to={"/produits"} />
+                            <Redirect to={"/produits"}/>
                         )}
 
                     </MDBModalFooter>
