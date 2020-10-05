@@ -1,13 +1,27 @@
 import React, {Component} from 'react';
 
-export default class StatementInvoice extends Component {
-  render() {
+const StatementInvoice = ({facture, isCheckBoxVisible, addOrRemoveSelectedFacture}) => {
     return (
       <tr>
-        <td>{this.props.facture.numfact}</td>
-        <td>{this.props.facture.date}</td>
-        <td>{this.props.facture.prixTTC}€</td>
+        <td>{facture.numfact}</td>
+        <td>{facture.date}</td>
+        <td>{facture.prixTTC}€</td>
+        <td>{
+            isCheckBoxVisible &&
+            <div className="custom-control custom-checkbox">
+                <input onClick={
+                    (event) => {
+                        // this.props.addOrRemoveSelectedFacture(this.props.facture, event.currentTarget.checked)
+                        addOrRemoveSelectedFacture(facture, event)
+                    }
+                }
+                    type="checkbox" className="custom-control-input" id={facture.id}/>
+                <label className="custom-control-label" htmlFor={facture.id}/>
+            </div>
+            }
+        </td>
       </tr>
     );
-  }
 }
+
+export default StatementInvoice;

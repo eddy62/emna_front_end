@@ -59,7 +59,6 @@ export default class TableExpenseReport extends React.Component {
     }
 
     toggleModalDocument = (key, id) => {
-        console.log(key);
         this.setState({
             index: key,
             modaleDetails: !this.state.modaleDetails,

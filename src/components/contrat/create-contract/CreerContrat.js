@@ -13,8 +13,7 @@ export default class CreerContrat extends React.Component {
             title: "CONTRAT A DUREE INDETERMINEE A TEMPS PLEIN",
             employeId: '',
             societeId: '1',
-            clauses:
-                [],
+            //clauses: [],
         };
     }
 
@@ -30,7 +29,7 @@ export default class CreerContrat extends React.Component {
         })
     }
 
-    handleOnChangeClause = (clause) => {
+    /*handleOnChangeClause = (clause) => {
         var present= false;
         var index=0;
         for(var i = 0; i < this.state.clauses.length; i++){
@@ -52,7 +51,7 @@ export default class CreerContrat extends React.Component {
 
 
 
-    }
+    }*/
 
     componentDidMount() {
 
@@ -74,7 +73,7 @@ export default class CreerContrat extends React.Component {
             })
 
             const Article = props.employe.articleVMList.map((article, b) =>{
-                const Clause = article.listClauses.map((clause, c) => {
+                /*const Clause = article.listClauses.map((clause, c) => {
                     return (
                         <div key={c}>
                             <div className="form-group">
@@ -90,12 +89,12 @@ export default class CreerContrat extends React.Component {
                             </div>
                         </div>
                     )
-                })
+                })*/
                 return (
                     <div key={b}>
                         <h5>{article.articleTitre} : {article.articleDescription}</h5>
                         {article.articleReference}
-                        {Clause}
+                        {/*Clause*/}
                     </div>
                 )
             })
@@ -114,13 +113,13 @@ export default class CreerContrat extends React.Component {
                             signe: 'false',
                             employeId: '',
                             societeId: '',
-                            clauses: [],
+                            //clauses: [],
                         }}
                         onSubmit={fields => {
                             fields.titre = this.state.title;
                             fields.employeId = this.state.employeId;
                             fields.societeId = this.state.societeId;
-                            fields.clauses = this.state.clauses;
+                            //fields.clauses = this.state.clauses;
                             ContratService.postContrat(fields)
                                 //.then(response =>{
                                // const blob = new Blob([response.data], { type: 'application/pdf' });
@@ -154,7 +153,7 @@ export default class CreerContrat extends React.Component {
 
                                         {Article}
                                 <hr/><hr/><hr/>
-                                <button type="button" className="btn btn-mdb-color float-left" >Ajouter une clause</button>
+                                {/*<button type="button" className="btn btn-mdb-color float-left" >Ajouter une clause</button>*/}
                                 <button type="button" className="btn btn-mdb-color float-left">Ajouter un article</button>
                                 <hr/><hr/><hr/><hr/><hr/>
                                 <div className="clearfix">

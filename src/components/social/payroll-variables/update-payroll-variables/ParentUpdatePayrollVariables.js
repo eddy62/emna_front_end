@@ -50,8 +50,8 @@ export default class ParentUpdatePayrollVariables extends Component {
             idEmploye: this.props.match.params.id,
             listeEmployes: [],
             currentYear: new Date().getFullYear(),
-            yearSelected: new Date().getFullYear(),
-            monthSelected: new Date().getMonth() + 1,
+            yearSelected: this.props.match.params.yearSelected,
+            monthSelected: this.props.match.params.monthSelected,
             period: [
                 {id: 1, text: "Janvier"},
                 {id: 2, text: "Février"},
@@ -94,15 +94,14 @@ export default class ParentUpdatePayrollVariables extends Component {
     /*Methode qui appelle le wrapper variables de paie */
     getWrapperPayrollVariablesByEmployeIdByYearByMonth = () => {
         AxiosCenter.getWrapperPayrollVariablesByEmployeIdByYearByMonth(this.state.idEmploye, this.state.yearSelected, this.state.monthSelected)
-        .then((response) => {     
-            console.log(response.data);    
+        .then((response) => {
             const absenceList = response.data.wrapperAbsenceList;
             const heureSupList = response.data.heuresSupplementairesDTOList;
-            const primeList = response.data.wrapperPrimeList;            
+            const primeList = response.data.wrapperPrimeList;
             const noteDeFraisList = response.data.wrapperNoteDeFraisList;
             const avanceRappelSalaireList = response.data.avanceRappelSalaireDTOList;
             const autresVariableList = response.data.wrapperAutresVariableList;
-            
+
             let afficherBoutonConfirmer = false;
             if ((absenceList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined)
                 || (heureSupList.find(variablePaie =>  variablePaie.etatVariablePaieId === 1) !== undefined)
@@ -191,7 +190,13 @@ export default class ParentUpdatePayrollVariables extends Component {
 
     //Méthode permettant de setter le State des selects qui sont transmis aux composants enfant
     changeHandler = event => {
-        this.setState({ [event.target.name]: event.target.value }, () => {
+        this.setState({ [event.target.name]: event.target.value }, async () => {
+            const currentMonth = new Date().getMonth() + 1;
+            if (this.state.yearSelected === "2020" && this.state.monthSelected > currentMonth){
+                await this.setState({
+                    monthSelected: currentMonth
+                })
+            }
             this.getWrapperPayrollVariablesByEmployeIdByYearByMonth();
         })
     };
@@ -238,6 +243,7 @@ export default class ParentUpdatePayrollVariables extends Component {
                                             name="yearSelected"
                                             className="browser-default custom-select"
                                             onChange={this.changeHandler}
+                                            value={this.state.yearSelected}
                                         >
                                             <option disabled>Choisissez une année</option>
                                             {this.state.year.map((y, index) => (
@@ -251,10 +257,11 @@ export default class ParentUpdatePayrollVariables extends Component {
                                             name="monthSelected"
                                             className="browser-default custom-select"
                                             onChange={this.changeHandler}
+                                            value={this.state.monthSelected}
                                         >
                                             <option disabled defaultValue={new Date().getMonth()}>Choisissez un mois  </option>
                                             {this.state.period.map((p, index) => (
-                                                <option key={index} selected={p.id === this.state.monthSelected}
+                                                <option key={index}
                                                         value={p.id}
                                                         disabled={this.state.yearSelected == this.state.currentYear && p.id > new Date().getMonth() + 1 ? (true) : (false)}>{p.text}</option>
                                             ))}
@@ -310,7 +317,7 @@ export default class ParentUpdatePayrollVariables extends Component {
                                         onClick={() => {
                                             this.props.history.push(
                                                 "/add-payroll-variables/"
-                                                + this.state.society.id + "/" + this.state.idNameSelected);
+                                                + this.state.society.id + "/" + this.state.idEmploye);
                                         }}>
                                     Ajouter
                                 </MDBBtn>

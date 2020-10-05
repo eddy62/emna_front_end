@@ -2,51 +2,41 @@ import React from "react";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import {Link} from "react-router-dom";
 import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer} from "mdbreact";
+import AxiosCenter from "../../../../shared/services/AxiosCenter";
 
 const ListReleve = (props) => {
     const releves = props.releves.map((wrapperReleve) => {
         return (
-            <tr key={wrapperReleve.releve.id} className="alert alert-success" role="alert">
-                <td> {wrapperReleve.releve.dateDebut}</td>
-                <td>{wrapperReleve.releve.dateFin}</td>
+            <tr key={wrapperReleve.id} className="alert alert-success" role="alert">
+                <td> {wrapperReleve.dateDebut}</td>
+                <td>{wrapperReleve.dateFin}</td>
                 <td>{wrapperReleve.solde}</td>
-                <td>{wrapperReleve.releve.banque}</td>
+                <td>{wrapperReleve.banque}</td>
                 <td>
-                    <Link to={props.chemin + wrapperReleve.releve.id}>voir le détail</Link>
+                    <Link to={props.chemin + wrapperReleve.id}>voir le détail</Link>
                 </td>
                 <td>
                     <button
                         //className="btn btn-small btn-danger"
-                        onClick={() => props.deleteReleve(wrapperReleve.releve.id)}
+                        onClick={() => props.deleteReleve(wrapperReleve.id)}
                     >
                         X
                     </button>
                 </td>
+                {
+                    props.isPdf &&
                 <td>
                     <button type="button"
                             className="btn btn-primary"
-                            onClick={getAsPDF(wrapperReleve.releve.id)}
+                            onClick={() => props.getAsPDF(wrapperReleve.id)}
                     >
                         <i className="fas fa-file-pdf" />
                     </button>
                 </td>
+                }
             </tr>
         );
     });
-
-function goBack(){
-    return props.goBack;
-}
-
-  function getAsPDF (statementId){
-        AxiosCenter.getPDFArchivedStatement(statementId)
-            .then((res) => {
-                const file = new Blob([res.data], {type: 'application/pdf'});
-                const fileURL = URL.createObjectURL(file);
-                window.open(fileURL);
-            })
-            .catch((err) => console.log(err));
-    }
 
     return (
         <div className="containerDetailsReleve">
@@ -77,7 +67,7 @@ function goBack(){
                                             color=" teal lighten-2"
                                             rounded
                                             size="sm"
-                                            onClick={goBack()}
+                                            onClick={()=>props.goBack()}
                                         >
                                             <span id="color-button"> Retour</span>
                                         </MDBBtn>

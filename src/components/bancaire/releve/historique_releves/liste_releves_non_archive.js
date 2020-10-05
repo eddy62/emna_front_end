@@ -24,6 +24,10 @@ export default class ListeRelevesNonArchive extends React.Component {
       .catch((err) => console.log(err));
   }
 
+  deleteReleve = (id) => {
+    AxiosCenter.deleteStatement(id).then((res) => this.componentDidMount());
+  };
+
   render() {
     if (this.state.loaded) {
       return (
@@ -33,6 +37,7 @@ export default class ListeRelevesNonArchive extends React.Component {
               titre="Rapprochement Bancaire"
               chemin="/detailsreleve/"
               goBack={this.props.history.goBack}
+              isPdf={false}
           />
       );
     } else {

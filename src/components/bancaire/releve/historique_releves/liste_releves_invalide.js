@@ -36,6 +36,7 @@ export default class ListeRelevesInvalide extends React.Component {
           titre={"Relevés en cours"}
           chemin="/detailsreleveinvalide/"
           goBack={this.props.history.goBack}
+          isPdf={false}
         />
       );
     } else {

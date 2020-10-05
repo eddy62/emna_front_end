@@ -64,33 +64,43 @@ const ComponentUploadFiles = ({field, ...props}) => (
 );
 
 const notify = type => {
+    const variable = "Absence"
     switch (type) {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Absence Enregistrée &nbsp;&nbsp;!</strong>
+                    <strong>{variable} Enregistrée &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Absence NON Enregistrée &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
         case "formatError":
             toast.error(
                 <div className="text-center">
-                    <strong>Absence NON Enregistrée &nbsp;&nbsp;! <br/>Format de fichier invalide &nbsp;&nbsp;!
+                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;!
+                        <br/>Format de fichier invalide &nbsp;&nbsp;!
                         <br/>Seuls les formats PDF, PNG, JPEG et JPG sont acceptés.</strong>
+                </div>
+            );
+            break;
+        case "fileError":
+            toast.error(
+                <div className="text-center">
+                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;!
+                        <br/>Un problème est survenu à cause du fichier.</strong>
                 </div>
             );
             break;
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>Absence NON Enregistrée &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
@@ -106,8 +116,7 @@ class CreateAbsence extends React.Component {
             loaded: false,
             startPeriod: "",
             endPeriod: "",
-            fileList: [],
-            jsonData: {}
+            fileList: []
         };
     }
 
@@ -129,20 +138,30 @@ class CreateAbsence extends React.Component {
         values.employeId = this.props.employeId;
         if (!this.checkFormat()) {
             AxiosCenter.createAbsence(values)
-                .then((response) => {
-                    this.uploadFiles(response.data.id)
-                    /* TODO : Execute success only if there is no error after previous function */
-                    notify("success");
-                    actions.resetForm();
+                .then(async (response) => {
+                    const errorDetected = await this.uploadFiles(response.data.id);
+                    if (errorDetected) {
+                        /* TODO Une fois deleteFile OK, supprimer en cascade toutes les entités + files
+                            (en cas d'envoi de multiples document en 1 variable) */
+                        AxiosCenter.deleteAbsence(response.data.id).catch((error) => {
+                            console.log(error);
+                        })
+                        notify("fileError");
+                        this.props.handleReset("Absence");
+                    } else {
+                        actions.setSubmitting(true);
+                        notify("success");
+                        this.props.handleReset("Absence");
+                    }
                 }).catch((error) => {
                 console.log(error);
                 notify("error");
+                this.props.handleReset("Absence");
             });
         } else {
-            this.setState({fileList: []});
             notify("formatError");
+            this.props.handleReset("Absence");
         }
-        actions.setSubmitting(true);
     }
 
     checkFormat = () => {
@@ -155,25 +174,30 @@ class CreateAbsence extends React.Component {
         return wrongFormat;
     }
 
-    uploadFiles = (absenceId) => {
+    uploadFiles = async (absenceId) => {
+        let errorDetected = false;
         let nbFiles = 0;
-        Array.from(this.state.fileList).forEach(file => {
+        for await (const file of this.state.fileList) {
             nbFiles++;
-            this.uploadFile(file, absenceId, nbFiles)
-        })
+            errorDetected = await this.uploadFile(file, absenceId, nbFiles);
+        }
+        return errorDetected;
     }
 
-    uploadFile = (file, absenceId, fileNumber) => {
+    uploadFile = async (file, absenceId, fileNumber) => {
+        let errorDetected = false;
         let formData = new FormData();
         formData.append("file", file);
         formData.append("absenceId", absenceId);
         formData.append("noteDeFraisId", "-1");
         formData.append("autresVariableId", "-1");
         formData.append("fileNumber", fileNumber);
-        AxiosCenter.uploadFile(formData)
+        await AxiosCenter.uploadFile(formData)
             .catch((error) => {
+                errorDetected = true;
                 console.log(error);
-            })
+            });
+        return errorDetected;
     }
 
     fileInputHandler = (files) => {
@@ -219,7 +243,9 @@ class CreateAbsence extends React.Component {
                                 validationSchema={absenceSchema(this.state)}
                         >
                             {({
-                                  handleSubmit
+                                  dirty,
+                                  handleSubmit,
+                                  isSubmitting
                               }) => (
                                 <Form onSubmit={handleSubmit}
                                       className="w-100"
@@ -266,7 +292,6 @@ class CreateAbsence extends React.Component {
                                             <ErrorMessage name="typeAbsenceId" component={ComponentError}/>
                                         </MDBRow>
                                         <MDBRow between around className="mt-3">
-                                            <MDBCol md="4" className="mt-4">
                                                 <MDBBtn
                                                     color="teal accent-3"
                                                     rounded
@@ -274,7 +299,14 @@ class CreateAbsence extends React.Component {
                                                     type="submit"
                                                 >Enregistrer
                                                 </MDBBtn>
-                                            </MDBCol>
+                                                <MDBBtn
+                                                    color="teal accent-3"
+                                                    rounded
+                                                    size="sm"
+                                                    disabled={(!dirty || isSubmitting) && this.state.fileList.length === 0}
+                                                    onClick={() => {this.props.handleReset("Absence")}}
+                                                >Réinitialiser
+                                                </MDBBtn>
                                         </MDBRow>
                                     </MDBCardBody>
                                 </Form>
@@ -284,7 +316,6 @@ class CreateAbsence extends React.Component {
                 </MDBContainer>
         )
     }
-
 }
 
 export default CreateAbsence;

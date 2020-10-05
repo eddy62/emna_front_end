@@ -97,8 +97,9 @@ class ModifyExpenseReport extends React.Component {
     submit = (values, actions) => {
         AxiosCenter.updateExpenseReport(values)
             .then(() => {
-                notify("success");
                 this.props.toggleNoteDeFrais(this.props.index);
+                this.props.reloadParentAfterUpdate();
+                notify("success");
             }).catch((error) => {
             console.log(error);
             notify("error");

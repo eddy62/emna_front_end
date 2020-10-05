@@ -135,7 +135,7 @@ class MenuClientFournisseur extends Component {
                       Voir La Liste
                           </MDBBtn>
                   </Link>
-                  <Link name={this.state.societeNom} to="/produit/creer">
+                  <Link name={this.state.societeNom} to="/produits/create">
                     <MDBBtn color="teal accent-3" rounded size="sm" >
                       +Ajouter
                           </MDBBtn>
@@ -148,11 +148,11 @@ class MenuClientFournisseur extends Component {
 
         <MDBRow>
           <MDBCol>
-            <br></br>
+            <br/>
             <div className="row d-flex justify-content-center">
               <Link to="/">
                 <MDBBtn color="teal accent-3" rounded size="sm">
-                  Retour à l'Acceuil
+                  Retour à l'Accueil
                 </MDBBtn>
               </Link>
             </div>

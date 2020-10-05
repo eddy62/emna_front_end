@@ -20,7 +20,7 @@ export default class DetailContrat extends React.Component {
     // const id = query.get('id')
     console.log("ID URL");
     console.log(this.props.match.params.id);
-    ContratService.getContratDetail(this.props.match.params.id)
+    /*ContratService.getContratDetail(this.props.match.params.id)
       .then((resultat) => {
         const contrats = resultat.data;
         this.setState({
@@ -28,7 +28,10 @@ export default class DetailContrat extends React.Component {
           loaded: true,
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err));*/
+    this.setState({
+      loaded: true
+    })
   }
 
   detailContrats(props) {

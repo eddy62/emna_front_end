@@ -1,32 +1,32 @@
-import React, { Component } from 'react';
-import { ErrorMessage, Field, Formik } from "formik";
+import React, {Component} from 'react';
+import {ErrorMessage, Field, Formik} from "formik";
 import * as Yup from "yup"
 import AxiosCenter from "../../../shared/services/AxiosCenter";
-import { Link } from 'react-router-dom';
-import { MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput, } from "mdbreact";
-import { toast } from "react-toastify";
+import {Link} from 'react-router-dom';
+import {MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput,} from "mdbreact";
+import {toast} from "react-toastify";
 
 const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
 );
 
-const ComposantInput = ({ field, form: { touched, errors }, ...props }) => (
-    <div >
+const ComposantInput = ({field, form: {touched, errors}, ...props}) => (
+    <div>
         <MDBInput label={props.label} type="text" {...props} className="form-control" {...field} />
     </div>
 );
-const ComposantTextarea = ({ field, form: { touched, errors }, ...props }) => (
-    <div >
+const ComposantTextarea = ({field, form: {touched, errors}, ...props}) => (
+    <div>
         <MDBInput type="textarea" label={props.label} rows="4"  {...props} className="form-control" {...field} />
     </div>
 );
-const ComposantSelect = ({ field, form: { touched, errors }, ...props }) => (
-    <div >
+const ComposantSelect = ({field, form: {touched, errors}, ...props}) => (
+    <div>
         <label> {props.label} </label>
         <select className=" form-control browser-default custom-select" name="unite"  {...props} {...field} >
             <option value="" disabled selected>
                 Unite*
-                                </option>
+            </option>
             <option value="h">H</option>
             <option value="j">J</option>
             <option value="m">M</option>
@@ -76,23 +76,22 @@ class UpdateProduit extends Component {
                     <div className="text-center">
                         <strong>Le produit a été mis à jour </strong>
                     </div>,
-                    { position: "top-right" }
+                    {position: "top-right"}
                 );
-                this.props.history.push("/produit/detail/" + response.data.id);
+                this.props.history.push("/produits/detail/" + response.data.id);
             })
             .catch((error) => {
                 console.log(error);
                 toast.error(
                     <div className="text-center">
                         <strong>Le produit n'a pas été mis à jour&nbsp;&nbsp;!</strong>
-                        <br />
+                        <br/>
                     </div>,
-                    { position: "top-right" }
+                    {position: "top-right"}
                 );
             });
         actions.setSubmitting(true);
     }
-
 
 
     userSchema = Yup.object().shape({
@@ -108,6 +107,7 @@ class UpdateProduit extends Component {
         description: Yup.string().max(200, "200 caractères maximum"),
         unite: Yup.string().required("Le champ est obligatoire"),
     });
+
     render() {
 
         return (
@@ -124,20 +124,20 @@ class UpdateProduit extends Component {
                         enableReinitialize={true}
                         validationSchema={this.userSchema}
                     >
-                        {({ handleSubmit }) => (
+                        {({handleSubmit}) => (
                             <form
                                 onSubmit={handleSubmit}
                                 className=" container-fluid p-5 lighten-5 justify-content-center align-items-center"
                             >
-                                <div >
+                                <div>
                                     <Field
                                         name="nom"
                                         label="Nom produit"
                                         component={ComposantInput}
                                     />
-                                    <ErrorMessage name="nom" component={ComposantErreur} />
+                                    <ErrorMessage name="nom" component={ComposantErreur}/>
 
-                                    <Field name="reference" label="Reference" component={ComposantInput} />
+                                    <Field name="reference" label="Reference" component={ComposantInput}/>
                                     <ErrorMessage
                                         name="reference"
                                         type="numbre"
@@ -145,41 +145,42 @@ class UpdateProduit extends Component {
                                     />
 
                                     <Field name="tva" label="Tva"
-                                        component={ComposantInput} />
+                                           component={ComposantInput}/>
                                     <ErrorMessage
                                         name="tva"
                                         type="numbre"
                                         component={ComposantErreur}
                                     />
-                                    <Field name="unite" label="Unité" component={ComposantSelect} />
-                                    <ErrorMessage name="unite" component={ComposantErreur} />
+                                    <Field name="unite" label="Unité" component={ComposantSelect}/>
+                                    <ErrorMessage name="unite" component={ComposantErreur}/>
 
-                                    <Field name="prix" label="Prix" component={ComposantInput} />
-                                    <ErrorMessage name="prix" type="number" component={ComposantErreur} />
+                                    <Field name="prix" label="Prix" component={ComposantInput}/>
+                                    <ErrorMessage name="prix" type="number" component={ComposantErreur}/>
 
                                     <Field name="description" label="Description" component={ComposantTextarea}
-                                        rows="2" />
-                                    <ErrorMessage name="description" component={ComposantErreur} />
+                                           rows="2"/>
+                                    <ErrorMessage name="description" component={ComposantErreur}/>
 
                                 </div>
-                                <br></br>
+                                <br/>
                                 <div className="row d-flex justify-content-center ">
                                     <MDBBtn rounded type="submit" color="primary">
                                         Sauvegarder
-              </MDBBtn>
-                                    <Link to={`/produit/detail/${this.state.UpdateProduit.id}`}>
+                                    </MDBBtn>
+                                    <Link to={`/produits/detail/${this.state.UpdateProduit.id}`}>
                                         <MDBBtn rounded color="teal accent-3">
                                             Annuler
-                  </MDBBtn>
+                                        </MDBBtn>
                                     </Link>
                                 </div>
                             </form>
                         )}
                     </Formik>
-                </div >
-            </MDBContainer >
+                </div>
+            </MDBContainer>
 
         );
     }
 }
+
 export default UpdateProduit;

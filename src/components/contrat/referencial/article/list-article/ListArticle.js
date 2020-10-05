@@ -3,7 +3,7 @@ import {MDBCardTitle, MDBTable, MDBTableBody, MDBTableHead} from 'mdbreact';
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../shared/component/Loading";
 import ArticleElement from "./ArticleElement";
-import RedirectionBtn from "../../../../../shared/component/RedirectionBtn";
+import RedirectionBtn from "../../../../../shared/component/buttons/RedirectionBtn";
 import UserService from "../../../../../shared/services/UserService";
 
 export default class ListOfArticles extends Component {
@@ -58,8 +58,8 @@ export default class ListOfArticles extends Component {
                         UserService.isAdmin() &&
                         <td>
                             <RedirectionBtn
-                                route={"/articles/create"}
-                                msg="Ajouter un nouvel article"
+                                to={"/articles/create"}
+                                txt="Ajouter un nouvel article"
                                 color="default-color"
                             />
                         </td>

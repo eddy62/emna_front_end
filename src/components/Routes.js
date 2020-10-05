@@ -28,6 +28,7 @@ import DetailsClient from "./client-fournisseur/detail-client-founisseur/DetailC
 
 //gestionBancaire
 import Bancaire from "./bancaire/index";
+import OperationsMerger from "./bancaire/releve/gestion_releves/rapprochement_bancaire/OperationsMerger";
 import Releve from "./bancaire/releve/releve";
 import ListeReleves from "./bancaire/releve/historique_releves/liste_releves_archive";
 import DetailsReleve from "./bancaire/releve/details_releve/details_releve";
@@ -93,7 +94,7 @@ import EditArticle from "./contrat/referencial/article/edit-article/EditArticle"
 import DetailDepense from "./gestion_factures/depenses/DetailDepense";
 
 //Juridique
-import ListOfClauses from "./contrat/referencial/clauses/list-of-clauses/ListOfClauses";
+//import ListOfClauses from "./contrat/referencial/clauses/list-of-clauses/ListOfClauses";
 import ListArticle from "./contrat/referencial/article/list-article/ListArticle";
 
 //gestion Variables de paie
@@ -125,7 +126,7 @@ export default class Routes extends Component {
         <PrivateRoute
           path="/add-payroll-variables/:id" component={ParentAddPayrollVariables} />
         <PrivateRoute
-          path="/modify-payroll-variables/:societyId/:id"
+          path="/modify-payroll-variables/:societyId/:id/:yearSelected/:monthSelected"
           component={ParentUpdatePayrollVariables}
         />
         <PrivateRoute path="/add-declaration-of-employment/:id" component={CreateDeclarationOfEmployment} />
@@ -149,7 +150,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/contrat" component={Contrat} />
         <PrivateRoute path="/detailcontrat/:id" component={DetailContrat} />
         <PrivateRoute path="/creercontrat" component={CreerContrat} />
-        <PrivateRoute path="/clauses/society/:id" component={ListOfClauses} />
+        {/*<PrivateRoute path="/clauses/society/:id" component={ListOfClauses} />*/}
         <PrivateRoute exact path="/articles" component={ListArticle} />
         <PrivateRoute exact path="/articles/create" component={CreateArticle} />
         <PrivateRoute exact path="/articles/edit/:id" component={EditArticle} />
@@ -278,12 +279,14 @@ export default class Routes extends Component {
           path="/detailsoperation/:id"
           component={DetailsOperation}
         />
+
         <PrivateRoute path="/editoperation/:id" component={EditOperation} />
         <PrivateRoute path="/menurelevenon" component={MenuReleveNon} />
         {/* Rapprochement bancaire */}
         <PrivateRoute path="/gestionReleves/rapprochementBancaire/:id" component={BankReconciliation} />
         <PrivateRoute path="/gestionReleves/rapprochementBancaire/listeOperations" component={ListOfOperations} />
         <PrivateRoute path="/gestionReleves/rapprochementBancaire/listeFactures" component={ListOfInvoices} />
+        <PrivateRoute path="/operationsmerger/:id" component={OperationsMerger} />
 
         <PrivateRoute
           path="/gestionReleves/rapprochementBancaire"
@@ -330,10 +333,10 @@ export default class Routes extends Component {
         />
         {/* finGestionClientFournisseur */}
         {/* GestionProduit */}
-        <PrivateRoute path="/produits" component={ListeProduits} />
-        <PrivateRoute path="/produit/detail/:id" component={DetailsProduit} />
-        <PrivateRoute path="/produit/creer" component={AddProduit} />
-        <PrivateRoute path="/produit/update/:id" component={UpdateProduit} />
+        <PrivateRoute exact path="/produits"            component={ListeProduits} />
+        <PrivateRoute exact path="/produits/detail/:id" component={DetailsProduit} />
+        <PrivateRoute exact path="/produits/update/:id" component={UpdateProduit} />
+        <PrivateRoute exact path="/produits/create"     component={AddProduit} />
         {/* Gestion Referentiels */}
         <PrivateRoute path="/ref" component={Referentiels} />
         {/* <Route component={NotFound} /> */}

@@ -53,7 +53,10 @@ export default class ParentAddPayrollVariables extends Component {
                 {item: new Date().getFullYear() - 3},
                 {item: new Date().getFullYear() - 4},
                 {item: new Date().getFullYear() - 5},
-            ]
+            ],
+            keyAbsence: 0,
+            keyExpenseReport: 0,
+            keyOtherPayrollVariable: 0
         };
     }
 
@@ -86,9 +89,35 @@ export default class ParentAddPayrollVariables extends Component {
 
     //Méthode permettant de setter le State des selects qui sont transmis aux composants enfant
     changeHandler = event => {
-        this.setState({[event.target.name]: event.target.value}, function () {
+        this.setState({[event.target.name]: event.target.value}, async () => {
+            const currentMonth = new Date().getMonth() + 1;
+            if (this.state.yearSelected === "2020" && this.state.monthSelected > currentMonth){
+                await this.setState({
+                    monthSelected: currentMonth
+                })
+            }
         });
     };
+
+    handleReset = (type) => {
+        switch (type) {
+            case "Absence":
+                this.setState(prevState => ({
+                    keyAbsence: prevState.keyAbsence + 1
+                }));
+                break;
+            case "ExpenseReport":
+                this.setState(prevState => ({
+                    keyExpenseReport: prevState.keyExpenseReport + 1
+                }));
+                break;
+            case "OtherPayrollVariable":
+                this.setState(prevState => ({
+                    keyOtherPayrollVariable: prevState.keyOtherPayrollVariable + 1
+                }));
+        };
+    };
+
 
     render() {
         const {collapseID} = this.state;
@@ -112,9 +141,9 @@ export default class ParentAddPayrollVariables extends Component {
                                             name="idNameSelected"
                                             className="browser-default custom-select"
                                             onChange={this.changeHandler}
-
+                                            defaultValue={'DEFAULT'}
                                         >
-                                            <option disabled selected>Choisissez employé</option>
+                                            <option value="DEFAULT" disabled>Choisissez employé</option>
                                             {this.state.listeEmployes.map((employe) => (
                                                 <option key={employe.id} value={employe.id}>{employe.nomUsage}</option>
                                             ))}
@@ -139,11 +168,13 @@ export default class ParentAddPayrollVariables extends Component {
                                             name="monthSelected"
                                             className="browser-default custom-select"
                                             onChange={this.changeHandler}
+                                            value={this.state.monthSelected}
                                         >
                                             <option disabled defaultValue={new Date().getMonth()}>Choisissez un mois
                                             </option>
                                             {this.state.period.map((p, index) => (
-                                                <option key={index} selected={p.id === this.state.monthSelected} value={p.id}
+                                                <option key={index}
+                                                        value={p.id}
                                                         disabled={this.state.yearSelected == this.state.currentYear && p.id > new Date().getMonth() + 1 ? (true) : (false)}>{p.text}</option>
                                             ))}
                                         </select>
@@ -169,7 +200,9 @@ export default class ParentAddPayrollVariables extends Component {
                                                     {this.state.idNameSelected ? (
                                                         <CreateAbsence employeId={this.state.idNameSelected}
                                                                        yearSelected={this.state.yearSelected}
-                                                                       monthSelected={this.state.monthSelected}/>
+                                                                       monthSelected={this.state.monthSelected}
+                                                                       key={this.state.keyAbsence}
+                                                                       handleReset={this.handleReset}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}
@@ -188,7 +221,9 @@ export default class ParentAddPayrollVariables extends Component {
                                                     {this.state.idNameSelected ? (
                                                         <CreateExpenseReport employeId={this.state.idNameSelected}
                                                                              yearSelected={this.state.yearSelected}
-                                                                             monthSelected={this.state.monthSelected}/>
+                                                                             monthSelected={this.state.monthSelected}
+                                                                             key={this.state.keyExpenseReport}
+                                                                             handleReset={this.handleReset}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}
@@ -207,7 +242,8 @@ export default class ParentAddPayrollVariables extends Component {
                                                     {this.state.idNameSelected ? (
                                                         <CreateBonus employeId={this.state.idNameSelected}
                                                                      yearSelected={this.state.yearSelected}
-                                                                     monthSelected={this.state.monthSelected}/>
+                                                                     monthSelected={this.state.monthSelected}
+                                                                     />
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}
@@ -265,7 +301,9 @@ export default class ParentAddPayrollVariables extends Component {
                                                     {this.state.idNameSelected ? (
                                                         <CreateOtherPayrollVariable employeId={this.state.idNameSelected}
                                                                                     yearSelected={this.state.yearSelected}
-                                                                                    monthSelected={this.state.monthSelected}/>
+                                                                                    monthSelected={this.state.monthSelected}
+                                                                                    key={this.state.keyOtherPayrollVariable}
+                                                                                    handleReset={this.handleReset}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}
@@ -282,7 +320,7 @@ export default class ParentAddPayrollVariables extends Component {
                                             disabled={!this.state.idNameSelected}
                                             onClick={() => {
                                                 this.props.history.push(
-                                                    "/modify-payroll-variables/" + this.state.society.id + "/" + this.state.idNameSelected
+                                                    "/modify-payroll-variables/" + this.state.society.id + "/" + this.state.idNameSelected  + "/" + this.state.yearSelected + "/" + this.state.monthSelected
                                                 );
                                             }}
                                     >

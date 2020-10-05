@@ -2,6 +2,7 @@ import React from 'react';
 import ContratService from '../service/ContratService';
 import {Link} from 'react-router-dom';
 import Loading from "../../../shared/component/Loading";
+import AxiosCenter from "../../../shared/services/AxiosCenter";
 
 export default class ListeContrat extends React.Component {
     constructor(props){
@@ -13,21 +14,23 @@ export default class ListeContrat extends React.Component {
     }
 
     componentDidMount(){
-        ContratService.getContrat(1).then((resultat) => {
-            const contrats = resultat.data;
-            this.setState({ contrats , loaded:true});
+        AxiosCenter.getAllContrats().then((result) => {
+            this.setState({
+                contrats: result.data,
+                loaded:true
+            })
         })
-            .catch((err) => console.log(err));
     }
 
     listerLesContrats(props) {
         const Contrats = props.contrats.map((contrat, index)=>{
-            if(contrat.contratSigner){
+            console.log(contrat)
+            if(contrat.signe){
                 return(
-                    <div key={contrat.employerId} className="alert alert-success" role="alert">
-                      <h5>  {contrat.contratTitre} - {contrat.employerNom} {contrat.employerPrenom}
+                    <div key={contrat.employeId} className="alert alert-success" role="alert">
+                      <h5>  {contrat.titre} - {contrat.employerNom} {contrat.employerPrenom}
                        <button type="button" className="btn btn--danger">Supprimer</button>
-                        <Link to={"/detailcontrat/"+contrat.employerId}>
+                        <Link to={"/detailcontrat/"+contrat.employeId}>
                             <button type="button" className="btn btn-outline-success text-right">Voir le contrat</button>
                         </Link>
                           </h5>
@@ -36,9 +39,9 @@ export default class ListeContrat extends React.Component {
             }else{
                 return(
                     <div key={index} className="alert alert-danger" >
-                       <h5> {contrat.contratTitre} - {contrat.employerNom} {contrat.employerPrenom}  - En attente d'une signature
+                       <h5> {contrat.titre} - {contrat.employerNom} {contrat.employerPrenom}  - En attente d'une signature
                            <button type="button" className="btn btn--danger text-right">Supprimer</button>
-                        <Link to={"/detailcontrat/"+contrat.employerId}>
+                        <Link to={"/detailcontrat/"+contrat.employeId}>
                               <button type="button" className="btn btn-outline-danger text-right">Voir le contrat</button>
                         </Link>
 
