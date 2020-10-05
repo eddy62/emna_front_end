@@ -6,7 +6,7 @@ import UserService from "../../../shared/services/UserService";
 
 class ListeDepenses extends React.Component {
   constructor(props){
-    super();
+    super(props);
     this.state = {
       depenses : []
     }
@@ -25,6 +25,7 @@ class ListeDepenses extends React.Component {
   componentDidMount(){
     Axios.getDepenseBySociete(UserService.getSocietyId()).then((res) => {
       const depenses = res.data;
+      console.log("data: " , res.data)
       this.setState({depenses});
     });
   }

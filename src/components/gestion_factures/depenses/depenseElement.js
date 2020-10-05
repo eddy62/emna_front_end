@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter as Link} from "react-router-dom";
+import RedirectionBtn from "../../../shared/component/RedirectionBtn";
 
 class DepenseElement extends React.Component {
   render() {
@@ -10,18 +10,9 @@ class DepenseElement extends React.Component {
         <td>{this.props.depense.date}</td>
         <td>{this.props.depense.prix} €</td>
         <td>{this.props.depense.etatDepense}</td>
-        <button className="btn-secondary btn-sm">
-          <Link
-            to={{
-              pathname: "/detaildepense",
-              state: {
-                depense: this.props.depense,
-              },
-            }}
-          >
-            Détails
-          </Link>
-        </button>
+
+          <RedirectionBtn color="default-color" route={"/depenses/details/" + this.props.depense.id}  msg="Details"/>
+
         <button
           href="/modifierdepense"
           className="btn-info btn-sm"

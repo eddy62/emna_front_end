@@ -275,6 +275,13 @@ const AxiosCenter = {
         });
     },
 
+    getDepense(id) {
+        return ApiBackEnd({
+            method: "GET",
+            url: `depenses/${id}`,
+        });
+    },
+
     getAllQuotesBySociety(id) {
         return ApiBackEnd({
             method: "GET",

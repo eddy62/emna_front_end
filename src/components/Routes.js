@@ -90,6 +90,7 @@ import CreerDepense from "./gestion_factures/depenses/creerDepense";
 import AccueilDepense from './gestion_factures/depenses/accueilDepenses';
 import CreateArticle from "./contrat/referencial/article/create-article/CreateArticle";
 import EditArticle from "./contrat/referencial/article/edit-article/EditArticle";
+import DetailDepense from "./gestion_factures/depenses/DetailDepense";
 
 //Juridique
 import ListOfClauses from "./contrat/referencial/clauses/list-of-clauses/ListOfClauses";
@@ -103,6 +104,7 @@ import ParentUpdatePayrollVariablesAccountants
     from "./social/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants";
 
 import ParentPayslip from "./social/payslip/ParentPayslip";
+
 
 
 export default class Routes extends Component {
@@ -135,6 +137,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/accueildepenses" component={AccueilDepense} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />
         <PrivateRoute path="/newdepense" component={CreerDepense} />
+          <PrivateRoute path="/depenses/details/:id" component={DetailDepense} />
 
         {/* Gestion Devis */}
         <PrivateRoute path="/devis/accueil" component={QuotesHome} />
