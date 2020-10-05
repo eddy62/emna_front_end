@@ -295,7 +295,7 @@ const AxiosCenter = {
   getInfosForCreationFacture(id) {
     return Axios.all([
       this.getLastNumFactBySociete(id),
-      this.getAllClientFournisseurBySociete(id)
+      this.getAllCustomerSupplierBySociete(id)
     ])
   },
 
