@@ -1,5 +1,5 @@
 import React from "react";
-import RedirectionBtn from "../../../shared/component/RedirectionBtn";
+import RedirectionBtn from "../../../shared/component/buttons/RedirectionBtn";
 
 class DepenseElement extends React.Component {
   render() {
@@ -11,7 +11,7 @@ class DepenseElement extends React.Component {
         <td>{this.props.depense.prix} €</td>
         <td>{this.props.depense.etatDepense}</td>
 
-          <RedirectionBtn color="default-color" route={"/depenses/details/" + this.props.depense.id}  msg="Details"/>
+          <RedirectionBtn size="10Px" color="success" to={"/depenses/details/" + this.props.depense.id}  txt="Details"/>
 
         <button
           href="/modifierdepense"

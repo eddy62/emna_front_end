@@ -1,8 +1,7 @@
 import React from "react";
-import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import {Link} from "react-router-dom";
 import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer} from "mdbreact";
-import AxiosCenter from "../../../../shared/services/AxiosCenter";
+
 
 const ListReleve = (props) => {
     const releves = props.releves.map((wrapperReleve) => {
