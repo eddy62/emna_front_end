@@ -278,10 +278,10 @@ const AxiosCenter = {
     });
   },
 
-  getAllQuotesBySociety(id) {
+  getQuotesBySociety(id) {
     return ApiBackEnd({
       method: "GET",
-      url: `devis/societe/${id}`
+      url: `devis/liste/societe/${id}`
     });
   },
 
@@ -527,6 +527,14 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "POST",
       url: "/articles",
+      data: values,
+    });
+  },
+
+  createQuote(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/devis",
       data: values,
     });
   },

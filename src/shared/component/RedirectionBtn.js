@@ -1,5 +1,5 @@
 import React from "react";
-import {MDBBtn, MDBContainer} from 'mdbreact';
+import {MDBBtn} from 'mdbreact';
 import {Link} from "react-router-dom";
 
 /**
@@ -14,14 +14,12 @@ import {Link} from "react-router-dom";
  * 
  */
 const RedirectionBtn = (props) => {
-  return (
-            <MDBContainer>
+  return (       
             <Link to={ props.route }>
-                <MDBBtn color={props.color} {...props.rest}>
+                <MDBBtn size="sm" color={props.color} {...props.rest}>
                     {props.msg}
                 </MDBBtn>
             </Link>
-        </MDBContainer>
   );
 };
 
