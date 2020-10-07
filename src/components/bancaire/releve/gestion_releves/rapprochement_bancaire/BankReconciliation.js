@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {MDBBtn, MDBCard, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer, MDBRow} from 'mdbreact';
-import {Link} from "react-router-dom";
 
 import ListOfInvoices from './ListOfInvoices';
 import ListOfOperations from './ListOfOperations';
@@ -9,6 +8,8 @@ import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import Axios from "../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../shared/component/Loading";
 import UserService from "../../../../../shared/services/UserService";
+import RedirectionBtn from "../../../../../shared/component/buttons/RedirectionBtn";
+import ConfirmationModal from "../../../../../shared/component/ConfirmationModal";
 
 class BankReconciliation extends Component {
     constructor(props) {
@@ -94,11 +95,11 @@ class BankReconciliation extends Component {
                     </MDBCol>
                 </MDBRow>
 
-                <MDBBtn color=" teal lighten-2" rounded size="sm">
-                    <Link to={"/relevevalide"} className='d-flex justify-content-center'>
-                        <span id="color-button">Retour</span>
-                    </Link>
-                </MDBBtn>
+                <RedirectionBtn onClick={this.props.history.goBack}
+                                txt="Retour"
+                                rounded={true}
+                                size="sm"
+                                color=" teal lighten-2"/>
 
                 {
                     (UserService.isAdmin() || UserService.isAccountant()) &&
@@ -111,6 +112,10 @@ class BankReconciliation extends Component {
                         <span>Rapprocher</span>
                     </MDBBtn>
                 }
+
+                <ConfirmationModal title="Voulez vous?"
+                                   txt="test"
+                                   action={()=>console.log("gagné")}/>
             </MDBContainer>
         );
     }

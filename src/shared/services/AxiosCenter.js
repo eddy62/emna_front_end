@@ -728,6 +728,13 @@ const AxiosCenter = {
       data: values,
     });
   },
+//en cours d'implantation ne pas supprimer ci dessous
+  validateStatementReconciliation(idReleve){
+    return ApiBackEnd({
+      method: "put",
+      url: `/releve/valider/comptable/${idReleve}`,
+    });
+  },
 
   // Fin Put
 
