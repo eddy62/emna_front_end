@@ -30,7 +30,6 @@ class ListeDepenses extends React.Component {
     });
   }
 
-
   render() {
     return (
       <div>
