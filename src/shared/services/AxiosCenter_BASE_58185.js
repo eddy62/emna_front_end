@@ -80,13 +80,6 @@ const AxiosCenter = {
     });
   },
 
-  getAllEmployesBySociety(id) {
-    return ApiBackEnd({
-      method: "get",
-      url: `/employes/society/${id}`,
-  });
-  },
-
   getAllWrapperEmployesBySociety(id) {
     return ApiBackEnd({
       method: "get",
@@ -268,6 +261,9 @@ const AxiosCenter = {
     });
   },
 
+
+
+
   getInvoicesByStatement(id) {
     return ApiBackEnd({
       method: "GET",
@@ -282,23 +278,10 @@ const AxiosCenter = {
     });
   },
 
-    getDepense(id) {
-        return ApiBackEnd({
-            method: "GET",
-            url: `depenses/${id}`,
-        });
-    },
-
-    getAllQuotesBySociety(id) {
-        return ApiBackEnd({
-            method: "GET",
-            url: `devis/societe/${id}`
-        });
-    },
-  getQuotesBySociety(id) {
+  getAllQuotesBySociety(id) {
     return ApiBackEnd({
       method: "GET",
-      url: `devis/liste/societe/${id}`
+      url: `devis/societe/${id}`
     });
   },
 
@@ -312,7 +295,7 @@ const AxiosCenter = {
   getInfosForCreationFacture(id) {
     return Axios.all([
       this.getLastNumFactBySociete(id),
-      this.getAllCustomerSupplierBySociete(id)
+      this.getAllClientFournisseurBySociete(id)
     ])
   },
 
@@ -351,78 +334,7 @@ const AxiosCenter = {
       url: `/wrappervariablespaie/employe/${idEmploye}/annee/${year}/mois/${month}`
     })
   },
-
-  getPdfFileByPath(path) {
-    return ApiBackEnd({
-      method: "GET",
-      url: `/getPdfFile/${path}`,
-      responseType: 'blob'
-    })
-  },
-
-  getAllContrats() {
-    return ApiBackEnd({
-      method: "GET",
-      url: `/contrats`
-    })
-  },
-
-
-  getPDFArchivedStatement(id) {
-    return ApiBackEnd({
-      method: "get",
-      url: `/releves/pdf/${id}`,
-      responseType: 'arraybuffer'
-    });
-  },
-
-  getAllPayslipByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
-    return ApiBackEnd({
-      method: "GET",
-      url: `/fiche-paies/employe/${idEmploye}/annee/${year}/moisDu/${monthStart}/moisFin/${monthEnd}`,
-  });
-  },
-
-  getDocumentByIdPayslip(idPayslip) {
-    return ApiBackEnd({
-      method: "GET",
-      url: `/documents/idPaySlip/${idPayslip}`
-    })
-
-  },
   // Fin Get
-    getPdfFileByPath(path) {
-        return ApiBackEnd({
-            method: "GET",
-            url: `/getPdfFile/${path}`,
-            responseType: 'blob'
-        })
-    },
-
-
-    getAllPaySlip() {
-        return ApiBackEnd({
-            method: "GET",
-            url: `/fiche-paies`,
-        });
-    },
-
-    getAllPayslipByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
-        return ApiBackEnd({
-            method: "GET",
-            url: `/fiche-paies/employe/${idEmploye}/annee/${year}/moisDu/${monthStart}/moisFin/${monthEnd}`,
-        });
-    },
-    getPDFArchivedStatement(id) {
-        return ApiBackEnd({
-            method: "get",
-            url: `/releves/pdf/${id}`,
-            responseType: 'arraybuffer'
-        });
-    },
-
-
-    // Fin Get
 
 
   //Post
@@ -619,36 +531,7 @@ const AxiosCenter = {
     });
   },
 
-  createQuote(values) {
-    return ApiBackEnd({
-      method: "POST",
-      url: "/devis",
-      data: values,
-    });
-  },
-    createFile(values) {
-        return ApiBackEnd({
-            method: "POST",
-            url: "/documents",
-        });
-    },
-
-    createArticle(values) {
-        return ApiBackEnd({
-            method: "POST",
-            url: "/articles",
-            data: values,
-        });
-    },
-
-    uploadFile(file) {
-        return ApiBackEnd({
-            method: "POST",
-            url: "/upload",
-            data: file
-        })
-    },
-    // Fin Post
+  // Fin Post
 
   //Put
   updateCustomerSupplier(values) {
@@ -885,14 +768,6 @@ const AxiosCenter = {
       url: `/clauses/${id}`,
     });
   },
-
-  deleteArticle(id) {
-    return ApiBackEnd({
-      method: "delete",
-      url: `/articles/${id}`
-    });
-  },
-
   // Fin Delete
 
 };
