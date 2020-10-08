@@ -43,27 +43,27 @@ class AddClientFournisseur extends React.Component {
     this.props.history.push("/client-fournisseur");
   };
 
-  userSchema = Yup.object().shape({
-    nom: Yup.string("String")
-      .min(3, "Le nom ne peut contient moins que 3 caractères")
-      .max(20, "Le nom ne peut dépasser 20 caractères ")
-      .required("Le champ est obligatoire"),
-    siren: Yup.string()
-      .matches(/^[0-9]+$/, "Siren doit être composé uniquement de chiffres").required("Le champ est obligatoire").min(9, 'Doit contenir exactement 9 chiffres')
-      .max(9, 'Doit contenir exactement 9 chiffres'),
-    email: Yup.string()
-      .email("L'adress mail doit être valide")
-      .required("Le champ est obligatoire"),
-    telephone: Yup.string()
-      .matches(/^[0-9]+$/, "Telephone doit être composé uniquement de chiffres").required("Le champ est obligatoire").min(10, 'Doit contenir exactement 10 chiffres')
-      .max(10, 'Doit contenir exactement 10 chiffres'),
-    numeroRue: Yup.string()
-      .matches(/^[0-9]+$/, "Numero doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
-    nomRue: Yup.string().required("Le champ est obligatoire"),
-    codePostal: Yup.string().matches(/^[a-zA-Z0-9\s]+$/, "Code postal invalide").required("Le champ est obligatoire"),
-    ville: Yup.string().matches(/^[a-zA-Zéçèùàêû\s]+$/, "Ville doit être composé uniquement de lettres").required("Le champ est obligatoire"),
-    pays: Yup.string().matches(/^[a-zA-Zéçèùàêû\s]+$/, "Pays doit être composé uniquement de lettres").required("Le champ est obligatoire"),
-  });
+    userSchema = Yup.object().shape({
+        nom: Yup.string("String")
+            .min(3, "Le nom doit contenir au moins 3 caractères")
+            .max(30, "Le nom ne peut dépasser 30 caractères ")
+            .required("Le champ est obligatoire"),
+        siret: Yup.string()
+            .matches(/^[0-9]+$/, "Siret doit être composé uniquement de chiffres").required("Le champ est obligatoire").min(14, 'SIRET doit contenir exactement 14 chiffres')
+            .max(14, 'SIRET doit contenir exactement 14 chiffres'),
+        email: Yup.string()
+            .email("L'adress mail doit être valide")
+            .required("Le champ est obligatoire"),
+        telephone: Yup.string()
+            .matches(/^[0-9]+$/, "Téléphone doit être composé uniquement de chiffres").required("Le champ est obligatoire").min(10, 'Téléphone doit contenir exactement 10 chiffres')
+            .max(10, 'Téléphone doit contenir exactement 10 chiffres'),
+        numeroRue: Yup.string()
+            .matches(/^[0-9a-z ]+$/, "Numéro doit être composé uniquement de chiffres, lettres minuscules, espaces"),
+        nomRue: Yup.string().required("Le champ est obligatoire"),
+        codePostal: Yup.string().matches(/^(?:[0-8]\d|9[0-8])\d{3}$/, "Code postal invalide").required("Le champ est obligatoire"),
+        ville: Yup.string().matches(/^[A-Z ]{1,50}$/, "Ville doit contenir uniquement des majuscules sans accent et des espaces").required("Le champ est obligatoire"),
+        pays: Yup.string().matches(/^[A-Z ]{1,50}$/, "Pays doit contenir uniquement des majuscules sans accent et des espaces").required("Le champ est obligatoire"),
+    });
 
   render() {
     return (
@@ -99,9 +99,9 @@ class AddClientFournisseur extends React.Component {
                   />
                   <ErrorMessage name="nom" component={ComposantErreur} />
 
-                  <Field name="siren" label="SIREN" component={ComposantInput} />
+                  <Field name="siret" label="SIRET" component={ComposantInput} />
                   <ErrorMessage
-                    name="siren"
+                    name="siret"
                     component={ComposantErreur}
                   />
 
@@ -125,7 +125,7 @@ class AddClientFournisseur extends React.Component {
 
                   <Field
                     name="numeroRue"
-                    label="Numero"
+                    label="Numéro"
                     component={ComposantInput}
                   />
                   <ErrorMessage
