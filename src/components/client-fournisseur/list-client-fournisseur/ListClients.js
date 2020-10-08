@@ -46,7 +46,7 @@ class ListerClientFournisseur extends Component {
             <thead color="teal accent-3">
               <tr className=" bg-info">
                 <th scope="col">Nom</th>
-                <th scope="col">SIREN</th>
+                <th scope="col">SIRET</th>
                 <th scope="col">Email</th>
               </tr>
             </thead>
@@ -55,7 +55,7 @@ class ListerClientFournisseur extends Component {
                 this.state.clients.map((c, index) => (
                   <tr key={index}>
                     <td >{c.nom}</td>
-                    <td >{c.siren}</td>
+                    <td >{c.siret}</td>
                     <td>{c.email}</td>
                     <td>
                       <div className="btn-group flex-btn-group-container">
