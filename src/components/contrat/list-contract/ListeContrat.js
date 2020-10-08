@@ -1,36 +1,35 @@
 import React from 'react';
-import ContratService from '../service/ContratService';
 import {Link} from 'react-router-dom';
 import Loading from "../../../shared/component/Loading";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
+import UserService from "../../../shared/services/UserService";
 
 export default class ListeContrat extends React.Component {
     constructor(props){
         super(props);
         this.state = {
             loaded: false,
-            contrats: [],
+            employes: [],
         };
     }
 
     componentDidMount(){
-        AxiosCenter.getAllContrats().then((result) => {
+        AxiosCenter.getAllWrapperEmployesBySociety(UserService.getSocietyId()).then((result) => {
             this.setState({
-                contrats: result.data,
+                employes: result.data,
                 loaded:true
             })
         })
     }
 
     listerLesContrats(props) {
-        const Contrats = props.contrats.map((contrat, index)=>{
-            console.log(contrat)
-            if(contrat.signe){
+        const employes = props.employes.map((employe, index)=>{
+            if(employe.signe){
                 return(
-                    <div key={contrat.employeId} className="alert alert-success" role="alert">
-                      <h5>  {contrat.titre} - {contrat.employerNom} {contrat.employerPrenom}
+                    <div key={employe.id} className="alert alert-success" role="alert">
+                      <h5>  {employe.titre} - {employe.nomUsage} {employe.prenom}
                        <button type="button" className="btn btn--danger">Supprimer</button>
-                        <Link to={"/detailcontrat/"+contrat.employeId}>
+                        <Link to={"/detailcontrat/"+employe.id}>
                             <button type="button" className="btn btn-outline-success text-right">Voir le contrat</button>
                         </Link>
                           </h5>
@@ -39,9 +38,9 @@ export default class ListeContrat extends React.Component {
             }else{
                 return(
                     <div key={index} className="alert alert-danger" >
-                       <h5> {contrat.titre} - {contrat.employerNom} {contrat.employerPrenom}  - En attente d'une signature
+                       <h5> {employe.titre} - {employe.nomUsage} {employe.prenom}  - En attente d'une signature
                            <button type="button" className="btn btn--danger text-right">Supprimer</button>
-                        <Link to={"/detailcontrat/"+contrat.employeId}>
+                        <Link to={"/detailcontrat/"+employe.id}>
                               <button type="button" className="btn btn-outline-danger text-right">Voir le contrat</button>
                         </Link>
 
@@ -60,7 +59,7 @@ export default class ListeContrat extends React.Component {
             <div >
                 <h1>Liste des Contrats</h1>
                 <hr/>
-                {Contrats}
+                {employes}
                 <Link to={"/contrat/"}>
                     <button type="button" className="btn btn-outline-success">Retour</button>
                 </Link>
@@ -75,7 +74,7 @@ export default class ListeContrat extends React.Component {
     render() {
         if(this.state.loaded){
             return(
-                <this.listerLesContrats contrats={this.state.contrats}/>
+                <this.listerLesContrats employes={this.state.employes}/>
             );
         }else{
             return (
