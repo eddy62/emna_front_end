@@ -352,14 +352,6 @@ const AxiosCenter = {
     });
   },
 
-  uploadFile(file) {
-    return ApiBackEnd({
-        method: "POST",
-        url: "/upload",
-        data: file
-    })
-  },
-
   getPdfFileByPath(path) {
     return ApiBackEnd({
         method: "GET",
@@ -405,6 +397,7 @@ const AxiosCenter = {
     })
 
   },
+
   // Fin Get
 
   //Post
@@ -608,11 +601,28 @@ const AxiosCenter = {
       data: values,
     });
   },
-    createFile(values) {
+    createFile() {
         return ApiBackEnd({
             method: "POST",
             url: "/documents",
         });
+    },
+
+    uploadFile(file) {
+        return ApiBackEnd({
+            method: "POST",
+            url: "/upload",
+            data: file
+        })
+    },
+
+
+    createWrapperContrat(values) {
+        return ApiBackEnd({
+            method: "POST",
+            url: `/wrapperContrat`,
+            data: values
+        })
     },
     // Fin Post
 
@@ -762,6 +772,13 @@ const AxiosCenter = {
       method: "PUT",
       url: `/articles`,
       data: values,
+    });
+  },
+
+  validateStatementReconciliation(idReleve){
+    return ApiBackEnd({
+      method: "put",
+      url: `/releve/valider/comptable/${idReleve}`,
     });
   },
 

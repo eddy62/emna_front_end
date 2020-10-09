@@ -11,6 +11,7 @@ import TablePaydayAdvanceReminder from "./table-update/TablePaydayAdvanceReminde
 import TableNoteDefrais from "./table-update/TableExpenseReport";
 import {toast} from "react-toastify";
 import TableOtherPayrollVariable from "./table-update/TableOtherPayrollVariable";
+import stock from "../../../../shared/stockage.js";
 
 let messageToast = '';
 
@@ -321,6 +322,9 @@ export default class ParentUpdatePayrollVariables extends Component {
                             <MDBCol md="4">
                                 <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm"
                                         onClick={() => {
+                                            stock.setFiltreAnneeSelected(this.state.yearSelected);
+                                            stock.setFiltreMoisSelected(this.state.monthSelected);
+                                            stock.setFiltreEmployeSelected(this.state.idEmploye)
                                             this.props.history.push(
                                                 "/add-payroll-variables/"
                                                 + this.state.society.id + "/" + this.state.idEmploye);
