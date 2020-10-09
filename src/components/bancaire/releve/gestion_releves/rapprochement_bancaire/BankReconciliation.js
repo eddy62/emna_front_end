@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {MDBBtn, MDBCard, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer, MDBRow} from 'mdbreact';
-import {Link} from "react-router-dom";
 
 import ListOfInvoices from './ListOfInvoices';
 import ListOfOperations from './ListOfOperations';
@@ -9,6 +8,8 @@ import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import Axios from "../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../shared/component/Loading";
 import UserService from "../../../../../shared/services/UserService";
+import RedirectionBtn from "../../../../../shared/component/buttons/RedirectionBtn";
+import ConfirmationModal from "../../../../../shared/component/ConfirmationModal";
 
 class BankReconciliation extends Component {
     constructor(props) {
@@ -19,6 +20,7 @@ class BankReconciliation extends Component {
             isCheckBoxVisible: false,
             selectedFactures: [],
             loaded: false,
+            isInvoiceEmpty: false,
         };
     }
 
@@ -41,6 +43,13 @@ class BankReconciliation extends Component {
         }
     }
 
+    validateStatement = ()=> {
+        AxiosCenter.validateStatementReconciliation(this.state.releveId).then(() =>{
+            this.props.history.goBack()
+            console.log("redirection!")
+        })
+    }
+
     refreshBankReconciliation = () => {
         this.setState({loaded: false, selectedFactures: []})
         this.componentDidMount()
@@ -55,8 +64,10 @@ class BankReconciliation extends Component {
                     releveId: this.props.match.params.id,
                 });
                 Axios.getInvoicesByStatement(this.state.releveId).then((res) => {
+                    const isInvoiceEmpty = (res.data.length === 0)
                     const factures = res.data;
                     this.setState({factures, loaded: true});
+                    this.setState({isInvoiceEmpty});
                 });
             })
             .catch((err) => console.log(err));
@@ -94,23 +105,35 @@ class BankReconciliation extends Component {
                     </MDBCol>
                 </MDBRow>
 
-                <MDBBtn color=" teal lighten-2" rounded size="sm">
-                    <Link to={"/relevevalide"} className='d-flex justify-content-center'>
-                        <span id="color-button">Retour</span>
-                    </Link>
-                </MDBBtn>
+                <RedirectionBtn onClick={this.props.history.goBack}
+                                txt="Retour"
+                                rounded={true}
+                                size="sm"
+                                color=" teal lighten-2"/>
 
                 {
-                    (UserService.isAdmin() || UserService.isAccountant()) &&
+                    ((UserService.isAdmin() || UserService.isAccountant()) && !this.state.isInvoiceEmpty) &&
                     <MDBBtn onClick={
                         () => {
                             this.changeCheckboxVisible()
                         }
                     }
                             color=" teal lighten-2" rounded size="sm">
-                        <span>Rapprocher</span>
+                        Rapprocher
                     </MDBBtn>
                 }
+
+                {
+                    ((UserService.isAdmin() || UserService.isAccountant()) && this.state.isInvoiceEmpty) &&
+                    <ConfirmationModal title={"Voulez vous validez le relevé "+ (this.state.releveId)+" ?"}
+                    name="Validez Releve"
+                    size="sm"
+                    rounded={true}
+                    color=" teal lighten-2"
+                    action={()=>this.validateStatement()}/>
+                }
+
+
             </MDBContainer>
         );
     }

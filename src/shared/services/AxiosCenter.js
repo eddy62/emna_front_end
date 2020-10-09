@@ -599,21 +599,14 @@ const AxiosCenter = {
       data: values,
     });
   },
-    createFile(values) {
+    createFile() {
         return ApiBackEnd({
             method: "POST",
             url: "/documents",
         });
     },
 
-    uploadFile(file) {
-        return ApiBackEnd({
-            method: "POST",
-            url: "/upload",
-            data: file
-        })
-    },
-    // Fin Post
+  // Fin Post
 
   //Put
   updateCustomerSupplier(values) {
@@ -754,6 +747,13 @@ const AxiosCenter = {
       method: "PUT",
       url: `/articles`,
       data: values,
+    });
+  },
+//en cours d'implantation ne pas supprimer ci dessous
+  validateStatementReconciliation(idReleve){
+    return ApiBackEnd({
+      method: "put",
+      url: `/releve/valider/comptable/${idReleve}`,
     });
   },
 
