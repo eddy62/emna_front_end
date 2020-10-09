@@ -19,6 +19,7 @@ import CreatePaydayAdvanceReminder from "./children/CreatePaydayAdvanceReminder"
 import CreateExpenseReport from "./children/CreateExpenseReport";
 import CreateOvertime from "./children/CreateOvertime";
 import CreateOtherPayrollVariable from "./children/CreateOtherPayrollVariable";
+import stock from "../../../../shared/stockage.js";
 
 export default class ParentAddPayrollVariables extends Component {
 
@@ -28,10 +29,10 @@ export default class ParentAddPayrollVariables extends Component {
             loaded: false,
             society: {},
             listeEmployes: [],
-            idNameSelected: '',
+            idNameSelected: stock.getFiltreEmployeSelected() !="" ? stock.getFiltreEmployeSelected() :'DEFAULT',
             currentYear: new Date().getFullYear(),
-            yearSelected: new Date().getFullYear(),
-            monthSelected: new Date().getMonth() + 1,
+            yearSelected: stock.getFiltreAnneeSelected() != "" ?  stock.getFiltreAnneeSelected() : new Date().getFullYear(),
+            monthSelected: stock.getFiltreMoisSelected() != "" ? stock.getFiltreMoisSelected() : new Date().getMonth() + 1,
             period: [
                 {id: 1, text: "Janvier"},
                 {id: 2, text: "Février"},
@@ -61,6 +62,7 @@ export default class ParentAddPayrollVariables extends Component {
     }
 
     componentDidMount() {
+
         //Récupération de l'id de la société
         const idSociete = this.props.match.params.id;
         AxiosCenter.getSocietyById(idSociete)
@@ -141,7 +143,7 @@ export default class ParentAddPayrollVariables extends Component {
                                             name="idNameSelected"
                                             className="browser-default custom-select"
                                             onChange={this.changeHandler}
-                                            defaultValue={'DEFAULT'}
+                                            value={this.state.idNameSelected}
                                         >
                                             <option value="DEFAULT" disabled>Choisissez employé</option>
                                             {this.state.listeEmployes.map((employe) => (
@@ -155,6 +157,7 @@ export default class ParentAddPayrollVariables extends Component {
                                             name="yearSelected"
                                             className="browser-default custom-select"
                                             onChange={this.changeHandler}
+                                            value={this.state.yearSelected}
                                         >
                                             <option disabled>Choisissez une année</option>
                                             {this.state.year.map((y, index) => (
