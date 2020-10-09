@@ -36,7 +36,8 @@ class SocialHome extends React.Component {
 
     render() {
         const title = "Gestion Social";
-        const title1 = "Gestion des Employés";
+        // TODO réussir à faire un saut de ligne dans le chaine de title1 et s'en servir dans MDBCardTitle ligne 72
+        //const title1 = "Gestion"+String.fromCharCode(13)+String.fromCharCode(10)+"des Employés";
         const text1 = "Enregistrement, Consultation et Modification des données des Employés de la Société";
         const title2 = "Validation Comptable";
         const text2 = "Validation Comptable des Variables de Paie des Employés et des pièces comptables";
@@ -68,13 +69,13 @@ class SocialHome extends React.Component {
                                     <MDBCol md="3" className="mb-3">
                                         <MDBCard className="cadre1">
                                             <MDBCardBody>
-                                                <MDBCardTitle tag="h4">{title1}</MDBCardTitle>
+                                                <MDBCardTitle tag="h4">Gestion<br/>des Employés</MDBCardTitle>
                                                 <br/>
                                                 <MDBCardText>
                                                     {text1}
                                                 </MDBCardText>
                                                 <br/>
-                                                <div>
+                                                <div className="boutton">
                                                     <MDBBtn
                                                         rounded
                                                         size="sm"
@@ -87,8 +88,23 @@ class SocialHome extends React.Component {
                                                             );
                                                         }}
                                                     >
-                                                        Gerer
+                                                        Consulter
                                                     </MDBBtn>
+                                                    <MDBBtn
+                                                        rounded
+                                                        size="sm"
+                                                        style = {{paddingRight: "2.5rem", paddingLeft: "2.5rem"}}
+                                                        color="teal accent-3"
+                                                        // TODO : lien vers Créer Fiche de paie
+                                                        disabled={true}
+                                                        /*l'id de la société est undefined sur le compte accountant*/
+                                                        onClick={() => {
+                                                            this.props.history.push(
+                                                                "/listEmployes/" + this.state.societe.id
+                                                            );
+                                                        }}
+                                                    >
+                                                        Créer                                                    </MDBBtn>
                                                 </div>
                                             </MDBCardBody>
                                         </MDBCard>
@@ -108,13 +124,28 @@ class SocialHome extends React.Component {
                                                             rounded
                                                             size="sm"
                                                             color="teal accent-3"
+                                                            // TODO : lien vers liste DPAE
+                                                            disabled={true}
                                                             onClick={() => {
                                                                 this.props.history.push(
                                                                     "/add-declaration-of-employment/" + this.state.societe.id
                                                                 );
                                                             }}
                                                         >
-                                                            Gerer
+                                                            Consulter
+                                                        </MDBBtn>
+                                                        <MDBBtn
+                                                            rounded
+                                                            size="sm"
+                                                            style = {{paddingRight: "2.5rem", paddingLeft: "2.5rem"}}
+                                                            color="teal accent-3"
+                                                            onClick={() => {
+                                                                this.props.history.push(
+                                                                    "/add-declaration-of-employment/" + this.state.societe.id
+                                                                );
+                                                            }}
+                                                        >
+                                                            Créer
                                                         </MDBBtn>
                                                     </div>
                                                 </MDBCardBody>
@@ -136,13 +167,14 @@ class SocialHome extends React.Component {
                                                             color="teal accent-3"
                                                             rounded
                                                             size="sm"
+                                                            style = {{paddingRight: "2.5rem", paddingLeft: "2.5rem"}}
                                                             onClick={() => {
                                                                 this.props.history.push(
                                                                     "/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants/" + this.state.societe.id
                                                                 );
                                                             }}
                                                         >
-                                                            Gerer
+                                                            Gérer
                                                         </MDBBtn>
                                                     </div>
                                                 </MDBCardBody>
@@ -169,13 +201,25 @@ class SocialHome extends React.Component {
                                                             size="sm"
                                                             onClick={() => {
                                                                 this.props.history.push(
+                                                                    "/modify-payroll-variables/" + this.state.societe.id + "/1/" + new Date().getFullYear() + "/" + new Date().getMonth()
+                                                                );
+                                                            }}
+                                                        >
+                                                            Consulter
+                                                        </MDBBtn>
+                                                        <MDBBtn
+                                                            color="teal accent-3"
+                                                            rounded
+                                                            size="sm"
+                                                            style = {{paddingRight: "2.5rem", paddingLeft: "2.5rem"}}
+                                                            onClick={() => {
+                                                                this.props.history.push(
                                                                     "/add-payroll-variables/" + this.state.societe.id
                                                                 );
                                                             }}
                                                         >
-                                                            Gerer
-                                                        </MDBBtn>
-                                                    </div>
+                                                            Créer
+                                                        </MDBBtn>                                                    </div>
                                                 </MDBCardBody>
                                             </MDBCard>
                                         </MDBCol>
@@ -202,7 +246,22 @@ class SocialHome extends React.Component {
                                                                 );
                                                             }}
                                                         >
-                                                            Gerer
+                                                            Consulter
+                                                        </MDBBtn>
+                                                        <MDBBtn
+                                                            color="teal accent-3"
+                                                            rounded
+                                                            size="sm"
+                                                            style = {{paddingRight: "2.5rem", paddingLeft: "2.5rem"}}
+                                                            // TODO : lien vers créer FicheDePaie
+                                                            disabled={true}
+                                                            onClick={() => {
+                                                                this.props.history.push(
+                                                                    "/payslip/ParentPayslip/" + this.state.societe.id
+                                                                );
+                                                            }}
+                                                        >
+                                                            Créer
                                                         </MDBBtn>
                                                     </div>
                                                 </MDBCardBody>
