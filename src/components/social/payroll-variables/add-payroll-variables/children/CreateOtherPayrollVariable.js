@@ -115,8 +115,8 @@ class CreateOtherPayrollVariable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            startPeriod: "",
-            endPeriod: "",
+            startPeriod: new Date(new Date().setFullYear(this.props.yearSelected, this.props.monthSelected - 1, 1)).toISOString().slice(0, 10),
+            endPeriod: new Date(new Date().setFullYear(this.props.yearSelected, this.props.monthSelected, 0)).toISOString().slice(0, 10),
             fileList: []
         };
     }
@@ -181,6 +181,7 @@ class CreateOtherPayrollVariable extends React.Component {
         formData.append("noteDeFraisId", "-1");
         formData.append("autresVariableId", autresVariableId);
         formData.append("fileNumber", fileNumber);
+        formData.append("timestamp", Date.now());
         await AxiosCenter.uploadFile(formData)
             .catch((error) => {
                 errorDetected = true;
@@ -195,107 +196,91 @@ class CreateOtherPayrollVariable extends React.Component {
         })
     }
 
-    updatePeriod() {
-        this.state.startPeriod = new Date(new Date()
-            .setFullYear(
-                this.props.yearSelected,
-                this.props.monthSelected - 1,
-                1
-            )).toISOString().slice(0, 10);
-        this.state.endPeriod = new Date(new Date()
-            .setFullYear(
-                this.props.yearSelected,
-                this.props.monthSelected,
-                0
-            )).toISOString().slice(0, 10);
-    }
-
     render() {
         return (
-            this.updatePeriod(),
-                <MDBContainer>
-                    <div className="d-flex justify-content-center">
-                        <Formik initialValues={{
-                            id: null,
-                            date: "",
-                            description: "",
-                            montant: 0,
-                            justificatif: "",
-                            etatVariablePaieId: 1,
-                            employeId: "",
-                            mois: "",
-                            annee: ""
-                        }}
-                                onSubmit={this.submit}
-                                validationSchema={otherSchema(this.state)}
-                        >
-                            {({
-                                  dirty,
-                                  handleSubmit,
-                                  isSubmitting
-                              }) => (
-                                <Form onSubmit={handleSubmit}
-                                      className="w-100"
-                                >
-                                    <MDBCardBody style={{marginTop: "-3%", marginBottom: "-3%"}}>
-                                        <MDBRow between around>
-                                            <MDBCol md="4">
-                                                {/* description */}
-                                                <Field
-                                                    name="description"
-                                                    label="Description* :"
-                                                    component={ComponentTextArea}
-                                                />
-                                                <ErrorMessage name="description" component={ComponentError}/>
-                                            </MDBCol>
-                                            <MDBCol md="4">
-                                                {/* date */}
-                                                <Field
-                                                    name="date"
-                                                    label="Date* :"
-                                                    startdate={this.state.startPeriod}
-                                                    enddate={this.state.endPeriod}
-                                                    component={ComponentDate}
-                                                />
-                                                <ErrorMessage name="date" component={ComponentError}/>
-                                                {/* montant */}
-                                                <Field
-                                                    name="montant"
-                                                    label="Montant*"
-                                                    component={ComponentNumber}
-                                                />
-                                                <ErrorMessage name="montant" component={ComponentError}/>
-                                            </MDBCol>
-                                        </MDBRow>
-                                        <br/>
-                                        {/* upload */}
-                                        <Field
-                                            fileInputHandler={this.fileInputHandler}
-                                            component={ComponentUploadFiles}
-                                        />
-                                        <MDBRow between around className="mt-3">
-                                                <MDBBtn
-                                                    color="teal accent-3"
-                                                    rounded
-                                                    size="sm"
-                                                    type="submit"
-                                                >Enregistrer
-                                                </MDBBtn>
-                                                <MDBBtn
-                                                    color="teal accent-3"
-                                                    rounded
-                                                    size="sm"
-                                                    disabled={(!dirty || isSubmitting) && this.state.fileList.length === 0}
-                                                    onClick={() => {this.props.handleReset("OtherPayrollVariable")}}
-                                                >Réinitialiser
-                                                </MDBBtn>
-                                        </MDBRow>
-                                    </MDBCardBody>
-                                </Form>
-                            )}
-                        </Formik>
-                    </div>
-                </MDBContainer>
+            <MDBContainer>
+                <div className="d-flex justify-content-center">
+                    <Formik initialValues={{
+                        id: null,
+                        date: "",
+                        description: "",
+                        montant: 0,
+                        justificatif: "",
+                        etatVariablePaieId: 1,
+                        employeId: "",
+                        mois: "",
+                        annee: ""
+                    }}
+                            onSubmit={this.submit}
+                            validationSchema={otherSchema(this.state)}
+                    >
+                        {({
+                                dirty,
+                                handleSubmit,
+                                isSubmitting
+                            }) => (
+                            <Form onSubmit={handleSubmit}
+                                    className="w-100"
+                            >
+                                <MDBCardBody style={{marginTop: "-3%", marginBottom: "-3%"}}>
+                                    <MDBRow between around>
+                                        <MDBCol md="4">
+                                            {/* description */}
+                                            <Field
+                                                name="description"
+                                                label="Description* :"
+                                                component={ComponentTextArea}
+                                            />
+                                            <ErrorMessage name="description" component={ComponentError}/>
+                                        </MDBCol>
+                                        <MDBCol md="4">
+                                            {/* date */}
+                                            <Field
+                                                name="date"
+                                                label="Date* :"
+                                                startdate={this.state.startPeriod}
+                                                enddate={this.state.endPeriod}
+                                                component={ComponentDate}
+                                            />
+                                            <ErrorMessage name="date" component={ComponentError}/>
+                                            {/* montant */}
+                                            <Field
+                                                name="montant"
+                                                label="Montant*"
+                                                component={ComponentNumber}
+                                            />
+                                            <ErrorMessage name="montant" component={ComponentError}/>
+                                        </MDBCol>
+                                    </MDBRow>
+                                    <br/>
+                                    {/* upload */}
+                                    <Field
+                                        fileInputHandler={this.fileInputHandler}
+                                        component={ComponentUploadFiles}
+                                    />
+                                    <MDBRow between around className="mt-3">
+                                            <MDBBtn
+                                                color="teal accent-3"
+                                                rounded
+                                                size="sm"
+                                                type="submit"
+                                            >Enregistrer
+                                            </MDBBtn>
+                                            <MDBBtn
+                                                color="teal accent-3"
+                                                rounded
+                                                size="sm"
+                                                disabled={(!dirty || isSubmitting) && this.state.fileList.length === 0}
+                                                onClick={() => {this.props.handleReset("OtherPayrollVariable")}}
+                                            >Réinitialiser
+                                            </MDBBtn>
+                                    </MDBRow>
+                                </MDBCardBody>
+                            </Form>
+                        )}
+                    </Formik>
+                </div>
+            </MDBContainer>
         )
     }
 }

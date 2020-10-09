@@ -63,20 +63,27 @@ const ComponentUploadFiles = ({field, ...props}) => (
     </div>
 );
 
-const notify = type => {
+const notify = (type, message) => {
     const variable = "Absence"
     switch (type) {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>{variable} Enregistrée &nbsp;&nbsp;!</strong>
+                    <strong>{variable} Enregistrée {message} &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
+        case "warning":
+            toast.warning(
+                <div className="text-center">
+                    <strong>{variable} non enregistrée : une {variable} existe déjà {message} &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;!</strong>
+                    <strong>{variable} non enregistrée : une {variable} existe déjà {message} &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
@@ -100,7 +107,7 @@ const notify = type => {
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON Enregistrée {message} &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
@@ -114,8 +121,8 @@ class CreateAbsence extends React.Component {
         this.state = {
             absenceTypesList: [],
             loaded: false,
-            startPeriod: "",
-            endPeriod: "",
+            startPeriod: new Date(new Date().setFullYear(this.props.yearSelected, this.props.monthSelected - 1, 1)).toISOString().slice(0, 10),
+            endPeriod: new Date(new Date().setFullYear(this.props.yearSelected, this.props.monthSelected, 0)).toISOString().slice(0, 10),
             fileList: []
         };
     }
@@ -139,6 +146,8 @@ class CreateAbsence extends React.Component {
         if (!this.checkFormat()) {
             AxiosCenter.createAbsence(values)
                 .then(async (response) => {
+                    const statut = response.status;
+                    const message = " du " + response.data.debutAbsence + " au " + response.data.finAbsence;
                     const errorDetected = await this.uploadFiles(response.data.id);
                     if (errorDetected) {
                         /* TODO Une fois deleteFile OK, supprimer en cascade toutes les entités + files
@@ -146,20 +155,31 @@ class CreateAbsence extends React.Component {
                         AxiosCenter.deleteAbsence(response.data.id).catch((error) => {
                             console.log(error);
                         })
-                        notify("fileError");
+                        notify("fileError", "");
                         this.props.handleReset("Absence");
                     } else {
-                        actions.setSubmitting(true);
-                        notify("success");
-                        this.props.handleReset("Absence");
+                        switch(statut) {
+                            case 201:
+                                notify("success", message);
+                                actions.setSubmitting(true);
+                                this.props.handleReset("Absence");
+                            break;
+                            case 208:
+                                notify("warning", message);
+                            break;
+                            default:
+                                notify("warning", message);
+                                break;
+                        };
                     }
                 }).catch((error) => {
                 console.log(error);
-                notify("error");
+                console.log(error.title);
+                notify("error", "");
                 this.props.handleReset("Absence");
             });
         } else {
-            notify("formatError");
+            notify("formatError", "");
             this.props.handleReset("Absence");
         }
     }
@@ -192,6 +212,7 @@ class CreateAbsence extends React.Component {
         formData.append("noteDeFraisId", "-1");
         formData.append("autresVariableId", "-1");
         formData.append("fileNumber", fileNumber);
+        formData.append("timestamp", Date.now());
         await AxiosCenter.uploadFile(formData)
             .catch((error) => {
                 errorDetected = true;
@@ -206,114 +227,97 @@ class CreateAbsence extends React.Component {
         })
     }
 
-    updatePeriod() {
-        this.state.startPeriod = new Date(new Date()
-            .setFullYear(
-                this.props.yearSelected,
-                this.props.monthSelected - 1,
-                1
-            )).toISOString().slice(0, 10);
-        this.state.endPeriod = new Date(new Date()
-            .setFullYear(
-                this.props.yearSelected,
-                this.props.monthSelected,
-                0
-            )).toISOString().slice(0, 10);
-    }
-
-
     render() {
         if (!this.state.loaded) return <Loading/>
         else return (
-            this.updatePeriod(),
-                <MDBContainer>
-                    <div className="d-flex justify-content-center">
-                        <Formik initialValues={{
-                            id: null,
-                            debutAbsence: "",
-                            finAbsence: "",
-                            justificatif: "",
-                            typeAbsenceId: 1,
-                            etatVariablePaieId: 1,
-                            employeId: "",
-                            mois: "",
-                            annee: ""
-                        }}
-                                onSubmit={this.submit}
-                                validationSchema={absenceSchema(this.state)}
-                        >
-                            {({
-                                  dirty,
-                                  handleSubmit,
-                                  isSubmitting
-                              }) => (
-                                <Form onSubmit={handleSubmit}
-                                      className="w-100"
-                                >
-                                    <MDBCardBody style={{marginTop: "-3%", marginBottom: "-3%"}}>
-                                        <MDBRow between around>
-                                            <MDBCol md="4">
-                                                {/* date debut absence */}
-                                                <Field
-                                                    name="debutAbsence"
-                                                    label="Du* :" className="mt-1"
-                                                    startdate={this.state.startPeriod}
-                                                    enddate={this.state.endPeriod}
-                                                    component={ComponentDate}
-                                                />
-                                                <ErrorMessage name="debutAbsence" component={ComponentError}/>
-                                            </MDBCol>
-                                            <MDBCol md="4">
-                                                {/* date fin absence */}
-                                                <Field
-                                                    name="finAbsence"
-                                                    label="Au* :"
-                                                    startdate={this.state.startPeriod}
-                                                    enddate={this.state.endPeriod}
-                                                    component={ComponentDate}
-                                                />
-                                                <ErrorMessage name="finAbsence" component={ComponentError}/>
-                                            </MDBCol>
-                                        </MDBRow>
-                                        <br/>
-                                        <MDBRow between around style={{marginTop: "-5%"}}>
-                                            {/* upload */}
+            <MDBContainer>
+                <div className="d-flex justify-content-center">
+                    <Formik initialValues={{
+                        id: null,
+                        debutAbsence: "",
+                        finAbsence: "",
+                        justificatif: "",
+                        typeAbsenceId: 1,
+                        etatVariablePaieId: 1,
+                        employeId: "",
+                        mois: "",
+                        annee: ""
+                    }}
+                            onSubmit={this.submit}
+                            validationSchema={absenceSchema(this.state)}
+                    >
+                        {({
+                                dirty,
+                                handleSubmit,
+                                isSubmitting
+                            }) => (
+                            <Form onSubmit={handleSubmit}
+                                    className="w-100"
+                            >
+                                <MDBCardBody style={{marginTop: "-3%", marginBottom: "-3%"}}>
+                                    <MDBRow between around>
+                                        <MDBCol md="4">
+                                            {/* date debut absence */}
                                             <Field
-                                                fileInputHandler={this.fileInputHandler}
-                                                component={ComponentUploadFiles}
+                                                name="debutAbsence"
+                                                label="Du* :" className="mt-1"
+                                                startdate={this.state.startPeriod}
+                                                enddate={this.state.endPeriod}
+                                                component={ComponentDate}
                                             />
-                                            {/* select type absence */}
+                                            <ErrorMessage name="debutAbsence" component={ComponentError}/>
+                                        </MDBCol>
+                                        <MDBCol md="4">
+                                            {/* date fin absence */}
                                             <Field
-                                                name="typeAbsenceId"
-                                                label="Type :"
-                                                list={this.state.absenceTypesList}
-                                                component={ComponentSelect}
+                                                name="finAbsence"
+                                                label="Au* :"
+                                                startdate={this.state.startPeriod}
+                                                enddate={this.state.endPeriod}
+                                                component={ComponentDate}
                                             />
-                                            <ErrorMessage name="typeAbsenceId" component={ComponentError}/>
-                                        </MDBRow>
-                                        <MDBRow between around className="mt-3">
-                                                <MDBBtn
-                                                    color="teal accent-3"
-                                                    rounded
-                                                    size="sm"
-                                                    type="submit"
-                                                >Enregistrer
-                                                </MDBBtn>
-                                                <MDBBtn
-                                                    color="teal accent-3"
-                                                    rounded
-                                                    size="sm"
-                                                    disabled={(!dirty || isSubmitting) && this.state.fileList.length === 0}
-                                                    onClick={() => {this.props.handleReset("Absence")}}
-                                                >Réinitialiser
-                                                </MDBBtn>
-                                        </MDBRow>
-                                    </MDBCardBody>
-                                </Form>
-                            )}
-                        </Formik>
-                    </div>
-                </MDBContainer>
+                                            <ErrorMessage name="finAbsence" component={ComponentError}/>
+                                        </MDBCol>
+                                    </MDBRow>
+                                    <br/>
+                                    <MDBRow between around style={{marginTop: "-5%"}}>
+                                        {/* upload */}
+                                        <Field
+                                            fileInputHandler={this.fileInputHandler}
+                                            component={ComponentUploadFiles}
+                                        />
+                                        {/* select type absence */}
+                                        <Field
+                                            name="typeAbsenceId"
+                                            label="Type :"
+                                            list={this.state.absenceTypesList}
+                                            component={ComponentSelect}
+                                        />
+                                        <ErrorMessage name="typeAbsenceId" component={ComponentError}/>
+                                    </MDBRow>
+                                    <MDBRow between around className="mt-3">
+                                            <MDBBtn
+                                                color="teal accent-3"
+                                                rounded
+                                                size="sm"
+                                                type="submit"
+                                            >Enregistrer
+                                            </MDBBtn>
+                                            <MDBBtn
+                                                color="teal accent-3"
+                                                rounded
+                                                size="sm"
+                                                disabled={(!dirty || isSubmitting) && this.state.fileList.length === 0}
+                                                onClick={() => {this.props.handleReset("Absence")}}
+                                            >Réinitialiser
+                                            </MDBBtn>
+                                    </MDBRow>
+                                </MDBCardBody>
+                            </Form>
+                        )}
+                    </Formik>
+                </div>
+            </MDBContainer>
         )
     }
 }

@@ -66,8 +66,8 @@ export default class TableExpenseReport extends React.Component {
         });
     }
 
-    callBackToDelete = () => {
-        AxiosCenter.deleteExpenseReport(this.props.noteDeFraisList[this.state.index].id).then(() => {
+    deleteExpenseReport = (id) => {
+        AxiosCenter.deleteExpenseReport(id).then(() => {
             this.toggleModaleDelete();
             this.props.reloadParentAfterUpdate();
             notify('success');
@@ -75,6 +75,23 @@ export default class TableExpenseReport extends React.Component {
             console.log(error);
             notify('error');
         });
+    }
+
+    callBackToDelete = () => {
+        if(this.props.noteDeFraisList[this.state.index].wrapperDocumentList.length) {
+            this.props.noteDeFraisList[this.state.index].wrapperDocumentList.map((docs, index) => (
+                index === this.props.noteDeFraisList[this.state.index].wrapperDocumentList.length -1 ? (
+                    AxiosCenter.deleteDocumentWithFile(docs.id, docs.nom).then(() => {
+                        this.deleteExpenseReport(this.props.noteDeFraisList[this.state.index].id)
+                    })
+                ) : (
+                    AxiosCenter.deleteDocumentWithFile(docs.id, docs.nom)
+                )
+            ))
+        }
+        else {
+            this.deleteExpenseReport(this.props.noteDeFraisList[this.state.index].id)
+        }
     }
 
     getPdf = (pdfName) => {
@@ -135,7 +152,7 @@ export default class TableExpenseReport extends React.Component {
                                     <td>{frais.designation}</td>
                                     <td>{frais.date}</td>
                                     <td>{frais.montant} €</td>
-                                    {frais.documentDTOList.length ? (
+                                    {frais.wrapperDocumentList.length ? (
                                         <td>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
                                                     onClick={() => this.toggleModalDocument(index, frais.id)}>VOIR</MDBBtn>
@@ -183,6 +200,8 @@ export default class TableExpenseReport extends React.Component {
                             index={this.state.index}
                             toggleNoteDeFrais={this.toggleModal}
                             reloadParentAfterUpdate={this.props.reloadParentAfterUpdate}
+                            yearSelected={this.props.yearSelected}
+                            monthSelected={this.props.monthSelected}
                         />
                     </MDBModalBody>
                 </MDBModal>
@@ -196,7 +215,7 @@ export default class TableExpenseReport extends React.Component {
                             <MDBListGroup>
                                 {this.props.noteDeFraisList.map((nFList) => (
                                     nFList.id == this.state.idExpenseReportSelected ? (
-                                        nFList.documentDTOList.map((doc, index) => (
+                                        nFList.wrapperDocumentList.map((doc, index) => (
                                             <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.nom)}>{doc.nom}</MDBListGroupItem>                                      
                                         ))) : (
                                             null

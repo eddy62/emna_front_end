@@ -80,17 +80,17 @@ const AxiosCenter = {
     });
   },
 
-  getAllEmployesBySociety(id) {
-    return ApiBackEnd({
-      method: "get",
-      url: `/employes/society/${id}`,
-  });
-  },
-
   getAllWrapperEmployesBySociety(id) {
     return ApiBackEnd({
       method: "get",
       url: `/wrapperemployes/society/${id}`,
+    });
+  },
+
+  getAllEmployesBySociety(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/employes/society/${id}`,
     });
   },
 
@@ -345,18 +345,41 @@ const AxiosCenter = {
     });
   },
 
-  getWrapperPayrollVariablesByEmployeIdByYearByMonth(idEmploye, year, month) {
+  getAllPaySlip() {
     return ApiBackEnd({
-      method: "GET",
-      url: `/wrappervariablespaie/employe/${idEmploye}/annee/${year}/mois/${month}`
+        method: "GET",
+        url: `/fiche-paies`,
+    });
+  },
+
+  uploadFile(file) {
+    return ApiBackEnd({
+        method: "POST",
+        url: "/upload",
+        data: file
     })
   },
 
   getPdfFileByPath(path) {
     return ApiBackEnd({
+        method: "GET",
+        url: `/getPdfFile/${path}`,
+        responseType: 'blob'
+    })
+  },
+
+  getAllPayslipByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
+      return ApiBackEnd({
+          method: "GET",
+          url: `/fiche-paies/employe/${idEmploye}/annee/${year}/moisDu/${monthStart}/moisFin/${monthEnd}`,
+      });
+  },
+
+
+  getWrapperPayrollVariablesByEmployeIdByYearByMonth(idEmploye, year, month) {
+    return ApiBackEnd({
       method: "GET",
-      url: `/getPdfFile/${path}`,
-      responseType: 'blob'
+      url: `/wrappervariablespaie/employe/${idEmploye}/annee/${year}/mois/${month}`
     })
   },
 
@@ -373,20 +396,6 @@ const AxiosCenter = {
       url: `/releves/pdf/${id}`,
       responseType: 'arraybuffer'
     });
-  },
-
-  getAllPaySlip() {
-    return ApiBackEnd({
-      method: "GET",
-      url: `/fiche-paies`,
-    });
-  },
-
-  getAllPayslipByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
-    return ApiBackEnd({
-      method: "GET",
-      url: `/fiche-paies/employe/${idEmploye}/annee/${year}/moisDu/${monthStart}/moisFin/${monthEnd}`,
-  });
   },
 
   getDocumentByIdPayslip(idPayslip) {
@@ -605,14 +614,6 @@ const AxiosCenter = {
             url: "/documents",
         });
     },
-
-    uploadFile(file) {
-        return ApiBackEnd({
-            method: "POST",
-            url: "/upload",
-            data: file
-        })
-    },
     // Fin Post
 
   //Put
@@ -721,6 +722,13 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "PUT",
       url: `/avance-rappel-salaires`,
+      data: values,
+    })
+  },
+  modifyOtherPayrollVariable(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/autres-variables`,
       data: values,
     })
   },
@@ -844,6 +852,13 @@ const AxiosCenter = {
     });
   },
 
+  deleteOtherPayrollVariable(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/autres-variables/${id}`
+    })
+  },
+
   deleteClause(id) {
     return ApiBackEnd({
       method: "delete",
@@ -855,6 +870,13 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "delete",
       url: `/articles/${id}`
+    });
+  },
+
+  deleteDocumentWithFile(id, filename) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/documents/${id}/${filename}`
     });
   },
 
