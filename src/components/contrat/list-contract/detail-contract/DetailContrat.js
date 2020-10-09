@@ -37,11 +37,11 @@ export default class DetailContrat extends React.Component {
   detailContrats(props) {
     console.log(props);
     return (
-       <div><img src={img} alt="logo lr" />
-         <Link to={"/listcontrat"}>
-           <button type="button" className="btn btn-outline-mdb-color float-left">Retour</button>
-         </Link>
-       </div>
+        <div><img src={img} alt="logo lr" />
+          <Link to={"/listcontrat"}>
+            <button type="button" className="btn btn-outline-mdb-color float-left">Retour</button>
+          </Link>
+        </div>
 
     );
   }
@@ -49,10 +49,10 @@ export default class DetailContrat extends React.Component {
   render() {
     if (this.state.loaded) {
       return (
-        <this.detailContrats
-          contrats={this.state.contrat}
-          clausesEtArticles={this.state.clauseEtArticle}
-        />
+          <this.detailContrats
+              contrats={this.state.contrat}
+              clausesEtArticles={this.state.clauseEtArticle}
+          />
       );
     } else {
       return <Loading />;
