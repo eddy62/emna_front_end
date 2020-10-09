@@ -46,7 +46,6 @@ class BankReconciliation extends Component {
     validateStatement = ()=> {
         AxiosCenter.validateStatementReconciliation(this.state.releveId).then(() =>{
             this.props.history.goBack()
-            console.log("redirection!")
         })
     }
 
