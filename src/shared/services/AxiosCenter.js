@@ -405,6 +405,7 @@ const AxiosCenter = {
     })
 
   },
+
   // Fin Get
 
   //Post
@@ -613,6 +614,15 @@ const AxiosCenter = {
             method: "POST",
             url: "/documents",
         });
+    },
+
+
+    createWrapperContrat(values) {
+        return ApiBackEnd({
+            method: "POST",
+            url: `/wrapperContrat`,
+            data: values
+        })
     },
     // Fin Post
 
