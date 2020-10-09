@@ -64,9 +64,8 @@ class TableAbsence extends React.Component {
             idAbsenceSelected: id,
         });
     }
-
-    callBackToDeleteAbsence = () => {
-        AxiosCenter.deleteAbsence(this.props.absenceList[this.state.index].id).then(() => {
+    deleteAbsence = (id) => {
+        AxiosCenter.deleteAbsence(id).then(() => {
             this.toggleModalDeleteAbsence();
             this.props.reloadParentAfterUpdate();
             notify('success');
@@ -76,12 +75,37 @@ class TableAbsence extends React.Component {
         });
     }
 
+    callBackToDeleteAbsence = () => {
+        //console.log(this.props.absenceList[this.state.index].wrapperDocumentList.length)
+        if(this.props.absenceList[this.state.index].wrapperDocumentList.length) {
+            this.props.absenceList[this.state.index].wrapperDocumentList.map((docs, index) => (
+                /*AxiosCenter.deleteDocumentWithFile(docs.id, docs.nom).then(() => {
+                    this.deleteAbsence(this.props.absenceList[this.state.index].id)
+                })*/
+                console.log(this.props.absenceList[this.state.index].wrapperDocumentList.length),
+                console.log(index),
+                index === this.props.absenceList[this.state.index].wrapperDocumentList.length -1 ? (
+                    AxiosCenter.deleteDocumentWithFile(docs.id, docs.nom).then(() => {
+                        this.deleteAbsence(this.props.absenceList[this.state.index].id)
+                    })
+                ) : (
+                    AxiosCenter.deleteDocumentWithFile(docs.id, docs.nom)
+                )
+            ))
+        }
+        else {
+            this.deleteAbsence(this.props.absenceList[this.state.index].id)
+        }
+    }
+
     getPdf = (pdfName) => {
         AxiosCenter.getPdfFileByPath(pdfName)
         .then((response) => {
+            console.log(response.config.url);
             const url = response.config.url;
             const urlTab = url.split('.');
             const ext = urlTab[1];
+            console.log(ext);
             this.setState({ modaleDetails: !this.state.modaleDetails });
             
             if(ext === "pdf") {
@@ -134,7 +158,7 @@ class TableAbsence extends React.Component {
                                     <td>{abs.intitule}</td>
                                     <td>{abs.debutAbsence}</td>
                                     <td>{abs.finAbsence}</td>
-                                    {abs.documentDTOList.length ? (
+                                    {abs.wrapperDocumentList.length ? (
                                         <td>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
                                                     onClick={() => this.toggleModalDocument(index, abs.id)}>VOIR</MDBBtn>
@@ -181,6 +205,8 @@ class TableAbsence extends React.Component {
                             index={this.state.index}
                             toggleModalUpdateAbsence={this.toggleModalUpdateAbsence}
                             reloadParentAfterUpdate={this.props.reloadParentAfterUpdate}
+                            yearSelected={this.props.yearSelected}
+                            monthSelected={this.props.monthSelected}
                         />
                     </MDBModalBody>
                 </MDBModal>
@@ -194,7 +220,7 @@ class TableAbsence extends React.Component {
                             <MDBListGroup>
                                 {this.props.absenceList.map((abs) => (
                                     abs.id == this.state.idAbsenceSelected ? (
-                                        abs.documentDTOList.map((doc, index) => (
+                                        abs.wrapperDocumentList.map((doc, index) => (
                                             <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.nom)}>{doc.nom}</MDBListGroupItem>
                                         ))   
                                     ) : (

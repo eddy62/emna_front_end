@@ -73,8 +73,8 @@ class ModifyOvertime extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            debutPeriode: "",
-            finPeriode: "",
+            startPeriod: new Date(new Date().setFullYear(this.props.yearSelected, this.props.monthSelected - 1, 1)).toISOString().slice(0, 10),
+            endPeriod: new Date(new Date().setFullYear(this.props.yearSelected, this.props.monthSelected, 0)).toISOString().slice(0, 10),
             loaded: false,
             btnDisabled: true
         }
@@ -100,21 +100,6 @@ class ModifyOvertime extends React.Component {
         });
         actions.setSubmitting(true);
     };
-
-    updatePeriod() {
-        this.state.debutPeriode = new Date(new Date()
-            .setFullYear(
-                this.props.heureSupplementaire.annee,
-                this.props.heureSupplementaire.mois - 1,
-                1
-            )).toISOString().slice(0, 10);
-        this.state.finPeriode = new Date(new Date()
-            .setFullYear(
-                this.props.heureSupplementaire.annee,
-                this.props.heureSupplementaire.mois,
-                0
-            )).toISOString().slice(0, 10)
-    }
 
     render() {
         if (!this.state.loaded) return <Loading/>;
@@ -152,8 +137,8 @@ class ModifyOvertime extends React.Component {
                                                 <Field
                                                     name="date"
                                                     label="Date* :"
-                                                    debutdate={this.state.debutPeriode}
-                                                    findate={this.state.finPeriode}
+                                                    debutdate={this.state.startPeriod}
+                                                    findate={this.state.endPeriode}
                                                     component={ComposantDate}
                                                 />
                                                 <ErrorMessage

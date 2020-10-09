@@ -80,10 +80,10 @@ const AxiosCenter = {
     });
   },
 
-  getAllWrapperEmployesBySociety(id) {
+  getAllEmployesBySociety(id) {
     return ApiBackEnd({
       method: "get",
-      url: `/wrapperemployes/society/${id}`,
+      url: `/employes/society/${id}`,
     });
   },
 
@@ -327,6 +327,37 @@ const AxiosCenter = {
       url: "/type-absences",
     });
   },
+
+  getAllPaySlip() {
+    return ApiBackEnd({
+        method: "GET",
+        url: `/fiche-paies`,
+    });
+  },
+
+  uploadFile(file) {
+    return ApiBackEnd({
+        method: "POST",
+        url: "/upload",
+        data: file
+    })
+  },
+
+  getPdfFileByPath(path) {
+    return ApiBackEnd({
+        method: "GET",
+        url: `/getPdfFile/${path}`,
+        responseType: 'blob'
+    })
+  },    
+
+  getAllPayslipByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
+      return ApiBackEnd({
+          method: "GET",
+          url: `/fiche-paies/employe/${idEmploye}/annee/${year}/moisDu/${monthStart}/moisFin/${monthEnd}`,
+      });
+  },
+
 
   getWrapperPayrollVariablesByEmployeIdByYearByMonth(idEmploye, year, month) {
     return ApiBackEnd({
@@ -649,6 +680,13 @@ const AxiosCenter = {
       data: values,
     })
   },
+  modifyOtherPayrollVariable(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/autres-variables`,
+      data: values,
+    })
+  },
 
   confirmPayrollVariables(values) {
     return ApiBackEnd({
@@ -673,6 +711,7 @@ const AxiosCenter = {
       data: values,
     });
   },
+
 
   editArticle(values) {
     return ApiBackEnd({
@@ -769,6 +808,13 @@ const AxiosCenter = {
     });
   },
 
+  deleteOtherPayrollVariable(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/autres-variables/${id}`
+    })
+  },
+
   deleteClause(id) {
     return ApiBackEnd({
       method: "delete",
@@ -780,6 +826,13 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "delete",
       url: `/articles/${id}`
+    });
+  },
+
+  deleteDocumentWithFile(id, filename) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/documents/${id}/${filename}`
     });
   },
 

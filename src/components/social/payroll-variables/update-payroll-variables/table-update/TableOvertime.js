@@ -121,6 +121,8 @@ export default class TableOvertime extends React.Component {
                             index={this.state.index}                          
                             toggleAvance={this.toggleModal}
                             reloadParentAfterUpdate={this.props.reloadParentAfterUpdate}
+                            yearSelected={this.props.yearSelected}
+                            monthSelected={this.props.monthSelected}
                         />
                     </MDBModalBody>
                 </MDBModal>

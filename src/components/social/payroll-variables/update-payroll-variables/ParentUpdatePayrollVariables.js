@@ -172,7 +172,7 @@ export default class ParentUpdatePayrollVariables extends Component {
         })
 
         //Récupération de la liste des employés à travers l'id de la société
-        AxiosCenter.getAllWrapperEmployesBySociety(societyId)
+        AxiosCenter.getAllEmployesBySociety(societyId)
             .then((response) => {
                 const listeEmployes = response.data;
                 this.setState({ listeEmployes: listeEmployes });
@@ -278,13 +278,17 @@ export default class ParentUpdatePayrollVariables extends Component {
                         <div style={{display: "flex", flexDirection: "column"}}>
                             <MDBCard>
                                 {<TableAbsence reloadParentAfterUpdate={this.reloadParentAfterUpdate}
-                                               changeHandler={this.changeHandler} absenceList={this.state.absenceList}
-                                               handleClick={this.handleClick}/>}
+                                                changeHandler={this.changeHandler} absenceList={this.state.absenceList}
+                                                handleClick={this.handleClick}
+                                                yearSelected={this.state.yearSelected}
+                                                monthSelected={this.state.monthSelected}/>}
                             </MDBCard>
                             <MDBCard className="mt-1">
                                 {<TableNoteDefrais noteDeFraisList={this.state.noteDeFraisList}
                                                    reloadParentAfterUpdate={this.reloadParentAfterUpdate}
-                                                   changeHandler={this.changeHandler} handleClick={this.handleClick}/>}
+                                                   changeHandler={this.changeHandler} handleClick={this.handleClick}
+                                                   yearSelected={this.state.yearSelected}
+                                                   monthSelected={this.state.monthSelected}/>}
                             </MDBCard>
                             <MDBCard>
                                 {<TableBonus reloadParentAfterUpdate={this.reloadParentAfterUpdate}
@@ -306,7 +310,9 @@ export default class ParentUpdatePayrollVariables extends Component {
                                 {<TableOtherPayrollVariable reloadParentAfterUpdate={this.reloadParentAfterUpdate}
                                                              changeHandler={this.changeHandler}
                                                              autresVariablesList={this.state.autresVariableList}
-                                                             handleClick={this.handleClick}/>}
+                                                             handleClick={this.handleClick}
+                                                             yearSelected={this.state.yearSelected}
+                                                             monthSelected={this.state.monthSelected}/>}
                             </MDBCard>
                         </div>
 

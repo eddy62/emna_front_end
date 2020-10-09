@@ -73,7 +73,7 @@ export default class ParentAddPayrollVariables extends Component {
             });
 
         //Récupération de la liste des employés à travers l'id de la société
-        AxiosCenter.getAllWrapperEmployesBySociety(idSociete)
+        AxiosCenter.getAllEmployesBySociety(idSociete)
             .then((response) => {
                 const listeEmployes = response.data;
                 this.setState({listeEmployes: listeEmployes});
