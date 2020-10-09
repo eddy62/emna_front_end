@@ -367,12 +367,18 @@ const AxiosCenter = {
     })
   },
 
-
   getPDFArchivedStatement(id) {
     return ApiBackEnd({
       method: "get",
       url: `/releves/pdf/${id}`,
       responseType: 'arraybuffer'
+    });
+  },
+
+  getAllPaySlip() {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/fiche-paies`,
     });
   },
 
@@ -391,39 +397,6 @@ const AxiosCenter = {
 
   },
   // Fin Get
-    getPdfFileByPath(path) {
-        return ApiBackEnd({
-            method: "GET",
-            url: `/getPdfFile/${path}`,
-            responseType: 'blob'
-        })
-    },
-
-
-    getAllPaySlip() {
-        return ApiBackEnd({
-            method: "GET",
-            url: `/fiche-paies`,
-        });
-    },
-
-    getAllPayslipByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
-        return ApiBackEnd({
-            method: "GET",
-            url: `/fiche-paies/employe/${idEmploye}/annee/${year}/moisDu/${monthStart}/moisFin/${monthEnd}`,
-        });
-    },
-    getPDFArchivedStatement(id) {
-        return ApiBackEnd({
-            method: "get",
-            url: `/releves/pdf/${id}`,
-            responseType: 'arraybuffer'
-        });
-    },
-
-
-    // Fin Get
-
 
   //Post
   finishPasswordReset(values) {
@@ -630,14 +603,6 @@ const AxiosCenter = {
         return ApiBackEnd({
             method: "POST",
             url: "/documents",
-        });
-    },
-
-    createArticle(values) {
-        return ApiBackEnd({
-            method: "POST",
-            url: "/articles",
-            data: values,
         });
     },
 
