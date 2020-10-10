@@ -1,12 +1,10 @@
 import React from 'react';
-import {ErrorMessage, Field, Form, Formik} from 'formik';
-import ContratService from "../service/ContratService";
+import {Field, Form, Formik} from 'formik';
 import Loading from "../../../shared/component/Loading";
 import {Link} from "react-router-dom";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
 import {MDBCard, MDBCardBody, MDBCol, MDBCollapse, MDBCollapseHeader, MDBContainer, MDBInput} from "mdbreact";
-import ErrorMessForm from "../../../shared/component/ErrorMessForm";
 import {toast} from "react-toastify";
 
 const ComponentText = ({field, ...props}) => (
@@ -59,11 +57,19 @@ const notify = type => {
                 </div>
             );
             break;
-        case "inputs":
+        case "missingInputs":
             toast.error(
                 <div className="text-center">
                     <strong>{variable} NON Enregistré &nbsp;&nbsp;!
                         <br/>Veuillez remplir tous les articles.</strong>
+                </div>
+            )
+            break;
+        case "existingContract":
+            toast.error(
+                <div className="text-center">
+                    <strong>{variable} NON Enregistré &nbsp;&nbsp;!
+                        <br/>Ce salarié dispose déjà d'un contrat.</strong>
                 </div>
             )
             break;
@@ -82,7 +88,7 @@ export default class CreerContrat extends React.Component {
         super(props);
         this.state = {
             loaded: false,
-            idEmploye: null,
+            selectedEmploye: null,
             idTypeContrat: null,
             title: '',
             employes: [],
@@ -95,8 +101,8 @@ export default class CreerContrat extends React.Component {
 
     handleOnChange = async (e) => {
         await this.setState({
-            idTypeContrat: e.target.value,
-            title: document.getElementById("exampleFormControlSelect1")[e.target.selectedIndex].text,
+            idTypeContrat: this.state.typeContracts[e.target.value].id,
+            title: this.state.typeContracts[e.target.value].intitule
         })
         const isSubmitDisabled = await (this.state.idEmploye === null) || (this.state.idTypeContrat === null);
         this.setState({
@@ -107,7 +113,7 @@ export default class CreerContrat extends React.Component {
 
     handleOnChangeEmploye = async (e) => {
         await this.setState({
-            idEmploye: e.target.value
+            selectedEmploye: this.state.employes[e.target.value]
         })
         const isSubmitDisabled = await (this.state.idEmploye === null) || (this.state.idTypeContrat === null);
         this.setState({
@@ -116,9 +122,26 @@ export default class CreerContrat extends React.Component {
     }
 
     checkFields(inputs) {
-        let isError = inputs.length !== this.state.articles.length;
-        if (isError)
-            notify("inputs");
+        const nbArticles = this.state.articles.length;
+        let isError = (inputs.length !== nbArticles);
+        let index = 0;
+
+        //Verifying all inputs are created
+        while (index < nbArticles && !isError) {
+            if (inputs[index] === undefined)
+                isError = true;
+            index++;
+        }
+
+        //Verifying all inputs are not empty
+        index = 0;
+        while (index < nbArticles && !isError) {
+            const nomLibelle = Object.keys(inputs[index]);
+           if (inputs[index][nomLibelle] === "")
+                isError = true;
+            index++;
+        }
+
         return isError;
     }
 
@@ -172,13 +195,13 @@ export default class CreerContrat extends React.Component {
     initialize = (props) => {
         const employes = props.employes.map((employe, index) => {
             return (
-                <option key={employe.id} value={employe.id}>{employe.nomUsage} {employe.prenom}</option>
+                <option key={index} value={index}>{employe.nomUsage} {employe.prenom}</option>
             )
         })
 
-        const typeContracts = props.typeContracts.map((typeContract, k) => {
+        const typeContracts = props.typeContracts.map((typeContract, index) => {
             return (
-                <option key={typeContract.id} value={typeContract.id}>{typeContract.intitule}</option>
+                <option key={index} value={index}>{typeContract.intitule}</option>
             )
         })
 
@@ -241,7 +264,7 @@ export default class CreerContrat extends React.Component {
             listSaisiesArticle.map((saisieArticle) => {
                 let nameLibelle = Object.keys(saisieArticle)[0]
                 const id = null;
-                const libelle = saisieArticle[Object.keys(saisieArticle)[0]];
+                const libelle = saisieArticle[nameLibelle];
                 const idArticle = nameLibelle.split("_")[1];
                 const idContrat = null;
 
@@ -296,30 +319,35 @@ export default class CreerContrat extends React.Component {
                         //clauses: [],
                     }}
                     onSubmit={async fields => {
-                        if (!this.checkFields(fields.wrapperSaisieArticles)) {
-                            fields.titre = this.state.title;
-                            fields.idTypeContrat = this.state.idTypeContrat;
-                            fields.idEmploye = this.state.idEmploye;
-                            fields.dateCreation = new Date().toISOString().slice(0, 10);
-                            fields.wrapperSaisieArticles = await getIdArticleFromLibelle(fields.wrapperSaisieArticles);
-                            await console.log(fields)
-                            //fields.clauses = this.state.clauses;
-                            //ContratService.postContrat(fields)
-                            //.then(response =>{
-                            // const blob = new Blob([response.data], { type: 'application/pdf' });
-                            // const url = URL.createObjectURL(blob);
-                            // window.open(url);
-                            // });
-                            AxiosCenter.createWrapperContrat(fields).then(() => {
-                                notify("success");
-                            }).catch((error) => {
-                                console.log(error);
-                                notify("error");
-                            });
-                            //alert(JSON.stringify(fields, null, 4));
+                        if (this.state.selectedEmploye.idContrat === null) {
+                            if (!this.checkFields(fields.wrapperSaisieArticles)) {
+                                fields.titre = this.state.title;
+                                fields.idTypeContrat = this.state.idTypeContrat;
+                                fields.idEmploye = this.state.selectedEmploye.id;
+                                fields.dateCreation = new Date().toISOString().slice(0, 10);
+                                fields.wrapperSaisieArticles = await getIdArticleFromLibelle(fields.wrapperSaisieArticles);
+                                //fields.clauses = this.state.clauses;
+                                //ContratService.postContrat(fields)
+                                //.then(response =>{
+                                // const blob = new Blob([response.data], { type: 'application/pdf' });
+                                // const url = URL.createObjectURL(blob);
+                                // window.open(url);
+                                // });
+                                AxiosCenter.createWrapperContrat(fields).then(() => {
 
-
+                                    this.props.history.push("/listcontrat/");
+                                    notify("success");
+                                }).catch((error) => {
+                                    console.log(error);
+                                    notify("error");
+                                });
+                                //alert(JSON.stringify(fields, null, 4));
+                            } else {
+                                notify("missingInputs");
+                            }
                         }
+                        else
+                            notify("existingContract")
                     }}
                 >
                     {({
@@ -329,10 +357,10 @@ export default class CreerContrat extends React.Component {
                       }) => (
                         <Form>
                             <div className="form-group">
-                                <label htmlFor="exampleFormControlSelect1"><h5>Type de contrat :</h5></label>
+                                <label htmlFor="selectTypeContrat"><h5>Type de contrat :</h5></label>
                                 <select name="idTypeContrat"
                                         className="browser-default custom-select form-control"
-                                        id="exampleFormControlSelect1"
+                                        id="selectTypeContrat"
                                         onChange={(event) => this.handleOnChange(event)}
                                         defaultValue={'DEFAULT'}>
                                     <option value="DEFAULT" disabled>Choisissez un type de contrat</option>
@@ -341,10 +369,10 @@ export default class CreerContrat extends React.Component {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="exampleFormControlSelect1"><h5>L'employé :</h5></label>
+                                <label htmlFor="selectEmploye"><h5>L'employé :</h5></label>
                                 <select name="idEmploye"
                                         className="browser-default custom-select form-control"
-                                        id="exampleFormControlSelect1"
+                                        id="selectEmploye"
                                         onChange={(event) => this.handleOnChangeEmploye(event)}
                                         defaultValue={'DEFAULT'}>
                                     <option value="DEFAULT" disabled>Choisissez un employé</option>
