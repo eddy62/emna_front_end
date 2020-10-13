@@ -1,10 +1,10 @@
 import React from "react";
-import {Redirect, Route} from "react-router-dom";
 import ArticleForm from "../ArticleForm";
 import Loading from "../../../../../shared/component/Loading";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {toast} from "react-toastify";
 import UserService from "../../../../../shared/services/UserService";
+import Redirect from "react-router-dom";
 
 export default class EditArticle extends React.Component {
     constructor(props) {
@@ -57,7 +57,6 @@ export default class EditArticle extends React.Component {
 
     render() {
         if (this.state.redirect) return <Redirect to={"/articles"}/>
-
         if (!this.state.loaded) return <Loading/>
         return <ArticleForm title="Modification d'article" article={this.state.article} onSubmit={this.editArticle}/>
     }

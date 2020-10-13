@@ -1,8 +1,8 @@
 import React from "react";
-import AxiosCenter from "../../../shared/services/AxiosCenter";
+import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import {MDBCardHeader, MDBCardTitle, MDBContainer, MDBTable, MDBTableBody, MDBTableHead} from "mdbreact";
-import Loading from "../../../shared/component/Loading";
-import RedirectionBtn from "../../../shared/component/buttons/RedirectionBtn";
+import Loading from "../../../../shared/component/Loading";
+import BackBtn from "../../../../shared/component/buttons/BackBtn";
 
 export default class DetailDepense extends React.Component {
     constructor(props) {
@@ -29,8 +29,8 @@ export default class DetailDepense extends React.Component {
                 <MDBContainer>
                     <div>
                         <MDBCardHeader color="default-color">
-                            <MDBCardTitle>
-                                <h1>Détail de la depense</h1>
+                            <MDBCardTitle tag="h1" >
+                                Détail de la depense
                             </MDBCardTitle>
                             <br/>
                         </MDBCardHeader>
@@ -62,8 +62,8 @@ export default class DetailDepense extends React.Component {
                         </MDBTable>
                         <br/>
                     </div>
+                    <BackBtn history={this.props.history}/>
                 </MDBContainer>
-                <RedirectionBtn color="light" to="/accueildepenses" txt="Retour"/>
             </div>
         );
     };
