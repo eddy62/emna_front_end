@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, {} from 'react';
+import {MDBInput} from "mdbreact";
 
 const StatementInvoice = ({facture, isCheckBoxVisible, addOrRemoveSelectedFacture}) => {
     return (
@@ -8,15 +9,15 @@ const StatementInvoice = ({facture, isCheckBoxVisible, addOrRemoveSelectedFactur
         <td>{facture.prixTTC}€</td>
         <td>{
             isCheckBoxVisible &&
-            <div className="custom-control custom-checkbox">
-                <input onClick={
+            <div>
+                <MDBInput onChange={
                     (event) => {
                         // this.props.addOrRemoveSelectedFacture(this.props.facture, event.currentTarget.checked)
                         addOrRemoveSelectedFacture(facture, event)
                     }
                 }
-                    type="checkbox" className="custom-control-input" id={facture.id}/>
-                <label className="custom-control-label" htmlFor={facture.id}/>
+                    type="checkbox" id={facture.id}
+                    label=" "/>
             </div>
             }
         </td>

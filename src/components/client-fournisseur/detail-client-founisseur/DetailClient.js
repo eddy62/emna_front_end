@@ -52,8 +52,8 @@ class Details extends React.Component {
                                         <dl>
                                             <dt>Raison sociale</dt>
                                             <dd>{this.state.client.nom}.</dd>
-                                            <dt>SIREN</dt>
-                                            <dd>{this.state.client.siren}.</dd>
+                                            <dt>SIRET</dt>
+                                            <dd>{this.state.client.siret}.</dd>
                                             <dt>Email</dt>
                                             <dd>{this.state.client.email}.</dd>
                                             <dt>Téléphone</dt>

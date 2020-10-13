@@ -4,69 +4,71 @@ import Loading from "../../../shared/component/Loading";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UploadFileBtn from "../../../shared/component/buttons/UploadFileBtn";
 import FileUpload from "../../../shared/component/drag-n-drop/FileUpload";
+import UserService from "../../../shared/services/UserService";
 
 export default class ListeContrat extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             loaded: false,
-            contrats: [],
+            employes: [],
         };
     }
 
-    componentDidMount(){
-        AxiosCenter.getAllContrats().then((result) => {
+    componentDidMount() {
+        AxiosCenter.getAllWrapperEmployesBySociety(UserService.getSocietyId()).then((result) => {
             this.setState({
-                contrats: result.data,
-                loaded:true
+                employes: result.data,
+                loaded: true
             })
         })
     }
 
     onSavingFiles = (files, idContract) => {
         console.log(files)
-        AxiosCenter.uploadContract(files,idContract)
+        AxiosCenter.uploadContract(files, idContract)
     }
 
     listerLesContrats(props) {
-        const Contrats = props.contrats.map((contrat, index)=>{
-            if(contrat.signe){
-                return(
-                    <div key={contrat.employeId} className="alert alert-success" role="alert">
-                      <h5>  {contrat.titre} - {contrat.employerNom} {contrat.employerPrenom}
-                       <button type="button" className="btn btn--danger">Supprimer</button>
-                        <Link to={"/detailcontrat/"+contrat.employeId}>
-                            <button type="button" className="btn btn-outline-success text-right">Voir le contrat</button>
-                        </Link>
-                          </h5>
-
-                    </div>
-                )
-            }else{
-                return(
-                    <div key={contrat.employeId} className="alert alert-danger" >
-                       <h5> {contrat.titre} - {contrat.employerNom} {contrat.employerPrenom}  - En attente d'une signature
-                           <button type="button" className="btn btn--danger text-right">Supprimer</button>
-                        <Link to={"/detailcontrat/"+contrat.employeId}>
-                              <button type="button" className="btn btn-outline-danger text-right">Voir le contrat</button>
-                        </Link>
-                           <UploadFileBtn
-                               fileFormats="application/pdf,.pdf"
-                               onSave={props.onSavingFiles}
-                               idElement={contrat.id}
-                           />
-                       </h5>
-                    </div>
-                );
+       const employes = props.employes.map((employe, index) => {
+            if (employe.archive === false) {
+                if (employe.signe) {
+                    return (
+                        <div key={employe.id} className="alert alert-success" role="alert">
+                            <h5>  {employe.titre} - {employe.nomUsage} {employe.prenom}
+                                <button type="button" className="btn btn--danger">Supprimer</button>
+                                <Link to={"/detailcontrat/" + employe.id}>
+                                    <button type="button" className="btn btn-outline-success text-right">Voir le
+                                        contrat
+                                    </button>
+                                </Link>
+                            </h5>
+                        </div>
+                    )
+                } else {
+                    return (
+                        <div key={index} className="alert alert-danger">
+                            <h5> {employe.titre} - {employe.nomUsage} {employe.prenom} - En attente d'une signature
+                                <button type="button" className="btn btn--danger text-right">Supprimer</button>
+                                <UploadFileBtn
+                                    fileFormats="application/pdf,.pdf"
+                                    onSave={props.onSavingFiles}
+                                    idElement={employe.id}
+                                />
+                            </h5>
+                        </div>
+                    );
+                }
             }
-
         });
 
+
+
         return (
-            <div >
-                <h1>Liste des Contrats</h1>
+            <div>
+                <h1>Liste des Contrats actifs</h1>
                 <hr/>
-                {Contrats}
+                {employes}
                 <Link to={"/contrat/"}>
                     <button type="button" className="btn btn-outline-success">Retour</button>
                 </Link>
@@ -79,7 +81,7 @@ export default class ListeContrat extends React.Component {
     }
 
     render() {
-        if(!this.state.loaded) return <Loading/>
-        return <this.listerLesContrats contrats={this.state.contrats} onSavingFiles={this.onSavingFiles}/>
+        if(!this.state.loaded) return<Loading/>
+        return <this.listerLesContrats employes={this.state.employes} onSavingFiles={this.onSavingFiles}/>
     }
 }

@@ -65,8 +65,8 @@ class TableOtherPayrollVariable extends React.Component {
         });
     }
 
-    callBackToDeleteOther = () => {
-        AxiosCenter.deleteOtherPayrollVariable(this.props.autresVariablesList[this.state.index].id).then(() => {
+    deleteOther = (id) => {
+        AxiosCenter.deleteOtherPayrollVariable(id).then(() => {
             this.toggleModalDeleteOther();
             this.props.reloadParentAfterUpdate();
             notify('success');
@@ -74,6 +74,23 @@ class TableOtherPayrollVariable extends React.Component {
             console.log(error);
             notify('error');
         });
+    }
+
+    callBackToDeleteOther = () => {
+        if(this.props.autresVariablesList[this.state.index].wrapperDocumentList.length) {
+            this.props.autresVariablesList[this.state.index].wrapperDocumentList.map((docs, index) => (
+                index === this.props.autresVariablesList[this.state.index].wrapperDocumentList.length -1 ? (
+                    AxiosCenter.deleteDocumentWithFile(docs.id, docs.nom).then(() => {
+                        this.deleteOther(this.props.autresVariablesList[this.state.index].id)
+                    })
+                ) : (
+                    AxiosCenter.deleteDocumentWithFile(docs.id, docs.nom)
+                )
+            ))
+        }
+        else {
+            this.deleteOther(this.props.autresVariablesList[this.state.index].id)
+        }
     }
 
     getPdf = (pdfName) => {
@@ -165,7 +182,7 @@ class TableOtherPayrollVariable extends React.Component {
                                     <td>{other.description}</td>
                                     <td>{other.date}</td>
                                     <td>{other.montant} €</td>
-                                    {other.documentDTOList.length ? (
+                                    {other.wrapperDocumentList.length ? (
                                         <td>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
                                                     onClick={() => this.toggleModalDocument(index, other.id)}>VOIR</MDBBtn>
@@ -212,6 +229,9 @@ class TableOtherPayrollVariable extends React.Component {
                             index={this.state.index}
                             toggleModalUpdateOther={this.toggleModalUpdateOther}
                             reloadParentAfterUpdate={this.props.reloadParentAfterUpdate}
+                            yearSelected={this.props.yearSelected}
+                            monthSelected={this.props.monthSelected}
+
                         />
                     </MDBModalBody>
                 </MDBModal>
@@ -225,7 +245,7 @@ class TableOtherPayrollVariable extends React.Component {
                             <MDBListGroup>
                                 {this.props.autresVariablesList.map((aVList) => (
                                     aVList.id == this.state.idOtherPayrollVariableSelected ? (
-                                        aVList.documentDTOList.map((doc, index) => (
+                                        aVList.wrapperDocumentList.map((doc, index) => (
                                             <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.nom)}>{doc.nom}</MDBListGroupItem>
                                         ))
                                     ) : (

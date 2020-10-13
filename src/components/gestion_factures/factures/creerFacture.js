@@ -13,7 +13,7 @@ class CreerFacture extends React.Component {
   };
 
   componentDidMount() {
-    axioscenter.getAllCustomerSupplierBySociete(UserService.getSocietyId()).then((resarray) => {
+    axioscenter.getInfosForCreationFacture(UserService.getSocietyId()).then((resarray) => {
       this.setState({
         clients: resarray[1].data,
         numfact: resarray[0].data +1,

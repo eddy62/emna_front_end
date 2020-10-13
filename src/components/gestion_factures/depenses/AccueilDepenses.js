@@ -1,12 +1,8 @@
 import React from "react";
-import ListeDepenses from "./listeDepenses";
+import ListDepense from "./list-depense/ListDepense";
 import Dropdown from "react-bootstrap/Dropdown";
 
 class AccueilDepense extends React.Component {
-  constructor(props) {
-    super();
-  }
-
   render() {
     return (
       <div className="AccueilFacture">
@@ -19,7 +15,7 @@ class AccueilDepense extends React.Component {
             <Dropdown.Item href="/newfacture">
               Facture
             </Dropdown.Item>
-            <Dropdown.Item href="/newdepense">
+            <Dropdown.Item href="/depenses/create">
               Depense
             </Dropdown.Item>
             <Dropdown.Item href="/newdevis">
@@ -27,7 +23,7 @@ class AccueilDepense extends React.Component {
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        <ListeDepenses />
+        <ListDepense />
       </div>
     );
   }

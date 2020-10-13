@@ -1,15 +1,15 @@
 import React from "react";
 import {ErrorMessage, Field, Form, Formik} from 'formik';
 import * as Yup from "yup";
-import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow, MDBCardHeader, MDBCardTitle} from "mdbreact";
+import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow, MDBCardHeader, MDBCardTitle, MDBListGroup, MDBListGroupItem, MDBIcon, MDBFileInput} from "mdbreact";
 import {toast} from "react-toastify";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 
 const noteDeFraisSchema = (props) => {
     return Yup.object().shape({
         date: Yup.date().required("Date obligatoire*")
-            .min(props.minDate, "Date erronée")
-            .max(props.maxDate, "Date erronée"),
+            .min(props.startPeriod, "Date erronée")
+            .max(props.endPeriod, "Date erronée"),
         montant: Yup.number().required("Montant obligatoire*")
             .min("0.01", "Ne peut être un montant nul ou négatif"),
         designation: Yup.string().required("Désignation obligatoire*")
@@ -55,6 +55,19 @@ const ComponentError = (props) => (
     <div className="text-danger">{props.children}</div>
 );
 
+const ComponentUploadFiles = ({field, ...props}) => (
+    <div>
+        <MDBFileInput
+            btnTitle="Télécharger"
+            textFieldTitle="Ajouter justificatif(s)"
+            multiple
+            btnColor="teal accent-3"
+            getValue={props.fileInputHandler}
+        />
+    </div>
+);
+
+
 const notify = (type) => {
     switch (type) {
         case "success":
@@ -85,8 +98,11 @@ class ModifyExpenseReport extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            minDate: "",
-            maxDate: "",
+            startPeriod: new Date(new Date().setFullYear(this.props.yearSelected, this.props.monthSelected - 1, 1)).toISOString().slice(0, 10),
+            endPeriod: new Date(new Date().setFullYear(this.props.yearSelected, this.props.monthSelected, 0)).toISOString().slice(0, 10),
+            docToDelete: [],
+            fileList: [],
+            noteDeFrais: this.props.noteDeFrais
         };
     }
 
@@ -95,6 +111,13 @@ class ModifyExpenseReport extends React.Component {
     }
 
     submit = (values, actions) => {
+        if(this.state.docToDelete.length) {
+            this.removeFile();
+        }
+        if(this.state.fileList.length) {
+            this.uploadFiles(values.id);
+            console.log(values.id);
+        }
         AxiosCenter.updateExpenseReport(values)
             .then(() => {
                 this.props.toggleNoteDeFrais(this.props.index);
@@ -107,115 +130,179 @@ class ModifyExpenseReport extends React.Component {
         actions.setSubmitting(true);
     };
 
-    updatePeriod() {
-        this.state.minDate = new Date(new Date()
-            .setFullYear(
-                this.props.noteDeFrais.annee,
-                this.props.noteDeFrais.mois - 1,
-                1
-            )).toISOString().slice(0, 10);
-        this.state.maxDate = new Date(new Date()
-            .setFullYear(
-                this.props.noteDeFrais.annee,
-                this.props.noteDeFrais.mois,
-                0
-            )).toISOString().slice(0, 10)
-    };
+    getIdFileToDelete(idDoc, fileName) {
+        this.state.docToDelete.push([idDoc, fileName]);
+        const docArray = [];
+        const noteDeFraisTemp = this.state.noteDeFrais;
+        this.state.noteDeFrais.wrapperDocumentList.forEach(document => {
+            if(document.id !== idDoc) {
+                docArray.push(document);
+            }
+        })
+        noteDeFraisTemp.wrapperDocumentList = docArray;
+        this.setState({ noteDeFrais: noteDeFraisTemp});
+    }
+
+    removeFile() {
+        this.state.docToDelete.map((doc) => (
+            AxiosCenter.deleteDocumentWithFile(doc[0], doc[1])
+            .then((response) => {
+                console.log(response);
+            })
+        ))
+        this.props.reloadParentAfterUpdate();
+    }
+
+    checkFormat = () => {
+        const acceptedFormats = ["application/pdf", "image/png", "image/jpg", "image/jpeg"]
+        let wrongFormat = false;
+        Array.from(this.state.fileList).forEach(file => {
+            if (acceptedFormats.indexOf(file.type) === -1)
+                wrongFormat = true;
+        })
+        return wrongFormat;
+    }
+
+    uploadFiles = (noteDeFraisId) => {
+        let errorDetected = false;
+        let nbFiles = 0;
+        for (const file of this.state.fileList) {
+            nbFiles++;
+            errorDetected = this.uploadFile(file, noteDeFraisId, nbFiles);
+        }
+        return errorDetected;
+    }
+
+    uploadFile = (file, noteDeFraisId, fileNumber) => {
+        let errorDetected = false;
+        let formData = new FormData();
+        formData.append("file", file);
+        formData.append("absenceId", "-1");
+        formData.append("noteDeFraisId", noteDeFraisId );
+        formData.append("autresVariableId", "-1");
+        formData.append("fileNumber", fileNumber);
+        formData.append("timestamp", Date.now());
+        AxiosCenter.uploadFile(formData)
+            .catch((error) => {
+                errorDetected = true;
+                console.log(error);
+            });
+        return errorDetected;
+    }
+
+    fileInputHandler = (files) => {
+        this.setState({
+            fileList: files
+        })
+    }
 
     render() {
         return (
-            this.updatePeriod(),
-                    <div>
-                        <MDBContainer>
-                            <div>
-                                <MDBCardHeader color={"teal accent-4"} >
-                                    <MDBCardTitle tag="h4">Notes de Frais</MDBCardTitle>
-                                </MDBCardHeader>
-                            </div>
-                            {/* Formulaire */}
-                            <Formik
-                                onSubmit={this.submit}
-                                initialValues={{
-                                    annee: this.props.noteDeFrais.annee,
-                                    date: this.props.noteDeFrais.date,
-                                    designation: this.props.noteDeFrais.designation,
-                                    employeId: this.props.noteDeFrais.employeId,
-                                    etatVariablePaieId: this.props.noteDeFrais.etatVariablePaieId,
-                                    id: this.props.noteDeFrais.id,
-                                    justificatif: this.props.noteDeFrais.justificatif,
-                                    mois: this.props.noteDeFrais.mois,
-                                    montant: this.props.noteDeFrais.montant,
+                <div>
+                    <MDBContainer>
+                        <div>
+                            <MDBCardHeader color={"teal accent-4"} >
+                                <MDBCardTitle tag="h4">Notes de Frais</MDBCardTitle>
+                            </MDBCardHeader>
+                        </div>
+                        {/* Formulaire */}
+                        <Formik
+                            onSubmit={this.submit}
+                            initialValues={{
+                                annee: this.props.noteDeFrais.annee,
+                                date: this.props.noteDeFrais.date,
+                                designation: this.props.noteDeFrais.designation,
+                                employeId: this.props.noteDeFrais.employeId,
+                                etatVariablePaieId: this.props.noteDeFrais.etatVariablePaieId,
+                                id: this.props.noteDeFrais.id,
+                                justificatif: this.props.noteDeFrais.justificatif,
+                                mois: this.props.noteDeFrais.mois,
+                                montant: this.props.noteDeFrais.montant,
 
-                                }}
-                                validationSchema={noteDeFraisSchema(this.state)}
-                            >
-                                {({
-                                      handleSubmit
-                                  }) => (
-                                    <Form onSubmit={handleSubmit}>
-                                        <MDBCardBody>
-                                            <MDBRow between around>
-                                                {/* ligne 1 */}
-                                                <MDBCol md="4" className="mt-3">
-                                                    <Field
-                                                        name="date"
-                                                        label="Le* :"
-                                                        startdate={this.state.minDate}
-                                                        enddate={this.state.maxDate}
-                                                        component={ComponentDate}
-                                                    />
-                                                    <ErrorMessage
-                                                        name="date"
-                                                        component={ComponentError}
-                                                    />
-                                                </MDBCol>
-                                                {/* ligne 2 */}
-                                                <MDBCol md="4" style={{marginTop: "-1%"}}>
-                                                    <Field
-                                                        name="montant"
-                                                        label="Montant*"
-                                                        component={ComponentNumber}
-                                                    />
-                                                    <ErrorMessage
-                                                        name="montant"
-                                                        component={ComponentError}
-                                                    />
-                                                </MDBCol>
-                                            </MDBRow>
-                                            {/* désignation */}
-                                            <MDBRow center style={{marginTop: "-3%"}}>
-                                                <MDBCol md="5">
-                                                    <Field
-                                                        name="designation"
-                                                        label="Désignation*"
-                                                        component={ComponentDesignation}
-                                                    />
-                                                    <ErrorMessage name="designation" component={ComponentError}/>
-                                                </MDBCol>
-                                            </MDBRow>
-                                            <MDBRow center>
-                                                {/* ligne 3 */}
-                                                <MDBBtn
-                                                    color="teal accent-3"
-                                                    rounded
-                                                    size="sm"
-                                                    type="submit"
-                                                >Enregistrer
-                                                </MDBBtn>
-                                                <MDBBtn
-                                                    color="teal accent-3"
-                                                    rounded
-                                                    size="sm"
-                                                    onClick={() => this.props.toggleNoteDeFrais(this.props.index)}
-                                                >Annuler
-                                                </MDBBtn>
-                                            </MDBRow>
-                                        </MDBCardBody>
-                                    </Form>
-                                )}
-                            </Formik>
-                        </MDBContainer>
-                    </div>
+                            }}
+                            validationSchema={noteDeFraisSchema(this.state)}
+                        >
+                            {({
+                                    handleSubmit
+                                }) => (
+                                <Form onSubmit={handleSubmit}>
+                                    <MDBCardBody>
+                                        <MDBRow between around>
+                                            {/* ligne 1 */}
+                                            <MDBCol md="4" className="mt-3">
+                                                <Field
+                                                    name="date"
+                                                    label="Le* :"
+                                                    startdate={this.state.startPeriod}
+                                                    enddate={this.state.endPeriod}
+                                                    component={ComponentDate}
+                                                />
+                                                <ErrorMessage
+                                                    name="date"
+                                                    component={ComponentError}
+                                                />
+                                            </MDBCol>
+                                            {/* ligne 2 */}
+                                            <MDBCol md="4" style={{marginTop: "-1%"}}>
+                                                <Field
+                                                    name="montant"
+                                                    label="Montant*"
+                                                    component={ComponentNumber}
+                                                />
+                                                <ErrorMessage
+                                                    name="montant"
+                                                    component={ComponentError}
+                                                />
+                                            </MDBCol>
+                                        </MDBRow>
+                                        {/* désignation */}
+                                        <MDBRow between around style={{marginTop: "-5%"}}>
+                                            {/* upload */}
+                                            <Field
+                                                fileInputHandler={this.fileInputHandler}
+                                                component={ComponentUploadFiles}
+                                            />
+                                            <MDBCol md="5">
+                                                <Field
+                                                    name="designation"
+                                                    label="Désignation*"
+                                                    component={ComponentDesignation}
+                                                />
+                                                <ErrorMessage name="designation" component={ComponentError}/>
+                                            </MDBCol>
+                                        </MDBRow>
+                                        <MDBRow center style={{marginTop: "5%"}}>
+                                            <MDBListGroup style={{width: "80%"}}>
+                                                {this.state.noteDeFrais.wrapperDocumentList.map((doc, index) => (
+                                                    <MDBListGroupItem className="d-flex justify-content-between align-items-center" key={doc.id} >
+                                                        {doc.nom}<MDBIcon onClick={() => this.getIdFileToDelete(doc.id, doc.nom, index)} icon="times" size="lg" className="red-text pr-3" style={{cursor:'pointer'}} />
+                                                    </MDBListGroupItem>
+                                                ))}
+                                            </MDBListGroup>
+                                        </MDBRow>
+                                        <MDBRow center>
+                                            {/* ligne 3 */}
+                                            <MDBBtn
+                                                color="teal accent-3"
+                                                rounded
+                                                size="sm"
+                                                type="submit"
+                                            >Enregistrer
+                                            </MDBBtn>
+                                            <MDBBtn
+                                                color="teal accent-3"
+                                                rounded
+                                                size="sm"
+                                                onClick={() => this.props.toggleNoteDeFrais(this.props.index)}
+                                            >Annuler
+                                            </MDBBtn>
+                                        </MDBRow>
+                                    </MDBCardBody>
+                                </Form>
+                            )}
+                        </Formik>
+                    </MDBContainer>
+                </div>
         )
     }
 }

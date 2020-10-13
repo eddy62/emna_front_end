@@ -87,13 +87,6 @@ const AxiosCenter = {
     });
   },
 
-  getAllEmployesBySociety(id) {
-    return ApiBackEnd({
-      method: "get",
-      url: `/employes/society/${id}`,
-    });
-  },
-
   getAllWrapperEmployeesBySocietyAndTypeContract(id, type) {
     return ApiBackEnd({
       method: "get",
@@ -268,6 +261,9 @@ const AxiosCenter = {
     });
   },
 
+
+
+
   getInvoicesByStatement(id) {
     return ApiBackEnd({
       method: "GET",
@@ -282,23 +278,10 @@ const AxiosCenter = {
     });
   },
 
-  getDepense(id) {
-    return ApiBackEnd({
-      method: "GET",
-      url: `depenses/${id}`,
-    });
-  },
-
   getAllQuotesBySociety(id) {
     return ApiBackEnd({
       method: "GET",
       url: `devis/societe/${id}`
-    });
-  },
-  getQuotesBySociety(id) {
-    return ApiBackEnd({
-      method: "GET",
-      url: `devis/liste/societe/${id}`
     });
   },
 
@@ -312,7 +295,7 @@ const AxiosCenter = {
   getInfosForCreationFacture(id) {
     return Axios.all([
       this.getLastNumFactBySociete(id),
-      this.getAllCustomerSupplierBySociete(id)
+      this.getAllClientFournisseurBySociete(id)
     ])
   },
 
@@ -345,60 +328,14 @@ const AxiosCenter = {
     });
   },
 
-  getAllPaySlip() {
-    return ApiBackEnd({
-      method: "GET",
-      url: `/fiche-paies`,
-    });
-  },
-
-  getPdfFileByPath(path) {
-    return ApiBackEnd({
-      method: "GET",
-      url: `/getPdfFile/${path}`,
-      responseType: 'blob'
-    })
-  },
-
-  getAllPayslipByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
-    return ApiBackEnd({
-      method: "GET",
-      url: `/fiche-paies/employe/${idEmploye}/annee/${year}/moisDu/${monthStart}/moisFin/${monthEnd}`,
-    });
-  },
-
-
   getWrapperPayrollVariablesByEmployeIdByYearByMonth(idEmploye, year, month) {
     return ApiBackEnd({
       method: "GET",
       url: `/wrappervariablespaie/employe/${idEmploye}/annee/${year}/mois/${month}`
     })
   },
-
-  getAllContrats() {
-    return ApiBackEnd({
-      method: "GET",
-      url: `/contrats`
-    })
-  },
-
-  getPDFArchivedStatement(id) {
-    return ApiBackEnd({
-      method: "get",
-      url: `/releves/pdf/${id}`,
-      responseType: 'arraybuffer'
-    });
-  },
-
-  getDocumentByIdPayslip(idPayslip) {
-    return ApiBackEnd({
-      method: "GET",
-      url: `/documents/idPaySlip/${idPayslip}`
-    })
-
-  },
-
   // Fin Get
+
 
   //Post
   finishPasswordReset(values) {
@@ -594,44 +531,6 @@ const AxiosCenter = {
     });
   },
 
-  createQuote(values) {
-    return ApiBackEnd({
-      method: "POST",
-      url: "/devis",
-      data: values,
-    });
-  },
-  createFile() {
-    return ApiBackEnd({
-      method: "POST",
-      url: "/documents",
-    });
-  },
-
-  uploadFile(file) {
-    return ApiBackEnd({
-      method: "POST",
-      url: "/upload",
-      data: file
-    })
-  },
-
-
-  createWrapperContrat(values) {
-    return ApiBackEnd({
-      method: "POST",
-      url: `/wrapperContrat`,
-      data: values
-    })
-  },
-
-  createWrapperDepense(values) {
-    return ApiBackEnd({
-      method: "POST",
-      url: `/wrapperdepense`,
-      data: values
-    })
-  },
   // Fin Post
 
   //Put
@@ -743,13 +642,6 @@ const AxiosCenter = {
       data: values,
     })
   },
-  modifyOtherPayrollVariable(values) {
-    return ApiBackEnd({
-      method: "PUT",
-      url: `/autres-variables`,
-      data: values,
-    })
-  },
 
   confirmPayrollVariables(values) {
     return ApiBackEnd({
@@ -780,21 +672,6 @@ const AxiosCenter = {
       method: "PUT",
       url: `/articles`,
       data: values,
-    });
-  },
-
-  validateStatementReconciliation(idReleve){
-    return ApiBackEnd({
-      method: "put",
-      url: `/releve/valider/comptable/${idReleve}`,
-    });
-  },
-
-  updateDepense(values){
-    return ApiBackEnd({
-      method: "put",
-      url: "/wrapperdepenses",
-      data: values
     });
   },
 
@@ -885,34 +762,12 @@ const AxiosCenter = {
     });
   },
 
-  deleteOtherPayrollVariable(id) {
-    return ApiBackEnd({
-      method: "DELETE",
-      url: `/autres-variables/${id}`
-    })
-  },
-
   deleteClause(id) {
     return ApiBackEnd({
       method: "delete",
       url: `/clauses/${id}`,
     });
   },
-
-  deleteArticle(id) {
-    return ApiBackEnd({
-      method: "delete",
-      url: `/articles/${id}`
-    });
-  },
-
-  deleteDocumentWithFile(id, filename) {
-    return ApiBackEnd({
-      method: "DELETE",
-      url: `/documents/${id}/${filename}`
-    });
-  },
-
   // Fin Delete
 
 };
