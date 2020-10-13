@@ -624,6 +624,14 @@ const AxiosCenter = {
             data: values
         })
     },
+    createWrapperDepense(values) {
+        return ApiBackEnd({
+            method: "POST",
+            url: `/wrapperdepense`,
+            data: values
+        })
+    },
+
     // Fin Post
 
   //Put
@@ -779,6 +787,14 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "put",
       url: `/releve/valider/comptable/${idReleve}`,
+    });
+  },
+
+  updateDepense(values){
+    return ApiBackEnd({
+      method: "put",
+      url: "/wrapperdepenses",
+      data: values
     });
   },
 

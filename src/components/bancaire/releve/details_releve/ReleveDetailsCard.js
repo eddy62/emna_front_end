@@ -1,6 +1,5 @@
 import {MDBCard, MDBCardBody, MDBCardTitle, MDBCol} from "mdbreact";
 import React from "react";
-import UserService from "../../../../shared/services/UserService";
 
 const ReleveDetailsCard = (props) => {
 
