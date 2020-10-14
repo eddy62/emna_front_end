@@ -137,7 +137,7 @@ export default class CreerContrat extends React.Component {
         index = 0;
         while (index < nbArticles && !isError) {
             const nomLibelle = Object.keys(inputs[index]);
-           if (inputs[index][nomLibelle] === "")
+            if (inputs[index][nomLibelle] === "")
                 isError = true;
             index++;
         }
@@ -313,8 +313,8 @@ export default class CreerContrat extends React.Component {
                         archive: 'false',
                         idEmploye: null,
                         idTypeContrat: '',
-                        codeRef: '',
-                        intitule: '',
+                        //codeRef: '',
+                        //intitule: '',
                         wrapperSaisieArticles: [],
                         //clauses: [],
                     }}
@@ -345,8 +345,7 @@ export default class CreerContrat extends React.Component {
                             } else {
                                 notify("missingInputs");
                             }
-                        }
-                        else
+                        } else
                             notify("existingContract")
                     }}
                 >
