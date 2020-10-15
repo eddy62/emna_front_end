@@ -80,6 +80,34 @@ const notify = (type, message) => {
                 </div>
             );
             break;
+        case "severalPayroll":
+            toast.warning(
+                <div className="text-center">
+                    <strong>{variable} non enregistrée : plusieurs autres variables de paie existent entre le {message} &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
+            case "warningOther":
+            toast.warning(
+                <div className="text-center">
+                    <strong>{variable} non enregistrée : une Autre Variable existe entre le {message} &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
+            case "warningOvertime":
+            toast.warning(
+                <div className="text-center">
+                    <strong>{variable} non enregistrée : une Heure Supplémentaire existe entre le {message} &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
+            case "warningExpenseReport":
+            toast.warning(
+                <div className="text-center">
+                    <strong>{variable} non enregistrée : une Note de Frais existe entre le {message} &nbsp;&nbsp;!</strong>
+                </div>
+            );            
+            break;
         case "error":
             toast.error(
                 <div className="text-center">
@@ -139,6 +167,21 @@ class CreateAbsence extends React.Component {
         });
     }
 
+    formatDate(date) {
+        const bothDateSplit = date.split('/');
+        const firstDate = bothDateSplit[0];
+        const secondDate = bothDateSplit[1];
+        const firstDateSplit = firstDate.split('-')
+        const secondDateSplit = secondDate.split('-')
+        const yearFirstDate = firstDateSplit[0];
+        const monthFirstDate = firstDateSplit[1];
+        const dayFirstDate = firstDateSplit[2];
+        const yearSecondDate = secondDateSplit[0];
+        const monthSecondDate = secondDateSplit[1];
+        const daySecondDate = secondDateSplit[2];
+        return dayFirstDate+"/"+monthFirstDate+"/"+yearFirstDate+" et le "+daySecondDate+"/"+monthSecondDate+"/"+yearSecondDate;
+    }
+
     submit = (values, actions) => {
         values.annee = this.props.yearSelected;
         values.mois = this.props.monthSelected;
@@ -146,8 +189,9 @@ class CreateAbsence extends React.Component {
         if (!this.checkFormat()) {
             AxiosCenter.createAbsence(values)
                 .then(async (response) => {
+                    console.log(response);
                     const statut = response.status;
-                    const message = " du " + response.data.debutAbsence + " au " + response.data.finAbsence;
+                    const message = " du " + this.props.formatDate(response.data.debutAbsence) + " au " + this.props.formatDate(response.data.finAbsence);
                     const errorDetected = await this.uploadFiles(response.data.id);
                     if (errorDetected) {
                         /* TODO Une fois deleteFile OK, supprimer en cascade toutes les entités + files
@@ -173,10 +217,28 @@ class CreateAbsence extends React.Component {
                         };
                     }
                 }).catch((error) => {
-                console.log(error);
-                console.log(error.title);
+                    const dateFormat = error.response.data.entityName;
+                    console.log(error.response.data.errorKey);
+                    switch(error.response.data.errorKey) {
+                        case "Autre Variable":
+                            notify("warningOther", this.formatDate(dateFormat));
+                        break;
+                        case "Heure Supplementaire":
+                            notify("warningOvertime", this.formatDate(dateFormat));
+                        break;
+                        case "Note de Frais":
+                            notify("warningExpenseReport", this.formatDate(dateFormat));
+                        break;         
+                        case "Plusieurs":
+                            notify("severalPayroll", this.formatDate(dateFormat));
+                        break;               
+                        default:
+                            notify("error", "");
+                            break;
+                    }
+                /*console.log(error);
                 notify("error", "");
-                this.props.handleReset("Absence");
+                this.props.handleReset("Absence");*/
             });
         } else {
             notify("formatError", "");

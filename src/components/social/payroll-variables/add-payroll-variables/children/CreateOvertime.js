@@ -44,26 +44,34 @@ const ComposantNumber = ({field, ...props}) => (
     />
 );
 
-const notify = type => {
+const notify = (type, date) => {
+    const variable = "Heure(s) supplémentaire(s)";
     switch (type) {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) Enregistrée(s) &nbsp;&nbsp;!</strong>
+                    <strong>{variable} Enregistrée(s) &nbsp;&nbsp;!</strong>
                 </div>,
+            );
+            break;
+            case "warning":
+            toast.warning(
+                <div className="text-center">
+                    <strong>{variable} NON Enregistrée : Le salarié était absent pendant cette date {date} &nbsp;&nbsp;!</strong>
+                </div>
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) NON Enregistrée(s) &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON Enregistrée(s) &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) NON Enregistrée(s) &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON Enregistrée(s) &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
@@ -74,8 +82,8 @@ class CreateOvertime extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            debutPeriode: '',
-            finPeriode: '',
+            debutPeriode: new Date(new Date().setFullYear(this.props.yearSelected, this.props.monthSelected - 1, 1)).toISOString().slice(0, 10),
+            finPeriode: new Date(new Date().setFullYear(this.props.yearSelected, this.props.monthSelected, 0)).toISOString().slice(0, 10),
         }
     };
 
@@ -91,35 +99,33 @@ class CreateOvertime extends React.Component {
         values.employeId = this.props.employeId
 
         AxiosCenter.createOvertime(values)
-            .then(() => {
-                notify('success');
-                actions.resetForm();
+            .then((response) => {
+                const statut = response.status;
+                const dateExpRept = this.props.formatDate(response.data.date);
+                switch(statut) {
+                    case 201:
+                        notify("success", "");
+                        actions.setSubmitting(true);
+                        //this.props.handleReset("ExpenseReport");
+                        actions.resetForm();
+                    break;
+                    case 208:
+                        notify("warning", dateExpRept);
+                    break;
+                    default:
+                        notify("warning", "");
+                        break;
+                };
             }).catch((error) => {
             console.log(error);
-            notify('error');
+            notify("error", "");
         });
         actions.setSubmitting(true);
     };
-
-    updatePeriod() {
-        this.state.debutPeriode = new Date(new Date()
-            .setFullYear(
-                this.props.yearSelected,
-                this.props.monthSelected -1,
-                1
-            )).toISOString().slice(0,10);
-            this.state.finPeriode = new Date(new Date()
-            .setFullYear(
-                this.props.yearSelected,
-                this.props.monthSelected ,
-                0
-            )).toISOString().slice(0,10)
-    }
     
     render() {
         if (!this.state.loaded) return <Loading/>
         else return (
-            this.updatePeriod(),
             <div className="App">
                 <div className="titre">
                     <MDBContainer>

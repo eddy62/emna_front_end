@@ -118,6 +118,14 @@ export default class ParentAddPayrollVariables extends Component {
         };
     };
 
+    formatDate(date) {
+        const dateSplit = date.split('-');
+        const year = dateSplit[0];
+        const month = dateSplit[1];
+        const day = dateSplit[2];
+        return day+"/"+month+"/"+year;
+    }
+
 
     render() {
         const {collapseID} = this.state;
@@ -202,7 +210,8 @@ export default class ParentAddPayrollVariables extends Component {
                                                                        yearSelected={this.state.yearSelected}
                                                                        monthSelected={this.state.monthSelected}
                                                                        key={this.state.keyAbsence}
-                                                                       handleReset={this.handleReset}/>
+                                                                       handleReset={this.handleReset}
+                                                                       formatDate={this.formatDate}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}
@@ -223,7 +232,8 @@ export default class ParentAddPayrollVariables extends Component {
                                                                              yearSelected={this.state.yearSelected}
                                                                              monthSelected={this.state.monthSelected}
                                                                              key={this.state.keyExpenseReport}
-                                                                             handleReset={this.handleReset}/>
+                                                                             handleReset={this.handleReset}
+                                                                             formatDate={this.formatDate}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}
@@ -263,7 +273,8 @@ export default class ParentAddPayrollVariables extends Component {
                                                         <CreateOvertime
                                                             employeId={this.state.idNameSelected}
                                                             yearSelected={this.state.yearSelected}
-                                                            monthSelected={this.state.monthSelected}/>
+                                                            monthSelected={this.state.monthSelected}
+                                                            formatDate={this.formatDate}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}
@@ -303,7 +314,8 @@ export default class ParentAddPayrollVariables extends Component {
                                                                                     yearSelected={this.state.yearSelected}
                                                                                     monthSelected={this.state.monthSelected}
                                                                                     key={this.state.keyOtherPayrollVariable}
-                                                                                    handleReset={this.handleReset}/>
+                                                                                    handleReset={this.handleReset}
+                                                                                    formatDate={this.formatDate}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}

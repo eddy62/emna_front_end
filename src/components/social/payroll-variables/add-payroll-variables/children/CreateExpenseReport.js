@@ -6,13 +6,20 @@ import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBFileInput, MDBInput, MDBRo
 import Loading from "../../../../../shared/component/Loading";
 import {toast} from "react-toastify";
 
-const notify = type => {
+const notify = (type, date) => {
     const variable = "Note de Frais"
     switch (type) {
         case "success":
             toast.success(
                 <div className="text-center">
                     <strong>{variable} Enregistrée &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
+            case "warning":
+            toast.warning(
+                <div className="text-center">
+                    <strong>{variable} NON Enregistrée : Le salarié était absent pendant cette date {date} &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
@@ -127,6 +134,8 @@ class CreateExpenseReport extends React.Component {
         if (!this.checkFormat()) {
             AxiosCenter.createExpenseReport(values)
                 .then(async (response) => {
+                    const statut = response.status;
+                    const dateExpRept = this.props.formatDate(response.data.date);
                     const errorDetected = await this.uploadFiles(response.data.id)
                     if (errorDetected) {
                         /* TODO Une fois deleteFile OK, supprimer en cascade toutes les entités + files
@@ -134,20 +143,30 @@ class CreateExpenseReport extends React.Component {
                         AxiosCenter.deleteExpenseReport(response.data.id).catch((error) => {
                             console.log(error);
                         })
-                        notify("fileError");
+                        notify("fileError", "");
                         this.props.handleReset("ExpenseReport");
                     } else {
-                        actions.setSubmitting(true);
-                        notify("success");
-                        this.props.handleReset("ExpenseReport");
+                        switch(statut) {
+                            case 201:
+                                notify("success", "");
+                                actions.setSubmitting(true);
+                                this.props.handleReset("ExpenseReport");
+                            break;
+                            case 208:
+                                notify("warning", dateExpRept);
+                            break;
+                            default:
+                                notify("warning", "");
+                                break;
+                        };
                     }
                 }).catch((error) => {
                 console.log(error);
-                notify("error");
+                notify("error", "");
                 this.props.handleReset("ExpenseReport");
             });
         } else {
-            notify("formatError");
+            notify("formatError", "");
             this.props.handleReset("ExpenseReport");
         }
     };
