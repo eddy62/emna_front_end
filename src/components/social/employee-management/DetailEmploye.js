@@ -120,7 +120,7 @@ class DetailEmploye extends React.Component {
                                                 <label className="gras">Département / Pays :</label>
                                                 &nbsp;&nbsp;&nbsp;
                                                 {employe.departementNaissance}&nbsp; /&nbsp;{" "}
-                                                {employe.paysNaisance}
+                                                {employe.paysNaissance}
                                             </p>
                                         </div>
                                         <div className="ligne4">
@@ -130,7 +130,7 @@ class DetailEmploye extends React.Component {
                                             </p>
                                             <p className="elt">
                                                 <label className="gras">Enfants à charge :</label>
-                                                &nbsp;{employe.enfantsACharge}
+                                                &nbsp;{employe.nbEnfantACharge}
                                             </p>
                                         </div>
                                     </MDBCard>
@@ -174,7 +174,7 @@ class DetailEmploye extends React.Component {
                                         <div className="ligne3">
                                             <p className="elt1">
                                                 <label className="gras">Telephone Fixe : </label>&nbsp;
-                                                {employe.telephoneFix}
+                                                {employe.telephoneFixe}
                                             </p>
                                             <p className="elt">
                                                 <label className="gras">Fax : </label>&nbsp;
@@ -250,7 +250,7 @@ class DetailEmploye extends React.Component {
                                         <div className="ligne4">
                                             <p className="elt1">
                                                 <label className="gras">Salaire Mensuel : </label>&nbsp;
-                                                {employe.salaireBrutMensuelle}&nbsp;&nbsp;€
+                                                {employe.salaireBrutMensuel}&nbsp;&nbsp;€
                                             </p>
                                             <p className="elt">
                                                 <label className="gras">Salaire Horaire :</label>&nbsp;
@@ -259,7 +259,7 @@ class DetailEmploye extends React.Component {
                                             <p className="elt">
                                                 <label className="gras">Heures Mensuelles : </label>
                                                 &nbsp;
-                                                {employe.heuresMensuelle}&nbsp;&nbsp;h
+                                                {employe.nbHeureMensuelle}&nbsp;&nbsp;h
                                             </p>
                                         </div>
                                     </MDBCard>

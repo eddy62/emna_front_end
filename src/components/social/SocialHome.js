@@ -80,7 +80,7 @@ class SocialHome extends React.Component {
                                                         rounded
                                                         size="sm"
                                                         color="teal accent-3"
-                                                        disabled={true}
+                                                        /*disabled={true}*/
                                                         /*l'id de la société est undefined sur le compte accountant*/
                                                         onClick={() => {
                                                             this.props.history.push(
@@ -96,7 +96,7 @@ class SocialHome extends React.Component {
                                                         style = {{paddingRight: "2.5rem", paddingLeft: "2.5rem"}}
                                                         color="teal accent-3"
                                                         // TODO : lien vers Créer Fiche de paie
-                                                        disabled={true}
+                                                        /*disabled={true}*/
                                                         /*l'id de la société est undefined sur le compte accountant*/
                                                         onClick={() => {
                                                             this.props.history.push(
