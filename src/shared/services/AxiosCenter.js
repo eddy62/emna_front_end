@@ -578,6 +578,19 @@ const AxiosCenter = {
     });
   },
 
+  uploadContract(file, idContract ) {
+    let formData = new FormData();
+    formData.append('file',file[0])
+    return ApiBackEnd({
+      method: "POST",
+      url: `/upload/contracts/${idContract}`,
+      data: formData,
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    });
+  },
+
   createOtherPayrollVariable(values) {
     return ApiBackEnd({
       method: "POST",

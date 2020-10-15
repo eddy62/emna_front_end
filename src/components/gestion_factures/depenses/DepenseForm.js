@@ -106,10 +106,7 @@ class DepenseForm extends React.Component {
                 >
                     {({
                           handleSubmit,
-                          values,
-                          isSubmitting,
                           errors,
-                          touched
                       }) => (
                         <form onSubmit={handleSubmit}
                               className="bg-white border p-5 d-flex flex-column"

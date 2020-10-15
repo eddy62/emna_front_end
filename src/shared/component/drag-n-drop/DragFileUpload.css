@@ -29,7 +29,11 @@
     height: 0.1px;
     opacity: 0;
     overflow: hidden;
-    margin-top: 10px;
     position: absolute;
     z-index: -1;
 }
+
+.f-input + label {
+    cursor: pointer; /* "hand" cursor */
+}
+
