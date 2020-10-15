@@ -1,0 +1,39 @@
+#f-upload{
+    font-size: 1.25rem;
+    background-color: #f3f1f1;
+    position: relative;
+    padding: 100px 20px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin: 0;
+    text-align: center;
+}
+
+#f-upload.has-advanced-upload {
+    outline: 2px dashed #92b0b3;
+    outline-offset: -10px;
+    -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+    transition: outline-offset .15s ease-in-out, background-color .15s linear;
+}
+
+#f-upload.has-advanced-upload .fupload-dragndrop {
+    display: inline;
+}
+
+#f-upload.is-dragover {
+    background-color: #999797;
+}
+
+.f-input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.f-input + label {
+    cursor: pointer; /* "hand" cursor */
+}
+
