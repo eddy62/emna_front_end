@@ -76,14 +76,8 @@ class TableAbsence extends React.Component {
     }
 
     callBackToDeleteAbsence = () => {
-        //console.log(this.props.absenceList[this.state.index].wrapperDocumentList.length)
         if(this.props.absenceList[this.state.index].wrapperDocumentList.length) {
             this.props.absenceList[this.state.index].wrapperDocumentList.map((docs, index) => (
-                /*AxiosCenter.deleteDocumentWithFile(docs.id, docs.nom).then(() => {
-                    this.deleteAbsence(this.props.absenceList[this.state.index].id)
-                })*/
-                console.log(this.props.absenceList[this.state.index].wrapperDocumentList.length),
-                console.log(index),
                 index === this.props.absenceList[this.state.index].wrapperDocumentList.length -1 ? (
                     AxiosCenter.deleteDocumentWithFile(docs.id, docs.nom).then(() => {
                         this.deleteAbsence(this.props.absenceList[this.state.index].id)
@@ -219,7 +213,7 @@ class TableAbsence extends React.Component {
                         <MDBContainer>                            
                             <MDBListGroup>
                                 {this.props.absenceList.map((abs) => (
-                                    abs.id == this.state.idAbsenceSelected ? (
+                                    abs.id === this.state.idAbsenceSelected ? (
                                         abs.wrapperDocumentList.map((doc, index) => (
                                             <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.nom)}>{doc.nom}</MDBListGroupItem>
                                         ))   

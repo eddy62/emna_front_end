@@ -67,13 +67,20 @@ const ComponentUploadFiles = ({field, ...props}) => (
     </div>
 );
 
-const notify = type => {
+const notify = (type, date) => {
     const variable = "Autre Variable"
     switch (type) {
         case "success":
             toast.success(
                 <div className="text-center">
                     <strong>{variable} Enregistrée &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
+            case "warning":
+            toast.warning(
+                <div className="text-center">
+                    <strong>{variable} NON Enregistrée : Le salarié était absent pendant cette date {date} &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
@@ -128,6 +135,8 @@ class CreateOtherPayrollVariable extends React.Component {
         if (!this.checkFormat()) {
             AxiosCenter.createOtherPayrollVariable(values)
                 .then(async (response) => {
+                    const statut = response.status;
+                    const dateExpRept = this.props.formatDate(response.data.date);
                     const errorDetected = await this.uploadFiles(response.data.id)
                     if (errorDetected) {
                         /* TODO Une fois deleteFile OK, supprimer en cascade toutes les entités + files
@@ -135,20 +144,30 @@ class CreateOtherPayrollVariable extends React.Component {
                         AxiosCenter.deleteOtherPayrollVariable(response.data.id).catch((error) => {
                             console.log(error);
                         })
-                        notify("fileError");
+                        notify("fileError", "");
                         this.props.handleReset("OtherPayrollVariable");
                     } else {
-                        actions.setSubmitting(true);
-                        notify("success");
-                        this.props.handleReset("OtherPayrollVariable");
+                        switch(statut) {
+                            case 201:
+                                notify("success", "");
+                                actions.setSubmitting(true);
+                                this.props.handleReset("OtherPayrollVariable");
+                            break;
+                            case 208:
+                                notify("warning", dateExpRept);
+                            break;
+                            default:
+                                notify("warning", "");
+                                break;
+                        };
                     }
                 }).catch((error) => {
                 console.log(error);
-                notify("error");
+                notify("error", "");
                 this.props.handleReset("OtherPayrollVariable");
             });
         } else {
-            notify("formatError");
+            notify("formatError", "");
             this.props.handleReset("OtherPayrollVariable");
         }
     }

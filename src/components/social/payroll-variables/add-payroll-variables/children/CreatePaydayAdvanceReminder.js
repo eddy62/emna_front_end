@@ -82,8 +82,8 @@ class CreatePaydayAdvanceReminder extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            minDate: "",
-            maxDate: "",
+            minDate: new Date(new Date().setFullYear(this.props.yearSelected, this.props.monthSelected - 1, 1)).toISOString().slice(0, 10),
+            maxDate: new Date(new Date().setFullYear(this.props.yearSelected, this.props.monthSelected, 0)).toISOString().slice(0, 10),
             loaded: false,
         };
     }
@@ -110,142 +110,126 @@ class CreatePaydayAdvanceReminder extends React.Component {
         actions.setSubmitting(true);
     };
 
-    updatePeriod() {
-        this.state.minDate = new Date(new Date()
-            .setFullYear(
-                this.props.yearSelected,
-                this.props.monthSelected - 1,
-                1
-            )).toISOString().slice(0, 10);
-        this.state.maxDate = new Date(new Date()
-            .setFullYear(
-                this.props.yearSelected,
-                this.props.monthSelected,
-                0
-            )).toISOString().slice(0, 10)
-    }
-
     render() {
         if (!this.state.loaded) return <Loading/>
         else return (
-            this.updatePeriod(),
-                <div className="App">
-                    <div className="titre">
-                        <MDBContainer>
-                            {/* Formulaire */}
-                            <Formik
-                                onSubmit={this.submit}
-                                initialValues={{
-                                    annee: "",
-                                    debutPeriode: "",
-                                    employeId: "",
-                                    etatVariablePaieId: 1,
-                                    finPeriode: "",
-                                    id: null,
-                                    mois: "",
-                                    montant: 0,
-                                    type: "",
-                                }}
-                                validationSchema={avanceRappelSchema(this.state)}
-                            >
-                                {({
-                                      dirty,
-                                      handleBlur,
-                                      handleChange,
-                                      handleReset,
-                                      handleSubmit,
-                                      values,
-                                      isSubmitting
-                                  }) => (
-                                    <Form onSubmit={handleSubmit}>
-                                        <MDBCardBody style={{marginTop: "-5%", marginBottom: "-3%"}}>
-                                            <MDBRow between around>
-                                                {/* ligne 1 */}
-                                                <MDBCol md="4" className="mt-3">
-                                                    <Field
-                                                        name="debutPeriode"
-                                                        label="Du* :"
-                                                        debutdate={this.state.minDate}
-                                                        findate={this.state.maxDate}
-                                                        component={ComposantDate}
-                                                    />
-                                                    <ErrorMessage
-                                                        name="debutPeriode"
-                                                        component={ComposantErreur}
-                                                    />
-                                                </MDBCol>
-                                                <MDBCol md="4" className="mt-3">
-                                                    <Field
-                                                        name="finPeriode"
-                                                        label="Au* :"
-                                                        debutdate={this.state.minDate}
-                                                        findate={this.state.maxDate}
-                                                        component={ComposantDate}
-                                                    />
-                                                    <ErrorMessage
-                                                        name="finPeriode"
-                                                        component={ComposantErreur}
-                                                    />
-                                                </MDBCol>
-                                            </MDBRow>
-                                            <MDBRow between around>
-                                                {/* ligne 2 */}
-                                                <MDBCol md="4" className="mt-3">
-                                                    <select
-                                                        className="browser-default custom-select"
-                                                        name="type"
-                                                        value={values.type}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                    >
-                                                        <option value="" disabled>
-                                                            Type*
-                                                        </option>
-                                                        <option value="Rappel">Rappel</option>
-                                                        <option value="Avance">Avance</option>
-                                                    </select>
-                                                    <ErrorMessage
-                                                        name="type"
-                                                        component={ComposantErreur}
-                                                    />
-                                                </MDBCol>
-                                                <MDBCol md="4" style={{marginTop: "-1%"}}>
-                                                    <Field
-                                                        name="montant"
-                                                        label="Montant*"
-                                                        component={ComposantNumber}
-                                                    />
-                                                    <ErrorMessage
-                                                        name="montant"
-                                                        component={ComposantErreur}
-                                                    />
-                                                </MDBCol>
-                                            </MDBRow>
-                                            <MDBRow center>
-                                                {/* ligne 3 */}
-                                                <MDBBtn
-                                                    color="teal accent-3"
-                                                    rounded
-                                                    size="sm"
-                                                    type="submit"
-                                                >Enregistrer
-                                                </MDBBtn>
-                                                <MDBBtn
-                                                    color="teal accent-3"
-                                                    rounded
-                                                    size="sm"
-                                                    disabled={!dirty || isSubmitting}
-                                                    onClick={handleReset}
-                                                >Réinitialiser
-                                                </MDBBtn>
-                                            </MDBRow>
-                                        </MDBCardBody>
-                                    </Form>
-                                )}
-                            </Formik>
-                        </MDBContainer>
-                    </div>
+            <div className="App">
+                <div className="titre">
+                    <MDBContainer>
+                        {/* Formulaire */}
+                        <Formik
+                            onSubmit={this.submit}
+                            initialValues={{
+                                annee: "",
+                                debutPeriode: "",
+                                employeId: "",
+                                etatVariablePaieId: 1,
+                                finPeriode: "",
+                                id: null,
+                                mois: "",
+                                montant: 0,
+                                type: "",
+                            }}
+                            validationSchema={avanceRappelSchema(this.state)}
+                        >
+                            {({
+                                    dirty,
+                                    handleBlur,
+                                    handleChange,
+                                    handleReset,
+                                    handleSubmit,
+                                    values,
+                                    isSubmitting
+                                }) => (
+                                <Form onSubmit={handleSubmit}>
+                                    <MDBCardBody style={{marginTop: "-5%", marginBottom: "-3%"}}>
+                                        <MDBRow between around>
+                                            {/* ligne 1 */}
+                                            <MDBCol md="4" className="mt-3">
+                                                <Field
+                                                    name="debutPeriode"
+                                                    label="Du* :"
+                                                    debutdate={this.state.minDate}
+                                                    findate={this.state.maxDate}
+                                                    component={ComposantDate}
+                                                />
+                                                <ErrorMessage
+                                                    name="debutPeriode"
+                                                    component={ComposantErreur}
+                                                />
+                                            </MDBCol>
+                                            <MDBCol md="4" className="mt-3">
+                                                <Field
+                                                    name="finPeriode"
+                                                    label="Au* :"
+                                                    debutdate={this.state.minDate}
+                                                    findate={this.state.maxDate}
+                                                    component={ComposantDate}
+                                                />
+                                                <ErrorMessage
+                                                    name="finPeriode"
+                                                    component={ComposantErreur}
+                                                />
+                                            </MDBCol>
+                                        </MDBRow>
+                                        <MDBRow between around>
+                                            {/* ligne 2 */}
+                                            <MDBCol md="4" className="mt-3">
+                                                <select
+                                                    className="browser-default custom-select"
+                                                    name="type"
+                                                    value={values.type}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                >
+                                                    <option value="" disabled>
+                                                        Type*
+                                                    </option>
+                                                    <option value="Rappel">Rappel</option>
+                                                    <option value="Avance">Avance</option>
+                                                </select>
+                                                <ErrorMessage
+                                                    name="type"
+                                                    component={ComposantErreur}
+                                                />
+                                            </MDBCol>
+                                            <MDBCol md="4" style={{marginTop: "-1%"}}>
+                                                <Field
+                                                    name="montant"
+                                                    label="Montant*"
+                                                    component={ComposantNumber}
+                                                />
+                                                <ErrorMessage
+                                                    name="montant"
+                                                    component={ComposantErreur}
+                                                />
+                                            </MDBCol>
+                                        </MDBRow>
+                                        <MDBRow center>
+                                            {/* ligne 3 */}
+                                            <MDBBtn
+                                                color="teal accent-3"
+                                                rounded
+                                                size="sm"
+                                                type="submit"
+                                            >Enregistrer
+                                            </MDBBtn>
+                                            <MDBBtn
+                                                color="teal accent-3"
+                                                rounded
+                                                size="sm"
+                                                disabled={!dirty || isSubmitting}
+                                                onClick={handleReset}
+                                            >Réinitialiser
+                                            </MDBBtn>
+                                        </MDBRow>
+                                    </MDBCardBody>
+                                </Form>
+                            )}
+                        </Formik>
+                    </MDBContainer>
                 </div>
+            </div>
         )
     }
 }
