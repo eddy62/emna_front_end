@@ -45,12 +45,12 @@ const employeSchema = Yup.object().shape({
     departementNaissance: Yup.string("String")
         .min(2, "Trop court")
         .max(20, "Trop long"),
-    paysNaisance: Yup.string("String")
+    paysNaissance: Yup.string("String")
         .min(2, "Trop court")
         .max(20, "Trop long")
         .required("Champ obligatoire"),
     situationFamiliale: Yup.string("String").required("Champ Obligatoire"),
-    enfantsACharge: Yup.string("String").required("Champ Obligatoire"),
+    nbEnfantACharge: Yup.string("String").required("Champ Obligatoire"),
     //Coordonnées
     numeroRue: Yup.string().max(5, "Trop long"),
     nomRue: Yup.string()
@@ -70,7 +70,7 @@ const employeSchema = Yup.object().shape({
     email: Yup.string()
         .email("L'email doit être valide")
         .required("Le champ est obligatoire"),
-    telephoneFix: Yup.number().min(9, "Trop court"),
+    telephoneFixe: Yup.number().min(9, "Trop court"),
     telephonePortable: Yup.number().min(9, "Trop court"),
     fax: Yup.number().min(9, "Trop court"),
     //Informations Emploi
@@ -82,8 +82,8 @@ const employeSchema = Yup.object().shape({
     poste: Yup.string("String").required("Champ Obligatoire"),
     // codeRefStatut: Yup.string("String").required("Champ obligatoire"), //StatutEmploye
     salaireHoraire: Yup.number().required("Champ Obligatoire"),
-    salaireBrutMensuelle: Yup.number().required("Champ Obligatoire"),
-    heuresMensuelle: Yup.string("String").required("Champ Obligatoire"),
+    salaireBrutMensuel: Yup.number().required("Champ Obligatoire"),
+    nbHeureMensuelle: Yup.string("String").required("Champ Obligatoire"),
     periodeEssai: Yup.number()
         .max(121, "120 jours limite conventionnelle")
         .required("Champ obligatoire"),
@@ -249,9 +249,9 @@ class CreateEmploye extends React.Component {
                                 dateNaissance: "",
                                 villeNaissance: "",
                                 departementNaissance: "",
-                                paysNaisance: "",
+                                paysNaissance: "",
                                 situationFamiliale: "",
-                                enfantsACharge: "",
+                                nbEnfantACharge: "",
                                 numeroRue: "",
                                 nomRue: "",
                                 boitePostale: "",
@@ -259,7 +259,7 @@ class CreateEmploye extends React.Component {
                                 ville: "",
                                 pays: "",
                                 email: "",
-                                telephoneFix: "",
+                                telephoneFixe: "",
                                 telephonePortable: "",
                                 fax: "",
                                 societeId: UserService.getSocietyId(),
@@ -271,8 +271,8 @@ class CreateEmploye extends React.Component {
                                 poste: "",
                                 codeRefStatut: "EMPNEMB",
                                 salaireHoraire: "",
-                                salaireBrutMensuelle: "",
-                                heuresMensuelle: "",
+                                salaireBrutMensuel: "",
+                                nbHeureMensuelle: "",
                                 periodeEssai: 0,
                                 // valeurs precedemment absentes (new jdl)
                                 adresseId: null,
@@ -436,13 +436,13 @@ class CreateEmploye extends React.Component {
                                                     </MDBCol>
                                                     <MDBCol md="3" className="mb-3">
                                                         <Field
-                                                            name="paysNaisance"
+                                                            name="paysNaissance"
                                                             label="Pays*"
                                                             component={ComposantInput}
                                                         />
                                                         <ErrorMessForm
-                                                            error={errors.paysNaisance}
-                                                            touched={touched.paysNaisance}
+                                                            error={errors.paysNaissance}
+                                                            touched={touched.paysNaissance}
                                                             right
                                                         />
                                                     </MDBCol>
@@ -476,13 +476,13 @@ class CreateEmploye extends React.Component {
                                                     </MDBCol>
                                                     <MDBCol md="4" className="mb-3">
                                                         <Field
-                                                            name="enfantsACharge"
+                                                            name="nbEnfantACharge"
                                                             label="Enfant(s) à Charge*"
                                                             component={ComposantNumber}
                                                         />
                                                         <ErrorMessForm
-                                                            error={errors.enfantsACharge}
-                                                            touched={touched.enfantsACharge}
+                                                            error={errors.nbEnfantACharge}
+                                                            touched={touched.nbEnfantACharge}
                                                             right
                                                         />
                                                     </MDBCol>
@@ -589,13 +589,13 @@ class CreateEmploye extends React.Component {
                                                     </MDBCol>
                                                     <MDBCol md="2" className="mb-3">
                                                         <Field
-                                                            name="telephoneFix"
+                                                            name="telephoneFixe"
                                                             label="Telephone fixe"
                                                             component={ComposantInput}
                                                         />
                                                         <ErrorMessForm
-                                                            error={errors.telephoneFix}
-                                                            touched={touched.telephoneFix}
+                                                            error={errors.telephoneFixe}
+                                                            touched={touched.telephoneFixe}
                                                             right
                                                         />
                                                     </MDBCol>
@@ -801,25 +801,25 @@ class CreateEmploye extends React.Component {
                                                     </MDBCol>
                                                     <MDBCol md="3" className="mb-3">
                                                         <Field
-                                                            name="salaireBrutMensuelle"
+                                                            name="salaireBrutMensuel"
                                                             label="Salaire Mensuel*"
                                                             component={ComposantNumberDecimal}
                                                         />
                                                         <ErrorMessForm
-                                                            error={errors.salaireBrutMensuelle}
-                                                            touched={touched.salaireBrutMensuelle}
+                                                            error={errors.salaireBrutMensuel}
+                                                            touched={touched.salaireBrutMensuel}
                                                             right
                                                         />
                                                     </MDBCol>
                                                     <MDBCol md="3" className="mb-3">
                                                         <Field
-                                                            name="heuresMensuelle"
+                                                            name="nbHeureMensuelle"
                                                             label="Heures Mensuelles*"
                                                             component={ComposantNumberDecimal}
                                                         />
                                                         <ErrorMessForm
-                                                            error={errors.heuresMensuelle}
-                                                            touched={touched.heuresMensuelle}
+                                                            error={errors.nbHeureMensuelle}
+                                                            touched={touched.nbHeureMensuelle}
                                                             right
                                                         />
                                                     </MDBCol>

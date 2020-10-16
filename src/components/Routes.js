@@ -48,8 +48,8 @@ import ListOfOperations from "./bancaire/releve/gestion_releves/rapprochement_ba
 import ListOfInvoices from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfInvoices";
 import EditStatement from "./bancaire/releve/details_releve/edit-statement/EditStatement";
 import QuotesHome from "./quotes/quotes-home/QuotesHome";
-import QuoteCreate from "./quotes/quotes-form/QuoteCreate";
-
+import QuoteCreate from "./quotes/quotes-form/quote-create/QuoteCreate";
+import QuoteEdit from "./quotes/quotes-form/quote-edit/QuoteEdit";
 
 
 // gestionUserRoutesImports
@@ -89,11 +89,11 @@ import Referentiels from "./contrat/referencial/Referentiels";
 //GestionFactures
 import AccueilFacture from "./gestion_factures/factures/accueilFactures";
 import CreerFacture from "./gestion_factures/factures/creerFacture";
-import CreerDepense from "./gestion_factures/depenses/creerDepense";
-import AccueilDepense from './gestion_factures/depenses/accueilDepenses';
+import CreateDepense from "./gestion_factures/depenses/create-depense/CreateDepense";
+import AccueilDepense from './gestion_factures/depenses/AccueilDepenses';
 import CreateArticle from "./contrat/referencial/article/create-article/CreateArticle";
 import EditArticle from "./contrat/referencial/article/edit-article/EditArticle";
-import DetailDepense from "./gestion_factures/depenses/DetailDepense";
+import DetailDepense from "./gestion_factures/depenses/detail-depense/DetailDepense";
 
 //Juridique
 //import ListOfClauses from "./contrat/referencial/clauses/list-of-clauses/ListOfClauses";
@@ -107,6 +107,7 @@ import ParentUpdatePayrollVariablesAccountants
     from "./social/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants";
 
 import ParentPayslip from "./social/payslip/ParentPayslip";
+import UpdateDepense from "./gestion_factures/depenses/update-depense/UpdateDepense";
 
 
 
@@ -139,12 +140,14 @@ export default class Routes extends Component {
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/accueildepenses" component={AccueilDepense} />
         <PrivateRoute path="/newfacture" component={CreerFacture} />
-        <PrivateRoute path="/newdepense" component={CreerDepense} />
-          <PrivateRoute path="/depenses/details/:id" component={DetailDepense} />
+        <PrivateRoute exact path="/depenses/create" component={CreateDepense} />
+        <PrivateRoute exact path="/depenses/update/:id" component={UpdateDepense} />
+        <PrivateRoute exact path="/depenses/details/:id" component={DetailDepense} />
 
         {/* Gestion Devis */}
         <PrivateRoute path="/devis/accueil" component={QuotesHome} />
         <PrivateRoute path="/devis/créer" component={QuoteCreate} />
+        <PrivateRoute path="/devis/modifier/:id" component={QuoteEdit} />
 
 
         {/* Juridique  */}
