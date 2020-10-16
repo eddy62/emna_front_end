@@ -29,10 +29,10 @@ export default class ParentAddPayrollVariables extends Component {
             loaded: false,
             society: {},
             listeEmployes: [],
-            idNameSelected: stock.getFiltreEmployeSelected() !="" ? stock.getFiltreEmployeSelected() :'DEFAULT',
+            idNameSelected: stock.getFiltreEmployeSelected() !=="" ? stock.getFiltreEmployeSelected() :'DEFAULT',
             currentYear: new Date().getFullYear(),
-            yearSelected: stock.getFiltreAnneeSelected() != "" ?  stock.getFiltreAnneeSelected() : new Date().getFullYear(),
-            monthSelected: stock.getFiltreMoisSelected() != "" ? stock.getFiltreMoisSelected() : new Date().getMonth() + 1,
+            yearSelected: stock.getFiltreAnneeSelected() !== "" ?  stock.getFiltreAnneeSelected() : new Date().getFullYear(),
+            monthSelected: stock.getFiltreMoisSelected() !== "" ? stock.getFiltreMoisSelected() : new Date().getMonth() + 1,
             period: [
                 {id: 1, text: "Janvier"},
                 {id: 2, text: "Février"},
@@ -120,7 +120,7 @@ export default class ParentAddPayrollVariables extends Component {
         };
     };
 
-    formatDate(date) {
+    dateFormat(date) {
         const dateSplit = date.split('-');
         const year = dateSplit[0];
         const month = dateSplit[1];
@@ -186,7 +186,7 @@ export default class ParentAddPayrollVariables extends Component {
                                             {this.state.period.map((p, index) => (
                                                 <option key={index}
                                                         value={p.id}
-                                                        disabled={this.state.yearSelected == this.state.currentYear && p.id > new Date().getMonth() + 1 ? (true) : (false)}>{p.text}</option>
+                                                        disabled={this.state.yearSelected === this.state.currentYear && p.id > new Date().getMonth() + 1 ? (true) : (false)}>{p.text}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -214,7 +214,7 @@ export default class ParentAddPayrollVariables extends Component {
                                                                        monthSelected={this.state.monthSelected}
                                                                        key={this.state.keyAbsence}
                                                                        handleReset={this.handleReset}
-                                                                       formatDate={this.formatDate}/>
+                                                                       dateFormat={this.dateFormat}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}
@@ -236,7 +236,7 @@ export default class ParentAddPayrollVariables extends Component {
                                                                              monthSelected={this.state.monthSelected}
                                                                              key={this.state.keyExpenseReport}
                                                                              handleReset={this.handleReset}
-                                                                             formatDate={this.formatDate}/>
+                                                                             dateFormat={this.dateFormat}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}
@@ -277,7 +277,7 @@ export default class ParentAddPayrollVariables extends Component {
                                                             employeId={this.state.idNameSelected}
                                                             yearSelected={this.state.yearSelected}
                                                             monthSelected={this.state.monthSelected}
-                                                            formatDate={this.formatDate}/>
+                                                            dateFormat={this.dateFormat}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}
@@ -318,7 +318,7 @@ export default class ParentAddPayrollVariables extends Component {
                                                                                     monthSelected={this.state.monthSelected}
                                                                                     key={this.state.keyOtherPayrollVariable}
                                                                                     handleReset={this.handleReset}
-                                                                                    formatDate={this.formatDate}/>
+                                                                                    dateFormat={this.dateFormat}/>
                                                     ) : (
                                                         <p>Veuillez choisir un employé</p>
                                                     )}

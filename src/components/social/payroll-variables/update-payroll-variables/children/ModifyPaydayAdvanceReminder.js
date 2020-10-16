@@ -82,8 +82,8 @@ class ModifyPaydayAdvanceReminder extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            minDate: "",
-            maxDate: "",
+            minDate: new Date(new Date().setFullYear(this.props.yearSelected, this.props.monthSelected - 1, 1)).toISOString().slice(0, 10),
+            maxDate: new Date(new Date().setFullYear(this.props.yearSelected, this.props.monthSelected, 0)).toISOString().slice(0, 10),
             loaded: false,
         };
     }
@@ -92,7 +92,6 @@ class ModifyPaydayAdvanceReminder extends React.Component {
         this.setState({
             loaded: true,
         });
-        this.updatePeriod()
     }
 
     submit = (values, actions) => {
@@ -107,21 +106,6 @@ class ModifyPaydayAdvanceReminder extends React.Component {
             notify("error");
         });
         actions.setSubmitting(true);
-    };
-
-    updatePeriod() {
-        this.state.minDate = new Date(new Date()
-            .setFullYear(
-                this.props.avanceRappelSalaire.annee,
-                this.props.avanceRappelSalaire.mois - 1,
-                1
-            )).toISOString().slice(0, 10);
-        this.state.maxDate = new Date(new Date()
-            .setFullYear(
-                this.props.avanceRappelSalaire.annee,
-                this.props.avanceRappelSalaire.mois,
-                0
-            )).toISOString().slice(0, 10)
     };
 
     render() {

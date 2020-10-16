@@ -67,26 +67,34 @@ const ComponentUploadFiles = ({field, ...props}) => (
     </div>
 );
 
-const notify = type => {
+const notify = (type, date) => {
+    const variable = "Autre Variable de Paie";
     switch (type) {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Autre Variable de Paie Modifiée &nbsp;&nbsp;!</strong>
+                    <strong>{variable} Modifiée &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
+        case "warning":
+            toast.warning(
+                <div className="text-center">
+                    <strong>{variable} NON modifiée : Le salarié était absent pendant cette date {date} &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Autre Variable de Paie NON Modifiée &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON Modifiée &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>Autre Variable de Paie NON Modifiée &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON Modifiée &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
@@ -115,13 +123,25 @@ class ModifyOtherPayrollVariable extends React.Component {
             console.log(values.id);
         }
         AxiosCenter.modifyOtherPayrollVariable(values)
-            .then(() => {
-                this.props.toggleModalUpdateOther(this.props.index);
-                this.props.reloadParentAfterUpdate();
-                notify("success");
+            .then((response) => {
+                const statut = response.status;
+                const dateOther = this.props.dateFormat(response.data.date);
+                switch(statut) {
+                    case 201:
+                        this.props.toggleModalUpdateOther(this.props.index);
+                        this.props.reloadParentAfterUpdate();
+                        notify("success", "");
+                    break;
+                    case 208:
+                        notify("warning", dateOther);
+                    break;
+                    default:
+                        notify("warning", "");
+                        break;
+                };
             }).catch((error) => {
             console.log(error);
-            notify("error");
+            notify("error", "");
         });
         actions.setSubmitting(true);
     }

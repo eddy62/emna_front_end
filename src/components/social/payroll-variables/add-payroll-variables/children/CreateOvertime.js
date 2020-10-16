@@ -101,7 +101,7 @@ class CreateOvertime extends React.Component {
         AxiosCenter.createOvertime(values)
             .then((response) => {
                 const statut = response.status;
-                const dateExpRept = this.props.formatDate(response.data.date);
+                const dateExpRept = this.props.dateFormat(response.data.date);
                 switch(statut) {
                     case 201:
                         notify("success", "");

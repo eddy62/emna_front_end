@@ -180,7 +180,7 @@ class TableOtherPayrollVariable extends React.Component {
                             {this.props.autresVariablesList.map((other, index) => (
                                 <tr key={index}>
                                     <td>{other.description}</td>
-                                    <td>{other.date}</td>
+                                    <td>{this.props.dateFormat(other.date)}</td>
                                     <td>{other.montant} €</td>
                                     {other.wrapperDocumentList.length ? (
                                         <td>
@@ -231,6 +231,7 @@ class TableOtherPayrollVariable extends React.Component {
                             reloadParentAfterUpdate={this.props.reloadParentAfterUpdate}
                             yearSelected={this.props.yearSelected}
                             monthSelected={this.props.monthSelected}
+                            dateFormat={this.props.dateFormat}
 
                         />
                     </MDBModalBody>
@@ -244,7 +245,7 @@ class TableOtherPayrollVariable extends React.Component {
                         <MDBContainer>                            
                             <MDBListGroup>
                                 {this.props.autresVariablesList.map((aVList) => (
-                                    aVList.id == this.state.idOtherPayrollVariableSelected ? (
+                                    aVList.id === this.state.idOtherPayrollVariableSelected ? (
                                         aVList.wrapperDocumentList.map((doc, index) => (
                                             <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.nom)}>{doc.nom}</MDBListGroupItem>
                                         ))
