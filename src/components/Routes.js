@@ -48,8 +48,8 @@ import ListOfOperations from "./bancaire/releve/gestion_releves/rapprochement_ba
 import ListOfInvoices from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfInvoices";
 import EditStatement from "./bancaire/releve/details_releve/edit-statement/EditStatement";
 import QuotesHome from "./quotes/quotes-home/QuotesHome";
-import QuoteCreate from "./quotes/quotes-form/QuoteCreate";
-
+import QuoteCreate from "./quotes/quotes-form/quote-create/QuoteCreate";
+import QuoteEdit from "./quotes/quotes-form/quote-edit/QuoteEdit";
 
 
 // gestionUserRoutesImports
@@ -147,6 +147,7 @@ export default class Routes extends Component {
         {/* Gestion Devis */}
         <PrivateRoute path="/devis/accueil" component={QuotesHome} />
         <PrivateRoute path="/devis/créer" component={QuoteCreate} />
+        <PrivateRoute path="/devis/modifier/:id" component={QuoteEdit} />
 
 
         {/* Juridique  */}
