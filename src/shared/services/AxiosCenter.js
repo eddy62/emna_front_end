@@ -282,19 +282,19 @@ const AxiosCenter = {
     });
   },
 
-    getDepense(id) {
-        return ApiBackEnd({
-            method: "GET",
-            url: `depenses/${id}`,
-        });
-    },
+  getDepense(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `depenses/${id}`,
+    });
+  },
 
-    getAllQuotesBySociety(id) {
-        return ApiBackEnd({
-            method: "GET",
-            url: `devis/societe/${id}`
-        });
-    },
+  getAllQuotesBySociety(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `devis/societe/${id}`
+    });
+  },
   getQuotesBySociety(id) {
     return ApiBackEnd({
       method: "GET",
@@ -347,24 +347,24 @@ const AxiosCenter = {
 
   getAllPaySlip() {
     return ApiBackEnd({
-        method: "GET",
-        url: `/fiche-paies`,
+      method: "GET",
+      url: `/fiche-paies`,
     });
   },
 
   getPdfFileByPath(path) {
     return ApiBackEnd({
-        method: "GET",
-        url: `/getPdfFile/${path}`,
-        responseType: 'blob'
+      method: "GET",
+      url: `/getPdfFile/${path}`,
+      responseType: 'blob'
     })
   },
 
   getAllPayslipByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
-      return ApiBackEnd({
-          method: "GET",
-          url: `/fiche-paies/employe/${idEmploye}/annee/${year}/moisDu/${monthStart}/moisFin/${monthEnd}`,
-      });
+    return ApiBackEnd({
+      method: "GET",
+      url: `/fiche-paies/employe/${idEmploye}/annee/${year}/moisDu/${monthStart}/moisFin/${monthEnd}`,
+    });
   },
 
 
@@ -578,6 +578,19 @@ const AxiosCenter = {
     });
   },
 
+  uploadContract(file, idContract ) {
+    let formData = new FormData();
+    formData.append('file',file[0])
+    return ApiBackEnd({
+      method: "POST",
+      url: `/upload/contracts/${idContract}`,
+      data: formData,
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    });
+  },
+
   createOtherPayrollVariable(values) {
     return ApiBackEnd({
       method: "POST",
@@ -601,30 +614,38 @@ const AxiosCenter = {
       data: values,
     });
   },
-    createFile() {
-        return ApiBackEnd({
-            method: "POST",
-            url: "/documents",
-        });
-    },
+  createFile() {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/documents",
+    });
+  },
 
-    uploadFile(file) {
-        return ApiBackEnd({
-            method: "POST",
-            url: "/upload",
-            data: file
-        })
-    },
+  uploadFile(file) {
+    return ApiBackEnd({
+      method: "POST",
+      url: "/upload",
+      data: file
+    })
+  },
 
 
-    createWrapperContrat(values) {
-        return ApiBackEnd({
-            method: "POST",
-            url: `/wrapperContrat`,
-            data: values
-        })
-    },
-    // Fin Post
+  createWrapperContrat(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: `/wrapperContrat`,
+      data: values
+    })
+  },
+
+  createWrapperDepense(values) {
+    return ApiBackEnd({
+      method: "POST",
+      url: `/wrapperdepense`,
+      data: values
+    })
+  },
+  // Fin Post
 
   //Put
   updateCustomerSupplier(values) {
@@ -779,6 +800,14 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "put",
       url: `/releve/valider/comptable/${idReleve}`,
+    });
+  },
+
+  updateDepense(values){
+    return ApiBackEnd({
+      method: "put",
+      url: "/wrapperdepenses",
+      data: values
     });
   },
 
