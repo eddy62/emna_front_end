@@ -31,7 +31,7 @@ const RegexService = {
      * @example aAbB
      */
     onlyUnaccentedLetters() {
-        return /^[a-zA-Z\S]+$/;
+        return /^[a-zA-Z]+$/;
     },
 
     /**
@@ -47,7 +47,7 @@ const RegexService = {
      * @example aAéÉ
      */
     onlyLetters() {
-        return /^[a-zA-ZâàäæéèêëîïöôœûüùçÂÀÄÆÉÈÊËÎÏÖÔŒÛÜÙÇ\S]+$/;
+        return /^[a-zA-ZâàäæéèêëîïöôœûüùçÂÀÄÆÉÈÊËÎÏÖÔŒÛÜÙÇ]+$/;
     },
 
     /**
@@ -63,7 +63,7 @@ const RegexService = {
      * @example 1a2A
      */
     onlyNumbersAndUnaccentedLetters() {
-        return /^[0-9a-zA-Z\S]+$/;
+        return /^[0-9a-zA-Z]+$/;
     },
 
     /**
@@ -71,7 +71,7 @@ const RegexService = {
      * @example 1A2B
      */
     onlyNumbersAndUppercaseUnaccentedLetters() {
-        return /^[0-9A-Z\S]+$/;
+        return /^[0-9A-Z]+$/;
     },
 
     /**
@@ -135,10 +135,12 @@ const RegexService = {
     },
 
     onlyHttpsUrl() {
+        // eslint-disable-next-line
         return /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)/;
     },
 
     onlyUrlWithOptionalHttps() {
+        // eslint-disable-next-line
         return /(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
     },
 
