@@ -295,6 +295,12 @@ const AxiosCenter = {
       url: `devis/societe/${id}`
     });
   },
+  getQuoteById(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `devis/detail/${id}`
+    });
+  },
   getQuotesBySociety(id) {
     return ApiBackEnd({
       method: "GET",

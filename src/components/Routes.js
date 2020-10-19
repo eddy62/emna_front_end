@@ -108,6 +108,7 @@ import ParentUpdatePayrollVariablesAccountants
 
 import ParentPayslip from "./social/payslip/ParentPayslip";
 import UpdateDepense from "./gestion_factures/depenses/update-depense/UpdateDepense";
+import QuoteDetails from "./quotes/quotes-details/QuotesDetails";
 
 
 
@@ -147,6 +148,7 @@ export default class Routes extends Component {
         {/* Gestion Devis */}
         <PrivateRoute path="/devis/accueil" component={QuotesHome} />
         <PrivateRoute path="/devis/créer" component={QuoteCreate} />
+        <PrivateRoute path="/devis/details/:id" component={QuoteDetails} />
 
 
         {/* Juridique  */}
