@@ -9,8 +9,7 @@ import {
     MDBCol,
     MDBContainer,
     MDBInput,
-    MDBRow,
-    MDBTimePicker
+    MDBRow
 } from "mdbreact";
 import UserService from "../../../../shared/services/UserService";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
@@ -20,16 +19,14 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import RegexService from "../../../../shared/services/RegexService";
 
 const ComponentDate = ({field, ...props}) => (
-    <div>
-        <MDBInput
-            label={props.label}
-            outline
-            type="date"
-            min={props.mindate}
-            max={props.maxdate}
-            {...field}
-        />
-    </div>
+    <MDBInput
+        label={props.label}
+        outline
+        type="date"
+        min={props.mindate}
+        max={props.maxdate}
+        {...field}
+    />
 
 );
 
@@ -48,9 +45,12 @@ const ComponentSelect = ({field, ...props}) => (
     <div>
         {/*<label style={{fontSize: "0.8rem", color: "#757575", marginLeft: "-70%"}}> {props.label} </label>*/}
         <select className="form-control browser-default custom-select"
-                name={props.name}  {...props} {...field}
+                name={props.name}
+                value={props.label}
+                {...props}
+                {...field}
         >
-            <option value="" disabled={true} selected={true}>{props.label}</option>
+            <option value="" disabled={true}>{props.label}</option>
             {props.options.map((object) => (
                 <option key={object.key} value={object.value}>{object.intitule}</option>))}
         </select>
@@ -78,18 +78,11 @@ const ComponentTextArea = ({field, ...props}) => (
 );
 
 const ComponentTime = ({field, ...props}) => (
-    <MDBTimePicker
-        outline
-        hoursFormat={24}
-        hours={0}
-        minutes={0}
-        cancelable={true}
-        cancelText="Réinitialiser"
-        clearable={true}
-        clearText="Test"
-        doneText="Sélectionner"
+    <MDBInput
         label={props.label}
-        getValue={props.getvalue}
+        outline
+        type="time"
+        {...field}
     />
 );
 
@@ -97,42 +90,82 @@ const ComponentError = (props) => (
     <div className="text-danger">{props.children}</div>
 );
 
-const doeSchema = (props) => {
+const listOptionsSex = [
+    {key: 1, value: 1, intitule: "Masculin"},
+    {key: 2, value: 2, intitule: "Féminin"}
+];
+
+const listOptionNature = [
+    {
+        key: 1,
+        value: "CDD",
+        intitule: "Contrat à durée déterminée"
+    },
+    {
+        key: 2,
+        value: "CDI",
+        intitule: "Contrat à durée indéterminée"
+    },
+    {
+        key: 3,
+        value: "CTT",
+        intitule: "Contrat de travail temporaire"
+    },
+];
+
+// contrôle saisie apeCode en dehors de yup car dynamique
+const validateApeCode = value => {
+    let errorMessage;
+    if (value !== "7820Z") errorMessage = "Le Code APE ne correspond pas à une agence de travail temporaire";
+    return errorMessage;
+};
+
+// contrôle saisie healthService en dehors de yup car dynamique
+const validateHealthService = value => {
+    let errorMessage;
+    if (value === "") errorMessage = "Service de santé au travail obligatoire";
+    return errorMessage;
+};
+
+// contrôle saisie endContractDate en dehors de yup car dynamique
+const validateEndContractDate = value => {
+    let errorMessage;
+    if (value === "") errorMessage = "Date de fin de contrat obligatoire";
+    return errorMessage;
+};
+
+const dpaeSchema = (props) => {
     return Yup.object().shape({
         //employeur
         siret: Yup.string()
-            .required("SIRET obligatoire")
+            // .required("SIRET obligatoire")
             .matches(RegexService.onlyNumbers(), "Chiffres uniquement")
             .matches(RegexService.startWithSpecificCharacter("12"), "Commence obligatoirement par 1 ou 2")
             .length(14, "Se compose obligatoirement de 14 chiffres"),
         urssafCode: Yup.string()
-            .required("Code Urssaf obligatoire")
+            // .required("Code Urssaf obligatoire")
             .matches(RegexService.onlyNumbers(), "Chiffres uniquement")
             .length(3, "Se compose obligatoirement de 3 chiffres"),
-        // TODO fonction uppercase
         apeCode: Yup.string()
-            .required("Code APE obligatoire")
-            .matches(/^[0-9A-Z]*$/, "Caractère spécial ou accentué non autorisé")
+            // .required("Code APE obligatoire")
+            .matches(RegexService.onlyNumbersAndUnaccentedLetters(), "Caractère spécial ou accentué non autorisé")
             .min(4, "Se compose obligatoirement de 4 ou 5 caractères")
             .max(5, "Se compose obligatoirement de 4 ou 5 caractères"),
-        // TODO fonction trim
         designation: Yup.string()
             .required("Désignation obligatoire")
             .matches(/^[a-zA-Z0-9 éèêëâàäöôûüùîïç°²!#$%&'()*+,-./:;<=>?@]*$/, "Caractère spécial non autorisé")
             .max(32, "Se compose au maximum de 32 caractères"),
-        // TODO fonction trim
         streetDesignation: Yup.string()
             .required("Adresse obligatoire")
             .matches(/^[a-zA-Z0-9 éèêëâàäöôûüùîïç°²!#$%&'()*+,-./:;<=>?@]*$/, "Caractère spécial non autorisé")
             .max(32, "Se compose au maximum de 32 caractères"),
         postalCode: Yup.string()
-            .required("Code postal obligatoire")
+            // .required("Code postal obligatoire")
             .matches(/^[0-9]*$/, "Chiffres uniquement")
             .length(5, "Se compose obligatoirement de 5 chiffres")
             .matches(RegexService.doesNotStartWith("00000"), "N'existe pas"),
-        // TODO fonction trim
         town: Yup.string()
-            .required("Ville obligatoire")
+            // .required("Ville obligatoire")
             .matches(/^[a-zA-Z0-9 éèêëâàäöôûüùîïç°²!#$%&'()*+,-./:;<=>?@]*$/, "Caractère spécial non autorisé")
             .max(32, "Se compose au maximum de 32 caractères"),
         phoneNumber: Yup.string()
@@ -140,82 +173,63 @@ const doeSchema = (props) => {
             .matches(/^[0]/, "Commence obligatoirement par 0")
             .length(10, "Se compose obligatoirement de 10 chiffres"),
         // salarie
-        // TODO fonction sup accent + trim + uppercase
         surname: Yup.string()
-            .required("Nom obligatoire")
-            .matches(/^[A-Z' .&-]*$/, "Caractère spécial ou accentué non autorisé")
+            // .required("Nom obligatoire")
+            // .matches(/^[A-Z' .&-]*$/, "Caractère spécial ou accentué non autorisé")
+            .matches(/^[a-zA-ZâàäéèêëîïöôûüùçÂÀÄÉÈÊËÎÏÖÔÛÜÙÇ' .&-]*$/, "Caractère spécial ou accentué non autorisé")
             .max(32, "Se compose au maximum de 32 caractères"),
-        // TODO fonction sup accent + trim + uppercase
         customaryName: Yup.string()
-            .matches(/^[A-Z' .&-]*$/, "Caractère spécial ou accentué non autorisé")
+            .matches(/^[a-zA-ZâàäéèêëîïöôûüùçÂÀÄÉÈÊËÎÏÖÔÛÜÙÇ' .&-]*$/, "Caractère spécial ou accentué non autorisé")
             .max(32, "Se compose au maximum de 32 caractères"),
-        // TODO fonction sup accent + trim + uppercase
         christianName: Yup.string()
-            .required("Prénom obligatoire")
-            .matches(/^[A-Z' .&-]*$/, "Caractère spécial ou accentué non autorisé")
+            // .required("Prénom obligatoire")
+            .matches(/^[a-zA-ZâàäéèêëîïöôûüùçÂÀÄÉÈÊËÎÏÖÔÛÜÙÇ' .&-]*$/, "Caractère spécial ou accentué non autorisé")
             .max(32, "Se compose au maximum de 32 caractères"),
         sex: Yup.string()
-            .required("Sexe obligatoire"),
-        // TODO pb avec param fonction RegexService
-        // TODO pb avec test qui sup required de tous les champs
-        nir: Yup.string()
-            .required("N° de Sécurité Sociale obligatoire")
-            .matches(RegexService.onlyNumbers(), "Chiffres uniquement")
-            // .matches(RegexService.startWithSpecificCharacter("12"), "Commence obligatoirement par 1 ou 2")
-            // .matches(RegexService.startWithSpecificCharacter(Yup.ref("sex")), "Ne correspond pas au sexe renseigné")
-        .test("length", "Se compose obligatoirement de 13 ou 15 chiffres", (value) => (value.length === 13 || value.length === 15))
+        // .required("Sexe obligatoire")
         ,
+        nir: Yup.string()
+            // .required("N° de Sécurité Sociale obligatoire")
+            .matches(RegexService.onlyNumbers(), "Chiffres uniquement")
+            .matches(/(^(.{13}|.{15})$)/, "Se compose obligatoirement de 13 ou 15 chiffres"),
         // TODO calcul à faire
         nirKey: Yup.string(),
         birthDate: Yup.date()
-            .required("Date de naissance obligatoire")
+            // .required("Date de naissance obligatoire")
             .max(new Date(), "Doit être inférieure à la date du jour"),
-        // TODO fonction uppercase
         departmentBirth: Yup.string()
-            .required("Département de naissance obligatoire")
-            .matches(/(^[0-9]*$|2A|2B)/, "Chiffres uniquement (exceptés 2A et 2B)")
+            // .required("Département de naissance obligatoire")
+            .matches(/(^[0-9]*$|2a|2A|2b|2B)/, "Chiffres uniquement (exceptés 2A et 2B)")
             .min(2, "Se compose obligatoirement de 2 ou 3 caractères")
             .max(3, "Se compose obligatoirement de 2 ou 3 caractères"),
-        // TODO fonction trim + uppercase
         birthTown: Yup.string()
-            .required("Commune de naissance obligatoire")
-            .matches(/^[A-Z0-9 .'-]*$/, "Caractère spécial ou accentué non autorisé")
+            // .required("Commune de naissance obligatoire")
+            .matches(/^[a-zA-ZâàäéèêëîïöôûüùçÂÀÄÉÈÊËÎÏÖÔÛÜÙÇ0-9 .'-]*$/, "Caractère spécial ou accentué non autorisé")
             .max(32, "Se compose au maximum de 32 caractères"),
-        // TODO fonction trim + uppercase
         countryBirth: Yup.string()
-            .required("Pays de naissance obligatoire")
-            .matches(/^[A-Z0-9 .'-]*$/, "Caractère spécial ou accentué non autorisé")
+            // .required("Pays de naissance obligatoire")
+            .matches(/^[a-zA-ZâàäéèêëîïöôûüùçÂÀÄÉÈÊËÎÏÖÔÛÜÙÇ0-9 .'-]*$/, "Caractère spécial ou accentué non autorisé")
             .max(32, "Se compose au maximum de 32 caractères"),
         // contrat
         nature: Yup.string()
-            .required("Nature du contrat obligatoire"),
-        // TODO fonction uppercase (selon doc)
+        // .required("Nature du contrat obligatoire")
+        ,
         healthService: Yup.string()
-            // .required("Service de santé au travail obligatoire pour un CDD ou un CDI")
             .matches(RegexService.onlyNumbers(), "Chiffres uniquement")
-            // .matches(RegexService.onlyNumbersAndUppercaseUnaccentedLetters(), "Chiffres et lettres uniquement")
-            // .matches(RegexService.startWithSpecificString("MT"), "Commence obligatoirement par MT")
             .length(3, "Se compose obligatoirement de 3 chiffres"),
         startContractDate: Yup.date()
-            .required("Date de début de contrat obligatoire")
+            // .required("Date de début de contrat obligatoire")
             .min(props.oneYearBeforeNow, "Doit être inférieure au maximum d'un an à la date du jour")
             .max(props.oneYearFromNow, "Doit être supérieure au maximum d'un an à la date du jour"),
-        // TODO required
         startContractTime: Yup.string()
-        .required("Heure de début de contrat obligatoire")
+        // .required("Heure de début de contrat obligatoire")
         ,
-        // TODO required si CDD
         endContractDate: Yup.date()
-            .min(Yup.ref("startContractDate"),
-                "Doit être supérieure ou égale à la date de début"),
+            .min(Yup.ref("startContractDate"), "Doit être supérieure ou égale à la date de début"),
         trialTime: Yup.number()
             .min(0, "Doit être positive ou nulle")
             .max(999, "Doit être inférieure à la durée maximale légale"),
-        // TODO fonction trim
         comment: Yup.string()
-        // test controle dynamique
-        // comment: Yup.ref("nature") !== "CTT" ? Yup.string().required("required") : Yup.string().notRequired()
-
     })
 };
 
@@ -225,6 +239,7 @@ class CreateDeclarationOfEmployment extends React.Component {
         this.state = {
             loaded: false,
             society: {},
+            societyInfo: {},
             oneYearBeforeNow: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
             oneYearFromNow: new Date(new Date().setFullYear(new Date().getFullYear() + 1))
         }
@@ -233,33 +248,75 @@ class CreateDeclarationOfEmployment extends React.Component {
     componentDidMount() {
         /*set society*/
         AxiosCenter.getSocietyById(this.props.match.params.id)
-            .then((response) => {
-                this.setState({
+            .then(async (response) => {
+                await this.setState({
                     society: response.data,
                     loaded: true
-                });
+                })
+                console.log(this.state.society)
             })
             .catch((error) => {
                 console.log(error);
             });
+
+        // /*set society*/
+        // AxiosCenter.getSocietyById(this.props.match.params.id)
+        //     .then(async (response) => {
+        //         console.log(response);
+        //         await this.setState({
+        //             society: response.data,
+        //         });
+        //         /*set societyInfo*/
+        //         AxiosCenter.getSocietyInformation(this.state.society.IdInfoEntreprise)
+        //             .then((response) => {
+        //                 this.setState({
+        //                     societyInfo: response.data,
+        //                     loaded: true
+        //                 });
+        //             })
+        //             .catch((error) => {
+        //                 console.log(error);
+        //             });
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
     }
 
     //TODO submit
-    submit = (values) => {
+    submit = (values, actions) => {
+        // formatage urssaf
+        values.apeCode = values.apeCode.toUpperCase();
+        values.designation = values.designation.trim();
+        values.streetDesignation = values.streetDesignation.trim();
+        values.town = values.town.trim();
+        values.surname = this.formatName(values.surname.trim().toUpperCase());
+        values.customaryName = this.formatName(values.customaryName.trim().toUpperCase());
+        values.christianName = this.formatName(values.christianName.trim().toUpperCase());
+        values.departmentBirth = values.departmentBirth.toUpperCase();
+        values.birthTown = this.formatName(values.birthTown.trim().toUpperCase());
+        values.countryBirth = this.formatName(values.countryBirth.trim().toUpperCase());
+        if (values.nir.length === 15) this.splitNir(values);
+        values.startContractTime += ":00";
+        values.comment = values.comment.trim();
+
         alert(JSON.stringify(values, null, 2));
+        actions.resetForm();
+        actions.setSubmitting(false);
     }
 
     formatName(value) {
         return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     }
 
-    handleChange = (values) => {
-        console.log(values)
+    splitNir(values) {
+        values.nirKey = values.nir.substring(13, 15);
+        values.nir = values.nir.substring(0, 13);
     }
 
     render() {
         const title = "Gestion Social";
-        const title1 = "Soumettre une Déclaration Préalable d'Embauche";
+        const title1 = "Soumettre une Déclaration Préalable À l'Embauche";
         const companyName = this.state.society.raisonSociale;
 
         if (!this.state.loaded) return <Loading/>;
@@ -286,14 +343,14 @@ class CreateDeclarationOfEmployment extends React.Component {
                             indicator: 1,
 
                             // employeur
-                            designation: "",
-                            siret: "",
-                            apeCode: "",
-                            urssafCode: "",
-                            streetDesignation: "",
-                            town: "",
-                            postalCode: "",
-                            phoneNumber: "",
+                            designation: this.state.society.raisonSociale,
+                            siret: this.state.society.siret,
+                            apeCode: this.state.society.apeCode,
+                            urssafCode: this.state.society.codeUrssaf,
+                            streetDesignation: this.state.society.numeroRue + " " + this.state.society.nomRue,
+                            town: this.state.society.ville,
+                            postalCode: this.state.society.codePostal,
+                            phoneNumber: this.state.society.telephone,
 
                             // salarie
                             surname: "",
@@ -315,17 +372,45 @@ class CreateDeclarationOfEmployment extends React.Component {
                             nature: "",
                             healthService: "",
                             comment: ""
+
+                            // // employeur
+                            // designation: "",
+                            // siret: "",
+                            // apeCode: "",
+                            // urssafCode: "",
+                            // streetDesignation: "",
+                            // town: "",
+                            // postalCode: "",
+                            // phoneNumber: "",
+                            //
+                            // // salarie
+                            // surname: "",
+                            // customaryName: "",
+                            // christianName: "",
+                            // sex: "",
+                            // nir: "",
+                            // nirKey: "",
+                            // birthDate: "",
+                            // birthTown: "",
+                            // departmentBirth: "",
+                            // countryBirth: "",
+                            //
+                            // // contrat
+                            // startContractDate: "",
+                            // startContractTime: "",
+                            // endContractDate: "",
+                            // trialTime: "",
+                            // nature: "",
+                            // healthService: "",
+                            // comment: ""
                         }}
                                 onSubmit={this.submit}
-                                validationSchema={doeSchema(this.state)}
+                                validationSchema={dpaeSchema(this.state)}
                         >
                             {({
                                   dirty,
-                                  handleChange,
-                                  handleBlur,
                                   handleReset,
                                   handleSubmit,
-                                  setFieldValue,
                                   isSubmitting,
                                   values
                               }) => (
@@ -342,6 +427,7 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="siret"
+                                                            value={values.siret}
                                                             label="SIRET*"
                                                             component={ComponentText}
                                                         />
@@ -350,7 +436,9 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="urssafCode"
+                                                            value={values.urssafCode}
                                                             label="Code Urssaf*"
+                                                            disabled={!values.urssafCode.isEmpty}
                                                             component={ComponentText}
                                                         />
                                                         <ErrorMessage name="urssafCode" component={ComponentError}/>
@@ -358,6 +446,8 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="apeCode"
+                                                            value={values.apeCode}
+                                                            validate={values.nature === "CTT" ? validateApeCode : null}
                                                             label="Code APE*"
                                                             component={ComponentText}
                                                         />
@@ -369,7 +459,10 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="designation"
+                                                            value={values.designation}
                                                             label="Désignation*"
+                                                            disabled={!values.designation.isEmpty}
+                                                            // placeholder={values.designation !== "" ? values.designation : ""}
                                                             component={ComponentText}
                                                         />
                                                         <ErrorMessage name="designation" component={ComponentError}/>
@@ -377,18 +470,12 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                 </MDBRow>
                                                 {/*ligne 3 employeur*/}
                                                 <MDBRow around between>
-                                                    {/*<MDBCol className="mb-3">
-                                                        <Field
-                                                            name="raisonSociale1"
-                                                            label="Raison Sociale*"
-                                                            component={ComponentText}
-                                                        />
-                                                        <ErrorMessage name="raisonSociale1" component={ComponentError}/>
-                                                    </MDBCol>*/}
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="streetDesignation"
+                                                            value={values.streetDesignation}
                                                             label="Adresse*"
+                                                            disabled={!values.streetDesignation.isEmpty && values.streetDesignation !== " "}
                                                             component={ComponentText}
                                                         />
                                                         <ErrorMessage name="streetDesignation"
@@ -400,6 +487,7 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="postalCode"
+                                                            value={values.postalCode}
                                                             label="Code Postal*"
                                                             component={ComponentText}
                                                         />
@@ -408,37 +496,18 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="town"
+                                                            value={values.town}
                                                             label="Ville*"
                                                             component={ComponentText}
                                                         />
                                                         <ErrorMessage name="town" component={ComponentError}/>
                                                     </MDBCol>
                                                 </MDBRow>
-                                                {/*ligne 5 employeur*/}
-                                                {/*<MDBRow around between>
-                                                    <MDBCol className="mb-3">
-                                                        <Field
-                                                            name="raisonSociale2"
-                                                            label="Raison Sociale 2"
-                                                            component={ComponentText}
-                                                        />
-                                                        <ErrorMessage name="raisonSociale2" component={ComponentError}/>
-                                                    </MDBCol>
-                                                    <MDBCol className="mb-3">
-                                                        <Field
-                                                            name="adresseEtablissement2"
-                                                            label="Adresse 2"
-                                                            component={ComponentText}
-                                                        />
-                                                        <ErrorMessage name="adresseEtablissement2"
-                                                                      component={ComponentError}/>
-                                                    </MDBCol>
-                                                </MDBRow>*/}
-                                                {/*ligne 5 employeur*/}
                                                 <MDBRow around between>
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="phoneNumber"
+                                                            value={values.phoneNumber}
                                                             label="Téléphone"
                                                             component={ComponentText}
                                                         />
@@ -459,11 +528,8 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="surname"
+                                                            value={values.surname}
                                                             label="Nom*"
-                                                            onChange={(e) => {
-                                                                handleChange(e)
-                                                                setFieldValue("surname", this.formatName(values.surname))
-                                                            }}
                                                             component={ComponentText}
                                                         />
                                                         <ErrorMessage name="surname" component={ComponentError}/>
@@ -471,6 +537,7 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="customaryName"
+                                                            value={values.customaryName}
                                                             label="Nom d'Usage"
                                                             component={ComponentText}
                                                         />
@@ -482,29 +549,18 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="christianName"
+                                                            value={values.christianName}
                                                             label="Prénom*"
                                                             component={ComponentText}
                                                         />
                                                         <ErrorMessage name="christianName" component={ComponentError}/>
                                                     </MDBCol>
                                                     <MDBCol className="mb-3">
-                                                        {/*<select*/}
-                                                        {/*    className="browser-default custom-select"*/}
-                                                        {/*    name="sex"*/}
-                                                        {/*    onChange={handleChange}*/}
-                                                        {/*    onBlur={handleBlur}*/}
-                                                        {/*>*/}
-                                                        {/*    <option value="" disabled={true} selected={true}>Sexe*</option>*/}
-                                                        {/*    <option value="1">Masculin</option>*/}
-                                                        {/*    <option value="2">Féminin</option>*/}
-                                                        {/*</select>*/}
                                                         <Field
                                                             name="sex"
+                                                            value={values.sex}
                                                             label="Sexe*"
-                                                            options={[
-                                                                {key: 1, value: 1, intitule: "Masculin"},
-                                                                {key: 2, value: 2, intitule: "Féminin"},
-                                                            ]}
+                                                            options={listOptionsSex}
                                                             component={ComponentSelect}
                                                         />
                                                         <ErrorMessage name="sex" component={ComponentError}/>
@@ -515,6 +571,7 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="nir"
+                                                            value={values.nir}
                                                             label="N° de Sécurité Sociale"
                                                             component={ComponentText}
                                                         />
@@ -523,6 +580,7 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="birthDate"
+                                                            value={values.birthDate}
                                                             label="Date de Naissance*"
                                                             component={ComponentDate}
                                                         />
@@ -534,6 +592,7 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="departmentBirth"
+                                                            value={values.departmentBirth}
                                                             label="Département de Naissance*"
                                                             component={ComponentText}
                                                         />
@@ -543,6 +602,7 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="birthTown"
+                                                            value={values.birthTown}
                                                             label="Commune de Naissance*"
                                                             component={ComponentText}
                                                         />
@@ -551,6 +611,7 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="countryBirth"
+                                                            value={values.countryBirth}
                                                             label="Pays de Naissance*"
                                                             component={ComponentText}
                                                         />
@@ -571,24 +632,9 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="nature"
+                                                            value={values.nature}
                                                             label="Nature du Contrat*"
-                                                            options={[
-                                                                {
-                                                                    key: 1,
-                                                                    value: "CDD",
-                                                                    intitule: "Contrat à durée déterminée"
-                                                                },
-                                                                {
-                                                                    key: 2,
-                                                                    value: "CDI",
-                                                                    intitule: "Contrat à durée indéterminée"
-                                                                },
-                                                                {
-                                                                    key: 3,
-                                                                    value: "CTT",
-                                                                    intitule: "Contrat de travail temporaire"
-                                                                },
-                                                            ]}
+                                                            options={listOptionNature}
                                                             component={ComponentSelect}
                                                         />
                                                         <ErrorMessage name="nature" component={ComponentError}/>
@@ -596,7 +642,8 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="healthService"
-                                                            required={values.nature !== "CTT" ? true : false}
+                                                            value={values.healthService}
+                                                            validate={values.nature !== "CTT" ? validateHealthService : null}
                                                             label={values.nature !== "CTT" ? "Service de Santé au Travail*" : "Service de Santé au Travail"}
                                                             component={ComponentText}
                                                         />
@@ -609,6 +656,7 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="startContractDate"
+                                                            value={values.startContractDate}
                                                             label="Date de Début de Contrat*"
                                                             mindate={this.state.oneYearBeforeNow}
                                                             maxdate={this.state.oneYearFromNow}
@@ -618,28 +666,14 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                                       component={ComponentError}/>
                                                     </MDBCol>
                                                     <MDBCol className="mb-3">
-                                                        {/*<Field*/}
-                                                        {/*    getvalue={(value) => {values.startContractTime = value}}*/}
-                                                        {/*    name="startContractTime"*/}
-                                                        {/*    label="Heure de Début de Contrat*"*/}
-                                                        {/*    */}
-                                                        {/*    component={ComponentTime}*/}
-                                                        {/*/>*/}
-                                                        <MDBTimePicker
-                                                            outline
-                                                            hoursFormat={24}
-                                                            hours={0}
-                                                            minutes={0}
-                                                            cancelable={true}
-                                                            cancelText="Réinitialiser"
-                                                            clearable={true}
-                                                            clearText="Test"
-                                                            doneText="Sélectionner"
+                                                        <Field
+                                                            getvalue={(value) => {
+                                                                values.startContractTime = value
+                                                            }}
                                                             name="startContractTime"
                                                             label="Heure de Début de Contrat*"
-                                                            // value={values.startContractTime}
-                                                            // getValue={(value) => {console.log(value)
-                                                            getValue={this.handleChange}
+                                                            value={values.startContractTime}
+                                                            component={ComponentTime}
                                                         />
                                                         <ErrorMessage name="startContractTime"
                                                                       component={ComponentError}/>
@@ -650,7 +684,9 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     {values.nature === "CDD" ? (<MDBCol className="mb-3">
                                                         <Field
                                                             name="endContractDate"
+                                                            value={values.endContractDate}
                                                             label="Date de Fin de Contrat*"
+                                                            validate={validateEndContractDate}
                                                             component={ComponentDate}
                                                         />
                                                         <ErrorMessage name="endContractDate"
@@ -659,6 +695,7 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="trialTime"
+                                                            value={values.trialTime}
                                                             label="Période d'Essai (en Jours)"
                                                             component={ComponentNumber}
                                                         />
@@ -670,6 +707,7 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                     <MDBCol className="mb-3">
                                                         <Field
                                                             name="comment"
+                                                            value={values.comment}
                                                             label="Commentaire"
                                                             component={ComponentTextArea}
                                                         />
@@ -687,7 +725,6 @@ class CreateDeclarationOfEmployment extends React.Component {
                                                 rounded
                                                 size="sm"
                                                 type="submit"
-                                                disabled={true}
                                             >
                                                 Soumettre
                                             </MDBBtn>
