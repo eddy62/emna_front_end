@@ -80,6 +80,35 @@ const notify = (type, message) => {
                 </div>
             );
             break;
+            case "severalPayroll":
+            toast.warning(
+                <div className="text-center">
+                    <strong>{variable} non enregistrée : plusieurs autres variables de paie existent entre le {message} &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
+        case "warningOther":
+            toast.warning(
+                <div className="text-center">
+                    <strong>{variable} non enregistrée : une Autre Variable existe entre le {message} &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
+        case "warningOvertime":
+            toast.warning(
+                <div className="text-center">
+                    <strong>{variable} non enregistrée : une Heure Supplémentaire existe entre le {message} &nbsp;&nbsp;!</strong>
+                </div>
+            );
+            break;
+        case "warningExpenseReport":
+            toast.warning(
+                <div className="text-center">
+                    <strong>{variable} non enregistrée : une Note de Frais existe entre le {message} &nbsp;&nbsp;!</strong>
+                </div>
+            );            
+            break;
+            break;
         case "error":
             toast.error(
                 <div className="text-center">
@@ -124,6 +153,21 @@ class ModifyAbsence extends React.Component {
         });
     }
 
+    formatDate(date) {
+        const bothDateSplit = date.split('/');
+        const firstDate = bothDateSplit[0];
+        const secondDate = bothDateSplit[1];
+        const firstDateSplit = firstDate.split('-')
+        const secondDateSplit = secondDate.split('-')
+        const yearFirstDate = firstDateSplit[0];
+        const monthFirstDate = firstDateSplit[1];
+        const dayFirstDate = firstDateSplit[2];
+        const yearSecondDate = secondDateSplit[0];
+        const monthSecondDate = secondDateSplit[1];
+        const daySecondDate = secondDateSplit[2];
+        return dayFirstDate+"/"+monthFirstDate+"/"+yearFirstDate+" et le "+daySecondDate+"/"+monthSecondDate+"/"+yearSecondDate;
+    }
+
     submit = (values, actions) => {
         if(this.state.docToDelete.length) {
             this.removeFile();
@@ -134,7 +178,7 @@ class ModifyAbsence extends React.Component {
         AxiosCenter.updateAbsence(values)
             .then((response) => {
                 const statut = response.status;
-                const message = " du " + response.data.debutAbsence + " au " + response.data.finAbsence;
+                const message = " du " + this.props.dateFormat(response.data.debutAbsence) + " au " + this.props.dateFormat(response.data.finAbsence);
                 switch(statut) {
                     case 201:
                         this.props.toggleModalUpdateAbsence(this.props.index);
@@ -151,8 +195,27 @@ class ModifyAbsence extends React.Component {
                         break;
                 };
             }).catch((error) => {
-            console.log(error);
-            notify("error", "");
+                const dateFormat = error.response.data.entityName;
+                    console.log(error.response.data.errorKey);
+                    switch(error.response.data.errorKey) {
+                        case "Autre Variable":
+                            notify("warningOther", this.formatDate(dateFormat));
+                        break;
+                        case "Heure Supplementaire":
+                            notify("warningOvertime", this.formatDate(dateFormat));
+                        break;
+                        case "Note de Frais":
+                            notify("warningExpenseReport", this.formatDate(dateFormat));
+                        break;         
+                        case "Plusieurs":
+                            notify("severalPayroll", this.formatDate(dateFormat));
+                        break;               
+                        default:
+                            notify("error", "");
+                            break;
+                    }
+            /*console.log(error);
+            notify("error", "");*/
         });
         actions.setSubmitting(true);
     }
@@ -244,7 +307,6 @@ class ModifyAbsence extends React.Component {
                         employeId: this.state.absence.employeId,
                         mois: this.state.absence.mois,
                         annee: this.state.absence.annee,
-                        justificatif: "",
                     }}
                             onSubmit={this.submit}
                             validationSchema={absenceSchema(this.state)}

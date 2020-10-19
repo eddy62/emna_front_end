@@ -150,8 +150,8 @@ class TableAbsence extends React.Component {
                             {this.props.absenceList.map((abs, index) => (
                                 <tr key={index}>
                                     <td>{abs.intitule}</td>
-                                    <td>{abs.debutAbsence}</td>
-                                    <td>{abs.finAbsence}</td>
+                                    <td>{this.props.dateFormat(abs.debutAbsence)}</td>
+                                    <td>{this.props.dateFormat(abs.finAbsence)}</td>
                                     {abs.wrapperDocumentList.length ? (
                                         <td>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
@@ -201,6 +201,7 @@ class TableAbsence extends React.Component {
                             reloadParentAfterUpdate={this.props.reloadParentAfterUpdate}
                             yearSelected={this.props.yearSelected}
                             monthSelected={this.props.monthSelected}
+                            dateFormat={this.props.dateFormat}
                         />
                     </MDBModalBody>
                 </MDBModal>

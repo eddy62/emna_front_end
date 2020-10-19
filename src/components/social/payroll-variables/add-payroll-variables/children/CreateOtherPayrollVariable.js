@@ -136,7 +136,7 @@ class CreateOtherPayrollVariable extends React.Component {
             AxiosCenter.createOtherPayrollVariable(values)
                 .then(async (response) => {
                     const statut = response.status;
-                    const dateExpRept = this.props.formatDate(response.data.date);
+                    const dateExpRept = this.props.dateFormat(response.data.date);
                     const errorDetected = await this.uploadFiles(response.data.id)
                     if (errorDetected) {
                         /* TODO Une fois deleteFile OK, supprimer en cascade toutes les entités + files

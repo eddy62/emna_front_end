@@ -68,26 +68,34 @@ const ComponentUploadFiles = ({field, ...props}) => (
 );
 
 
-const notify = (type) => {
+const notify = (type, date) => {
+    const variable = "Note de Frais"
     switch (type) {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Note de frais modifiée &nbsp;&nbsp;!</strong>
+                    <strong>{variable} modifiée &nbsp;&nbsp;!</strong>
                 </div>,
+            );
+            break;
+        case "warning":
+            toast.warning(
+                <div className="text-center">
+                    <strong>{variable} NON modifiée : Le salarié était absent pendant cette date {date} &nbsp;&nbsp;!</strong>
+                </div>
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Note de frais NON modifiée  &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON modifiée  &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>Note de frais NON modifiée  &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON modifiée  &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
@@ -119,13 +127,28 @@ class ModifyExpenseReport extends React.Component {
             console.log(values.id);
         }
         AxiosCenter.updateExpenseReport(values)
-            .then(() => {
-                this.props.toggleNoteDeFrais(this.props.index);
-                this.props.reloadParentAfterUpdate();
-                notify("success");
+            .then((response) => {
+                const statut = response.status;
+                console.log(response.data.date);
+                const dateExpRept = this.props.dateFormat(response.data.date);
+                switch(statut) {
+                    case 201:
+                        this.props.toggleNoteDeFrais(this.props.index);
+                        this.props.reloadParentAfterUpdate();
+                        notify("success", "");
+                        /*actions.setSubmitting(true);
+                        this.props.handleReset("ExpenseReport");*/
+                    break;
+                    case 208:
+                        notify("warning", dateExpRept);
+                    break;
+                    default:
+                        notify("warning", "");
+                        break;
+                };
             }).catch((error) => {
             console.log(error);
-            notify("error");
+            notify("error", "");
         });
         actions.setSubmitting(true);
     };

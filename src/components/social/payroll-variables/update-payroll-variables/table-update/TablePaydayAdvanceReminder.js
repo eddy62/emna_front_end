@@ -86,8 +86,8 @@ export default class TablePaydayAdvanceReminder extends React.Component {
                             {this.props.avanceRappelSalaireList.map((avrap, index) => (
                                 <tr key={index}>
                                     <td>{avrap.type}</td>
-                                    <td>{avrap.debutPeriode}</td>
-                                    <td>{avrap.finPeriode}</td>
+                                    <td>{this.props.dateFormat(avrap.debutPeriode)}</td>
+                                    <td>{this.props.dateFormat(avrap.finPeriode)}</td>
                                     <td>{avrap.montant} €</td>
                                     {avrap.etatVariablePaieId === 1 ? (
                                         <td>

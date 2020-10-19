@@ -9,8 +9,8 @@ import Loading from "../../../../../shared/component/Loading";
 const heuresSupSchema = (props) => {
     return Yup.object().shape({
         date: Yup.date().required("Date Obligatoire*")
-            .min(props.debutPeriode, "Date erronée")
-            .max(props.finPeriode, "Date erronée"),
+            .min(props.startPeriod, "Date erronée")
+            .max(props.endPeriod, "Date erronée"),
         nombreHeure: Yup.number().required("Heures obligatoires*")
             .min(1, "1 heure minimum"),
     })
@@ -43,26 +43,34 @@ const ComposantNumber = ({field, ...props}) => (
     />
 );
 
-const notify = type => {
+const notify = (type, date) => {
+    const variable = "Heure(s) supplémentaire(s)"
     switch (type) {
         case "success":
             toast.success(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) Modifiée(s) &nbsp;&nbsp;!</strong>
+                    <strong>{variable} Modifiée(s) &nbsp;&nbsp;!</strong>
                 </div>,
+            );
+            break;
+        case "warning":
+            toast.warning(
+                <div className="text-center">
+                    <strong>{variable} NON modifiée : Le salarié était absent pendant cette date {date} &nbsp;&nbsp;!</strong>
+                </div>
             );
             break;
         case "error":
             toast.error(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) NON Modifiée(s) &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON Modifiée(s) &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) NON Modifiée(s) &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON Modifiée(s) &nbsp;&nbsp;!</strong>
                 </div>,
             );
             break;
@@ -84,19 +92,30 @@ class ModifyOvertime extends React.Component {
         this.setState({
             loaded: true
         });
-        this.updatePeriod();
     }
 
     submit = (values, actions) => {
         AxiosCenter.modifyOvertime(values)
-            .then(() => {
-                notify('success');
-                actions.resetForm();
-                this.props.toggleAvance(this.props.index);
-                this.props.reloadParentAfterUpdate();
+            .then((response) => {
+                const statut = response.status;
+                const dateOvertime = this.props.dateFormat(response.data.date);
+                switch(statut) {
+                    case 201:
+                        notify("success", "");
+                        actions.resetForm();
+                        this.props.toggleAvance(this.props.index);
+                        this.props.reloadParentAfterUpdate();
+                    break;
+                    case 208:
+                        notify("warning", dateOvertime);
+                    break;
+                    default:
+                        notify("warning", "");
+                        break;
+                };
             }).catch((error) => {
             console.log(error);
-            notify('error');
+            notify("error", "");
         });
         actions.setSubmitting(true);
     };
@@ -105,82 +124,82 @@ class ModifyOvertime extends React.Component {
         if (!this.state.loaded) return <Loading/>;
         else return (
             <div>
-                    <MDBContainer>
-                        <div>
-                            <MDBCardHeader color={"teal accent-4"} >
-                                <MDBCardTitle tag="h4">Heures Supplémentaires</MDBCardTitle>
-                            </MDBCardHeader>
-                        </div>
-                        {/* Formulaire */}
-                        <Formik
-                            onSubmit={this.submit}
-                            initialValues={{
-                                annee: this.props.heureSupplementaire.annee,
-                                date: this.props.heureSupplementaire.date,
-                                employeId: this.props.heureSupplementaire.employeId,
-                                etatVariablePaieId: this.props.heureSupplementaire.etatVariablePaieId,
-                                id: this.props.heureSupplementaire.id,
-                                justificatif: this.props.heureSupplementaire.justificatif,
-                                mois: this.props.heureSupplementaire.mois,
-                                nombreHeure: this.props.heureSupplementaire.nombreHeure,
-                            }}
-                            validationSchema={heuresSupSchema(this.state)}
-                        >
-                            {({
-                                  handleSubmit
-                              }) => (
-                                <Form onSubmit={handleSubmit}>
-                                    <MDBCardBody>
-                                        <MDBRow between around>
-                                            {/* ligne 1 */}
-                                            <MDBCol md="4">
-                                                <Field
-                                                    name="date"
-                                                    label="Date* :"
-                                                    debutdate={this.state.startPeriod}
-                                                    findate={this.state.endPeriode}
-                                                    component={ComposantDate}
-                                                />
-                                                <ErrorMessage
-                                                    name="date"
-                                                    component={ComposantErreur}
-                                                />
-                                            </MDBCol>
-                                            <MDBCol md="4" className="mb-1">
-                                                <Field
-                                                    name="nombreHeure"
-                                                    label="Heure(s) sup."
-                                                    component={ComposantNumber}
-                                                />
-                                                <ErrorMessage
-                                                    name="nombreHeure"
-                                                    component={ComposantErreur}
-                                                />
-                                            </MDBCol>
-                                        </MDBRow>
-                                        <MDBRow center>
-                                            {/* ligne2 */}
-                                            <MDBBtn
-                                                color="teal accent-3"
-                                                rounded
-                                                size="sm"
-                                                type="submit"
-                                            >Enregistrer
-                                            </MDBBtn>
-                                            <MDBBtn
-                                                color="teal accent-3"
-                                                rounded
-                                                size="sm"
-                                                onClick={() => this.props.toggleAvance(this.props.index)}
-                                            >Annuler
-                                            </MDBBtn>
-                                        </MDBRow>
-                                    </MDBCardBody>
-                                </Form>
-                            )}
-                        </Formik>
-                    </MDBContainer>
-                </div>
+                <MDBContainer>
+                    <div>
+                        <MDBCardHeader color={"teal accent-4"} >
+                            <MDBCardTitle tag="h4">Heures Supplémentaires</MDBCardTitle>
+                        </MDBCardHeader>
+                    </div>
+                    {/* Formulaire */}
+                    <Formik
+                        onSubmit={this.submit}
+                        initialValues={{
+                            annee: this.props.heureSupplementaire.annee,
+                            date: this.props.heureSupplementaire.date,
+                            employeId: this.props.heureSupplementaire.employeId,
+                            etatVariablePaieId: this.props.heureSupplementaire.etatVariablePaieId,
+                            id: this.props.heureSupplementaire.id,
+                            justificatif: this.props.heureSupplementaire.justificatif,
+                            mois: this.props.heureSupplementaire.mois,
+                            nombreHeure: this.props.heureSupplementaire.nombreHeure,
+                        }}
+                        validationSchema={heuresSupSchema(this.state)}
+                    >
+                        {({
+                                handleSubmit
+                            }) => (
+                            <Form onSubmit={handleSubmit}>
+                                <MDBCardBody>
+                                    <MDBRow between around>
+                                        {/* ligne 1 */}
+                                        <MDBCol md="4">
+                                            <Field
+                                                name="date"
+                                                label="Date* :"
+                                                debutdate={this.state.startPeriod}
+                                                findate={this.state.endPeriode}
+                                                component={ComposantDate}
+                                            />
+                                            <ErrorMessage
+                                                name="date"
+                                                component={ComposantErreur}
+                                            />
+                                        </MDBCol>
+                                        <MDBCol md="4" className="mb-1">
+                                            <Field
+                                                name="nombreHeure"
+                                                label="Heure(s) sup."
+                                                component={ComposantNumber}
+                                            />
+                                            <ErrorMessage
+                                                name="nombreHeure"
+                                                component={ComposantErreur}
+                                            />
+                                        </MDBCol>
+                                    </MDBRow>
+                                    <MDBRow center>
+                                        {/* ligne2 */}
+                                        <MDBBtn
+                                            color="teal accent-3"
+                                            rounded
+                                            size="sm"
+                                            type="submit"
+                                        >Enregistrer
+                                        </MDBBtn>
+                                        <MDBBtn
+                                            color="teal accent-3"
+                                            rounded
+                                            size="sm"
+                                            onClick={() => this.props.toggleAvance(this.props.index)}
+                                        >Annuler
+                                        </MDBBtn>
+                                    </MDBRow>
+                                </MDBCardBody>
+                            </Form>
+                        )}
+                    </Formik>
+                </MDBContainer>
+            </div>
         )
     }
 }

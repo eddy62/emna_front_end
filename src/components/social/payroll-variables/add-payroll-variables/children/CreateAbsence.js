@@ -87,21 +87,21 @@ const notify = (type, message) => {
                 </div>
             );
             break;
-            case "warningOther":
+        case "warningOther":
             toast.warning(
                 <div className="text-center">
                     <strong>{variable} non enregistrée : une Autre Variable existe entre le {message} &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
-            case "warningOvertime":
+        case "warningOvertime":
             toast.warning(
                 <div className="text-center">
                     <strong>{variable} non enregistrée : une Heure Supplémentaire existe entre le {message} &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
-            case "warningExpenseReport":
+        case "warningExpenseReport":
             toast.warning(
                 <div className="text-center">
                     <strong>{variable} non enregistrée : une Note de Frais existe entre le {message} &nbsp;&nbsp;!</strong>
@@ -191,7 +191,7 @@ class CreateAbsence extends React.Component {
                 .then(async (response) => {
                     console.log(response);
                     const statut = response.status;
-                    const message = " du " + this.props.formatDate(response.data.debutAbsence) + " au " + this.props.formatDate(response.data.finAbsence);
+                    const message = " du " + this.props.dateFormat(response.data.debutAbsence) + " au " + this.props.dateFormat(response.data.finAbsence);
                     const errorDetected = await this.uploadFiles(response.data.id);
                     if (errorDetected) {
                         /* TODO Une fois deleteFile OK, supprimer en cascade toutes les entités + files

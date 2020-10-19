@@ -210,6 +210,14 @@ export default class ParentUpdatePayrollVariables extends Component {
         this.setState({render: compName, key});
     }
 
+    dateFormat(date) {
+        const dateSplit = date.split('-');
+        const year = dateSplit[0];
+        const month = dateSplit[1];
+        const day = dateSplit[2];
+        return day+"/"+month+"/"+year;
+    }
+
     render() {
         if (!this.state.loaded) return <Loading />
         else return (
@@ -264,7 +272,7 @@ export default class ParentUpdatePayrollVariables extends Component {
                                             {this.state.period.map((p, index) => (
                                                 <option key={index}
                                                         value={p.id}
-                                                        disabled={this.state.yearSelected == this.state.currentYear && p.id > new Date().getMonth() + 1 ? (true) : (false)}>{p.text}</option>
+                                                        disabled={this.state.yearSelected === this.state.currentYear && p.id > new Date().getMonth() + 1 ? (true) : (false)}>{p.text}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -282,14 +290,16 @@ export default class ParentUpdatePayrollVariables extends Component {
                                                 changeHandler={this.changeHandler} absenceList={this.state.absenceList}
                                                 handleClick={this.handleClick}
                                                 yearSelected={this.state.yearSelected}
-                                                monthSelected={this.state.monthSelected}/>}
+                                                monthSelected={this.state.monthSelected}
+                                                dateFormat={this.dateFormat}/>}
                             </MDBCard>
                             <MDBCard className="mt-1">
                                 {<TableNoteDefrais noteDeFraisList={this.state.noteDeFraisList}
                                                    reloadParentAfterUpdate={this.reloadParentAfterUpdate}
                                                    changeHandler={this.changeHandler} handleClick={this.handleClick}
                                                    yearSelected={this.state.yearSelected}
-                                                   monthSelected={this.state.monthSelected}/>}
+                                                   monthSelected={this.state.monthSelected}
+                                                   dateFormat={this.dateFormat}/>}
                             </MDBCard>
                             <MDBCard>
                                 {<TableBonus reloadParentAfterUpdate={this.reloadParentAfterUpdate}
@@ -299,13 +309,19 @@ export default class ParentUpdatePayrollVariables extends Component {
                             <MDBCard>
                                 {<TableOvertime reloadParentAfterUpdate={this.reloadParentAfterUpdate}
                                                 changeHandler={this.changeHandler}
-                                                heureSupList={this.state.heureSupList} handleClick={this.handleClick}/>}
+                                                heureSupList={this.state.heureSupList} handleClick={this.handleClick}
+                                                dateFormat={this.dateFormat}
+                                                yearSelected={this.state.yearSelected}
+                                                monthSelected={this.state.monthSelected}/>}
                             </MDBCard>
                             <MDBCard>
                                 {<TablePaydayAdvanceReminder reloadParentAfterUpdate={this.reloadParentAfterUpdate}
                                                              changeHandler={this.changeHandler}
                                                              avanceRappelSalaireList={this.state.avanceRappelSalaireList}
-                                                             handleClick={this.handleClick}/>}
+                                                             handleClick={this.handleClick}
+                                                             dateFormat={this.dateFormat}
+                                                            yearSelected={this.state.yearSelected}
+                                                            monthSelected={this.state.monthSelected}/>}
                             </MDBCard>
                             <MDBCard>
                                 {<TableOtherPayrollVariable reloadParentAfterUpdate={this.reloadParentAfterUpdate}
@@ -313,7 +329,8 @@ export default class ParentUpdatePayrollVariables extends Component {
                                                              autresVariablesList={this.state.autresVariableList}
                                                              handleClick={this.handleClick}
                                                              yearSelected={this.state.yearSelected}
-                                                             monthSelected={this.state.monthSelected}/>}
+                                                             monthSelected={this.state.monthSelected}
+                                                             dateFormat={this.dateFormat}/>}
                             </MDBCard>
                         </div>
 

@@ -292,13 +292,21 @@ const AxiosCenter = {
   getAllQuotesBySociety(id) {
     return ApiBackEnd({
       method: "GET",
-      url: `devis/societe/${id}`
+      url: `devis/liste/societe/${id}`
     });
   },
-  getQuotesBySociety(id) {
+
+  getQuoteById(id) {
     return ApiBackEnd({
       method: "GET",
-      url: `devis/liste/societe/${id}`
+      url: `devis/detail/${id}`
+    });
+  },
+
+  getNewQuoteNumber(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `devis/nouveau/numero/${id}`
     });
   },
 

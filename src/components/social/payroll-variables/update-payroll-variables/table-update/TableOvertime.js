@@ -81,7 +81,7 @@ export default class TableOvertime extends React.Component {
                             {this.props.heureSupList.map((hsupp, index) => (
                                 <tr key={index}>
                                     <td>{hsupp.nombreHeure} heure(s)</td>
-                                    <td>{hsupp.date}</td>
+                                    <td>{this.props.dateFormat(hsupp.date)}</td>
                                     {hsupp.etatVariablePaieId === 1 ? (
                                         <td>
                                             <MDBBtn color="teal accent-3" rounded size="sm"
@@ -123,6 +123,7 @@ export default class TableOvertime extends React.Component {
                             reloadParentAfterUpdate={this.props.reloadParentAfterUpdate}
                             yearSelected={this.props.yearSelected}
                             monthSelected={this.props.monthSelected}
+                            dateFormat={this.props.dateFormat}
                         />
                     </MDBModalBody>
                 </MDBModal>

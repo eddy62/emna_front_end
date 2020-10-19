@@ -18,7 +18,7 @@ export default class QuotesHome extends Component {
   }
 
   componentDidMount() {
-    Axios.getQuotesBySociety(this.state.societyId).then((res) => {
+    Axios.getAllQuotesBySociety(this.state.societyId).then((res) => {
       const quotes = res.data;
       this.setState({quotes, loaded: true});
     })
@@ -38,7 +38,7 @@ export default class QuotesHome extends Component {
         <hr />
         <MDBCard>
           <MDBCardBody>            
-            <MDBTable>
+            <MDBTable striped>
               <MDBTableHead>
                 <tr>
                   <th scope="col">Numéro</th>
@@ -58,8 +58,8 @@ export default class QuotesHome extends Component {
         </MDBCard>        
         <br />  
         <div className="row d-flex justify-content-center ">
-              <RedirectionBtn color="default-color" to="/menu/comptabilite" txt="retour" size="sm"/>
-              <RedirectionBtn color="default-color" to="/devis/créer" txt="Créer un devis" size="sm"/>
+          <RedirectionBtn color="default-color" to="/menu/comptabilite" txt="retour" size="sm"/>
+          <RedirectionBtn color="default-color" to="/devis/créer" txt="Créer un devis" size="sm"/>
         </div> 
       </MDBContainer>       
     );

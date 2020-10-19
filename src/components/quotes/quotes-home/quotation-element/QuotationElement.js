@@ -16,7 +16,12 @@ export default class QuotationElement extends Component {
           </Link>
         </td>
         <td>  
-          <RedirectionBtn color="default-color" route="/devis/accueil" txt="Modifier" size="sm"/>
+          <RedirectionBtn 
+            to={"/devis/modifier/" + this.props.quote.id} 
+            txt="Modifier" 
+            color="default-color" 
+            size="sm"
+          />
           <RedirectionBtn color="default-color" route="/devis/accueil" txt="Télécharger" size="sm"/>
           <RedirectionBtn color="default-color" route="/devis/accueil" txt="Supprimer"size="sm"/>
         </td>     

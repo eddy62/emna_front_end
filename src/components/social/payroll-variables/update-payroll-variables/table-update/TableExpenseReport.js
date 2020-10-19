@@ -150,7 +150,7 @@ export default class TableExpenseReport extends React.Component {
                             {this.props.noteDeFraisList.map((frais, index) => (
                                 <tr key={index}>
                                     <td>{frais.designation}</td>
-                                    <td>{frais.date}</td>
+                                    <td>{this.props.dateFormat(frais.date)}</td>
                                     <td>{frais.montant} €</td>
                                     {frais.wrapperDocumentList.length ? (
                                         <td>
@@ -202,6 +202,7 @@ export default class TableExpenseReport extends React.Component {
                             reloadParentAfterUpdate={this.props.reloadParentAfterUpdate}
                             yearSelected={this.props.yearSelected}
                             monthSelected={this.props.monthSelected}
+                            dateFormat={this.props.dateFormat}
                         />
                     </MDBModalBody>
                 </MDBModal>
@@ -214,7 +215,7 @@ export default class TableExpenseReport extends React.Component {
                         <MDBContainer>                            
                             <MDBListGroup>
                                 {this.props.noteDeFraisList.map((nFList) => (
-                                    nFList.id == this.state.idExpenseReportSelected ? (
+                                    nFList.id === this.state.idExpenseReportSelected ? (
                                         nFList.wrapperDocumentList.map((doc, index) => (
                                             <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.nom)}>{doc.nom}</MDBListGroupItem>                                      
                                         ))) : (
