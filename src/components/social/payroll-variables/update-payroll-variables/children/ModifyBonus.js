@@ -5,6 +5,7 @@ import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {MDBBtn, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
 import {toast} from "react-toastify";
 import Loading from "../../../../../shared/component/Loading";
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 
 const ComposantErreur = (props) => (
@@ -34,33 +35,6 @@ const ComposantSelect = ({field, ...props}) => (
     </div>
 );
 
-const notify = type => {
-    switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>Prime Modifiée &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>Prime NON Modifiée &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        default:
-            toast.error(
-                <div className="text-center">
-                    <strong>Prime NON Modifiée &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-    }
-};
-
-
 class ModifyBonus extends React.Component {
     constructor(props) {
         super(props);
@@ -86,14 +60,16 @@ class ModifyBonus extends React.Component {
     }
 
     submit = (values, actions) => {
+        const entityName = "Prime";
+
         AxiosCenter.updateBonus(values)
             .then(() => {
-                notify("success", values.type)
+                NotificationService.successModification(entityName);
                 actions.resetForm();
                 this.props.toggleAvance(this.props.index);
             }).catch((error) => {
             console.log(error)
-            notify("error", values.type)
+            NotificationService.failedModification(entityName);
         })
         actions.setSubmitting(true)
     }

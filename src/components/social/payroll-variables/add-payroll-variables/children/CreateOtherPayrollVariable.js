@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBFileInput, MDBInput, MDBRow} from "mdbreact";
 import {toast} from "react-toastify";
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 const otherSchema = (props) => {
     return Yup.object().shape({
@@ -67,56 +68,6 @@ const ComponentUploadFiles = ({field, ...props}) => (
     </div>
 );
 
-const notify = (type, date) => {
-    const variable = "Autre Variable"
-    switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>{variable} Enregistrée &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
-            case "warning":
-            toast.warning(
-                <div className="text-center">
-                    <strong>{variable} NON Enregistrée : Le salarié était absent pendant cette date {date} &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
-        case "formatError":
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;! <br/>Format de fichier invalide &nbsp;&nbsp;!
-                        <br/>Seuls les formats PDF, PNG, JPEG et JPG sont acceptés.</strong>
-                </div>
-            );
-            break;
-        case "fileError":
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;!
-                        <br/>Un problème est survenu à cause du fichier.</strong>
-                </div>
-            );
-            break;
-        default:
-            toast.error(
-                <div className="text-center">
-                    <strong>Autre Variable NON Enregistrée &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
-    }
-};
-
 class CreateOtherPayrollVariable extends React.Component {
 
     constructor(props) {
@@ -129,14 +80,17 @@ class CreateOtherPayrollVariable extends React.Component {
     }
 
     submit = (values, actions) => {
+        const entityName = "Autre Variable de Paie"
+
         values.annee = this.props.yearSelected;
         values.mois = this.props.monthSelected;
         values.employeId = this.props.employeId;
+
         if (!this.checkFormat()) {
             AxiosCenter.createOtherPayrollVariable(values)
                 .then(async (response) => {
                     const statut = response.status;
-                    const dateExpRept = this.props.dateFormat(response.data.date);
+                    const dateOtherPayroll = this.props.dateFormat(response.data.date);
                     const errorDetected = await this.uploadFiles(response.data.id)
                     if (errorDetected) {
                         /* TODO Une fois deleteFile OK, supprimer en cascade toutes les entités + files
@@ -144,30 +98,30 @@ class CreateOtherPayrollVariable extends React.Component {
                         AxiosCenter.deleteOtherPayrollVariable(response.data.id).catch((error) => {
                             console.log(error);
                         })
-                        notify("fileError", "");
+                        NotificationService.uploadFileError(entityName);
                         this.props.handleReset("OtherPayrollVariable");
                     } else {
                         switch(statut) {
                             case 201:
-                                notify("success", "");
+                                NotificationService.successRegistration(entityName);
                                 actions.setSubmitting(true);
                                 this.props.handleReset("OtherPayrollVariable");
                             break;
                             case 208:
-                                notify("warning", dateExpRept);
+                                NotificationService.employeeWasAbsent(entityName, dateOtherPayroll);
                             break;
                             default:
-                                notify("warning", "");
+                                NotificationService.failedRegistration(entityName);
                                 break;
-                        };
+                        }
                     }
                 }).catch((error) => {
                 console.log(error);
-                notify("error", "");
+                NotificationService.failedRegistration(entityName);
                 this.props.handleReset("OtherPayrollVariable");
             });
         } else {
-            notify("formatError", "");
+            NotificationService.wrongFileFormatError(entityName)
             this.props.handleReset("OtherPayrollVariable");
         }
     }

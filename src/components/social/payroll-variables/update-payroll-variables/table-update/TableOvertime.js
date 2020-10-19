@@ -3,32 +3,7 @@ import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBTableHead} fr
 import ModifyOvertime from "../children/ModifyOvertime";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {toast} from "react-toastify";
-
-const notify = type => {
-    switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) Supprimée(s) &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) NON Supprimée(s) &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        default:
-            toast.error(
-                <div className="text-center">
-                    <strong>Heure(s) supplémentaire(s) NON Supprimée(s) &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-    }
-};
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 export default class TableOvertime extends React.Component {
 
@@ -55,13 +30,14 @@ export default class TableOvertime extends React.Component {
     }
 
     callBackToDelete = () => {
+        const entityName = "Heure(s) supplémentaire(s)";
         AxiosCenter.deleteOvertime(this.props.heureSupList[this.state.index].id).then(() => {
             this.toggleModaleDelete();
             this.props.reloadParentAfterUpdate();
-            notify('success');
+            NotificationService.successDeletion(entityName);
         }).catch((error) => {
             console.log(error);
-            notify('error');
+            NotificationService.failedDeletion(entityName);
         });
     }
 

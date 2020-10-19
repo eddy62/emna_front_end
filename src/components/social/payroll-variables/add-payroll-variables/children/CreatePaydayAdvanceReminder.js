@@ -5,6 +5,7 @@ import Loading from "../../../../../shared/component/Loading";
 import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {toast} from "react-toastify";
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 const avanceRappelSchema = (props) => {
     return Yup.object().shape({
@@ -21,32 +22,6 @@ const avanceRappelSchema = (props) => {
         montant: Yup.number().required("Montant obligatoire*")
             .min("0.01", "Ne peut être un montant nul ou négatif"),
     })
-};
-
-const notify = (type, nom) => {
-    switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>{nom} sur salaire Enregistré(e) &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>{nom} sur salaire NON Enregistré(e) &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        default:
-            toast.error(
-                <div className="text-center">
-                    <strong>{nom} sur salaire NON Enregistré(e) &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-    }
 };
 
 const ComposantErreur = (props) => (
@@ -95,17 +70,19 @@ class CreatePaydayAdvanceReminder extends React.Component {
     }
 
     submit = (values, actions) => {
+        const entityName = values.type + " sur salaire";
+
         values.annee = this.props.yearSelected;
         values.mois = this.props.monthSelected;
         values.employeId = this.props.employeId;
 
         AxiosCenter.createPaydayAdvanceOrReminder(values)
             .then(() => {
-                notify("success", values.type);
+                NotificationService.successRegistration(entityName)
                 actions.resetForm();
             }).catch((error) => {
             console.log(error);
-            notify("error", values.type);
+            NotificationService.failedRegistration(entityName)
         });
         actions.setSubmitting(true);
     };

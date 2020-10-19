@@ -3,32 +3,7 @@ import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBTableHead} fr
 import ModifyPaydayAdvanceReminder from "../children/ModifyPaydayAdvanceReminder"
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {toast} from "react-toastify";
-
-const notify = (type, nom) => {
-    switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>Avance/Rappel sur salaire Supprimé(e) &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>Avance/Rappel sur salaire NON Supprimé(e) &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        default:
-            toast.error(
-                <div className="text-center">
-                    <strong>Avance/Rappel sur salaire NON Supprimé(e) &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-    }
-};
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 export default class TablePaydayAdvanceReminder extends React.Component {
 
@@ -57,13 +32,15 @@ export default class TablePaydayAdvanceReminder extends React.Component {
     }
 
     callBackToDelete = () => {
+        const entityName = "Avance/Rappel sur Salaire";
+
         AxiosCenter.deletePaydayAdvanceOrReminder(this.props.avanceRappelSalaireList[this.state.index].id).then(() => {
             this.toggleModaleDelete();
             this.props.reloadParentAfterUpdate();
-            notify('success');
+            NotificationService.successDeletion(entityName);
         }).catch((error) => {
             console.log(error);
-            notify('error');
+            NotificationService.failedDeletion(entityName);
         });
     }
 

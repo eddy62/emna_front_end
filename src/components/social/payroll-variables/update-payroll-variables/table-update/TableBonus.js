@@ -3,6 +3,7 @@ import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBTableHead} fr
 import ModifyBonus from '../children/ModifyBonus'
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {toast} from "react-toastify";
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 const notify = type => {
     switch (type) {
@@ -57,16 +58,16 @@ export default class TableBonus extends React.Component {
     }
 
     callBackToDelete = () => {
+        const entityName = "Prime";
         AxiosCenter.deleteBonus(this.props.primeList[this.state.index].id).then(() => {
             this.toggleModaleDelete();
             this.props.reloadParentAfterUpdate();
-            notify('success');
+            NotificationService.successDeletion(entityName);
         }).catch((error) => {
             console.log(error);
-            notify('error');
+            NotificationService.failedDeletion(entityName);
         });
     }
-
 
     render() {
         return (
