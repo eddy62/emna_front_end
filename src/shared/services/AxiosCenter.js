@@ -406,6 +406,13 @@ const AxiosCenter = {
 
   },
 
+  getHtmlDpae(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/dpae/html/${id}`,
+    });
+  },
+
   getAllDpaeByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
     return ApiBackEnd({
       method: "GET",
@@ -625,7 +632,7 @@ const AxiosCenter = {
   createQuote(values) {
     return ApiBackEnd({
       method: "POST",
-      url: "/devis/nouveau",
+      url: "/devis",
       data: values,
     });
   },

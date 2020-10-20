@@ -76,6 +76,7 @@ import ListSociete from "./societe/ListSociete";
 import HomeMenu from "./navigation/HomeMenu";
 import ComptabiliteMenu from "./navigation/ComptabiliteMenu";
 import JuridiqueMenu from "./navigation/JuridiqueMenu";
+import ContentHtmlDpae from "./social/declaration-of-employment/detail-declaration-of-employment/ContentHtmlDpae";
 // finGestionUserRoutesImports
 //GestionProduits
 import ListeProduits from "./produits/list-produits/ListProduits";
@@ -138,7 +139,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/consult-declaration-of-employment/:id" component={ConsultDeclarationOfEmploylent} />
         <PrivateRoute path="/payslip/ParentPayslip/:id" component={ParentPayslip} />
         <PrivateRoute path="/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants/:id" component={ParentUpdatePayrollVariablesAccountants} />
-
+        <PrivateRoute path="/contentHtmlDpae" component={ContentHtmlDpae} />
           {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/accueildepenses" component={AccueilDepense} />
