@@ -131,7 +131,6 @@ class ListeContrat extends React.Component {
                 <Link to={"/contrat/"}>
                     <button type="button" className="btn btn-outline-success">Retour</button>
                 </Link>
-
                 <form className="md-form">
 
                 </form>
