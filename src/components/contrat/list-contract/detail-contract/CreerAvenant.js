@@ -3,15 +3,11 @@ import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import Loading from "../../../../shared/component/Loading";
 import {
     MDBBtn,
-    MDBCard,
-    MDBCardBody,
     MDBCardTitle,
-    MDBCollapse,
-    MDBCollapseHeader,
     MDBContainer,
-    MDBInput, MDBTable, MDBTableBody, MDBTableHead
+    MDBTable, MDBTableBody, MDBTableHead
 } from "mdbreact";
-import {Form, withFormik} from "formik";
+import {Form} from "formik";
 import {ErrorMessage, Field, Formik} from "formik";
 
 import ComposantSelect from "./ComposantSelect";
@@ -19,24 +15,23 @@ import InputComponent from "../../../../shared/component/form/InputComponent";
 
 
 const ComposantTableau = ({listeSaisieArticle}) =>
-    listeSaisieArticle.map((item,index) => (
-        <tr>
-            <td>
-                {item.article.titre}
-            </td>
-            <td>
-                {item.article.intitule}
-            </td>
-            <td>
-                {item.article.description}
-            </td>
-            <td>
-                {item.saisie}
-            </td>
-        </tr>
+    listeSaisieArticle.map((item, index) => (
+            <tr key={item.article.id}>
+                <td >
+                    {item.article.titre}
+                </td>
+                <td>
+                    {item.article.intitule}
+                </td>
+                <td>
+                    {item.article.description}
+                </td>
+                <td>
+                    {item.saisie}
+                </td>
+            </tr>
+        )
     )
-    )
-
 
 
 class CreerAvenant extends React.Component {
@@ -45,6 +40,7 @@ class CreerAvenant extends React.Component {
         this.state = {
             loaded: false,
             articles: [],
+            copyArticles: [],
             listeSaisieArticle: [],
             saisie: "",
         }
@@ -60,10 +56,11 @@ class CreerAvenant extends React.Component {
             const articles = articlesT.filter(article => article.titre !== "ARTICLE 2")
             this.setState({
                 articles,
+                copyArticles: articles,
                 loaded: true,
             })
         }).catch((err) => console.log(err));
-}
+    }
 
 
     toggleCollapse = collapseID => () =>
@@ -72,92 +69,90 @@ class CreerAvenant extends React.Component {
         }));
 
 
-    getArticleById= (id) => {
-        // return this.state.articles.find((article) =>
-        //     article.id = id
-        // )
-        let newListeArticles = [...this.state.articles]
-        return newListeArticles.find((article) =>
-            article.id = id
-        )
+    getArticleById = (id) => {
+        return this.state.articles.filter(article => article.id === id)[0];
     }
-    addListeSaisieArticle = () => {
-        let currentArticle = document.getElementById("current-article")
-        let currentSaisie = document.getElementById("current-saisie")
+
+    addListeSaisieArticle = async () => {
+        let currentArticle = document.getElementById("current-article").value
+        let currentSaisie = document.getElementById("current-saisie").value
         let newListe = [...this.state.listeSaisieArticle]
-        let article = this.getArticleById(currentArticle.value)
-        console.log(this.state.articles)
-        newListe.push({article:article,saisie: currentSaisie.value})
-        this.setState({listeSaisieArticle: newListe}
-        )
+        let article = await this.getArticleById(parseInt(currentArticle))
+        newListe.push({article: article, saisie: currentSaisie})
+        this.setState({listeSaisieArticle: newListe})
+    }
+
+
+    removeArticlefromCopy = (id) => {
+        // YOU KNOW
+    }
+
+    addArticleToCopy = () => {
+        // TMTC
     }
 
     render() {
-        if (!this.state.loaded) return <Loading />
+        if (!this.state.loaded) return <Loading/>
         return (
             <MDBContainer>
                 <div>
                     <MDBCardTitle tag="h1">Création d'avenant</MDBCardTitle>
                     <hr/>
-            <Formik initialValues={{
-                article: "",
-                saisieArticle: "",
-            }
-            } onSubmit={this.submit}>
-                {({handleSubmit, isSubmitting,values}) => (
-
-                    <Form
-                        onSubmit={handleSubmit}
-                        className="container-fluid p-5  lighten-5 justify-content-center align-items-center"
+                    <Formik onSubmit={this.submit}
+                            initialValues={{
+                                article: "",
+                                saisieArticle: ""
+                            }}
                     >
-                   <Field
-                        name="article"
-                        id="current-article"
-                        articles={this.state.articles}
-                        component={ComposantSelect}
-                   />
-                   <Field
-                        name="saisieArticle"
-                        id="current-saisie"
-                        saisie={this.state.Saisie}
-                        component={InputComponent}
-                   />
-                   <div>
-                       <MDBTable>
-                           <MDBTableHead>
-                               <tr>
-                                   <th>article</th>
-                                   <th>intitulé</th>
-                                   <th>description</th>
-                                   <th>Saisie d'article</th>
-                               </tr>
-                           </MDBTableHead>
-                           <MDBTableBody>
-                                <ComposantTableau listeSaisieArticle={this.state.listeSaisieArticle}/>
-                                   </MDBTableBody>
-                               }
-                               }
-                       </MDBTable>
-                   </div>
+                        {({handleSubmit, isSubmitting, values}) => (
 
-                   <MDBBtn
-                        onClick={
-                                this.addListeSaisieArticle
-                            }
-                        rounded type="submit"
-                        color="primary">
-                        Ajouter
-                   </MDBBtn>
-                        <pre>{JSON.stringify(values, null, 4)}</pre>
-                    </Form>
-                )}
-            </Formik>
+                            <Form
+                                onSubmit={handleSubmit}
+                                className="container-fluid p-5  lighten-5 justify-content-center align-items-center"
+                            >
+                                <Field
+                                    name="article"
+                                    id="current-article"
+                                    articles={this.state.articles}
+                                    component={ComposantSelect}
+                                />
+                                <Field
+                                    name="saisieArticle"
+                                    id="current-saisie"
+                                    saisie={this.state.Saisie}
+                                    component={InputComponent}
+                                />
+                                <div>
+                                    <MDBTable>
+                                        <MDBTableHead>
+                                            <tr>
+                                                <th>article</th>
+                                                <th>intitulé</th>
+                                                <th>description</th>
+                                                <th>Saisie d'article</th>
+                                            </tr>
+                                        </MDBTableHead>
+                                        <MDBTableBody>
+                                            <ComposantTableau listeSaisieArticle={this.state.listeSaisieArticle}/>
+                                        </MDBTableBody>
+                                    </MDBTable>
+                                </div>
+
+                                <MDBBtn
+                                    onClick={this.addListeSaisieArticle}
+                                    rounded
+                                    color="primary"
+                                >
+                                    Ajouter
+                                </MDBBtn>
+                                <pre>{JSON.stringify(values, null, 4)}</pre>
+                            </Form>
+                        )}
+                    </Formik>
                 </div>
             </MDBContainer>
         )
-
     }
-
 }
 
 export default CreerAvenant;
