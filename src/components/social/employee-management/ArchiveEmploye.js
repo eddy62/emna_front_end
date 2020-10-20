@@ -33,9 +33,8 @@ class ArchiveEmploye extends Component {
         console.log(response);
         toast.success(
           <div className="text-center">
-            <strong>Employé Archivé &nbsp;&nbsp;!</strong>
+            <strong>Employé Archivé !</strong>
           </div>,
-          { position: "top-right" }
         );
         this.setState({
           modal: !this.state.modal,
@@ -46,9 +45,8 @@ class ArchiveEmploye extends Component {
         console.log(error);
         toast.error(
           <div className="text-center">
-            <strong>Employé NON Archivé &nbsp;&nbsp;!</strong>
+            <strong>Employé NON Archivé !</strong>
           </div>,
-          { position: "top-right" }
         );
       });
   };

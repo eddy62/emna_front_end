@@ -6,6 +6,7 @@ import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
 import {MDBCard, MDBCardBody, MDBCol, MDBCollapse, MDBCollapseHeader, MDBContainer, MDBInput} from "mdbreact";
 import {toast} from "react-toastify";
+import NotificationService from "../../../shared/services/NotificationService";
 
 const ComponentText = ({field, ...props}) => (
     <MDBInput
@@ -43,24 +44,10 @@ const ComposantNumber = ({field, ...props}) => (
 const notify = type => {
     const variable = "Contrat"
     switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>{variable} Enregistré &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON Enregistré &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
         case "missingInputs":
             toast.error(
                 <div className="text-center">
-                    <strong>{variable} NON Enregistré &nbsp;&nbsp;!
+                    <strong>{variable} NON Enregistré !
                         <br/>Veuillez remplir tous les articles.</strong>
                 </div>
             )
@@ -68,15 +55,15 @@ const notify = type => {
         case "existingContract":
             toast.error(
                 <div className="text-center">
-                    <strong>{variable} NON Enregistré &nbsp;&nbsp;!
-                        <br/>Ce salarié dispose déjà d'un contrat.</strong>
+                    <strong>{variable} NON Enregistré !
+                        <br/>Cet employé dispose déjà d'un contrat.</strong>
                 </div>
             )
             break;
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>{variable} NON Enregistré &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON Enregistré !</strong>
                 </div>
             );
             break;
@@ -319,6 +306,7 @@ export default class CreerContrat extends React.Component {
                         //clauses: [],
                     }}
                     onSubmit={async fields => {
+                        const entityName = "Contrat"
                         if (this.state.selectedEmploye.idContrat === null) {
                             if (!this.checkFields(fields.wrapperSaisieArticles)) {
                                 fields.titre = this.state.title;
@@ -336,10 +324,10 @@ export default class CreerContrat extends React.Component {
                                 AxiosCenter.createWrapperContrat(fields).then(() => {
 
                                     this.props.history.push("/listcontrat/");
-                                    notify("success");
+                                    NotificationService.successRegistration(entityName);
                                 }).catch((error) => {
                                     console.log(error);
-                                    notify("error");
+                                    NotificationService.failedRegistration(entityName);
                                 });
                                 //alert(JSON.stringify(fields, null, 4));
                             } else {

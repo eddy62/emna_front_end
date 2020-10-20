@@ -625,7 +625,7 @@ const AxiosCenter = {
   createQuote(values) {
     return ApiBackEnd({
       method: "POST",
-      url: "/devis",
+      url: "/devis/nouveau",
       data: values,
     });
   },

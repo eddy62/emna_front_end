@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {MDBBtn, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer, MDBInput, MDBRow, MDBListGroup, MDBListGroupItem, MDBIcon, MDBFileInput} from "mdbreact";
 import {toast} from "react-toastify";
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 const otherSchema = (props) => {
     return Yup.object().shape({
@@ -67,40 +68,6 @@ const ComponentUploadFiles = ({field, ...props}) => (
     </div>
 );
 
-const notify = (type, date) => {
-    const variable = "Autre Variable de Paie";
-    switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>{variable} Modifiée &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
-        case "warning":
-            toast.warning(
-                <div className="text-center">
-                    <strong>{variable} NON modifiée : Le salarié était absent pendant cette date {date} &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON Modifiée &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
-        default:
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON Modifiée &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
-    }
-}
-
 class ModifyOtherPayrollVariable extends React.Component {
 
     constructor(props) {
@@ -115,6 +82,8 @@ class ModifyOtherPayrollVariable extends React.Component {
     }
 
     submit = (values, actions) => {
+        const entityName = "Autre Variable de Paie";
+
         if(this.state.docToDelete.length) {
             this.removeFile();
         }
@@ -125,23 +94,23 @@ class ModifyOtherPayrollVariable extends React.Component {
         AxiosCenter.modifyOtherPayrollVariable(values)
             .then((response) => {
                 const statut = response.status;
-                const dateOther = this.props.dateFormat(response.data.date);
+                const dateOtherPayroll = this.props.dateFormat(response.data.date);
                 switch(statut) {
                     case 201:
                         this.props.toggleModalUpdateOther(this.props.index);
                         this.props.reloadParentAfterUpdate();
-                        notify("success", "");
+                        NotificationService.successModification(entityName);
                     break;
                     case 208:
-                        notify("warning", dateOther);
+                        NotificationService.employeeWasAbsent(entityName, dateOtherPayroll);
                     break;
                     default:
-                        notify("warning", "");
+                        NotificationService.failedModification(entityName);
                         break;
-                };
+                }
             }).catch((error) => {
             console.log(error);
-            notify("error", "");
+            NotificationService.failedModification(entityName);
         });
         actions.setSubmitting(true);
     }

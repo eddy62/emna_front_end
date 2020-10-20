@@ -5,6 +5,7 @@ import Loading from "../../../../../shared/component/Loading";
 import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow,} from "mdbreact";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {toast} from "react-toastify";
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 const heuresSupSchema = (props) => {
     return Yup.object().shape({
@@ -47,31 +48,17 @@ const ComposantNumber = ({field, ...props}) => (
 const notify = (type, date) => {
     const variable = "Heure(s) supplémentaire(s)";
     switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>{variable} Enregistrée(s) &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
             case "warning":
             toast.warning(
                 <div className="text-center">
-                    <strong>{variable} NON Enregistrée : Le salarié était absent pendant cette date {date} &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON Enregistrée : Le salarié était absent pendant cette date {date} !</strong>
                 </div>
-            );
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON Enregistrée(s) &nbsp;&nbsp;!</strong>
-                </div>,
             );
             break;
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>{variable} NON Enregistrée(s) &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON Enregistrée(s) !</strong>
                 </div>,
             );
             break;
@@ -94,6 +81,8 @@ class CreateOvertime extends React.Component {
     }
 
     submit = (values, actions) => {
+        const entityName = "Heure(s) Supplémentaire(s)";
+
         values.annee = this.props.yearSelected
         values.mois = this.props.monthSelected
         values.employeId = this.props.employeId
@@ -101,24 +90,24 @@ class CreateOvertime extends React.Component {
         AxiosCenter.createOvertime(values)
             .then((response) => {
                 const statut = response.status;
-                const dateExpRept = this.props.dateFormat(response.data.date);
+                const dateOvertime = this.props.dateFormat(response.data.date);
                 switch(statut) {
                     case 201:
-                        notify("success", "");
+                        NotificationService.successRegistration(entityName);
                         actions.setSubmitting(true);
                         //this.props.handleReset("ExpenseReport");
                         actions.resetForm();
                     break;
                     case 208:
-                        notify("warning", dateExpRept);
+                        NotificationService.employeeWasAbsent(entityName, dateOvertime);
                     break;
                     default:
-                        notify("warning", "");
+                        NotificationService.failedRegistration(entityName);
                         break;
-                };
+                }
             }).catch((error) => {
             console.log(error);
-            notify("error", "");
+            NotificationService.failedRegistration(entityName);
         });
         actions.setSubmitting(true);
     };

@@ -5,6 +5,7 @@ import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow, MDBCardHead
 import {toast} from "react-toastify";
 import Loading from "../../../../../shared/component/Loading";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter"
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 const avanceRappelSchema = (props) => {
     return Yup.object().shape({
@@ -52,32 +53,6 @@ const ComposantNumber = ({field, ...props}) => (
     />
 );
 
-const notify = (type) => {
-    switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>Avance/Rappel sur salaire Modifié(e) &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>Avance/Rappel sur salaire NON Modifié(e) &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        default:
-            toast.error(
-                <div className="text-center">
-                    <strong>Avance/Rappel sur salaire NON Modifié(e) &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-    }
-};
-
 class ModifyPaydayAdvanceReminder extends React.Component {
     constructor(props) {
         super(props);
@@ -95,15 +70,17 @@ class ModifyPaydayAdvanceReminder extends React.Component {
     }
 
     submit = (values, actions) => {
+        const entityName = values.type + " sur salaire";
+
         AxiosCenter.modifyPaydayAdvanceOrReminder(values)
             .then(() => {
-                notify("success");
+                NotificationService.successModification(entityName);
                 actions.resetForm();
                 this.props.toggleAvance(this.props.index);
                 this.props.reloadParentAfterUpdate();
             }).catch((error) => {
             console.log(error);
-            notify("error");
+            NotificationService.failedModification(entityName);
         });
         actions.setSubmitting(true);
     };
