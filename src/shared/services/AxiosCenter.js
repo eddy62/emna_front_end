@@ -406,6 +406,14 @@ const AxiosCenter = {
 
   },
 
+  getPDFAmendment(idAmendment) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/avenant/pdf/${idAmendment}`,
+      responseType: 'arraybuffer'
+    });
+  },
+
   // Fin Get
 
   //Post
