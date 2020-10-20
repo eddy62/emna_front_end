@@ -811,6 +811,13 @@ const AxiosCenter = {
     });
   },
 
+  archiveContrat(idContrat){
+    return ApiBackEnd({
+      method: "put",
+      url: `/archiveContrat/${idContrat}`,
+    });
+  },
+
   // Fin Put
 
   //Delete

@@ -5,6 +5,7 @@ import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UploadFileBtn from "../../../shared/component/drag-n-drop/UploadFileBtn";
 import UserService from "../../../shared/services/UserService";
 import {toast} from "react-toastify";
+import {MDBBtn} from "mdbreact";
 
 class ListeContrat extends React.Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class ListeContrat extends React.Component {
     }
 
     componentDidMount() {
+        console.log("here");
         AxiosCenter.getAllWrapperEmployesBySociety(UserService.getSocietyId()).then((result) => {
             this.setState({
                 employes: result.data,
@@ -24,9 +26,29 @@ class ListeContrat extends React.Component {
         })
     }
 
-    onSavingFiles = (files, idContract) => {
+    archiveContract = async (idContrat) => {
+        await AxiosCenter.archiveContrat(idContrat).then(res => {
+            toast.success(
+                <div className="text-center">
+                    <strong>
+                        Le contrat est archivé !
+                    </strong>
+                </div>,
+                {position: "bottom-right"}
+            );
+            this.componentDidMount();
+        }).catch((err) =>{
+            toast.error(
+                <div className="text-center">
+                    <strong>Y'a une autre couille dans le potage !</strong>
+                    <br/>
+                </div>,
+                {position: "top-right"}
+            );
+        });
+    }
 
-        console.log(files)
+    onSavingFiles = (files, idContract) => {
         AxiosCenter.uploadContract(files, idContract).then(res => {
             toast.success(
                 <div className="text-center">
@@ -61,6 +83,9 @@ class ListeContrat extends React.Component {
                                         contrat
                                     </button>
                                 </Link>
+                                <MDBBtn onClick={ () =>  props.archiveContract(employe.idContrat)} color={"info"} >
+                                    Archiver
+                                </MDBBtn>
                             </h5>
                         </div>
                     )
@@ -104,6 +129,7 @@ class ListeContrat extends React.Component {
                 employes={this.state.employes}
                 onSavingFiles={this.onSavingFiles}
                 files={this.state.files}
+                archiveContract={this.archiveContract}
         />
     }
 }
