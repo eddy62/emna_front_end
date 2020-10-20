@@ -16,7 +16,7 @@ import Contrat from "./contrat/Contrat";
 import DetailContrat from "./contrat/list-contract/detail-contract/DetailContrat";
 import CreerContrat from "./contrat/create-contract/CreerContrat";
 
-import CreateDeclarationOfEmployment from "./social/declaration-of-employment/add-declaration-of-employment/CreateDeclarationOfEmployment";
+import CreateDpae from "./social/dpae/add-dpae/CreateDpae";
 
 //gestion ClientFournisseur imports
 import MenuClientFournisseur from "./client-fournisseur/MenuClientFournisseur";
@@ -132,7 +132,7 @@ export default class Routes extends Component {
           path="/modify-payroll-variables/:societyId/:id/:yearSelected/:monthSelected"
           component={ParentUpdatePayrollVariables}
         />
-        <PrivateRoute path="/add-declaration-of-employment/:id" component={CreateDeclarationOfEmployment} />
+        <PrivateRoute path="/add-declaration-of-employment/:id" component={CreateDpae} />
         <PrivateRoute path="/payslip/ParentPayslip/:id" component={ParentPayslip} />
         <PrivateRoute path="/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants/:id" component={ParentUpdatePayrollVariablesAccountants} />
 
