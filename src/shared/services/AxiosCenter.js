@@ -403,13 +403,15 @@ const AxiosCenter = {
       method: "GET",
       url: `/documents/idPaySlip/${idPayslip}`
     })
-
   },
 
   getHtmlDpae(id) {
     return ApiBackEnd({
       method: "get",
       url: `/dpae/html/${id}`,
+      headers: {
+        'content-type': 'charset=UTF-8'
+      }
     });
   },
 

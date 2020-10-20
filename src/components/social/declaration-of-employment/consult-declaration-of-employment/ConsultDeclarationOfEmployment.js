@@ -219,7 +219,11 @@ export default class ConsultDeclarationOfEmployment extends React.Component {
                                                             <td>{dpae.commentaire}</td>
                                                             <td>
                                                                 <MDBBtn color="teal accent-3" rounded size="sm"
-                                                                        onClick={() => this.newWindowPdfFile(index)}>VOIR</MDBBtn>
+                                                                        onClick = {() => {
+                                                                            this.props.history.push(
+                                                                            "/contentHtmlDpae");
+                                                                        }}>VOIR
+                                                                </MDBBtn>
                                                             </td>
 
 
