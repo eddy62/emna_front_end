@@ -125,12 +125,9 @@ class SocialHome extends React.Component {
                                                             rounded
                                                             size="sm"
                                                             color="teal accent-3"
-                                                            // TODO : lien vers liste DPAE
-                                                            //disabled={true}
                                                             onClick={() => {
                                                                 this.props.history.push(
-                                                                    //"/add-declaration-of-employment/" + this.state.societe.id
-                                                                    "/contentHtmlDpae"
+                                                                    "/consult-declaration-of-employment/" + this.state.societe.id
                                                                );
                                                             }}
                                                         >

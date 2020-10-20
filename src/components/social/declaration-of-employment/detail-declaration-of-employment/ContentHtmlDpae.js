@@ -28,7 +28,7 @@ class ContentHtmlDpae extends React.Component{
         AxiosCenter.getHtmlDpae(1)
        
             .then((response) => {
-                this.setState({codeHtml: response.data})
+                this.setState({codeHtml: response.data.html})
         console.log(this.state.codeHtml)
 
         
