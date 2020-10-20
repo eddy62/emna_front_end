@@ -35,6 +35,10 @@ export default class ListeContrat extends React.Component {
                                         contrat
                                     </button>
                                 </Link>
+                                <Link to={"/creeravenant/" + employe.id}>
+                                    <button type="button" className="btn btn-outline-success text-right">Creer un avenant
+                                    </button>
+                                </Link>
                             </h5>
                         </div>
                     )
@@ -70,7 +74,6 @@ export default class ListeContrat extends React.Component {
                 <Link to={"/contrat/"}>
                     <button type="button" className="btn btn-outline-success">Retour</button>
                 </Link>
-
                 <form className="md-form">
 
                 </form>

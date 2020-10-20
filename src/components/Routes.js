@@ -12,6 +12,7 @@ import DeleteEmploye from "./social/employee-management/DeleteEmploye";
 import ArchiveEmploye from "./social/employee-management/ArchiveEmploye";
 
 import ListeContrat from "./contrat/list-contract/ListeContrat";
+import CreerAvenant from "./contrat/list-contract/detail-contract/CreerAvenant";
 import Contrat from "./contrat/Contrat";
 import DetailContrat from "./contrat/list-contract/detail-contract/DetailContrat";
 import CreerContrat from "./contrat/create-contract/CreerContrat";
@@ -154,6 +155,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/contrat" component={Contrat} />
         <PrivateRoute path="/detailcontrat/:id" component={DetailContrat} />
         <PrivateRoute path="/creercontrat" component={CreerContrat} />
+        <PrivateRoute path="/creeravenant/:id" component={CreerAvenant} />
         {/*<PrivateRoute path="/clauses/society/:id" component={ListOfClauses} />*/}
         <PrivateRoute exact path="/articles" component={ListArticle} />
         <PrivateRoute exact path="/articles/create" component={CreateArticle} />
