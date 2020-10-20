@@ -108,6 +108,8 @@ import ParentUpdatePayrollVariablesAccountants
 
 import ParentPayslip from "./social/payslip/ParentPayslip";
 import UpdateDepense from "./gestion_factures/depenses/update-depense/UpdateDepense";
+import ConsultDeclarationOfEmploylent
+    from "./social/declaration-of-employment/consult-declaration-of-employment/ConsultDeclarationOfEmployment";
 
 
 
@@ -133,6 +135,7 @@ export default class Routes extends Component {
           component={ParentUpdatePayrollVariables}
         />
         <PrivateRoute path="/add-declaration-of-employment/:id" component={CreateDeclarationOfEmployment} />
+        <PrivateRoute path="/consult-declaration-of-employment/:id" component={ConsultDeclarationOfEmploylent} />
         <PrivateRoute path="/payslip/ParentPayslip/:id" component={ParentPayslip} />
         <PrivateRoute path="/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants/:id" component={ParentUpdatePayrollVariablesAccountants} />
 

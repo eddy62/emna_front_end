@@ -406,6 +406,13 @@ const AxiosCenter = {
 
   },
 
+  getAllDpaeByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/dpae/employe/${idEmploye}/annee/${year}/moisDu/${monthStart}/moisFin/${monthEnd}`
+    });
+  },
+
   // Fin Get
 
   //Post

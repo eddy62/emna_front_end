@@ -208,7 +208,8 @@ export default class ParentAddPayrollVariables extends Component {
                                             </MDBCollapseHeader>
                                             <MDBCollapse id="collapse1" isOpen={collapseID}>
                                                 <MDBCardBody>
-                                                    {this.state.idNameSelected ? (
+                                                    {((this.state.idNameSelected )
+                                                     && (this.state.idNameSelected !== 'DEFAULT')) ? (
                                                         <CreateAbsence employeId={this.state.idNameSelected}
                                                                        yearSelected={this.state.yearSelected}
                                                                        monthSelected={this.state.monthSelected}
@@ -230,7 +231,8 @@ export default class ParentAddPayrollVariables extends Component {
                                             </MDBCollapseHeader>
                                             <MDBCollapse id="collapse4" isOpen={collapseID}>
                                                 <MDBCardBody>
-                                                    {this.state.idNameSelected ? (
+                                                    {((this.state.idNameSelected )
+                                                        && (this.state.idNameSelected !== 'DEFAULT')) ? (
                                                         <CreateExpenseReport employeId={this.state.idNameSelected}
                                                                              yearSelected={this.state.yearSelected}
                                                                              monthSelected={this.state.monthSelected}
@@ -252,7 +254,8 @@ export default class ParentAddPayrollVariables extends Component {
                                             </MDBCollapseHeader>
                                             <MDBCollapse id="collapse3" isOpen={collapseID}>
                                                 <MDBCardBody>
-                                                    {this.state.idNameSelected ? (
+                                                    {((this.state.idNameSelected )
+                                                        && (this.state.idNameSelected !== 'DEFAULT')) ? (
                                                         <CreateBonus employeId={this.state.idNameSelected}
                                                                      yearSelected={this.state.yearSelected}
                                                                      monthSelected={this.state.monthSelected}
@@ -272,7 +275,8 @@ export default class ParentAddPayrollVariables extends Component {
                                             </MDBCollapseHeader>
                                             <MDBCollapse id="collapse2" isOpen={collapseID}>
                                                 <MDBCardBody>
-                                                    {this.state.idNameSelected ? (
+                                                    {((this.state.idNameSelected )
+                                                        && (this.state.idNameSelected !== 'DEFAULT')) ? (
                                                         <CreateOvertime
                                                             employeId={this.state.idNameSelected}
                                                             yearSelected={this.state.yearSelected}
@@ -293,7 +297,8 @@ export default class ParentAddPayrollVariables extends Component {
                                             </MDBCollapseHeader>
                                             <MDBCollapse id="collapse5" isOpen={collapseID}>
                                                 <MDBCardBody>
-                                                    {this.state.idNameSelected ? (
+                                                    {((this.state.idNameSelected )
+                                                        && (this.state.idNameSelected !== 'DEFAULT')) ? (
                                                         <CreatePaydayAdvanceReminder employeId={this.state.idNameSelected}
                                                                                      yearSelected={this.state.yearSelected}
                                                                                      monthSelected={this.state.monthSelected}/>
@@ -312,7 +317,8 @@ export default class ParentAddPayrollVariables extends Component {
                                             </MDBCollapseHeader>
                                             <MDBCollapse id="collapse6" isOpen={collapseID}>
                                                 <MDBCardBody>
-                                                    {this.state.idNameSelected ? (
+                                                    {((this.state.idNameSelected )
+                                                        && (this.state.idNameSelected !== 'DEFAULT')) ? (
                                                         <CreateOtherPayrollVariable employeId={this.state.idNameSelected}
                                                                                     yearSelected={this.state.yearSelected}
                                                                                     monthSelected={this.state.monthSelected}
@@ -332,7 +338,8 @@ export default class ParentAddPayrollVariables extends Component {
                             <div className="btnContent">
                                 <div className="btnConainer">
                                     <MDBBtn color="teal accent-3" rounded size="sm"
-                                            disabled={!this.state.idNameSelected}
+                                            disabled={!((this.state.idNameSelected )
+                                                && (this.state.idNameSelected !== 'DEFAULT'))}
                                             onClick={() => {
                                                 this.props.history.push(
                                                     "/modify-payroll-variables/" + this.state.society.id + "/" + this.state.idNameSelected  + "/" + this.state.yearSelected + "/" + this.state.monthSelected
