@@ -127,6 +127,8 @@ export default class TablePaydayAdvanceReminder extends React.Component {
                             avanceRappelSalaire={this.props.avanceRappelSalaireList[this.state.index]}
                             index={this.state.index}
                             toggleAvance={this.toggleModal}
+                            yearSelected={this.props.yearSelected}
+                            monthSelected={this.props.monthSelected}
                             reloadParentAfterUpdate={reloadParent}
                         />
                     </MDBModalBody>

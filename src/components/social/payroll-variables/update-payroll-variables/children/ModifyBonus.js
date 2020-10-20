@@ -91,6 +91,7 @@ class ModifyBonus extends React.Component {
                 notify("success", values.type)
                 actions.resetForm();
                 this.props.toggleAvance(this.props.index);
+                this.props.reloadParentAfterUpdate();
             }).catch((error) => {
             console.log(error)
             notify("error", values.type)

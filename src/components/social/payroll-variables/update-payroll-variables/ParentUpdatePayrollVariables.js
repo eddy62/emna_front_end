@@ -272,7 +272,7 @@ export default class ParentUpdatePayrollVariables extends Component {
                                             {this.state.period.map((p, index) => (
                                                 <option key={index}
                                                         value={p.id}
-                                                        disabled={this.state.yearSelected === this.state.currentYear && p.id > new Date().getMonth() + 1 ? (true) : (false)}>{p.text}</option>
+                                                        disabled={this.state.yearSelected == this.state.currentYear && p.id > new Date().getMonth() + 1 ? (true) : (false)}>{p.text}</option>
                                             ))}
                                         </select>
                                     </div>
@@ -316,10 +316,10 @@ export default class ParentUpdatePayrollVariables extends Component {
                             </MDBCard>
                             <MDBCard>
                                 {<TablePaydayAdvanceReminder reloadParentAfterUpdate={this.reloadParentAfterUpdate}
-                                                             changeHandler={this.changeHandler}
-                                                             avanceRappelSalaireList={this.state.avanceRappelSalaireList}
-                                                             handleClick={this.handleClick}
-                                                             dateFormat={this.dateFormat}
+                                                            changeHandler={this.changeHandler}
+                                                            avanceRappelSalaireList={this.state.avanceRappelSalaireList}
+                                                            handleClick={this.handleClick}
+                                                            dateFormat={this.dateFormat}
                                                             yearSelected={this.state.yearSelected}
                                                             monthSelected={this.state.monthSelected}/>}
                             </MDBCard>

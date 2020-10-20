@@ -19,7 +19,7 @@ const notify = (type, date) => {
             case "warning":
             toast.warning(
                 <div className="text-center">
-                    <strong>{variable} NON Enregistrée : Le salarié était absent pendant cette date {date} &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON Enregistrée : Le salarié était absent le {date} &nbsp;&nbsp;!</strong>
                 </div>
             );
             break;
