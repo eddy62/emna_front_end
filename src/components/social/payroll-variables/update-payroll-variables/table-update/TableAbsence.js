@@ -3,32 +3,7 @@ import {MDBBtn, MDBRow, MDBListGroupItem, MDBModal, MDBModalBody, MDBTable, MDBT
 import {toast} from "react-toastify";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import ModifyAbsence from "../children/ModifyAbsence";
-
-const notify = type => {
-    switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>Absence Supprimée &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>Absence NON Supprimée &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        default:
-            toast.error(
-                <div className="text-center">
-                    <strong>Absence NON Supprimée &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-    }
-};
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 class TableAbsence extends React.Component {
 
@@ -65,13 +40,14 @@ class TableAbsence extends React.Component {
         });
     }
     deleteAbsence = (id) => {
+        const entityName = "Absence";
         AxiosCenter.deleteAbsence(id).then(() => {
             this.toggleModalDeleteAbsence();
             this.props.reloadParentAfterUpdate();
-            notify('success');
+            NotificationService.successDeletion(entityName);
         }).catch((error) => {
             console.log(error);
-            notify('error');
+            NotificationService.failedDeletion(entityName);
         });
     }
 

@@ -7,6 +7,7 @@ import {MDBBtn, MDBContainer, MDBInput, MDBRow} from "mdbreact";
 import Loading from "../../../../../shared/component/Loading";
 import {toast} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.min.css';
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
@@ -35,32 +36,6 @@ const ComposantSelect = ({field, ...props}) => (
     </div>
 );
 
-const notify = type => {
-    switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>Prime Enregistrée &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>Prime NON Enregistrée &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        default:
-            toast.error(
-                <div className="text-center">
-                    <strong>Prime NON Enregistrée &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-    }
-};
-
 class CreateBonus extends React.Component {
     constructor(props) {
         super(props);
@@ -86,17 +61,19 @@ class CreateBonus extends React.Component {
     }
 
     submit = (values, actions) => {
+        const entityName = "Prime";
+
         values.annee = this.props.yearSelected;
         values.mois = this.props.monthSelected;
         values.employeId = this.props.employeId;
 
         AxiosCenter.createBonus(values)
             .then(() => {
-                notify("success");           
+                NotificationService.successRegistration(entityName);
                 actions.resetForm();
             }).catch((error) => {
             console.log(error);
-            notify("error");
+            NotificationService.failedRegistration(entityName);
         });
         actions.setSubmitting(true)
     };

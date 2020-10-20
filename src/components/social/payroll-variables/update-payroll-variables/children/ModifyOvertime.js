@@ -5,6 +5,7 @@ import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow, MDBCardHead
 import {toast} from "react-toastify";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../shared/component/Loading";
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 const heuresSupSchema = (props) => {
     return Yup.object().shape({
@@ -46,25 +47,11 @@ const ComposantNumber = ({field, ...props}) => (
 const notify = (type, date) => {
     const variable = "Heure(s) supplémentaire(s)"
     switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>{variable} Modifiée(s) &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
         case "warning":
             toast.warning(
                 <div className="text-center">
-                    <strong>{variable} NON modifiée : Le salarié était absent pendant cette date {date} &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON modifiée : Le salarié était absent pendant cette date {date} !</strong>
                 </div>
-            );
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON Modifiée(s) &nbsp;&nbsp;!</strong>
-                </div>,
             );
             break;
         default:
@@ -95,27 +82,29 @@ class ModifyOvertime extends React.Component {
     }
 
     submit = (values, actions) => {
+        const entityName = "Heure(s) supplémentaire(s)";
+
         AxiosCenter.modifyOvertime(values)
             .then((response) => {
                 const statut = response.status;
                 const dateOvertime = this.props.dateFormat(response.data.date);
                 switch(statut) {
                     case 201:
-                        notify("success", "");
+                        NotificationService.successModification(entityName);
                         actions.resetForm();
                         this.props.toggleAvance(this.props.index);
                         this.props.reloadParentAfterUpdate();
                     break;
                     case 208:
-                        notify("warning", dateOvertime);
+                        NotificationService.employeeWasAbsent(entityName, dateOvertime);
                     break;
                     default:
-                        notify("warning", "");
+                        NotificationService.failedModification(entityName);
                         break;
-                };
+                }
             }).catch((error) => {
             console.log(error);
-            notify("error", "");
+            NotificationService.failedModification(entityName);
         });
         actions.setSubmitting(true);
     };

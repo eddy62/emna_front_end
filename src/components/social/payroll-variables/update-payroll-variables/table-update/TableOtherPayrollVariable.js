@@ -3,32 +3,7 @@ import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBCardHeader, M
 import {toast} from "react-toastify";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import ModifyOtherPayrollVariable from "../children/ModifyOtherPayrollVariable";
-
-const notify = type => {
-    switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>Autre Variable de Paie Supprimée &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>Autre Variable de Paie NON Supprimée &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        default:
-            toast.error(
-                <div className="text-center">
-                    <strong>Autre Variable de Paie NON Supprimée &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-    }
-};
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 class TableOtherPayrollVariable extends React.Component {
 
@@ -66,13 +41,14 @@ class TableOtherPayrollVariable extends React.Component {
     }
 
     deleteOther = (id) => {
+        const entityName = "Autre Variable de Paie";
         AxiosCenter.deleteOtherPayrollVariable(id).then(() => {
             this.toggleModalDeleteOther();
             this.props.reloadParentAfterUpdate();
-            notify('success');
+            NotificationService.successDeletion(entityName);
         }).catch((error) => {
             console.log(error);
-            notify('error');
+            NotificationService.failedDeletion(entityName);
         });
     }
 

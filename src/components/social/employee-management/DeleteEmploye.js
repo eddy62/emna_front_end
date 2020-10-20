@@ -6,6 +6,7 @@ import "./gestionEmploye.scss";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
 import {MDBBtn, MDBContainer, MDBIcon, MDBModal, MDBModalBody, MDBModalFooter, MDBModalHeader, MDBRow,} from "mdbreact";
+import NotificationService from "../../../shared/services/NotificationService";
 
 class DeleteEmploye extends Component {
   constructor(props) {
@@ -25,6 +26,8 @@ class DeleteEmploye extends Component {
   };
 
   delete = () => {
+    const entityName = "Employé(e)"
+
     const idEmploye = this.props.employe.id;
     console.log(idEmploye);
     const { employe } = this.props;
@@ -39,24 +42,18 @@ class DeleteEmploye extends Component {
         console.log(response);
         const resultat = response.data;
         if (resultat) {
-          toast.success(
-            <div className="text-center">
-              <strong>Employé Supprimé &nbsp;&nbsp;!"</strong>
-            </div>,
-            { position: "top-right" }
-          );
+          NotificationService.successDeletion(entityName);
         } else {
           toast.error(
             <div className="text-center">
-              <strong>Employé NON Supprimé &nbsp;&nbsp;!</strong>
+              <strong>Employé NON Supprimé !</strong>
               <br />
               <small>
-                Le temps d'archivage est de {diff} &nbsp;ans.
+                Le temps d'archivage est de {diff} ans.
                 <br />
                 (minimum 5 ans)
               </small>
             </div>,
-            { position: "top-right" }
           );
         }
         this.setState({
@@ -66,12 +63,7 @@ class DeleteEmploye extends Component {
       })
       .catch((error) => {
         console.log(error);
-        toast.error(
-          <div className="text-center">
-            <strong>Employé NON Supprimé &nbsp;&nbsp;!</strong>
-          </div>,
-          { position: "top-right" }
-        );
+        NotificationService.failedDeletion(entityName);
       });
   };
   redirection = () => this.setState({ redirect: true });

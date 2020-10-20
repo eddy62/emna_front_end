@@ -5,56 +5,7 @@ import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBFileInput, MDBInput, MDBRow} from "mdbreact";
 import Loading from "../../../../../shared/component/Loading";
 import {toast} from "react-toastify";
-
-const notify = (type, date) => {
-    const variable = "Note de Frais"
-    switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>{variable} Enregistrée &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
-            case "warning":
-            toast.warning(
-                <div className="text-center">
-                    <strong>{variable} NON Enregistrée : Le salarié était absent le {date} &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
-        case "formatError":
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;! <br/>Format de fichier invalide &nbsp;&nbsp;!
-                        <br/>Seuls les formats PDF, PNG, JPEG et JPG sont acceptés.</strong>
-                </div>
-            );
-            break;
-        case "fileError":
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;!
-                        <br/>Un problème est survenu à cause du fichier.</strong>
-                </div>
-            );
-            break;
-        default:
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
-    }
-};
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 const ComponentDesignation = ({field, ...props}) => (
     <MDBInput
@@ -128,14 +79,17 @@ class CreateExpenseReport extends React.Component {
     }
 
     submit = (values, actions) => {
+        const entityName = "Note de Frais";
+
         values.employeId = this.props.employeId;
         values.annee = this.props.yearSelected;
         values.mois = this.props.monthSelected;
+
         if (!this.checkFormat()) {
             AxiosCenter.createExpenseReport(values)
                 .then(async (response) => {
                     const statut = response.status;
-                    const dateExpRept = this.props.dateFormat(response.data.date);
+                    const dateExpenseReport = this.props.dateFormat(response.data.date);
                     const errorDetected = await this.uploadFiles(response.data.id)
                     if (errorDetected) {
                         /* TODO Une fois deleteFile OK, supprimer en cascade toutes les entités + files
@@ -143,30 +97,30 @@ class CreateExpenseReport extends React.Component {
                         AxiosCenter.deleteExpenseReport(response.data.id).catch((error) => {
                             console.log(error);
                         })
-                        notify("fileError", "");
+                        NotificationService.uploadFileError(entityName);
                         this.props.handleReset("ExpenseReport");
                     } else {
                         switch(statut) {
                             case 201:
-                                notify("success", "");
+                                NotificationService.successRegistration(entityName);
                                 actions.setSubmitting(true);
                                 this.props.handleReset("ExpenseReport");
                             break;
                             case 208:
-                                notify("warning", dateExpRept);
+                                NotificationService.employeeWasAbsent(entityName, dateExpenseReport);
                             break;
                             default:
-                                notify("warning", "");
+                                NotificationService.failedRegistration(entityName);
                                 break;
-                        };
+                        }
                     }
                 }).catch((error) => {
                 console.log(error);
-                notify("error", "");
+                NotificationService.failedRegistration(entityName)
                 this.props.handleReset("ExpenseReport");
             });
         } else {
-            notify("formatError", "");
+            NotificationService.wrongFileFormatError(entityName);
             this.props.handleReset("ExpenseReport");
         }
     };

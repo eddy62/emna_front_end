@@ -5,6 +5,7 @@ import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {MDBBtn, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer, MDBInput, MDBRow, MDBListGroup, MDBListGroupItem, MDBIcon, MDBFileInput} from "mdbreact";
 import Loading from "../../../../../shared/component/Loading"
 import {toast} from "react-toastify";
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 const absenceSchema = (props) => {
     return Yup.object().shape({
@@ -66,13 +67,6 @@ const ComponentUploadFiles = ({field, ...props}) => (
 const notify = (type, message) => {
     const variable = "Absence"
     switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>{variable} Modifiée &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
         case "warning":
             toast.warning(
                 <div className="text-center">
@@ -83,43 +77,35 @@ const notify = (type, message) => {
             case "severalPayroll":
             toast.warning(
                 <div className="text-center">
-                    <strong>{variable} non enregistrée : plusieurs autres variables de paie existent entre le {message} &nbsp;&nbsp;!</strong>
+                    <strong>{variable} non enregistrée : plusieurs autres variables de paie existent entre le {message} !</strong>
                 </div>
             );
             break;
         case "warningOther":
             toast.warning(
                 <div className="text-center">
-                    <strong>{variable} non enregistrée : une Autre Variable existe entre le {message} &nbsp;&nbsp;!</strong>
+                    <strong>{variable} non enregistrée : une Autre Variable existe entre le {message} !</strong>
                 </div>
             );
             break;
         case "warningOvertime":
             toast.warning(
                 <div className="text-center">
-                    <strong>{variable} non enregistrée : une Heure Supplémentaire existe entre le {message} &nbsp;&nbsp;!</strong>
+                    <strong>{variable} non enregistrée : une Heure Supplémentaire existe entre le {message} !</strong>
                 </div>
             );
             break;
         case "warningExpenseReport":
             toast.warning(
                 <div className="text-center">
-                    <strong>{variable} non enregistrée : une Note de Frais existe entre le {message} &nbsp;&nbsp;!</strong>
-                </div>
-            );            
-            break;
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON Modifiée &nbsp;&nbsp;!</strong>
+                    <strong>{variable} non enregistrée : une Note de Frais existe entre le {message} !</strong>
                 </div>
             );
             break;
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>{variable} NON Modifiée &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON Modifiée !</strong>
                 </div>
             );
             break;
@@ -169,6 +155,8 @@ class ModifyAbsence extends React.Component {
     }
 
     submit = (values, actions) => {
+        const entityName = "Absence";
+
         if(this.state.docToDelete.length) {
             this.removeFile();
         }
@@ -183,7 +171,7 @@ class ModifyAbsence extends React.Component {
                     case 201:
                         this.props.toggleModalUpdateAbsence(this.props.index);
                         this.props.reloadParentAfterUpdate();
-                        notify("success", message);
+                        NotificationService.successModification(entityName);
                         actions.setSubmitting(true);
                         //this.props.handleReset("Absence");
                     break;
@@ -191,9 +179,9 @@ class ModifyAbsence extends React.Component {
                         notify("warning", message);
                     break;
                     default:
-                        notify("warning", message);
+                        NotificationService.failedModification(entityName);
                         break;
-                };
+                }
             }).catch((error) => {
                 const dateFormat = error.response.data.entityName;
                     console.log(error.response.data.errorKey);
@@ -211,7 +199,7 @@ class ModifyAbsence extends React.Component {
                             notify("severalPayroll", this.formatDate(dateFormat));
                         break;               
                         default:
-                            notify("error", "");
+                            NotificationService.failedModification(entityName);
                             break;
                     }
             /*console.log(error);

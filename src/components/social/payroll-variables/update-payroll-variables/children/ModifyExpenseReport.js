@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBInput, MDBRow, MDBCardHeader, MDBCardTitle, MDBListGroup, MDBListGroupItem, MDBIcon, MDBFileInput} from "mdbreact";
 import {toast} from "react-toastify";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 const noteDeFraisSchema = (props) => {
     return Yup.object().shape({
@@ -67,41 +68,6 @@ const ComponentUploadFiles = ({field, ...props}) => (
     </div>
 );
 
-
-const notify = (type, date) => {
-    const variable = "Note de Frais"
-    switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>{variable} modifiée &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        case "warning":
-            toast.warning(
-                <div className="text-center">
-                    <strong>{variable} NON modifiée : Le salarié était absent pendant cette date {date} &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON modifiée  &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        default:
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON modifiée  &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-    }
-};
-
 class ModifyExpenseReport extends React.Component {
     constructor(props) {
         super(props);
@@ -119,6 +85,8 @@ class ModifyExpenseReport extends React.Component {
     }
 
     submit = (values, actions) => {
+        const entityName = "Note de Frais";
+
         if(this.state.docToDelete.length) {
             this.removeFile();
         }
@@ -130,25 +98,25 @@ class ModifyExpenseReport extends React.Component {
             .then((response) => {
                 const statut = response.status;
                 console.log(response.data.date);
-                const dateExpRept = this.props.dateFormat(response.data.date);
+                const dateExpenseReport = this.props.dateFormat(response.data.date);
                 switch(statut) {
                     case 201:
                         this.props.toggleNoteDeFrais(this.props.index);
                         this.props.reloadParentAfterUpdate();
-                        notify("success", "");
+                        NotificationService.successModification(entityName);
                         /*actions.setSubmitting(true);
                         this.props.handleReset("ExpenseReport");*/
                     break;
                     case 208:
-                        notify("warning", dateExpRept);
+                        NotificationService.employeeWasAbsent(entityName, dateExpenseReport);
                     break;
                     default:
-                        notify("warning", "");
+                        NotificationService.failedModification(entityName);
                         break;
-                };
+                }
             }).catch((error) => {
             console.log(error);
-            notify("error", "");
+            NotificationService.failedModification(entityName);
         });
         actions.setSubmitting(true);
     };
