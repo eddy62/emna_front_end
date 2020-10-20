@@ -3,32 +3,7 @@ import {MDBBtn, MDBModal, MDBModalBody, MDBTable, MDBTableBody, MDBTableHead, MD
 import ModifyExpenseReport from "../children/ModifyExpenseReport";
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {toast} from "react-toastify";
-
-const notify = (type) => {
-    switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>Note de frais supprimée &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>Note de frais NON supprimée  &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-        default:
-            toast.error(
-                <div className="text-center">
-                    <strong>Note de frais NON supprimée  &nbsp;&nbsp;!</strong>
-                </div>,
-            );
-            break;
-    }
-};
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 export default class TableExpenseReport extends React.Component {
 
@@ -67,13 +42,14 @@ export default class TableExpenseReport extends React.Component {
     }
 
     deleteExpenseReport = (id) => {
+        const entityName = "Note de Frais";
         AxiosCenter.deleteExpenseReport(id).then(() => {
             this.toggleModaleDelete();
             this.props.reloadParentAfterUpdate();
-            notify('success');
+            NotificationService.successDeletion(entityName)
         }).catch((error) => {
             console.log(error);
-            notify('error');
+            NotificationService.failedDeletion(entityName);
         });
     }
 

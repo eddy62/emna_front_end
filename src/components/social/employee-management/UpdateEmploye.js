@@ -17,6 +17,7 @@ import AxiosCenter from "../../../shared/services/AxiosCenter";
 import Loading from "../../../shared/component/Loading";
 import ErrorMessForm from "../../../shared/component/ErrorMessForm";
 import {toast} from "react-toastify";
+import NotificationService from "../../../shared/services/NotificationService";
 
 const employeSchema = Yup.object().shape({
     //Identitée
@@ -161,6 +162,8 @@ class UpdateEmploye extends React.Component {
     }
 
     submit = (values, actions) => {
+        const entityName = "Employé(e)";
+
         console.log("update", values);
         AxiosCenter.updateWrapperEmployee(values)
             .then((response) => {
@@ -168,24 +171,19 @@ class UpdateEmploye extends React.Component {
                 const employe = response.data;
                 console.log(employe);
                 if (response.status === 200) {
-                    toast.success(
-                        <div className="text-center">
-                            <strong>Informations Employé modifiées &nbsp;&nbsp;!</strong>
-                        </div>
-                    );
+                    NotificationService.successModification(entityName);
                 }
                 this.props.history.push("/detailEmploye/" + employe.id);
             })
             .catch((error) => {
                 toast.error(
                     <div className="text-center">
-                        <strong>Employé NON Modifié &nbsp;&nbsp;!</strong>
+                        <strong>Employé NON Modifié !</strong>
                         <br/>
                         {error.response.data.status === 400 ? (
                             <small>{error.response.data.title}</small>
                         ) : null}
                     </div>,
-                    {position: "top-right"}
                 );
                 console.log(error);
             });

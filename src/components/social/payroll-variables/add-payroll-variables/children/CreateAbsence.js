@@ -5,6 +5,7 @@ import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import {MDBBtn, MDBCardBody, MDBCol, MDBContainer, MDBFileInput, MDBInput, MDBRow} from "mdbreact";
 import Loading from "../../../../../shared/component/Loading"
 import {toast} from "react-toastify";
+import NotificationService from "../../../../../shared/services/NotificationService";
 
 const absenceSchema = (props) => {
     return Yup.object().shape({
@@ -66,76 +67,45 @@ const ComponentUploadFiles = ({field, ...props}) => (
 const notify = (type, message) => {
     const variable = "Absence"
     switch (type) {
-        case "success":
-            toast.success(
-                <div className="text-center">
-                    <strong>{variable} Enregistrée {message} &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
         case "warning":
             toast.warning(
                 <div className="text-center">
-                    <strong>{variable} non enregistrée : une {variable} existe déjà {message} &nbsp;&nbsp;!</strong>
+                    <strong>{variable} non enregistrée : une {variable} existe déjà {message} !</strong>
                 </div>
             );
             break;
         case "severalPayroll":
             toast.warning(
                 <div className="text-center">
-                    <strong>{variable} non enregistrée : plusieurs autres variables de paie existent entre le {message} &nbsp;&nbsp;!</strong>
+                    <strong>{variable} non enregistrée : plusieurs autres variables de paie existent entre le {message} !</strong>
                 </div>
             );
             break;
         case "warningOther":
             toast.warning(
                 <div className="text-center">
-                    <strong>{variable} non enregistrée : une Autre Variable existe entre le {message} &nbsp;&nbsp;!</strong>
+                    <strong>{variable} non enregistrée : une Autre Variable existe entre le {message} !</strong>
                 </div>
             );
             break;
         case "warningOvertime":
             toast.warning(
                 <div className="text-center">
-                    <strong>{variable} non enregistrée : une Heure Supplémentaire existe entre le {message} &nbsp;&nbsp;!</strong>
+                    <strong>{variable} non enregistrée : une Heure Supplémentaire existe entre le {message} !</strong>
                 </div>
             );
             break;
         case "warningExpenseReport":
             toast.warning(
                 <div className="text-center">
-                    <strong>{variable} non enregistrée : une Note de Frais existe entre le {message} &nbsp;&nbsp;!</strong>
+                    <strong>{variable} non enregistrée : une Note de Frais existe entre le {message} !</strong>
                 </div>
             );            
-            break;
-        case "error":
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} non enregistrée : une {variable} existe déjà {message} &nbsp;&nbsp;!</strong>
-                </div>
-            );
-            break;
-        case "formatError":
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;!
-                        <br/>Format de fichier invalide &nbsp;&nbsp;!
-                        <br/>Seuls les formats PDF, PNG, JPEG et JPG sont acceptés.</strong>
-                </div>
-            );
-            break;
-        case "fileError":
-            toast.error(
-                <div className="text-center">
-                    <strong>{variable} NON Enregistrée &nbsp;&nbsp;!
-                        <br/>Un problème est survenu à cause du fichier.</strong>
-                </div>
-            );
             break;
         default:
             toast.error(
                 <div className="text-center">
-                    <strong>{variable} NON Enregistrée {message} &nbsp;&nbsp;!</strong>
+                    <strong>{variable} NON Enregistrée {message} !</strong>
                 </div>
             );
             break;
@@ -183,9 +153,12 @@ class CreateAbsence extends React.Component {
     }
 
     submit = (values, actions) => {
+        const entityName = "Absence";
+
         values.annee = this.props.yearSelected;
         values.mois = this.props.monthSelected;
         values.employeId = this.props.employeId;
+
         if (!this.checkFormat()) {
             AxiosCenter.createAbsence(values)
                 .then(async (response) => {
@@ -199,12 +172,12 @@ class CreateAbsence extends React.Component {
                         AxiosCenter.deleteAbsence(response.data.id).catch((error) => {
                             console.log(error);
                         })
-                        notify("fileError", "");
+                        NotificationService.uploadFileError(entityName);
                         this.props.handleReset("Absence");
                     } else {
                         switch(statut) {
                             case 201:
-                                notify("success", message);
+                                NotificationService.successRegistration(entityName);
                                 actions.setSubmitting(true);
                                 this.props.handleReset("Absence");
                             break;
@@ -212,9 +185,9 @@ class CreateAbsence extends React.Component {
                                 notify("warning", message);
                             break;
                             default:
-                                notify("warning", message);
+                                NotificationService.failedRegistration(entityName);
                                 break;
-                        };
+                        }
                     }
                 }).catch((error) => {
                     const dateFormat = error.response.data.entityName;
@@ -233,7 +206,7 @@ class CreateAbsence extends React.Component {
                             notify("severalPayroll", this.formatDate(dateFormat));
                         break;               
                         default:
-                            notify("error", "");
+                            NotificationService.failedRegistration(entityName);
                             break;
                     }
                 /*console.log(error);
@@ -241,7 +214,7 @@ class CreateAbsence extends React.Component {
                 this.props.handleReset("Absence");*/
             });
         } else {
-            notify("formatError", "");
+            NotificationService.wrongFileFormatError(entityName);
             this.props.handleReset("Absence");
         }
     }

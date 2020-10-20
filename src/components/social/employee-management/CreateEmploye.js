@@ -19,6 +19,7 @@ import Loading from "../../../shared/component/Loading";
 import ErrorMessForm from "../../../shared/component/ErrorMessForm";
 import {toast} from "react-toastify";
 import UserService from "../../../shared/services/UserService";
+import NotificationService from "../../../shared/services/NotificationService";
 
 const employeSchema = Yup.object().shape({
     //Identitée
@@ -162,6 +163,8 @@ class CreateEmploye extends React.Component {
     }
 
     submit = (values, actions) => {
+        const entityName = "Employé(e)";
+
         const diff = dateFns.differenceInCalendarYears(
             new Date(),
             new Date(values.dateNaissance)
@@ -174,35 +177,21 @@ class CreateEmploye extends React.Component {
                     const employe = response.data;
                     console.log(employe);
                     if (response.status === 200) {
-                        toast.success(
-                            <div className="text-center">
-                                <strong>Employé Enregistré &nbsp;&nbsp;!</strong>
-                            </div>,
-                            {position: "top-right"}
-                        );
+
                     }
                     this.props.history.push("/detailEmploye/" + employe.id);
                 })
                 .catch((error) => {
                     console.log(error.response);
-                    toast.error(
-                        <div className="text-center">
-                            <strong>Employé NON Enregistré &nbsp;&nbsp;!</strong>
-                            <br/>
-                            {error.response.data.status === 400 ? (
-                                <small>{error.response.data.title}</small>
-                            ) : null}
-                        </div>,
-                        {position: "top-right"}
-                    );
+                    NotificationService.successRegistration(entityName);
                 });
             actions.setSubmitting(true);
         } else {
             toast.error(
                 <div className="text-center">
-                    <strong>Employé NON Enregistré &nbsp;&nbsp;!</strong>
+                    <strong>Employé NON Enregistré !</strong>
                     <br/>
-                    <small>Date de Naissance incorrect !</small>
+                    <small>Date de Naissance incorrecte !</small>
                     <br/>
                     <small>L'âge minimum pour travailler est de 14 ans !</small>
                 </div>
