@@ -16,7 +16,7 @@ import Contrat from "./contrat/Contrat";
 import DetailContrat from "./contrat/list-contract/detail-contract/DetailContrat";
 import CreerContrat from "./contrat/create-contract/CreerContrat";
 
-import CreateDeclarationOfEmployment from "./social/declaration-of-employment/add-declaration-of-employment/CreateDeclarationOfEmployment";
+import CreateDpae from "./social/dpae/add-dpae/CreateDpae";
 
 //gestion ClientFournisseur imports
 import MenuClientFournisseur from "./client-fournisseur/MenuClientFournisseur";
