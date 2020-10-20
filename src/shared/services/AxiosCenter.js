@@ -406,6 +406,17 @@ const AxiosCenter = {
 
   },
 
+  getHtmlDpae(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/dpae/html/${id}`,
+      headers: {
+        'content-type': 'charset=UTF-8'
+      }
+      //reponseType: `document`
+    });
+  },
+
   // Fin Get
 
   //Post

@@ -14,6 +14,7 @@ import {
     MDBContainer,
     MDBRow,
 } from "mdbreact";
+import contentHtmlDpae from "./declaration-of-employment/detail-declaration-of-employment/ContentHtmlDpae"
 
 class SocialHome extends React.Component {
     constructor(props) {
@@ -125,11 +126,12 @@ class SocialHome extends React.Component {
                                                             size="sm"
                                                             color="teal accent-3"
                                                             // TODO : lien vers liste DPAE
-                                                            disabled={true}
+                                                            //disabled={true}
                                                             onClick={() => {
                                                                 this.props.history.push(
-                                                                    "/add-declaration-of-employment/" + this.state.societe.id
-                                                                );
+                                                                    //"/add-declaration-of-employment/" + this.state.societe.id
+                                                                    "/contentHtmlDpae"
+                                                               );
                                                             }}
                                                         >
                                                             Consulter
