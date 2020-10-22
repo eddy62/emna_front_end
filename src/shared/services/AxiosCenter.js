@@ -361,11 +361,13 @@ const AxiosCenter = {
   },
 
   getPdfFileByPath(path) {
+  path = path.replaceAll("/", "¤¤¤");
+
     return ApiBackEnd({
       method: "GET",
       url: `/getPdfFile/${path}`,
       responseType: 'blob'
-    })
+    });
   },
 
   getAllPayslipByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
