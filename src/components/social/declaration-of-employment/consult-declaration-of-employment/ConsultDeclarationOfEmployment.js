@@ -1,20 +1,16 @@
 import React from "react";
-import AxiosCenter from "../../../shared/services/AxiosCenter";
-import {ErrorMessage, Field, Form, Formik} from "formik";
+import AxiosCenter from "../../../../shared/services/AxiosCenter"
+import {Form, Formik} from "formik";
 import {
     MDBBtn,
-    MDBCard,
-    MDBCardBody,
     MDBCardHeader,
     MDBCardTitle,
-    MDBCollapse,
-    MDBCollapseHeader,
     MDBContainer,
     MDBRow, MDBTable, MDBTableBody, MDBTableHead
 } from "mdbreact";
-import {toast} from "react-toastify";
+import {Link} from "react-router-dom";
 
-export default class ParentPayslip extends React.Component {
+export default class ConsultDeclarationOfEmployment extends React.Component {
 
     constructor(props) {
         super(props);
@@ -22,7 +18,7 @@ export default class ParentPayslip extends React.Component {
             society: {},
             listeEmployes: [],
             idEmployeSelected: undefined,
-            listPaySlip: [],
+            listDpae: [],
             yearSelected: new Date().getFullYear(),
             firstMonthSelected: 1,
             secondMonthSelected: new Date().getMonth() + 1,
@@ -55,16 +51,19 @@ export default class ParentPayslip extends React.Component {
                 this.handleClick = this.handleClick.bind(this);*/
     }
 
-    /*Methode qui récupère les fiches de paie*/
-    getAllPayslipByEmployeIdMonthStartMonthEnd = () => {
-        AxiosCenter.getAllPayslipByEmployeIdMonthStartMonthEnd(this.state.idEmployeSelected, this.state.yearSelected, this.state.firstMonthSelected,this.state.secondMonthSelected)
+    get () {};
+
+
+    /*Methode qui récupère les dpae*/
+    getAllDpaeByEmployeIdMonthStartMonthEnd = () => {
+        AxiosCenter.getAllDpaeByEmployeIdMonthStartMonthEnd(this.state.idEmployeSelected, this.state.yearSelected, this.state.firstMonthSelected,this.state.secondMonthSelected)
             /*AxiosCenter.getAllPaySlip()*/
             .then((response) => {
-                const listPaySlip = response.data;
+                const listDpae = response.data;
                 this.setState({
-                    listPaySlip,
+                    listDpae,
                     loaded:true
-                }, () => {console.log(this.state.listPaySlip)})
+                }, () => {console.log(this.state.listDpae)})
             });
     };
 
@@ -98,48 +97,12 @@ export default class ParentPayslip extends React.Component {
                 this.state.secondMonthSelected =  new Date().getMonth() + 1;
             }
             if (this.state.idEmployeSelected != undefined ) {
-                this.getAllPayslipByEmployeIdMonthStartMonthEnd();
+                this.getAllDpaeByEmployeIdMonthStartMonthEnd();
             }
 
         })
     };
 
-
-
-    //Méthode appelée au clique sur le bouton voir dans la liste des fiches de paie
-    newWindowPdfFile = (key) => {
-        console.log(this.state.listPaySlip[key].id)
-        AxiosCenter.getDocumentByIdPayslip(this.state.listPaySlip[key].id)
-            .then((response) => {
-                console.log(response.data);
-                const fullLink = response.data.cheminFichier;
-                console.log(" fullLink " + fullLink);
-                if (fullLink != null) {
-               /*     const tabFullLink = fullLink.split('./fichiers/social/fichedepaie/');
-                    const pdfName = tabFullLink[1];*/
-                    AxiosCenter.getPdfFileByPath(encodeURI(fullLink))
-                        .then((response) => {
-                            const file = new Blob(
-                                [response.data],
-                                {type: 'application/pdf'});
-                            const fileURL = URL.createObjectURL(file);
-                            window.open(fileURL);
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                        });
-                }else{
-                    toast.error(
-                        <div className="text-center">
-                            <strong>Erreur de chargement du fichier &nbsp;&nbsp;!</strong>
-                        </div>,
-                    );
-                }
-            });;
-
-
-        ;
-    }
 
 
     render() {
@@ -233,25 +196,27 @@ export default class ParentPayslip extends React.Component {
                                         </div>
                                         {/*</form>*/}
                                     </MDBRow>
-                                    <h3 className="card-title mb-4"> Fiche de Paie :</h3>
+                                    <h3 className="card-title mb-4"> DPAE :</h3>
                                     <div>
                                         <MDBTable>
                                             <MDBTableHead>
                                                 <tr>
-                                                    <th className="font-weight-bold">Mois</th>
-                                                    <th>Du</th>
-                                                    <th>Au</th>
+                                                    <th className="font-weight-bold">Date</th>
+                                                    <th>Lieu</th>
+                                                    <th>Retour URSSAF</th>
+                                                    <th>Commentaire</th>
                                                     <th>Lien</th>
                                                     <th className="w-25"></th>
                                                 </tr>
                                             </MDBTableHead>
-                                            {this.state.listPaySlip.length ? (
+                                            {this.state.listDpae.length ? (
                                                 <MDBTableBody>
-                                                    {this.state.listPaySlip.map((paySlip, index) => (
+                                                    {this.state.listDpae.map((dpae, index) => (
                                                         <tr key={index}>
-                                                            <td>{this.state.period [paySlip.mois-1].text }</td>
-                                                            <td>{paySlip.debutPeriode}</td>
-                                                            <td>{paySlip.finPeriode}</td>
+                                                            <td>{dpae.date}</td>
+                                                            <td>{dpae.lieu}</td>
+                                                            <td>{dpae.retourApiUrssaf}</td>
+                                                            <td>{dpae.commentaire}</td>
                                                             <td>
                                                                 <MDBBtn color="teal accent-3" rounded size="sm"
                                                                         onClick={() => this.newWindowPdfFile(index)}>VOIR</MDBBtn>
@@ -265,12 +230,17 @@ export default class ParentPayslip extends React.Component {
                                             ) : (
                                                 <MDBTableBody>
                                                     <tr>
-                                                        <td colSpan="5">Pas de fiche de paie pour cette période</td>
+                                                        <td colSpan="5">Pas DPAE pour cette période</td>
                                                     </tr>
                                                 </MDBTableBody>
                                             )}
 
                                         </MDBTable>
+                                        <Link to="/socialHome/1">
+                                            <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm">
+                                                Retour Home Social
+                                            </MDBBtn>
+                                        </Link>
                                     </div>
                                 </Form>
 
