@@ -24,7 +24,7 @@ export default class QuoteFormEdit extends Component {
     return (
       <MDBContainer>
         <MDBCardHeader color="default-color">
-          <MDBCardTitle>Accueil Devis</MDBCardTitle><br />
+          <MDBCardTitle>Gestion des Devis</MDBCardTitle><br />
         </MDBCardHeader><hr />  
         <MDBCardTitle tag="h3">{this.props.title}</MDBCardTitle><hr/> 
         <Formik
@@ -217,15 +217,6 @@ export default class QuoteFormEdit extends Component {
                   </div>                   
                   <hr />
                   <br />      
-                     
-                  {/* documents */}
-                  {/* <Field
-                    name="initialValues.documentDTOList"
-                    label="Documents relatifs"
-                    component={InputComponent}
-                    outline 
-                  />         */}
-                  
                 </MDBCardBody>
               </MDBCard><br />
               <div className="row d-flex justify-content-center">

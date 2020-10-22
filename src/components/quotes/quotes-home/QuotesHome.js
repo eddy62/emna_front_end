@@ -30,7 +30,7 @@ export default class QuotesHome extends Component {
     return (
       <MDBContainer>   
         <MDBCardHeader color="default-color">
-          <MDBCardTitle>Accueil Devis</MDBCardTitle>
+          <MDBCardTitle>Gestion des Devis</MDBCardTitle>
           <br />
         </MDBCardHeader>         
         <hr />  
@@ -52,8 +52,7 @@ export default class QuotesHome extends Component {
                   <QuotationElement key={quote.id} quote={quote} />
                 ))}
               </MDBTableBody>
-            </MDBTable>  
-            
+            </MDBTable>             
           </MDBCardBody>
         </MDBCard>        
         <br />  

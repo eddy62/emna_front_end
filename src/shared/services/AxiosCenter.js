@@ -310,6 +310,14 @@ const AxiosCenter = {
     });
   },
 
+  getInfosForCreateQuote(id) {
+    return Axios.all([
+      this.getNewQuoteNumber(id),
+      this.getAllCustomerSupplierBySociete(id),
+      this.getProduct(id)
+    ])
+  },
+
   getLastNumFactBySociete(id) {
     return ApiBackEnd({
       method: "GET",
