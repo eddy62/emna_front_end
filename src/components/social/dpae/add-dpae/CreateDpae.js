@@ -91,19 +91,19 @@ class CreateDpae extends React.Component {
                             />
                             :
                             <MDBRow around between>
-                            <MDBBtn
-                                color="teal accent-3"
-                                rounded
-                                size="sm"
-                                onClick={() => {
-                                    this.props.history.push(
-                                        "/socialHome/" + this.state.society.id
-                                    );
-                                }}
-                            >
-                                Annuler
-                            </MDBBtn>
-                        </MDBRow>}
+                                <MDBBtn
+                                    color="teal accent-3"
+                                    rounded
+                                    size="sm"
+                                    onClick={() => {
+                                        this.props.history.push(
+                                            "/socialHome/" + this.state.society.id
+                                        );
+                                    }}
+                                >
+                                    Annuler
+                                </MDBBtn>
+                            </MDBRow>}
                     </MDBContainer>
                 </div>
             </div>

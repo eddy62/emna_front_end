@@ -5,6 +5,7 @@ import UserService from "../../../../shared/services/UserService";
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import RegexService from "../../../../shared/services/RegexService";
+import {Link} from "react-router-dom";
 
 const ComponentDate = ({field, ...props}) => (
     <MDBInput
@@ -42,7 +43,7 @@ const ComponentSelect = ({field, ...props}) => (
             <option
                 style={{color: "#757575"}}
                 value=""
-                disabled={true}
+                disabled={false}
             >{props.label}</option>
             {props.options.map((object) => (
                 <option key={object.key} value={object.value}>{object.intitule}</option>))}
@@ -169,17 +170,17 @@ const dpaeSchema = (props) => {
         // salarie
         surname: Yup.string()
             .required("Nom obligatoire")
-            .matches(/^[a-zA-ZâàäéèêëîïöôûüùçÂÀÄÉÈÊËÎÏÖÔÛÜÙÇ' .&-]*$/, "Caractère spécial ou accentué non autorisé")
+            .matches(RegexService.matchUrssafControlForEmployeeName(), "Caractère spécial ou accentué non autorisé")
             .max(32, "Se compose au maximum de 32 caractères"),
         customaryName: Yup.string()
-            .matches(/^[a-zA-ZâàäéèêëîïöôûüùçÂÀÄÉÈÊËÎÏÖÔÛÜÙÇ' .&-]*$/, "Caractère spécial ou accentué non autorisé")
+            .matches(RegexService.matchUrssafControlForEmployeeName(), "Caractère spécial ou accentué non autorisé")
             .max(32, "Se compose au maximum de 32 caractères"),
         christianName: Yup.string()
             .required("Prénom obligatoire")
-            .matches(/^[a-zA-ZâàäéèêëîïöôûüùçÂÀÄÉÈÊËÎÏÖÔÛÜÙÇ' .&-]*$/, "Caractère spécial ou accentué non autorisé")
+            .matches(RegexService.matchUrssafControlForEmployeeName(), "Caractère spécial ou accentué non autorisé")
             .max(32, "Se compose au maximum de 32 caractères"),
         sex: Yup.string()
-        .required("Sexe obligatoire"),
+            .required("Sexe obligatoire"),
         nir: Yup.string()
             .required("N° de Sécurité Sociale obligatoire")
             .matches(RegexService.onlyNumbers(), "Chiffres uniquement")
@@ -196,16 +197,16 @@ const dpaeSchema = (props) => {
             .max(3, "Se compose obligatoirement de 2 ou 3 caractères"),
         birthTown: Yup.string()
             .required("Commune de naissance obligatoire")
-            .matches(/^[a-zA-ZâàäéèêëîïöôûüùçÂÀÄÉÈÊËÎÏÖÔÛÜÙÇ0-9 .'-]*$/, "Caractère spécial ou accentué non autorisé")
+            .matches(RegexService.matchUrssafControlForEmployeeAddress(), "Caractère spécial ou accentué non autorisé")
             .max(32, "Se compose au maximum de 32 caractères"),
         countryBirth: Yup.string()
             .required("Pays de naissance obligatoire")
-            .matches(/^[a-zA-ZâàäéèêëîïöôûüùçÂÀÄÉÈÊËÎÏÖÔÛÜÙÇ0-9 .'-]*$/, "Caractère spécial ou accentué non autorisé")
+            .matches(RegexService.matchUrssafControlForEmployeeAddress(), "Caractère spécial ou accentué non autorisé")
             .max(32, "Se compose au maximum de 32 caractères"),
 
         // contrat
         nature: Yup.string()
-        .required("Nature du contrat obligatoire"),
+            .required("Nature du contrat obligatoire"),
         healthService: Yup.string()
             .matches(RegexService.onlyNumbers(), "Chiffres uniquement")
             .length(3, "Se compose obligatoirement de 3 chiffres"),
@@ -214,7 +215,7 @@ const dpaeSchema = (props) => {
             .min(props.oneYearBeforeNow, "Doit être inférieure au maximum d'un an à la date du jour")
             .max(props.oneYearFromNow, "Doit être supérieure au maximum d'un an à la date du jour"),
         startContractTime: Yup.string()
-        .required("Heure de début de contrat obligatoire"),
+            .required("Heure de début de contrat obligatoire"),
         endContractDate: Yup.date()
             .min(Yup.ref("startContractDate"), "Doit être supérieure ou égale à la date de début"),
         trialTime: Yup.number()
@@ -230,7 +231,7 @@ class DpaeForm extends React.Component {
         this.state = {
             society: this.props.society,
             employee: this.props.employee,
-            disabled: true,
+            disabled: false,
             oneYearBeforeNow: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
             oneYearFromNow: new Date(new Date().setFullYear(new Date().getFullYear() + 1))
         }
@@ -240,6 +241,11 @@ class DpaeForm extends React.Component {
         if (prevProps.employee !== this.props.employee) {
             this.setState({employee: this.props.employee})
         }
+    }
+
+    componentDidMount() {
+        console.log(this.state.society);
+        console.log(this.state.employee);
     }
 
     //TODO submit
@@ -302,9 +308,10 @@ class DpaeForm extends React.Component {
                 countryBirth: this.state.employee.paysNaissance,
 
                 // contrat
+                // TODO récupérer bonne variable ?
                 startContractDate: this.state.employee.dateEmbauche,
                 startContractTime: "",
-                // TODO initialiser une fois le bon wrapperEmploye reçu
+                // TODO récupérer bonne variable ?
                 endContractDate: "",
                 trialTime: this.state.employee.periodeEssai,
                 nature: this.state.employee.codeRefContrat,
@@ -417,8 +424,7 @@ class DpaeForm extends React.Component {
                                                 disabled={this.state.disabled}
                                                 component={ComponentText}
                                             />
-                                            <ErrorMessage name="streetDesignation"
-                                                          component={ComponentError}/>
+                                            <ErrorMessage name="streetDesignation" component={ComponentError}/>
                                         </MDBCol>
                                     </MDBRow>
                                     {/*ligne 4 employeur*/}
@@ -545,8 +551,7 @@ class DpaeForm extends React.Component {
                                                 disabled={this.state.disabled}
                                                 component={ComponentText}
                                             />
-                                            <ErrorMessage name="departmentBirth"
-                                                          component={ComponentError}/>
+                                            <ErrorMessage name="departmentBirth" component={ComponentError}/>
                                         </MDBCol>
                                         <MDBCol className="mb-3">
                                             <Field
@@ -600,8 +605,7 @@ class DpaeForm extends React.Component {
                                                 disabled={this.state.disabled}
                                                 component={ComponentText}
                                             />
-                                            <ErrorMessage name="healthService"
-                                                          component={ComponentError}/>
+                                            <ErrorMessage name="healthService" component={ComponentError}/>
                                         </MDBCol>
                                     </MDBRow>
                                     {/*ligne 2 contrat*/}
@@ -616,8 +620,7 @@ class DpaeForm extends React.Component {
                                                 maxdate={this.state.oneYearFromNow}
                                                 component={ComponentDate}
                                             />
-                                            <ErrorMessage name="startContractDate"
-                                                          component={ComponentError}/>
+                                            <ErrorMessage name="startContractDate" component={ComponentError}/>
                                         </MDBCol>
                                         <MDBCol className="mb-3">
                                             <Field
@@ -629,8 +632,7 @@ class DpaeForm extends React.Component {
                                                 value={values.startContractTime}
                                                 component={ComponentTime}
                                             />
-                                            <ErrorMessage name="startContractTime"
-                                                          component={ComponentError}/>
+                                            <ErrorMessage name="startContractTime" component={ComponentError}/>
                                         </MDBCol>
                                     </MDBRow>
                                     {/*ligne 3 contrat*/}
@@ -644,8 +646,7 @@ class DpaeForm extends React.Component {
                                                 validate={validateEndContractDate}
                                                 component={ComponentDate}
                                             />
-                                            <ErrorMessage name="endContractDate"
-                                                          component={ComponentError}/>
+                                            <ErrorMessage name="endContractDate" component={ComponentError}/>
                                         </MDBCol>) : null}
                                         <MDBCol className="mb-3">
                                             <Field
@@ -695,18 +696,20 @@ class DpaeForm extends React.Component {
                             >
                                 Réinitialiser
                             </MDBBtn>
-                            <MDBBtn
-                                color="teal accent-3"
-                                rounded
-                                size="sm"
-                                onClick={() => {
-                                    this.props.history.push(
-                                        "/socialHome/" + this.state.society.id
-                                    );
-                                }}
-                            >
-                                Annuler
-                            </MDBBtn>
+                            <Link to={"/socialHome/" + this.state.society.id}>
+                                <MDBBtn
+                                    color="teal accent-3"
+                                    rounded
+                                    size="sm"
+                                    // onClick={() => {
+                                    //     // this.props.history.push(
+                                    //     //     "/socialHome/" + this.state.society.id
+                                    //     // );
+                                    // }}
+                                >
+                                    Annuler
+                                </MDBBtn>
+                            </Link>
                         </MDBRow>
                     </Form>
                 )}

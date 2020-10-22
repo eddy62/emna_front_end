@@ -6,7 +6,7 @@
  */
 const RegexService = {
 
-    /*nombres et lettres seulements*/
+    /*contrôles génériques nombres et lettres*/
 
     /**
      * only numbers
@@ -93,7 +93,15 @@ const RegexService = {
         return /^[0-9a-zA-ZâàäæéèêëîïöôœûüùçÂÀÄÆÉÈÊËÎÏÖÔŒÛÜÙÇ\s]+$/;
     },
 
-    /*cas spécifiques*/
+    /*contrôles génériques autres*/
+
+    /**
+     * must be the same length as the length indicated by the provided string
+     * @param {string} string - the length the expression must be
+     */
+    byLength(string) {
+        return new RegExp(`^.{${string}}$`);
+    },
 
     /**
      * must start with one character from the provided string
@@ -101,8 +109,8 @@ const RegexService = {
      */
     startWithSpecificCharacter(string) {
         return new RegExp(`^[${string}]`);
-
     },
+
     /**
      * must start with the provided string
      * @param {string} string - the string the expression must start with
@@ -112,7 +120,7 @@ const RegexService = {
     },
 
     /**
-     * doesn't start with the provided string
+     * must not start with the provided string
      * @param {string} string - the string the expression must not start with
      */
     doesNotStartWith(string) {
@@ -127,6 +135,25 @@ const RegexService = {
         return new RegExp(`^((?!${string}).)*$`);
     },
 
+    /*contrôles spécifiques*/
+
+    /**
+     * specific input control for Urssaf employee name
+     * (surname + customaryName + chistianName)
+     */
+    matchUrssafControlForEmployeeName() {
+        return /^[a-zA-ZâàäéèêëîïöôûüùçÂÀÄÉÈÊËÎÏÖÔÛÜÙÇ' .&-]*$/;
+    },
+
+    /**
+     * specific input control for Urssaf employee address
+     * (town + birth)
+     */
+    matchUrssafControlForEmployeeAddress() {
+        return /^[a-zA-ZâàäéèêëîïöôûüùçÂÀÄÉÈÊËÎÏÖÔÛÜÙÇ0-9 .'-]*$/;
+    },
+
+    //javascript doc à finir
     /**
      * @example example@gmail.com
      */
@@ -134,16 +161,19 @@ const RegexService = {
         return /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6})*$/;
     },
 
+    //javascript doc à faire
     onlyHttpsUrl() {
         // eslint-disable-next-line
         return /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#()?&//=]*)/;
     },
 
+    //javascript doc à faire
     onlyUrlWithOptionalHttps() {
         // eslint-disable-next-line
         return /(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
     },
 
+    //javascript doc à faire
     onlyIPv4() {
         return /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/
     },
