@@ -9,6 +9,7 @@ import Loading from '../../../shared/component/Loading';
 import AxiosCenter from '../../../shared/services/AxiosCenter';
 import UserService from '../../../shared/services/UserService';
 
+// composants de selection des dates
 const StartDateComponent = ({ field, form: { touched, errors }, ...props }) => (
   <MDBInput label={props.label} outline type="date" {...props} {...field} />
 );
@@ -17,17 +18,41 @@ const EndDateComponent = ({ field, form: { touched, errors }, ...props }) => (
   <MDBInput label={props.label} outline type="date" {...props} {...field} />
 );
 
+// select commun au fournisseur et au produit
 const ComposantSelect = ({field, form: {touched, errors}, ...props}) => (
   <span>
-      <select className="browser-default custom-select md-form md-outline" {...props} {...field}>
-          <option defaultValue label="Sélectionnez un fournisseur" key="0"/>
-          {
-              props.list.map((item) => (
-                  <option value={item.id} label={item.nom} key={item.id}/>
-              ))
-          }
-      </select>
+    <select className="browser-default custom-select md-form md-outline" {...props} {...field}>
+      <option defaultValue label={props.label} key="0"/>
+      {
+        props.list.map((item) => (
+          <option value={item.id} label={item.nom} key={item.id}/>
+        ))
+      }
+    </select>
   </span>
+)
+
+// tableau de produits
+const ArrayComponent = ({productLineList, removeProduct}) =>
+productLineList.map((item, index) => (
+    <tr key={item.product.id}>
+      <td >
+        {item.product.reference}
+      </td>
+      <td>
+        {item.product.nom}
+      </td>
+      <td>
+        {item.product.tva} %
+      </td>
+      <td>
+        {item.product.prix} € ht
+      </td>
+      <td>
+        <MDBBtn onClick={ () => {removeProduct(item.product.id)}} size="sm" color="default-color">X</MDBBtn>
+      </td>
+    </tr>
+  )
 )
 
 export default class QuoteFormCreate extends Component {
@@ -36,8 +61,10 @@ export default class QuoteFormCreate extends Component {
     super();
     this.state = {
         loaded: false,
+        productList: [],
+        productLineList: []
     }
-}
+  }
 
   lexique = {
     required : "le champ est obligatoire",
@@ -50,24 +77,52 @@ export default class QuoteFormCreate extends Component {
     clientFournisseurId           : Yup.number().required(this.lexique.required)                                   
   });
 
+  componentDidMount() {
+    AxiosCenter.getInfosForCreateQuote(UserService.getSocietyId()).then((res) => {
+      this.setState({ 
+        customerList : res[1].data,
+        numDevis : res[0].data+1,
+        productList : res[2].data,
+        loaded: true
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+  }
+
   getInitialValues = () => {
     return {
       numDevis : this.state.numDevis,
       clientFournisseurId: this.state.clientFournisseurId,
+      productList: this.state.productList,
+      product: ''
     }
   }
+  
+  getProductById = (id) => {
+    return this.state.productList.filter(product => product.id === id)[0];
+  }
+  
+  // ajouter un produit au devis 
+  addproductLineList = async () => {
+    let currentProduct = document.getElementById("current-product").value
+    let newListe = [...this.state.productLineList]
+    let product = await this.getProductById(parseInt(currentProduct))
+    newListe.push({product: product})
+    this.setState({productLineList: newListe})
+  }
 
-  componentDidMount() {
-      AxiosCenter.getInfosForCreateQuote(UserService.getSocietyId()).then((res) => {
-        this.setState({ 
-          customerList : res[1].data,
-          numDevis : res[0].data,
-          loaded: true
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+  // supprimer un produit
+  removeProduct = (id) => {
+    this.state.productLineList.map((value) => {
+      if (value.product.id === id) {
+        let index = value.product.id
+        this.setState({
+          productLineList: this.state.productLineList.filter((v, i) => v.product.id !== index)
+        })
+      }
+    })
   }
 
   render() {
@@ -75,7 +130,7 @@ export default class QuoteFormCreate extends Component {
     return (
       <MDBContainer>
         <MDBCardHeader color="default-color">
-          <MDBCardTitle>Accueil Devis</MDBCardTitle>
+          <MDBCardTitle>Gestion des Devis</MDBCardTitle>
           <br />
         </MDBCardHeader>
         <hr />  
@@ -93,7 +148,6 @@ export default class QuoteFormCreate extends Component {
             <Form onSubmit={handleSubmit} className="container-fluid lighten-5 justify-content-center align-items-center">
               <MDBCard>
                 <MDBCardBody>
-
                   {/* références entête devis */}
                   <MDBRow>
                     <MDBCol md="4">
@@ -130,26 +184,7 @@ export default class QuoteFormCreate extends Component {
                     </MDBCol>                      
                   </MDBRow>  
                   <MDBRow>
-                    <MDBCol md="4">
-                      <Field
-                        name="nom"
-                        label="Nom du devis"
-                        component={InputComponent}
-                        outline
-                      />
-                    </MDBCol>
-                    <MDBCol md="8">
-                      <Field
-                        name="message"
-                        label="Message"
-                        component={InputComponent}
-                        outline
-                      /> 
-                    </MDBCol>
-                  </MDBRow>
-
-                  {/* client */}
-                  <MDBRow>
+                    {/* client et nom devis */}
                     <MDBCol md="6">
                       <Field
                         name="clientFournisseurId"
@@ -163,24 +198,46 @@ export default class QuoteFormCreate extends Component {
                         left
                       />
                     </MDBCol>
+                    <MDBCol md="6">
+                      <Field
+                        name="nom"
+                        label="Nom du devis ( optionnel )"
+                        component={InputComponent}
+                        outline
+                      />
+                    </MDBCol>
                   </MDBRow>
-                
-                  {/* coeur devis */}
+                  {/* produits et tableau de produits */}
+                  <MDBRow>
+                    <MDBCol md="6">
+                      <Field
+                        name="productId"
+                        id="current-product"
+                        label="Liste de produits :"
+                        list={this.state.productList}
+                        component={ComposantSelect}
+                      />
+                      <MDBBtn onClick={this.addproductLineList} size="sm" color="default-color">Ajouter</MDBBtn>
+                    </MDBCol>
+                  </MDBRow>
                   <MDBTable>
                     <MDBTableHead>
                     <tr>
-                      <th scope="col"><strong>Produit id</strong></th>
-                      <th scope="col"><strong>Commentaire</strong></th>
-                      <th scope="col"><strong>Quantité</strong></th>
-                      <th scope="col"><strong>Remise</strong></th>
+                      <th scope="col"><strong>Reference</strong></th>
+                      <th scope="col"><strong>Nom</strong></th>
+                      <th scope="col"><strong>TVA</strong></th>
+                      <th scope="col"><strong>Prix</strong></th>
                     </tr>
                     </MDBTableHead>
                     <MDBTableBody>
-                      {/* {this.props.quote.ligneProduitDTOList.map((productLine, index) => (
-                        <ProductList key={productLine.id} productLine={productLine} />
-                      ))} */}
+                      <ArrayComponent 
+                        productLineList={this.state.productLineList}
+                        removeProduct={this.removeProduct}
+                      />
                     </MDBTableBody>
-                  </MDBTable>    
+                  </MDBTable>   
+                  <hr />
+                  {/* prix total et message */}
                   <div className="d-flex flex-row-reverse">
                     <Field
                       name="prixTTC"
@@ -188,9 +245,17 @@ export default class QuoteFormCreate extends Component {
                       component={InputComponent}
                       outline disabled background
                     />
-                  </div>                   
+                  </div>   
+                    <MDBCol>
+                      <Field
+                        name="message"
+                        label="Message"
+                        component={InputComponent}
+                        outline
+                      /> 
+                    </MDBCol>                
                   <hr />
-                  <br />      
+                  <br />                  
                 </MDBCardBody>
               </MDBCard><br />
               <div className="row d-flex justify-content-center">
