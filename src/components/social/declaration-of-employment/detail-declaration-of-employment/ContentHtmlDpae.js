@@ -1,5 +1,4 @@
 import React from "react";
-import "../DeclarationOfEmployment.scss";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import {MDBBtn, MDBContainer, MDBRow} from "mdbreact";
 
