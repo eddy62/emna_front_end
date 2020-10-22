@@ -6,7 +6,10 @@ import {
     MDBCardHeader,
     MDBCardTitle,
     MDBContainer,
-    MDBRow, MDBTable, MDBTableBody, MDBTableHead
+    MDBRow,
+    MDBTable,
+    MDBTableBody,
+    MDBTableHead
 } from "mdbreact";
 import {Link} from "react-router-dom";
 
@@ -221,7 +224,7 @@ export default class ConsultDeclarationOfEmployment extends React.Component {
                                                                 <MDBBtn color="teal accent-3" rounded size="sm"
                                                                         onClick = {() => {
                                                                             this.props.history.push(
-                                                                            "/contentHtmlDpae");
+                                                                            "/contentHtmlDpae/" + dpae.id);
                                                                         }}>VOIR
                                                                 </MDBBtn>
                                                             </td>
