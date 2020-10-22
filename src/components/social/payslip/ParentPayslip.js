@@ -108,6 +108,7 @@ export default class ParentPayslip extends React.Component {
 
     //Méthode appelée au clique sur le bouton voir dans la liste des fiches de paie
     newWindowPdfFile = (key) => {
+        console.log(this.state.listPaySlip[key].id)
         AxiosCenter.getDocumentByIdPayslip(this.state.listPaySlip[key].id)
             .then((response) => {
                 const lienDocument = response.data;
