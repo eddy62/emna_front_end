@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {Switch} from "react-router-dom";
 import {PrivateRoute} from "../helpers/PrivateRoute";
-
 //Gestion Social import
 import SocialHome from "./social/SocialHome";
 import ListEmployes from "./social/employee-management/ListEmployes";
@@ -17,7 +16,6 @@ import DetailContrat from "./contrat/list-contract/detail-contract/DetailContrat
 import CreerContrat from "./contrat/create-contract/CreerContrat";
 
 import CreateDpae from "./social/dpae/add-dpae/CreateDpae";
-
 //gestion ClientFournisseur imports
 import MenuClientFournisseur from "./client-fournisseur/MenuClientFournisseur";
 import ListerClients from "./client-fournisseur/list-client-fournisseur/ListClients";
@@ -25,7 +23,6 @@ import AddClient from "./client-fournisseur/add-client-fournisseur/AddClient";
 import ModifierClient from "./client-fournisseur/update-cLient-fournisseur/UpdateClient";
 import SupprimerClient from "./client-fournisseur/delete-client-founisseur/DeleteClient";
 import DetailsClient from "./client-fournisseur/detail-client-founisseur/DetailClient";
-
 //gestionBancaire
 import Bancaire from "./bancaire/index";
 import OperationsMerger from "./bancaire/releve/gestion_releves/rapprochement_bancaire/OperationsMerger";
@@ -50,8 +47,6 @@ import EditStatement from "./bancaire/releve/details_releve/edit-statement/EditS
 import QuotesHome from "./quotes/quotes-home/QuotesHome";
 import QuoteCreate from "./quotes/quotes-form/quote-create/QuoteCreate";
 import QuoteEdit from "./quotes/quotes-form/quote-edit/QuoteEdit";
-
-
 // gestionUserRoutesImports
 import NotFound from "./pages/NotFound";
 import EditUser from "./users/EditUser";
@@ -85,7 +80,6 @@ import UpdateProduit from "./produits/update-produit/UpdateProduit";
 //finGestionProduits
 //GestionReferentiels
 import Referentiels from "./contrat/referencial/Referentiels";
-
 //GestionFactures
 import AccueilFacture from "./gestion_factures/factures/accueilFactures";
 import CreerFacture from "./gestion_factures/factures/creerFacture";
@@ -94,11 +88,9 @@ import AccueilDepense from './gestion_factures/depenses/AccueilDepenses';
 import CreateArticle from "./contrat/referencial/article/create-article/CreateArticle";
 import EditArticle from "./contrat/referencial/article/edit-article/EditArticle";
 import DetailDepense from "./gestion_factures/depenses/detail-depense/DetailDepense";
-
 //Juridique
 //import ListOfClauses from "./contrat/referencial/clauses/list-of-clauses/ListOfClauses";
 import ListArticle from "./contrat/referencial/article/list-article/ListArticle";
-
 //gestion Variables de paie
 import ParentAddPayrollVariables from "./social/payroll-variables/add-payroll-variables/ParentAddPayrollVariables";
 import ParentUpdatePayrollVariables
@@ -138,7 +130,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/consult-declaration-of-employment/:id" component={ConsultDeclarationOfEmployment} />
         <PrivateRoute path="/payslip/ParentPayslip/:id" component={ParentPayslip} />
         <PrivateRoute path="/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants/:id" component={ParentUpdatePayrollVariablesAccountants} />
-        <PrivateRoute path="/contentHtmlDpae" component={ContentHtmlDpae} />
+        <PrivateRoute path="/contentHtmlDpae/:id" component={ContentHtmlDpae} />
           {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/accueildepenses" component={AccueilDepense} />

@@ -1,21 +1,9 @@
 import React from "react";
 import "../DeclarationOfEmployment.scss";
-import {
-    MDBBtn,
-    MDBCard,
-    MDBCardBody,
-    MDBCardHeader,
-    MDBCardTitle,
-    MDBCol,
-    MDBContainer,
-    MDBInput,
-    MDBRow
-} from "mdbreact";
-import UserService from "../../../../shared/services/UserService";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
-import Loading from "../../../../shared/component/Loading";
+import {MDBBtn, MDBContainer, MDBRow} from "mdbreact";
 
-class ContentHtmlDpae extends React.Component{
+class ContentHtmlDpae extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -24,26 +12,64 @@ class ContentHtmlDpae extends React.Component{
     }
 
     componentDidMount() {
-        
-        AxiosCenter.getHtmlDpae(1)
-       
+        const idDpae = this.props.match.params.id;
+        AxiosCenter.getHtmlDpae(parseInt(idDpae))
             .then((response) => {
                 this.setState({codeHtml: response.data.html})
-        console.log(this.state.codeHtml)
-
-        
-
             })
     }
 
-    render() {
-        return (
-            <div className="content" dangerouslySetInnerHTML={{ __html: this.state.codeHtml }}></div>
-                // var code  = this.state.codeHtml;
-                // var parse = require('html-react-parser');
-                // parse('<div>code</div>');
-        );
-    }
-}
+    getPdf = (id) => {
+        AxiosCenter.getPdfDpae(id)
+            .then((response) => {
+                const file = new Blob(
+                    [response.data],
+                    {type: 'application/pdf'});
+                //Build a URL from the file
+                const fileURL = URL.createObjectURL(file);
+                //Open the URL on new Window
+                window.open(fileURL);
+           })
+    };
 
-export default ContentHtmlDpae;
+        render()
+        {
+            return (
+                <div>
+                    <div className="content" dangerouslySetInnerHTML={{__html: this.state.codeHtml}}>
+                    </div>
+                    <div className="navigate">
+                        <MDBContainer>
+                            <MDBRow around between>
+                                <MDBBtn
+                                    color="teal accent-3"
+                                    rounded
+                                    size="sm"
+                                    onClick={() => {
+                                        this.props.history.go(-1);
+                                    }}
+                                >
+                                    Retour liste
+                                </MDBBtn>
+                                <MDBBtn
+                                    color="teal accent-3"
+                                    rounded
+                                    size="sm"
+                                    onClick={() => {
+                                        this.getPdf(this.props.match.params.id);
+                                    }}
+                                >
+                                    Afficher en pdf
+                                </MDBBtn>
+                            </MDBRow>
+                        </MDBContainer>
+                    </div>
+                </div>
+
+            );
+        }
+    }
+
+    export
+    default
+    ContentHtmlDpae;
