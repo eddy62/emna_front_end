@@ -75,7 +75,7 @@ class SideNavigation extends React.Component {
                   onChange={() => this.changeSocietyId()}
                 >
                   {this.state.societes.map((societe) => (
-                    <option value={societe.id}>{societe.civilite}</option>
+                    <option value={societe.id} key={societe.id}>{societe.civilite}</option>
                   ))}
                 </select>
               </div>

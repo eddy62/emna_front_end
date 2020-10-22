@@ -310,6 +310,14 @@ const AxiosCenter = {
     });
   },
 
+  getInfosForCreateQuote(id) {
+    return Axios.all([
+      this.getNewQuoteNumber(id),
+      this.getAllCustomerSupplierBySociete(id),
+      this.getProduct(id)
+    ])
+  },
+
   getLastNumFactBySociete(id) {
     return ApiBackEnd({
       method: "GET",
@@ -361,11 +369,13 @@ const AxiosCenter = {
   },
 
   getPdfFileByPath(path) {
+  path = path.replaceAll("/", "¤¤¤");
+
     return ApiBackEnd({
       method: "GET",
       url: `/getPdfFile/${path}`,
       responseType: 'blob'
-    })
+    });
   },
 
   getAllPayslipByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
@@ -419,6 +429,14 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "GET",
       url: `/dpae/employe/${idEmploye}/annee/${year}/moisDu/${monthStart}/moisFin/${monthEnd}`
+    });
+  },
+
+  getPDFAmendment(idAmendment) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/avenant/pdf/${idAmendment}`,
+      responseType: 'arraybuffer'
     });
   },
 
