@@ -415,6 +415,13 @@ const AxiosCenter = {
     });
   },
 
+  getPdfDpae(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/dpae/pdf/${id}`,
+      responseType: 'blob'
+    });
+  },
   getAllDpaeByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
     return ApiBackEnd({
       method: "GET",
