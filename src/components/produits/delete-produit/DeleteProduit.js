@@ -34,10 +34,10 @@ class DeleteProduit extends Component {
                 })
             })
             .catch((error) => {
-                console.log(error);
+                console.log(error.response);
                 toast.error(
                     <div className="text-center">
-                        <strong>Erreur lors la suppression &nbsp;&nbsp;!</strong>
+                        <strong>{error.response.data.title}</strong>
                         <br/>
                     </div>,
                     {position: "top-right"}
