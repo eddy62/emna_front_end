@@ -413,6 +413,12 @@ const AxiosCenter = {
     });
   },
 
+  getAllAmendmentByContratId(idContrat) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/avenants/contrats/${idContrat}`
+    })
+  },
   // Fin Get
 
   //Post

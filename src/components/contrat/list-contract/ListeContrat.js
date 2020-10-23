@@ -16,17 +16,17 @@ class ListeContrat extends React.Component {
     }
 
     componentDidMount() {
-        AxiosCenter.getAllWrapperEmployesBySociety(UserService.getSocietyId()).then((result) => {
-            this.setState({
-                employes: result.data,
-                loaded: true
+        if(!this.state.loaded){
+            AxiosCenter.getAllWrapperEmployesBySociety(UserService.getSocietyId()).then((result) => {
+                this.setState({
+                    employes: result.data,
+                    loaded: true
+                })
             })
-        })
+        }
     }
 
     onSavingFiles = (files, idContract) => {
-
-        console.log(files)
         AxiosCenter.uploadContract(files, idContract).then(res => {
             toast.success(
                 <div className="text-center">
@@ -37,7 +37,7 @@ class ListeContrat extends React.Component {
                 {position: "bottom-right"}
             );
             this.componentDidMount();
-        }).catch((err) =>{
+        }).catch((err) => {
             toast.error(
                 <div className="text-center">
                     <strong>Y'a une couille dans le potage !</strong>
@@ -49,13 +49,16 @@ class ListeContrat extends React.Component {
     }
 
     listerLesContrats(props) {
-       const employes = props.employes.map((employe, index) => {
+        const employes = props.employes.map((employe) => {
             if (employe.archive === false) {
                 if (employe.signe) {
                     return (
-                        <div key={employe.idContrat} className="alert alert-success" role="alert">
+                        <div key={employe.id} className="alert alert-success" role="alert">
                             <h5>  {employe.titre} - {employe.nomUsage} {employe.prenom}
                                 <button type="button" className="btn btn--danger">Supprimer</button>
+                                <Link to={"/contrat/avenant/" + employe.idContrat}>
+                                    <button type="button" className="btn btn-outline-success">Voir ces avenants</button>
+                                </Link>
                                 <Link to={"/detailcontrat/" + employe.idContrat}>
                                     <button type="button" className="btn btn-outline-success text-right">Voir le
                                         contrat
@@ -66,7 +69,7 @@ class ListeContrat extends React.Component {
                     )
                 } else {
                     return (
-                        <div key={index} className="alert alert-danger">
+                        <div key={employe.id} className="alert alert-danger">
                             <h5> {employe.titre} - {employe.nomUsage} {employe.prenom} - En attente d'une signature
                                 <button type="button" className="btn btn--danger text-right">Supprimer</button>
                                 <UploadFileBtn
@@ -99,11 +102,11 @@ class ListeContrat extends React.Component {
     }
 
     render() {
-        if(!this.state.loaded) return <Loading/>
+        if (!this.state.loaded) return <Loading/>
         return <this.listerLesContrats
-                employes={this.state.employes}
-                onSavingFiles={this.onSavingFiles}
-                files={this.state.files}
+            employes={this.state.employes}
+            onSavingFiles={this.onSavingFiles}
+            files={this.state.files}
         />
     }
 }
