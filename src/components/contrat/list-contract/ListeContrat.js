@@ -5,6 +5,7 @@ import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UploadFileBtn from "../../../shared/component/drag-n-drop/UploadFileBtn";
 import UserService from "../../../shared/services/UserService";
 import {toast} from "react-toastify";
+import {MDBContainer} from "mdbreact";
 
 class ListeContrat extends React.Component {
     constructor(props) {
@@ -16,7 +17,7 @@ class ListeContrat extends React.Component {
     }
 
     componentDidMount() {
-        if(!this.state.loaded){
+        if (!this.state.loaded) {
             AxiosCenter.getAllWrapperEmployesBySociety(UserService.getSocietyId()).then((result) => {
                 this.setState({
                     employes: result.data,
@@ -113,16 +114,19 @@ class ListeContrat extends React.Component {
 
     render() {
         if (!this.state.loaded) return <Loading/>
-        return <this.listerLesContrats
-            employes={this.state.employes}
-            onSavingFiles={this.onSavingFiles}
-            files={this.state.files}
-        />
-        <div>
-            <button onClick={()=>this.getPDFAmendment(1)}>
-                pdf
-            </button>
-        </div>
+        return (
+            <MDBContainer>
+                <this.listerLesContrats
+                    employes={this.state.employes}
+                    onSavingFiles={this.onSavingFiles}
+                    files={this.state.files}
+                />
+                <div>
+                    <button onClick={() => this.getPDFAmendment(1)}>
+                        pdf
+                    </button>
+                </div>
+            </MDBContainer>)
     }
 }
 

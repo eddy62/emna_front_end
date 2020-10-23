@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
 import RedirectionBtn from '../../../../shared/component/buttons/RedirectionBtn';
 
 export default class QuotationElement extends Component {
@@ -11,20 +10,17 @@ export default class QuotationElement extends Component {
         <td>{this.props.quote.prixTTC} € TTC</td>
         <td>{this.props.quote.clientFournisseurNom}</td>
         <td>
-          <Link to={"#"}>
-            <em>voir le détail</em>
-          </Link>
+            <RedirectionBtn color="default-color"
+                            to={"/devis/details/" + this.props.quote.id}
+                            txt="Details"
+                            size="sm"
+            />
         </td>
         <td>  
-          <RedirectionBtn 
-            to={"/devis/modifier/" + this.props.quote.id} 
-            txt="Modifier" 
-            color="default-color" 
-            size="sm"
-          />
-          <RedirectionBtn color="default-color" route="/devis/accueil" txt="Télécharger" size="sm"/>
-          <RedirectionBtn color="default-color" route="/devis/accueil" txt="Supprimer"size="sm"/>
-        </td>     
+          <RedirectionBtn color="default-color" to={"/devis/modifier/" + this.props.quote.id} txt="Modifier" size="sm"/>
+          <RedirectionBtn color="default-color" to="/devis/accueil" txt="Télécharger" size="sm"/>
+          <RedirectionBtn color="default-color" to="/devis/accueil" txt="Supprimer" size="sm"/>
+        </td>
       </tr>
     );
   }

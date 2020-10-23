@@ -104,6 +104,8 @@ import UpdateDepense from "./gestion_factures/depenses/update-depense/UpdateDepe
 import ConsultDeclarationOfEmployment
     from "./social/declaration-of-employment/consult-declaration-of-employment/ConsultDeclarationOfEmployment";
 import AmendmentList from "./amendment/amendment-list/AmendmentList";
+import QuoteDetails from "./quotes/quotes-details/QuotesDetails";
+
 
 
 export default class Routes extends Component {
@@ -144,7 +146,7 @@ export default class Routes extends Component {
         <PrivateRoute path="/devis/accueil" component={QuotesHome} />
         <PrivateRoute path="/devis/créer" component={QuoteCreate} />
         <PrivateRoute path="/devis/modifier/:id" component={QuoteEdit} />
-
+        <PrivateRoute path="/devis/details/:id" component={QuoteDetails} />
 
         {/* Juridique  */}
 

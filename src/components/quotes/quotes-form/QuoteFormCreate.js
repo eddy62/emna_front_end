@@ -1,4 +1,5 @@
-import { MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer, MDBInput, MDBRow, MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
+import { MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer,
+        MDBInput, MDBRow, MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
 import React, { Component } from 'react';
 import RedirectionBtn from '../../../shared/component/buttons/RedirectionBtn';
 import * as Yup from "yup";
