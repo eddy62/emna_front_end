@@ -1,7 +1,7 @@
 import React from "react";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import Loading from "../../../shared/component/Loading";
-import {MDBCard, MDBCardBody, MDBCardHeader, MDBCardText, MDBCardTitle, MDBContainer} from "mdbreact";
+import {MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBContainer} from "mdbreact";
 import QuotePrimaryDetails from "./quote-sub-details/QuotePrimaryDetails";
 import QuoteProductsDetails from "./quote-sub-details/QuoteProductsDetails";
 import QuoteClientDetails from "./quote-sub-details/QuoteClientDetails";

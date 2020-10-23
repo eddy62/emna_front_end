@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import AxiosCenter from '../../../shared/services/AxiosCenter';
 import QuoteForm from './QuoteForm';
 

@@ -1,8 +1,8 @@
-import { MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput } from 'mdbreact';
-import React, { Component } from 'react';
+import {MDBBtn, MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput} from 'mdbreact';
+import React, {Component} from 'react';
 import RedirectionBtn from '../../../shared/component/buttons/RedirectionBtn';
 import * as Yup from "yup";
-import { Formik, Form, Field, } from 'formik';
+import {Field, Form, Formik,} from 'formik';
 import InputComponent from '../../../shared/component/form/InputComponent';
 import ErrorMessForm from '../../../shared/component/ErrorMessForm';
 

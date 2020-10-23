@@ -1,5 +1,5 @@
 import React from "react";
-import {MDBCard, MDBCardBody, MDBCardText, MDBCol, MDBRow} from "mdbreact";
+import {MDBCard, MDBCardBody, MDBCol, MDBRow} from "mdbreact";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import UserService from "../../../../shared/services/UserService";
 import Loading from "../../../../shared/component/Loading";
@@ -31,7 +31,7 @@ class QuoteSocietyDetails extends React.Component {
                 <MDBCardBody>
                     <MDBRow>
                         <MDBCol md="4">
-                            <strong>{society.civilite}</strong>
+                            <b>{society.civilite}</b>
                         </MDBCol>
                     </MDBRow>
                     <MDBRow>

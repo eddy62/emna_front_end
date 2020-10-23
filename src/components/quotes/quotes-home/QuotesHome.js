@@ -1,8 +1,17 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Axios from '../../../shared/services/AxiosCenter';
 import Loading from '../../../shared/component/Loading';
 import UserService from '../../../shared/services/UserService';
-import { MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBContainer, MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
+import {
+    MDBCard,
+    MDBCardBody,
+    MDBCardHeader,
+    MDBCardTitle,
+    MDBContainer,
+    MDBTable,
+    MDBTableBody,
+    MDBTableHead
+} from 'mdbreact';
 import QuotationElement from './quotation-element/QuotationElement';
 import RedirectionBtn from '../../../shared/component/buttons/RedirectionBtn';
 

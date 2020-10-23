@@ -1,5 +1,5 @@
 import React from "react";
-import {MDBCard, MDBCardBody, MDBCardText, MDBCol, MDBRow} from "mdbreact";
+import {MDBCard, MDBCardBody, MDBCol, MDBRow} from "mdbreact";
 
 const QuotePrimaryDetails = ({quote}) => (
     <MDBCard className="border-0">
