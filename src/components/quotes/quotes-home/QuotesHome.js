@@ -33,6 +33,14 @@ export default class QuotesHome extends Component {
     })
     .catch((err) => console.log(err));
   }
+    reload() {
+    
+    Axios.getAllQuotesBySociety(this.state.societyId).then((res) => {
+      const quotes = res.data;
+      this.setState({quotes, loaded: true});
+    })
+    .catch((err) => console.log(err));
+  }
 
   render() {
     if (!this.state.loaded) return <Loading />
@@ -47,7 +55,7 @@ export default class QuotesHome extends Component {
         <hr />
         <MDBCard>
           <MDBCardBody>            
-            <MDBTable striped>
+            <MDBTable >
               <MDBTableHead>
                 <tr>
                   <th scope="col">Numéro</th>
@@ -58,7 +66,7 @@ export default class QuotesHome extends Component {
               </MDBTableHead>
               <MDBTableBody>
                 {this.state.quotes.map((quote, index) => (
-                  <QuotationElement key={quote.id} quote={quote} />
+                  <QuotationElement key={quote.id} quote={quote} reload={()=>this.reload()} societyId={this.state.societyId} />
                 ))}
               </MDBTableBody>
             </MDBTable>             

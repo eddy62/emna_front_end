@@ -705,6 +705,8 @@ const AxiosCenter = {
       data: values
     })
   },
+
+  
   // Fin Post
 
   //Put
@@ -713,6 +715,15 @@ const AxiosCenter = {
       method: "PUT",
       url: `/client-fournisseurs/wrapper`,
       data: values,
+    });
+  },
+
+  updateStateQuote(idQuote){
+
+    return ApiBackEnd({
+      method:"PUT",
+      url: `/quote/stateChange/${idQuote}`,
+      data : idQuote,
     });
   },
 
