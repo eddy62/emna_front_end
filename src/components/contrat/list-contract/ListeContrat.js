@@ -17,13 +17,14 @@ class ListeContrat extends React.Component {
     }
 
     componentDidMount() {
-        console.log("here");
-        AxiosCenter.getAllWrapperEmployesBySociety(UserService.getSocietyId()).then((result) => {
-            this.setState({
-                employes: result.data,
-                loaded: true
+        if (!this.state.loaded) {
+            AxiosCenter.getAllWrapperEmployesBySociety(UserService.getSocietyId()).then((result) => {
+                this.setState({
+                    employes: result.data,
+                    loaded: true
+                })
             })
-        })
+        }
     }
 
     getPDFAmendment = (idAmendment) => {

@@ -302,6 +302,12 @@ const AxiosCenter = {
       url: `devis/detail/${id}`
     });
   },
+  getQuotesBySociety(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `devis/detail/${id}`
+    });
+  },
 
   getNewQuoteNumber(id) {
     return ApiBackEnd({
@@ -368,12 +374,10 @@ const AxiosCenter = {
     });
   },
 
-  getPdfFileByPath(path) {
-  path = path.replaceAll("/", "¤¤¤");
-
+  getPdfFileById(id) {
     return ApiBackEnd({
       method: "GET",
-      url: `/getPdfFile/${path}`,
+      url: `/getPdfFile/${id}`,
       responseType: 'blob'
     });
   },
@@ -437,6 +441,13 @@ const AxiosCenter = {
       method: "GET",
       url: `/dpae/employe/${idEmploye}/annee/${year}/moisDu/${monthStart}/moisFin/${monthEnd}`
     });
+  },
+
+  getAllAmendmentByContratId(idContrat) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/avenants/contrats/${idContrat}`
+    })
   },
 
   getPDFAmendment(idAmendment) {
@@ -694,6 +705,8 @@ const AxiosCenter = {
       data: values
     })
   },
+
+  
   // Fin Post
 
   //Put
@@ -702,6 +715,15 @@ const AxiosCenter = {
       method: "PUT",
       url: `/client-fournisseurs/wrapper`,
       data: values,
+    });
+  },
+
+  updateStateQuote(idQuote){
+
+    return ApiBackEnd({
+      method:"PUT",
+      url: `/quote/stateChange/${idQuote}`,
+      data : idQuote,
     });
   },
 
@@ -816,7 +838,15 @@ const AxiosCenter = {
   confirmPayrollVariables(values) {
     return ApiBackEnd({
       method: "PUT",
-      url: `/wrappervariablespaie/confirm-variablespaie`,
+      url: `/wrappervariablespaie/process-variablespaie/1`,
+      data: values,
+    })
+  },
+
+  validatePayrollVariables(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/wrappervariablespaie/process-variablespaie/2`,
       data: values,
     })
   },

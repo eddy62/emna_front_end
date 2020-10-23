@@ -103,6 +103,9 @@ import ParentPayslip from "./social/payslip/ParentPayslip";
 import UpdateDepense from "./gestion_factures/depenses/update-depense/UpdateDepense";
 import ConsultDeclarationOfEmployment
     from "./social/declaration-of-employment/consult-declaration-of-employment/ConsultDeclarationOfEmployment";
+import AmendmentList from "./amendment/amendment-list/AmendmentList";
+import QuoteDetails from "./quotes/quotes-details/QuotesDetails";
+
 
 
 export default class Routes extends Component {
@@ -143,13 +146,13 @@ export default class Routes extends Component {
         <PrivateRoute path="/devis/accueil" component={QuotesHome} />
         <PrivateRoute path="/devis/créer" component={QuoteCreate} />
         <PrivateRoute path="/devis/modifier/:id" component={QuoteEdit} />
-
+        <PrivateRoute path="/devis/details/:id" component={QuoteDetails} />
 
         {/* Juridique  */}
 
         {/* Gestion des Contrats*/}
         <PrivateRoute path="/listcontrat" component={ListeContrat} />
-        <PrivateRoute path="/contrat" component={Contrat} />
+        <PrivateRoute exact path="/contrat" component={Contrat} />
         <PrivateRoute path="/detailcontrat/:id" component={DetailContrat} />
         <PrivateRoute path="/creercontrat" component={CreerContrat} />
         {/*<PrivateRoute path="/clauses/society/:id" component={ListOfClauses} />*/}
@@ -157,7 +160,7 @@ export default class Routes extends Component {
         <PrivateRoute exact path="/articles/create" component={CreateArticle} />
         <PrivateRoute exact path="/articles/edit/:id" component={EditArticle} />
         {/*<PrivateRoute exact path="/articles/delete/:id" component={DeleteArticle}/>*/}
-
+        <PrivateRoute exact path="/contrat/avenant/:id" component={AmendmentList} />
         {/* gestionUserRoutes */}
         {/* <PrivateRoute exact path="/users" component={Users} />
         <PrivateRoute exact path="/users/add" component={AddUser} /> */}
