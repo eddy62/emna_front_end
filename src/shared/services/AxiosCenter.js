@@ -302,6 +302,12 @@ const AxiosCenter = {
       url: `devis/detail/${id}`
     });
   },
+  getQuotesBySociety(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `devis/detail/${id}`
+    });
+  },
 
   getNewQuoteNumber(id) {
     return ApiBackEnd({
@@ -435,6 +441,13 @@ const AxiosCenter = {
       method: "GET",
       url: `/dpae/employe/${idEmploye}/annee/${year}/moisDu/${monthStart}/moisFin/${monthEnd}`
     });
+  },
+
+  getAllAmendmentByContratId(idContrat) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/avenants/contrats/${idContrat}`
+    })
   },
 
   getPDFAmendment(idAmendment) {
