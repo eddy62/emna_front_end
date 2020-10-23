@@ -1,14 +1,17 @@
 import React from "react";
 import AxiosCenter from "../../../../shared/services/AxiosCenter"
-import {ErrorMessage, Field, Form, Formik} from "formik";
+import {Form, Formik} from "formik";
 import {
     MDBBtn,
     MDBCardHeader,
     MDBCardTitle,
     MDBContainer,
-    MDBRow, MDBTable, MDBTableBody, MDBTableHead
+    MDBRow,
+    MDBTable,
+    MDBTableBody,
+    MDBTableHead
 } from "mdbreact";
-import {toast} from "react-toastify";
+import {Link} from "react-router-dom";
 
 export default class ConsultDeclarationOfEmployment extends React.Component {
 
@@ -219,7 +222,11 @@ export default class ConsultDeclarationOfEmployment extends React.Component {
                                                             <td>{dpae.commentaire}</td>
                                                             <td>
                                                                 <MDBBtn color="teal accent-3" rounded size="sm"
-                                                                        onClick={() => this.newWindowPdfFile(index)}>VOIR</MDBBtn>
+                                                                        onClick = {() => {
+                                                                            this.props.history.push(
+                                                                            "/contentHtmlDpae/" + dpae.id);
+                                                                        }}>VOIR
+                                                                </MDBBtn>
                                                             </td>
 
 
@@ -236,6 +243,11 @@ export default class ConsultDeclarationOfEmployment extends React.Component {
                                             )}
 
                                         </MDBTable>
+                                        <Link to="/socialHome/1">
+                                            <MDBBtn className="mt-5" color="teal accent-3" rounded size="sm">
+                                                Retour Home Social
+                                            </MDBBtn>
+                                        </Link>
                                     </div>
                                 </Form>
 

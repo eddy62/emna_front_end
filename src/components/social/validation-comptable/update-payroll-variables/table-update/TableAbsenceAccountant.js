@@ -51,7 +51,7 @@ class TableAbsenceAccountant extends React.Component {
       callBackToRejectAbsence = () => {
           this.props.absenceList[this.state.index].etatVariablePaieId = 1;
           console.log(this.props.absenceList[this.state.index].etatVariablePaieId)
-          AxiosCenter.modifyAbsence(this.props.absenceList[this.state.index]).then(() => {
+          AxiosCenter.updateAbsence(this.props.absenceList[this.state.index]).then(() => {
             this.toggleModalRejectAbsence();
             notify('success');
         }).catch((error) => {

@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-import { Switch } from "react-router-dom";
-import { PrivateRoute } from "../helpers/PrivateRoute";
-
+import React, {Component} from "react";
+import {Switch} from "react-router-dom";
+import {PrivateRoute} from "../helpers/PrivateRoute";
 //Gestion Social import
 import SocialHome from "./social/SocialHome";
 import ListEmployes from "./social/employee-management/ListEmployes";
@@ -16,8 +15,7 @@ import Contrat from "./contrat/Contrat";
 import DetailContrat from "./contrat/list-contract/detail-contract/DetailContrat";
 import CreerContrat from "./contrat/create-contract/CreerContrat";
 
-import CreateDeclarationOfEmployment from "./social/declaration-of-employment/add-declaration-of-employment/CreateDeclarationOfEmployment";
-
+import CreateDpae from "./social/dpae/add-dpae/CreateDpae";
 //gestion ClientFournisseur imports
 import MenuClientFournisseur from "./client-fournisseur/MenuClientFournisseur";
 import ListerClients from "./client-fournisseur/list-client-fournisseur/ListClients";
@@ -25,7 +23,6 @@ import AddClient from "./client-fournisseur/add-client-fournisseur/AddClient";
 import ModifierClient from "./client-fournisseur/update-cLient-fournisseur/UpdateClient";
 import SupprimerClient from "./client-fournisseur/delete-client-founisseur/DeleteClient";
 import DetailsClient from "./client-fournisseur/detail-client-founisseur/DetailClient";
-
 //gestionBancaire
 import Bancaire from "./bancaire/index";
 import OperationsMerger from "./bancaire/releve/gestion_releves/rapprochement_bancaire/OperationsMerger";
@@ -42,7 +39,7 @@ import ListeRelevesInvalide from "./bancaire/releve/historique_releves/liste_rel
 import ListeRelevesValide from "./bancaire/releve/historique_releves/liste_releves_valide";
 import ListeRelevesNonArchive from "./bancaire/releve/historique_releves/liste_releves_non_archive";
 import PageAddOperationStatement
-  from "./bancaire/releve/details_releve/operation/creation_operation/pageAddOperationStatement";
+    from "./bancaire/releve/details_releve/operation/creation_operation/pageAddOperationStatement";
 import BankReconciliation from "./bancaire/releve/gestion_releves/rapprochement_bancaire/BankReconciliation";
 import ListOfOperations from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfOperations";
 import ListOfInvoices from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfInvoices";
@@ -50,10 +47,7 @@ import EditStatement from "./bancaire/releve/details_releve/edit-statement/EditS
 import QuotesHome from "./quotes/quotes-home/QuotesHome";
 import QuoteCreate from "./quotes/quotes-form/quote-create/QuoteCreate";
 import QuoteEdit from "./quotes/quotes-form/quote-edit/QuoteEdit";
-
-
 // gestionUserRoutesImports
-import Users from "./users/Users";
 import NotFound from "./pages/NotFound";
 import EditUser from "./users/EditUser";
 import AddUser from "./users/AddUser";
@@ -76,6 +70,7 @@ import ListSociete from "./societe/ListSociete";
 import HomeMenu from "./navigation/HomeMenu";
 import ComptabiliteMenu from "./navigation/ComptabiliteMenu";
 import JuridiqueMenu from "./navigation/JuridiqueMenu";
+import ContentHtmlDpae from "./social/declaration-of-employment/detail-declaration-of-employment/ContentHtmlDpae";
 // finGestionUserRoutesImports
 //GestionProduits
 import ListeProduits from "./produits/list-produits/ListProduits";
@@ -85,7 +80,6 @@ import UpdateProduit from "./produits/update-produit/UpdateProduit";
 //finGestionProduits
 //GestionReferentiels
 import Referentiels from "./contrat/referencial/Referentiels";
-
 //GestionFactures
 import AccueilFacture from "./gestion_factures/factures/accueilFactures";
 import CreerFacture from "./gestion_factures/factures/creerFacture";
@@ -94,24 +88,22 @@ import AccueilDepense from './gestion_factures/depenses/AccueilDepenses';
 import CreateArticle from "./contrat/referencial/article/create-article/CreateArticle";
 import EditArticle from "./contrat/referencial/article/edit-article/EditArticle";
 import DetailDepense from "./gestion_factures/depenses/detail-depense/DetailDepense";
-
 //Juridique
 //import ListOfClauses from "./contrat/referencial/clauses/list-of-clauses/ListOfClauses";
 import ListArticle from "./contrat/referencial/article/list-article/ListArticle";
-
 //gestion Variables de paie
 import ParentAddPayrollVariables from "./social/payroll-variables/add-payroll-variables/ParentAddPayrollVariables";
-import ParentUpdatePayrollVariables from "./social/payroll-variables/update-payroll-variables/ParentUpdatePayrollVariables";
+import ParentUpdatePayrollVariables
+    from "./social/payroll-variables/update-payroll-variables/ParentUpdatePayrollVariables";
 
 import ParentUpdatePayrollVariablesAccountants
     from "./social/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants";
 
 import ParentPayslip from "./social/payslip/ParentPayslip";
 import UpdateDepense from "./gestion_factures/depenses/update-depense/UpdateDepense";
-import ConsultDeclarationOfEmploylent
+import ConsultDeclarationOfEmployment
     from "./social/declaration-of-employment/consult-declaration-of-employment/ConsultDeclarationOfEmployment";
 import AmendmentList from "./amendment/amendment-list/AmendmentList";
-
 
 
 export default class Routes extends Component {
@@ -135,11 +127,11 @@ export default class Routes extends Component {
           path="/modify-payroll-variables/:societyId/:id/:yearSelected/:monthSelected"
           component={ParentUpdatePayrollVariables}
         />
-        <PrivateRoute path="/add-declaration-of-employment/:id" component={CreateDeclarationOfEmployment} />
-        <PrivateRoute path="/consult-declaration-of-employment/:id" component={ConsultDeclarationOfEmploylent} />
+        <PrivateRoute path="/add-declaration-of-employment/:id" component={CreateDpae} />
+        <PrivateRoute path="/consult-declaration-of-employment/:id" component={ConsultDeclarationOfEmployment} />
         <PrivateRoute path="/payslip/ParentPayslip/:id" component={ParentPayslip} />
         <PrivateRoute path="/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants/:id" component={ParentUpdatePayrollVariablesAccountants} />
-
+        <PrivateRoute path="/contentHtmlDpae/:id" component={ContentHtmlDpae} />
           {/* Gestion Facture */}
         <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
         <PrivateRoute path="/accueildepenses" component={AccueilDepense} />

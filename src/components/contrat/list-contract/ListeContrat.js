@@ -26,6 +26,16 @@ class ListeContrat extends React.Component {
         }
     }
 
+    getPDFAmendment = (idAmendment) => {
+        AxiosCenter.getPDFAmendment(idAmendment)
+            .then((res) => {
+                const file = new Blob([res.data], {type: 'application/pdf'});
+                const fileURL = URL.createObjectURL(file);
+                window.open(fileURL);
+            })
+            .catch((err) => console.log(err));
+    }
+
     onSavingFiles = (files, idContract) => {
         AxiosCenter.uploadContract(files, idContract).then(res => {
             toast.success(
@@ -108,6 +118,11 @@ class ListeContrat extends React.Component {
             onSavingFiles={this.onSavingFiles}
             files={this.state.files}
         />
+        <div>
+            <button onClick={()=>this.getPDFAmendment(1)}>
+                pdf
+            </button>
+        </div>
     }
 }
 

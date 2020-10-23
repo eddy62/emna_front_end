@@ -24,7 +24,7 @@ export default class QuoteFormEdit extends Component {
     return (
       <MDBContainer>
         <MDBCardHeader color="default-color">
-          <MDBCardTitle>Accueil Devis</MDBCardTitle><br />
+          <MDBCardTitle>Gestion des Devis</MDBCardTitle><br />
         </MDBCardHeader><hr />  
         <MDBCardTitle tag="h3">{this.props.title}</MDBCardTitle><hr/> 
         <Formik
@@ -195,14 +195,16 @@ export default class QuoteFormEdit extends Component {
                   <MDBTable>
                     <MDBTableHead>
                     <tr>
-                      <th scope="col"><strong>Produit id</strong></th>
-                      <th scope="col"><strong>Commentaire</strong></th>
-                      <th scope="col"><strong>Quantité</strong></th>
+                      <th scope="col"><strong>Référence</strong></th>
+                      <th scope="col"><strong>Nom</strong></th>
+                      <th scope="col"><strong>Prix</strong></th>
                       <th scope="col"><strong>Remise</strong></th>
+                      <th scope="col"><strong>TVA</strong></th>
+                      <th scope="col"><strong>Quantité</strong></th>
                     </tr>
                     </MDBTableHead>
                     <MDBTableBody>
-                      {this.props.quote.ligneProduitDTOList.map((productLine, index) => (
+                      {this.props.quote.ligneProduits.map((productLine, index) => (
                         <ProductList key={productLine.id} productLine={productLine} />
                       ))}
                     </MDBTableBody>
@@ -217,15 +219,6 @@ export default class QuoteFormEdit extends Component {
                   </div>                   
                   <hr />
                   <br />      
-                     
-                  {/* documents */}
-                  {/* <Field
-                    name="initialValues.documentDTOList"
-                    label="Documents relatifs"
-                    component={InputComponent}
-                    outline 
-                  />         */}
-                  
                 </MDBCardBody>
               </MDBCard><br />
               <div className="row d-flex justify-content-center">

@@ -72,9 +72,8 @@ class TableOtherPayrollVariable extends React.Component {
     getPdf = (pdfName) => {
         AxiosCenter.getPdfFileByPath(pdfName)
         .then((response) => {            
-            const url = response.config.url;
-            const urlTab = url.split('.');
-            const ext = urlTab[1];
+            const url = pdfName.split(".");
+            const ext = url[2];
             this.setState({ modaleDetails: !this.state.modaleDetails });
             
             if(ext === "pdf") {
@@ -223,7 +222,7 @@ class TableOtherPayrollVariable extends React.Component {
                                 {this.props.autresVariablesList.map((aVList) => (
                                     aVList.id === this.state.idOtherPayrollVariableSelected ? (
                                         aVList.wrapperDocumentList.map((doc, index) => (
-                                            <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.nom)}>{doc.nom}</MDBListGroupItem>
+                                            <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.cheminFichier)}>{doc.nom}</MDBListGroupItem>
                                         ))
                                     ) : (
                                         null
