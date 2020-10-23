@@ -413,9 +413,25 @@ const AxiosCenter = {
       method: "GET",
       url: `/documents/idPaySlip/${idPayslip}`
     })
-
   },
 
+  getHtmlDpae(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/dpae/html/${id}`,
+      headers: {
+        'content-type': 'charset=UTF-8'
+      }
+    });
+  },
+
+  getPdfDpae(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/dpae/pdf/${id}`,
+      responseType: 'blob'
+    });
+  },
   getAllDpaeByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
     return ApiBackEnd({
       method: "GET",
@@ -643,7 +659,7 @@ const AxiosCenter = {
   createQuote(values) {
     return ApiBackEnd({
       method: "POST",
-      url: "/devis/nouveau",
+      url: "/devis",
       data: values,
     });
   },
