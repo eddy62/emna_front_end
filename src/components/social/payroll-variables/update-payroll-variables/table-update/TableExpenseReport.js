@@ -70,8 +70,8 @@ export default class TableExpenseReport extends React.Component {
         }
     }
 
-    getPdf = (pdfName) => {
-        AxiosCenter.getPdfFileByPath(pdfName)
+    getPdf = (id, pdfName) => {
+        AxiosCenter.getPdfFileById(id)
         .then((response) => {
             const url = pdfName.split(".");
             const ext = url[2];
@@ -192,7 +192,7 @@ export default class TableExpenseReport extends React.Component {
                                 {this.props.noteDeFraisList.map((nFList) => (
                                     nFList.id === this.state.idExpenseReportSelected ? (
                                         nFList.wrapperDocumentList.map((doc, index) => (
-                                            <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.cheminFichier)}>{doc.nom}</MDBListGroupItem>                                      
+                                            <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.id, doc.cheminFichier)}>{doc.nom}</MDBListGroupItem>                                      
                                         ))) : (
                                             null
                                     )                                    

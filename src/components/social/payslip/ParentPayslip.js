@@ -114,10 +114,11 @@ export default class ParentPayslip extends React.Component {
                 console.log(response.data);
                 const fullLink = response.data.cheminFichier;
                 console.log(" fullLink " + fullLink);
+                const idDoc = response.data.id;
                 if (fullLink != null) {
                /*     const tabFullLink = fullLink.split('./fichiers/social/fichedepaie/');
                     const pdfName = tabFullLink[1];*/
-                    AxiosCenter.getPdfFileByPath(encodeURI(fullLink))
+                    AxiosCenter.getPdfFileById(idDoc)
                         .then((response) => {
                             const file = new Blob(
                                 [response.data],

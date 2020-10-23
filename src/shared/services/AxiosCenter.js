@@ -368,12 +368,10 @@ const AxiosCenter = {
     });
   },
 
-  getPdfFileByPath(path) {
-  path = path.replaceAll("/", "¤¤¤");
-
+  getPdfFileById(id) {
     return ApiBackEnd({
       method: "GET",
-      url: `/getPdfFile/${path}`,
+      url: `/getPdfFile/${id}`,
       responseType: 'blob'
     });
   },
