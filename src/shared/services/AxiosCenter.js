@@ -302,12 +302,26 @@ const AxiosCenter = {
       url: `devis/detail/${id}`
     });
   },
+  getQuotesBySociety(id) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `devis/detail/${id}`
+    });
+  },
 
   getNewQuoteNumber(id) {
     return ApiBackEnd({
       method: "GET",
       url: `devis/nouveau/numero/${id}`
     });
+  },
+
+  getInfosForCreateQuote(id) {
+    return Axios.all([
+      this.getNewQuoteNumber(id),
+      this.getAllCustomerSupplierBySociete(id),
+      this.getProduct(id)
+    ])
   },
 
   getLastNumFactBySociete(id) {
@@ -360,12 +374,12 @@ const AxiosCenter = {
     });
   },
 
-  getPdfFileByPath(path) {
+  getPdfFileById(id) {
     return ApiBackEnd({
       method: "GET",
-      url: `/getPdfFile/${path}`,
+      url: `/getPdfFile/${id}`,
       responseType: 'blob'
-    })
+    });
   },
 
   getAllPayslipByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
@@ -403,13 +417,44 @@ const AxiosCenter = {
       method: "GET",
       url: `/documents/idPaySlip/${idPayslip}`
     })
-
   },
 
+  getHtmlDpae(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/dpae/html/${id}`,
+      headers: {
+        'content-type': 'charset=UTF-8'
+      }
+    });
+  },
+
+  getPdfDpae(id) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/dpae/pdf/${id}`,
+      responseType: 'blob'
+    });
+  },
   getAllDpaeByEmployeIdMonthStartMonthEnd(idEmploye, year, monthStart, monthEnd) {
     return ApiBackEnd({
       method: "GET",
       url: `/dpae/employe/${idEmploye}/annee/${year}/moisDu/${monthStart}/moisFin/${monthEnd}`
+    });
+  },
+
+  getAllAmendmentByContratId(idContrat) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/avenants/contrats/${idContrat}`
+    })
+  },
+
+  getPDFAmendment(idAmendment) {
+    return ApiBackEnd({
+      method: "get",
+      url: `/avenant/pdf/${idAmendment}`,
+      responseType: 'arraybuffer'
     });
   },
 
@@ -625,7 +670,7 @@ const AxiosCenter = {
   createQuote(values) {
     return ApiBackEnd({
       method: "POST",
-      url: "/devis/nouveau",
+      url: "/devis",
       data: values,
     });
   },
@@ -660,6 +705,8 @@ const AxiosCenter = {
       data: values
     })
   },
+
+  
   // Fin Post
 
   //Put
@@ -668,6 +715,15 @@ const AxiosCenter = {
       method: "PUT",
       url: `/client-fournisseurs/wrapper`,
       data: values,
+    });
+  },
+
+  updateStateQuote(idQuote){
+
+    return ApiBackEnd({
+      method:"PUT",
+      url: `/quote/stateChange/${idQuote}`,
+      data : idQuote,
     });
   },
 
@@ -782,7 +838,15 @@ const AxiosCenter = {
   confirmPayrollVariables(values) {
     return ApiBackEnd({
       method: "PUT",
-      url: `/wrappervariablespaie/confirm-variablespaie`,
+      url: `/wrappervariablespaie/process-variablespaie/1`,
+      data: values,
+    })
+  },
+
+  validatePayrollVariables(values) {
+    return ApiBackEnd({
+      method: "PUT",
+      url: `/wrappervariablespaie/process-variablespaie/2`,
       data: values,
     })
   },

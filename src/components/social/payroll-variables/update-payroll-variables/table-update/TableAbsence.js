@@ -68,14 +68,12 @@ class TableAbsence extends React.Component {
         }
     }
 
-    getPdf = (pdfName) => {
-        AxiosCenter.getPdfFileByPath(pdfName)
+    getPdf = (id, pdfName) => {
+        AxiosCenter.getPdfFileById(id)
         .then((response) => {
-            console.log(response.config.url);
-            const url = response.config.url;
-            const urlTab = url.split('.');
-            const ext = urlTab[1];
-            console.log(ext);
+            console.log(response)
+            const url = pdfName.split(".");
+            const ext = url[2];
             this.setState({ modaleDetails: !this.state.modaleDetails });
             
             if(ext === "pdf") {
@@ -191,8 +189,9 @@ class TableAbsence extends React.Component {
                             <MDBListGroup>
                                 {this.props.absenceList.map((abs) => (
                                     abs.id === this.state.idAbsenceSelected ? (
+                                        console.log(abs.wrapperDocumentList),
                                         abs.wrapperDocumentList.map((doc, index) => (
-                                            <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.nom)}>{doc.nom}</MDBListGroupItem>
+                                            <MDBListGroupItem key={index} style={{cursor:'pointer'}} hover onClick={() => this.getPdf(doc.id, doc.cheminFichier)}>{doc.nom}</MDBListGroupItem>
                                         ))   
                                     ) : (
                                         null

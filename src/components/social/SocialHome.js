@@ -124,11 +124,10 @@ class SocialHome extends React.Component {
                                                             rounded
                                                             size="sm"
                                                             color="teal accent-3"
-                                                            // TODO : lien vers liste DPAE
                                                             onClick={() => {
                                                                 this.props.history.push(
                                                                     "/consult-declaration-of-employment/" + this.state.societe.id
-                                                                );
+                                                               );
                                                             }}
                                                         >
                                                             Consulter
@@ -200,7 +199,7 @@ class SocialHome extends React.Component {
                                                             size="sm"
                                                             onClick={() => {
                                                                 this.props.history.push(
-                                                                    "/modify-payroll-variables/" + this.state.societe.id + "/1/" + new Date().getFullYear() + "/" + (new Date().getMonth()+1)
+                                                                    "/modify-payroll-variables/" + this.state.societe.id + "/1/" + new Date().getFullYear() + "/" + new Date().getMonth()
                                                                 );
                                                             }}
                                                         >
