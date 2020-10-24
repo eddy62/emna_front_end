@@ -3,15 +3,19 @@ import {MDBCardTitle, MDBTable, MDBTableBody, MDBTableHead} from 'mdbreact';
 import AxiosCenter from "../../../../../shared/services/AxiosCenter";
 import Loading from "../../../../../shared/component/Loading";
 import StatementOperation from "../StatementOperation";
+import { withRouter } from "react-router-dom";
 
-export default class ListOfOperations extends Component {
+
+class ListOfOperations extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             operations: {},
             loaded: false,
+            url : null
         }
+
     }
 
     componentDidMount() {
@@ -19,6 +23,10 @@ export default class ListOfOperations extends Component {
             const operations = res.data;
             this.setState({operations, loaded: true});
         });
+    }
+
+    goToList = (id) => {
+    this.props.history.push(`/detailsoperation/${id}`);
     }
 
     render() {
@@ -29,7 +37,7 @@ export default class ListOfOperations extends Component {
                 <MDBCardTitle className="card-title text-center py-2">
                     Liste des opérations
                 </MDBCardTitle>
-                <MDBTable striped scrollY maxHeight="500px">
+                <MDBTable hover scrollY maxHeight="500px">
                     <MDBTableHead>
                         <tr>
                             <td><strong>Id</strong></td>
@@ -42,6 +50,7 @@ export default class ListOfOperations extends Component {
                     <MDBTableBody>
                         {this.state.operations.map((operation, index) => (
                             <StatementOperation key={operation.id} operation={operation}
+                                                onClick={() => this.goToList(operation.id)}
                                                 isCheckBoxVisible={this.props.isCheckBoxVisible}
                                                 changeCheckboxVisible={this.props.changeCheckboxVisible}
                                                 selectedFactures={this.props.selectedFactures}
@@ -55,3 +64,6 @@ export default class ListOfOperations extends Component {
 
     }
 }
+
+export default withRouter(ListOfOperations)
+
