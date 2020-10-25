@@ -1017,7 +1017,13 @@ const AxiosCenter = {
       method: "GET",
       url:`facture/operation/${id}`
     })
-  }
+  },
+  deleteQuoteById(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/devis/${id}`
+    });
+  },
 
   // Fin Delete
 
