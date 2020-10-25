@@ -949,6 +949,13 @@ const AxiosCenter = {
     });
   },
 
+  getInvoicesByOperationId(id){
+    return ApiBackEnd({
+      method: "GET",
+      url:`facture/operation/${id}`
+    })
+  }
+
   // Fin Delete
 
 };

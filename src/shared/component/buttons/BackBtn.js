@@ -9,13 +9,14 @@ import React from "react";
  *
  */
 
-const BackBtn = ({history}) => {
+const BackBtn = ({history, size}) => {
     return (
         <RedirectionBtn
             color="teal"
             icon="arrow-left"
             txt="Retour"
             rounded
+            size= {size}
             onClick={history.goBack}
         />
     )

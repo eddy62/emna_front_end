@@ -3,6 +3,7 @@ import {MDBBtn} from "mdbreact";
 import UserService from "../../../../shared/services/UserService";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
 
+
 export default class StatementOperation extends Component {
 
     mergeProcess = () => {
@@ -24,9 +25,11 @@ export default class StatementOperation extends Component {
         await AxiosCenter.updateRapprochementOperation(this.props.operation.id);
     }
 
+
+
     render() {
         return (
-            <tr>
+            <tr onClick={this.props.onClick}>
                 <td>{this.props.operation.id}</td>
                 <td>{this.props.operation.date}</td>
                 <td>{this.props.operation.description}</td>
@@ -35,7 +38,7 @@ export default class StatementOperation extends Component {
                 {(UserService.isAdmin() || UserService.isAccountant()) &&
                 <td>
                     {
-                        this.props.isCheckBoxVisible &&  this.props.operation.rapproche == false &&
+                        this.props.isCheckBoxVisible &&  this.props.operation.rapproche === false &&
                         <MDBBtn onClick={this.mergeProcess}
                                 color=" teal lighten-2" rounded size="sm">
                             <span id={this.props.operation.id}>Valider</span>
