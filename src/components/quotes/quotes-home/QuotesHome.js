@@ -1,8 +1,17 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Axios from '../../../shared/services/AxiosCenter';
 import Loading from '../../../shared/component/Loading';
 import UserService from '../../../shared/services/UserService';
-import { MDBCard, MDBCardBody, MDBCardHeader, MDBCardTitle, MDBContainer, MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
+import {
+    MDBCard,
+    MDBCardBody,
+    MDBCardHeader,
+    MDBCardTitle,
+    MDBContainer,
+    MDBTable,
+    MDBTableBody,
+    MDBTableHead
+} from 'mdbreact';
 import QuotationElement from './quotation-element/QuotationElement';
 import RedirectionBtn from '../../../shared/component/buttons/RedirectionBtn';
 
@@ -24,13 +33,21 @@ export default class QuotesHome extends Component {
     })
     .catch((err) => console.log(err));
   }
+    reload() {
+    
+    Axios.getAllQuotesBySociety(this.state.societyId).then((res) => {
+      const quotes = res.data;
+      this.setState({quotes, loaded: true});
+    })
+    .catch((err) => console.log(err));
+  }
 
   render() {
     if (!this.state.loaded) return <Loading />
     return (
       <MDBContainer>   
         <MDBCardHeader color="default-color">
-          <MDBCardTitle>Accueil Devis</MDBCardTitle>
+          <MDBCardTitle>Gestion des Devis</MDBCardTitle>
           <br />
         </MDBCardHeader>         
         <hr />  
@@ -38,7 +55,7 @@ export default class QuotesHome extends Component {
         <hr />
         <MDBCard>
           <MDBCardBody>            
-            <MDBTable striped>
+            <MDBTable >
               <MDBTableHead>
                 <tr>
                   <th scope="col">Numéro</th>
@@ -49,11 +66,10 @@ export default class QuotesHome extends Component {
               </MDBTableHead>
               <MDBTableBody>
                 {this.state.quotes.map((quote, index) => (
-                  <QuotationElement key={quote.id} quote={quote} />
+                  <QuotationElement key={quote.id} quote={quote} reload={()=>this.reload()} societyId={this.state.societyId} />
                 ))}
               </MDBTableBody>
-            </MDBTable>  
-            
+            </MDBTable>             
           </MDBCardBody>
         </MDBCard>        
         <br />  
