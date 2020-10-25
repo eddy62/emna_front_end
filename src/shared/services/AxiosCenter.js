@@ -957,6 +957,13 @@ const AxiosCenter = {
     });
   },
 
+  deleteQuoteById(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/devis/${id}`
+    });
+  },
+
   // Fin Delete
 
 };
