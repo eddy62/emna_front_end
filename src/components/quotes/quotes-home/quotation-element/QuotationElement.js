@@ -1,15 +1,35 @@
-import React, {Component} from 'react';
+import { id } from 'date-fns/locale';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import RedirectionBtn from '../../../../shared/component/buttons/RedirectionBtn';
-import ConfirmationModal from './../../../../shared/component/ConfirmationModal';
-
-import QuoteService from './../../QuotesService';
-
+import ConfirmationModal from '../../../../shared/component/ConfirmationModal';
+import AxiosCenter from '../../../../shared/services/AxiosCenter';
+import QuoteService from '../../QuotesService';
 
 export default class QuotationElement extends Component {
-
-  
-
-
+  deleteQuote = (quote) => {
+    this.props.delete(quote)
+    AxiosCenter.deleteQuoteById(quote.id)
+      .then((response) => {
+        toast.success(
+          <div className="text-center">
+            <strong> Le Devis a été bien Supprimé</strong>
+          </div>,
+          { position: "top-right" }
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(
+          <div className="text-center">
+            <strong>Erreur lors la suppression du devis !</strong>
+            <br />
+          </div>,
+          { position: "top-right" }
+        );
+      });
+  }
   render() {
     return (
       <tr class={this.props.quote.etat==="Signé"?"signe": this.props.quote.etat==="Archivé"?"archive":"non-signe"}>
@@ -32,7 +52,7 @@ export default class QuotationElement extends Component {
             size="sm"
           />
           <RedirectionBtn color="teal lighten" route="/devis/accueil" txt="Télécharger" size="sm"/>
-          <RedirectionBtn color="red darken" route="/devis/accueil" txt="Supprimer"size="sm"/>
+          <RedirectionBtn color="red darken" onClick={() => this.deleteQuote(this.props.quote)} route="/devis/accueil" txt="Supprimer"size="sm"/>
           {this.props.quote.etat==="En attente de signature"?"":
           <ConfirmationModal 
           icon="archive"
