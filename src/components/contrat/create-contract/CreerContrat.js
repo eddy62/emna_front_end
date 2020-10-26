@@ -90,26 +90,28 @@ export default class CreerContrat extends React.Component {
         await this.setState({
             idTypeContrat: this.state.typeContracts[e.target.value].id,
             title: this.state.typeContracts[e.target.value].intitule
-        })
-        const isSubmitDisabled = await (this.state.idEmploye === null) || (this.state.idTypeContrat === null);
+        });
+        const isSubmitDisabled = await (this.state.selectedEmploye === null) || (this.state.idTypeContrat === null);
         this.setState({
             isSubmitDisabled
-        })
-
-    }
+        });
+    };
 
     handleOnChangeEmploye = async (e) => {
         await this.setState({
             selectedEmploye: this.state.employes[e.target.value]
         })
-        const isSubmitDisabled = await (this.state.idEmploye === null) || (this.state.idTypeContrat === null);
+        const isSubmitDisabled = await (this.state.selectedEmploye === null) || (this.state.idTypeContrat === null);
         this.setState({
             isSubmitDisabled
         })
-    }
+    };
 
     checkFields(inputs) {
-        const nbArticles = this.state.articles.length;
+        let isCDI = this.state.idTypeContrat === 3;
+        let nbArticles = this.state.articles.length;
+        if (isCDI)
+            nbArticles = this.state.articles.length - 1;
         let isError = (inputs.length !== nbArticles);
         let index = 0;
 
@@ -130,7 +132,7 @@ export default class CreerContrat extends React.Component {
         }
 
         return isError;
-    }
+    };
 
     /*handleOnChangeClause = (clause) => {
         var present= false;
@@ -194,22 +196,24 @@ export default class CreerContrat extends React.Component {
 
         //Show all Articles + inputs
         const articles = props.articles.map((article, index) => {
-            const name = "wrapperSaisieArticles[" + index + "].libelle_" + article.id
-            return (
-                <MDBCard key={index}>
-                    <MDBCollapseHeader onClick={this.toggleCollapse(index)} className="bg-transparent">
-                        {article.titre} : {article.intitule}
-                        <i className={props.collapseID === index ? "fa fa-angle-up" : "fa fa-angle-down"}/>
-                    </MDBCollapseHeader>
-                    <MDBCollapse id={index} isOpen={props.collapseID}>
-                        <MDBCardBody>
-                            {article.description}
-                            {renderInputs(index, name)}
-                            {/*<ErrorMessForm error={errors.name}/>*/}
-                        </MDBCardBody>
-                    </MDBCollapse>
-                </MDBCard>
-            )
+            if (index !== 8 || props.idTypeContrat !== 3) {
+                const name = "wrapperSaisieArticles[" + index + "].libelle_" + article.id
+                return (
+                    <MDBCard key={index}>
+                        <MDBCollapseHeader onClick={this.toggleCollapse(index)} className="bg-transparent">
+                            {article.titre} : {article.intitule}
+                            <i className={props.collapseID === index ? "fa fa-angle-up" : "fa fa-angle-down"}/>
+                        </MDBCollapseHeader>
+                        <MDBCollapse id={index} isOpen={props.collapseID}>
+                            <MDBCardBody>
+                                {article.description}
+                                {renderInputs(index, name)}
+                                {/*<ErrorMessForm error={errors.name}/>*/}
+                            </MDBCardBody>
+                        </MDBCollapse>
+                    </MDBCard>
+                )
+            }
         })
 
         function renderInputs(index, name) {
@@ -240,6 +244,16 @@ export default class CreerContrat extends React.Component {
                             <Field
                                 name={name}
                                 component={ComposantNumber}>€</Field>
+                        </MDBCol>
+                    );
+
+                case 8:
+                    return (
+                        <MDBCol md="4">
+                            <Field
+                                name={name}
+                                component={ComponentDate}
+                            />
                         </MDBCol>
                     );
             }
@@ -402,7 +416,8 @@ export default class CreerContrat extends React.Component {
                 typeContracts={this.state.typeContracts}
                 articles={this.state.articles}
                 collapseID={collapseID}
-                onChange={this.handleOnChange}/>
+                idTypeContrat={this.state.idTypeContrat}
+            />
         );
     }
 }
