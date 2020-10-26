@@ -429,6 +429,13 @@ const AxiosCenter = {
     });
   },
 
+  getProduitsByNomOrReferenceAndSocieteId(keyWord){
+    return ApiBackEnd({
+      method: "GET",
+      url: `/products/q/${keyWord}`
+    });
+  },
+
   // Fin Get
 
   //Post
