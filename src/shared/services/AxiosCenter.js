@@ -447,6 +447,13 @@ const AxiosCenter = {
     });
   },
 
+  getAllWrapperDpaesToDoBySociety(societyId) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/wrapper-dpaes-to-do/society/${societyId}`,
+    })
+  },
+
   // Fin Get
 
   //Post
