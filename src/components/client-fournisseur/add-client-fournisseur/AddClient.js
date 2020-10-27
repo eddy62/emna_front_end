@@ -27,20 +27,29 @@ class AddClientFournisseur extends React.Component {
           </div>,
           { position: "top-right" }
         );
+          actions.setSubmitting(true);
+          this.props.history.push("/client-fournisseur");
       })
       .catch((error) => {
-        console.log(error);
-        toast.error(
-          <div className="text-center">
-            <strong>Erreur lors de la création d'un nouveau Client Fournisseur &nbsp;&nbsp;!</strong>
-            <br />
-          </div>,
-          { position: "top-right" }
-        );
+        if(error.data = 'A new clientFournisseur cannot already have an SIRET'){
+            toast.error(
+                <div className="text-center">
+                    <strong>Erreur le SIRET est déjà utiliser par un autre Client Fournisseur &nbsp;&nbsp;!</strong>
+                    <br />
+                </div>,
+                { position: "top-right" }
+            );
+        } else {
+            toast.error(
+                <div className="text-center">
+                    <strong>Erreur lors de la création d'un nouveau Client Fournisseur &nbsp;&nbsp;!</strong>
+                    <br />
+                </div>,
+                { position: "top-right" }
+            );
+            actions.setSubmitting(false);
+        }
       });
-
-    actions.setSubmitting(true);
-    this.props.history.push("/client-fournisseur");
   };
 
     userSchema = Yup.object().shape({
