@@ -19,7 +19,7 @@ class AccueilFacture extends React.Component {
             <Dropdown.Item href="/newfacture">
               Facture
             </Dropdown.Item>
-            <Dropdown.Item href="/newdepense">
+            <Dropdown.Item href="/depenses/create">
               Depense
             </Dropdown.Item>
             <Dropdown.Item href="/newdevis">

@@ -9,7 +9,7 @@ import React from "react";
  *
  */
 
-const BackBtn = ({history, size}) => {
+const BackBtn = ({history, to, size}) => {
     return (
         <RedirectionBtn
             color="teal"
@@ -17,7 +17,8 @@ const BackBtn = ({history, size}) => {
             txt="Retour"
             rounded
             size= {size}
-            onClick={history.goBack}
+            onClick={(history) ? history.goBack : ""}
+            to={to}
         />
     )
 }
