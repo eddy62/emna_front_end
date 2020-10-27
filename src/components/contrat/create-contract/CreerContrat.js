@@ -4,7 +4,7 @@ import Loading from "../../../shared/component/Loading";
 import {Link} from "react-router-dom";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
-import {MDBCard, MDBCardBody, MDBCol, MDBCollapse, MDBCollapseHeader, MDBContainer, MDBInput} from "mdbreact";
+import {MDBCol, MDBIcon, MDBInput} from "mdbreact";
 import {toast} from "react-toastify";
 import NotificationService from "../../../shared/services/NotificationService";
 
@@ -82,7 +82,7 @@ export default class CreerContrat extends React.Component {
             typeContracts: [],
             articles: [],
             isSubmitDisabled: true,
-            //clauses: [],
+            showOptionalArticles: false
         };
     }
 
@@ -132,30 +132,6 @@ export default class CreerContrat extends React.Component {
         return isError;
     }
 
-    /*handleOnChangeClause = (clause) => {
-        var present= false;
-        var index=0;
-        for(var i = 0; i < this.state.clauses.length; i++){
-            present=false;
-            if ( this.state.clauses[i] == clause) {
-                present=true;
-                index=i;
-                break;
-            }
-        }
-        if(present){
-            const list = this.state.clauses;
-            list.splice(index,1);
-            this.setState({clauses:list});
-
-        }else{
-            this.state.clauses.push(clause);
-        }
-
-
-
-    }*/
-
     componentDidMount() {
         AxiosCenter.getAllWrapperEmployesBySociety(UserService.getSocietyId()).then((result1) => {
             const employes = result1.data;
@@ -179,6 +155,10 @@ export default class CreerContrat extends React.Component {
             collapseID: prevState.collapseID !== collapseID ? collapseID : ""
         }));
 
+
+    dropDownDescription = (id) => {
+
+    }
     initialize = (props) => {
         const employes = props.employes.map((employe, index) => {
             return (
@@ -195,20 +175,42 @@ export default class CreerContrat extends React.Component {
         //Show all Articles + inputs
         const articles = props.articles.map((article, index) => {
             const name = "wrapperSaisieArticles[" + index + "].libelle_" + article.id
+            const [state, useState] = React.useState();
             return (
-                <MDBCard key={index}>
-                    <MDBCollapseHeader onClick={this.toggleCollapse(index)} className="bg-transparent">
-                        {article.titre} : {article.intitule}
-                        <i className={props.collapseID === index ? "fa fa-angle-up" : "fa fa-angle-down"}/>
-                    </MDBCollapseHeader>
-                    <MDBCollapse id={index} isOpen={props.collapseID}>
-                        <MDBCardBody>
-                            {article.description}
-                            {renderInputs(index, name)}
-                            {/*<ErrorMessForm error={errors.name}/>*/}
-                        </MDBCardBody>
-                    </MDBCollapse>
-                </MDBCard>
+                <>
+                    {(this.state.showOptionalArticles || !article.optional) &&
+                    <>
+                        <MDBInput
+                            data-tip data-for={"registerTip" + index}
+                            label={article.titre}
+                        />
+                        <div>
+
+                            <small>
+                                <MDBIcon
+                                    icon={!state ? 'fas fa-caret-right' : 'fas fa-caret-down'}
+                                    className='cyan-text mr-2'
+                                    size='lg'
+                                    style={{cursor: 'pointer'}}
+                                    onClick={() => {
+                                        useState(!state)
+                                    }}
+                                />
+
+                                {article.intitule}
+                            </small>
+                            {state &&
+                            <>
+                                <br/>
+                                {article.description}
+                            </>
+                            }
+                        </div>
+
+                    </>
+                    }
+                </>
+
             )
         })
 
@@ -260,37 +262,9 @@ export default class CreerContrat extends React.Component {
             return newListSaisiesArticle;
         }
 
-        /*const Articles = props.employe.articleVMList.map((article, b) =>{
-            /!*const Clause = article.listClauses.map((clause, c) => {
-                return (
-                    <div key={c}>
-                        <div className="form-group">
-                            <div id="feedback">
-                                <div className="form-check">
-
-                                    <input type="checkbox" className="form-check-input" name="channel[]"
-                                           id={clause.clauseId} value={clause} onChange={(event)=>this.handleOnChangeClause(clause)}/>
-                                    <label htmlFor={clause.clauseId}
-                                           className="form-check-label">{clause.clauseDesciption}</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )
-            })*!/
-            return (
-                <div key={b}>
-                    <h5>{article.articleTitre} : {article.articleDescription}</h5>
-                    {article.articleReference}
-                    {/!*Clause*!/}
-                </div>
-            )
-        })*/
-
         return (
             <div>
                 <h1>Nouveau contrat</h1>
-
                 <Formik
                     initialValues={{
                         id: null,
@@ -366,11 +340,13 @@ export default class CreerContrat extends React.Component {
                                     {employes}
                                 </select>
                             </div>
-
-                            <MDBContainer>
-                                {articles}
-                            </MDBContainer>
-
+                            {articles}
+                            {!this.state.showOptionalArticles &&
+                            <i onClick={() => this.setState({showOptionalArticles: true})}
+                               className="fas fa-plus float-right" ddata-toggle="tooltip" data-placement="left"
+                               title="Ajouter des articles"/>
+                            }
+                            <br/>
                             <div className="clearfix">
                                 <div className="form-group">
                                     <button type="submit"
@@ -403,6 +379,7 @@ export default class CreerContrat extends React.Component {
                 articles={this.state.articles}
                 collapseID={collapseID}
                 onChange={this.handleOnChange}/>
+
         );
     }
 }
