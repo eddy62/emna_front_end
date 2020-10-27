@@ -409,6 +409,14 @@ const AxiosCenter = {
     });
   },
 
+  createAvenant(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: `/avenants/add/new`,
+      data: values,
+    });
+  },
+
   createCustomerSupplier(values) {
     return ApiBackEnd({
       method: "post",
