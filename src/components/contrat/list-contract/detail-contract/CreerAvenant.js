@@ -3,8 +3,8 @@ import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import Loading from "../../../../shared/component/Loading";
 import {
     MDBBtn,
-    MDBCardTitle,
-    MDBContainer,
+    MDBCardTitle, MDBCol,
+    MDBContainer, MDBInput,
     MDBTable, MDBTableBody, MDBTableHead
 } from "mdbreact";
 import {Form} from "formik";
@@ -14,9 +14,9 @@ import ComposantSelect from "./ComposantSelect";
 import InputComponent from "../../../../shared/component/form/InputComponent";
 
 
-const ComposantTableau = ({listeSaisieArticle}) =>
+const ComposantTableau = ({removeArticlefromCopy,listeSaisieArticle}) =>
     listeSaisieArticle.map((item, index) => (
-            <tr key={item.article.id}>
+            <tr key={index}>
                 <td >
                     {item.article.titre}
                 </td>
@@ -28,6 +28,15 @@ const ComposantTableau = ({listeSaisieArticle}) =>
                 </td>
                 <td>
                     {item.saisie}
+                </td>
+                <td>
+                    <MDBBtn onClick={
+                        () => {
+                            {removeArticlefromCopy(item.article.id)}
+                        }
+                    }>
+                        X
+                    </MDBBtn>
                 </td>
             </tr>
         )
@@ -46,7 +55,18 @@ class CreerAvenant extends React.Component {
         }
     }
 
-    submit = (values, actions) => {
+
+    submit = () => {
+        let listeSaisie = this.state.listeSaisieArticle.map((saisieArticle) => {
+            return {
+                id: null,
+                libelle: saisieArticle.saisie,
+                contratId: this.props.match.params.id,
+                articleId: saisieArticle.article.id,
+                avenantId: null,
+            }
+        })
+        AxiosCenter.createAvenant(listeSaisie)
     };
 
 
@@ -62,16 +82,10 @@ class CreerAvenant extends React.Component {
         }).catch((err) => console.log(err));
     }
 
-
-    toggleCollapse = collapseID => () =>
-        this.setState(prevState => ({
-            collapseID: prevState.collapseID !== collapseID ? collapseID : ""
-        }));
-
-
     getArticleById = (id) => {
         return this.state.articles.filter(article => article.id === id)[0];
     }
+
 
     addListeSaisieArticle = async () => {
         let currentArticle = document.getElementById("current-article").value
@@ -80,12 +94,24 @@ class CreerAvenant extends React.Component {
         let article = await this.getArticleById(parseInt(currentArticle))
         newListe.push({article: article, saisie: currentSaisie})
         this.setState({listeSaisieArticle: newListe})
+
     }
 
 
     removeArticlefromCopy = (id) => {
-        // YOU KNOW
-    }
+        this.state.listeSaisieArticle.map((value) =>
+        {
+            if (value.article.id == id)
+            {
+                 let index = value.article.id
+                this.setState(
+                    {
+                    listeSaisieArticle: this.state.listeSaisieArticle.filter((v, i) => v.article.id !== index)
+                         }
+                             )
+            }
+        })
+    }   
 
     addArticleToCopy = () => {
         // TMTC
@@ -116,6 +142,7 @@ class CreerAvenant extends React.Component {
                                     articles={this.state.articles}
                                     component={ComposantSelect}
                                 />
+                                
                                 <Field
                                     name="saisieArticle"
                                     id="current-saisie"
@@ -133,11 +160,11 @@ class CreerAvenant extends React.Component {
                                             </tr>
                                         </MDBTableHead>
                                         <MDBTableBody>
-                                            <ComposantTableau listeSaisieArticle={this.state.listeSaisieArticle}/>
+                                            <ComposantTableau listeSaisieArticle={this.state.listeSaisieArticle}
+                                                              removeArticlefromCopy={this.removeArticlefromCopy} />
                                         </MDBTableBody>
                                     </MDBTable>
                                 </div>
-
                                 <MDBBtn
                                     onClick={this.addListeSaisieArticle}
                                     rounded
@@ -145,7 +172,9 @@ class CreerAvenant extends React.Component {
                                 >
                                     Ajouter
                                 </MDBBtn>
-                                <pre>{JSON.stringify(values, null, 4)}</pre>
+                                <MDBBtn type="submit">
+                                    creer avenant
+                                </MDBBtn>
                             </Form>
                         )}
                     </Formik>
