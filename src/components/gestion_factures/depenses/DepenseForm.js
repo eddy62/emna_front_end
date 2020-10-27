@@ -6,6 +6,7 @@ import {MDBBtn, MDBCardHeader, MDBCardTitle, MDBCol, MDBContainer, MDBInput, MDB
 import * as Yup from "yup";
 import {Field, Formik} from "formik";
 import ErrorMessForm from "../../../shared/component/ErrorMessForm";
+import BackBtn from "../../../shared/component/buttons/BackBtn";
 
 const ComposantSelect = ({field, form: {touched, errors}, ...props}) => (
     <span>
@@ -181,10 +182,12 @@ class DepenseForm extends React.Component {
                                     />
                                 </MDBCol>
                             </MDBRow>
-
-                            <MDBBtn rounded type="submit" color="primary">
-                                Enregistrer
-                            </MDBBtn>
+                            <div className="row d-flex justify-content-center ">
+                                <MDBBtn rounded type="submit" color="primary">
+                                    Enregistrer
+                                </MDBBtn>
+                                <BackBtn to={"/accueildepenses"} />
+                            </div>
 
                         </form>
                     )}
