@@ -465,11 +465,11 @@ const AxiosCenter = {
     });
   },
 
-  getAllWrapperDpaesToDoBySociety(societyId) {
+  getClientBySiretAndSocietyId(siret){
     return ApiBackEnd({
       method: "GET",
-      url: `/wrapper-dpaes-to-do/society/${societyId}`,
-    })
+      url: `/clients-fournisseurs/siret/${siret}`
+    });
   },
 
   // Fin Get
@@ -728,7 +728,7 @@ const AxiosCenter = {
     })
   },
 
-
+  
   // Fin Post
 
   //Put
