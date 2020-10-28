@@ -458,6 +458,13 @@ const AxiosCenter = {
     });
   },
 
+  getProduitsByNomOrReferenceAndSocieteId(keyWord){
+    return ApiBackEnd({
+      method: "GET",
+      url: `/products/q/${keyWord}`
+    });
+  },
+
   // Fin Get
 
   //Post
@@ -465,6 +472,14 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "post",
       url: `/account/reset-password/finish`,
+      data: values,
+    });
+  },
+
+  createAvenant(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: `/avenants/add/new`,
       data: values,
     });
   },
@@ -706,7 +721,16 @@ const AxiosCenter = {
     })
   },
 
-  
+  uploadFiles(url,file,config){
+    return ApiBackEnd({
+      method: 'POST',
+      url: url,
+      data: file,
+      onUploadProgress: config
+    })
+  },
+
+
   // Fin Post
 
   //Put

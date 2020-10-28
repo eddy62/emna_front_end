@@ -9,18 +9,18 @@ import {ForgotPassword} from "./components/login/ForgotPassword";
 import {ResetPassword} from "./components/login/ResetPassword";
 
 class App extends React.Component {
-  render() {
-    return (
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/forgot/password" component={ForgotPassword} />
-        <Route path="/reset/password" component={ResetPassword} />
-        <PrivateRoute path="/" component={RoutesWithNavigation} />
-        <RoutesWithNavigation />
-      </Switch>
-    );
-  }
+    render() {
+        return (
+            <Switch>
+                <Route path="/login" component={Login}/>
+                <Route path="/register" component={Register}/>
+                <Route path="/forgot/password" component={ForgotPassword}/>
+                <Route path="/reset/password" component={ResetPassword}/>
+                <PrivateRoute path="/" component={RoutesWithNavigation}/>
+                <RoutesWithNavigation/>
+            </Switch>
+        );
+    }
 }
 
 export default App;
