@@ -39,6 +39,7 @@ const ComposantSelect = ({field, form: {touched, errors}, ...props}) => (
 );
 
 const regOnlyNumbers = RegexService.onlyNumbers();
+const regOnlyNumbersWithComaAndDot = RegexService.onlyNumbersWithComaAndDot();
 
 class AddProduit extends React.Component {
     submit = (values, actions) => {
@@ -74,7 +75,7 @@ class AddProduit extends React.Component {
         tva: Yup.string()
             .matches(regOnlyNumbers, "Tva doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
         prix: Yup.string()
-            .matches(regOnlyNumbers, "Prix doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
+            .matches(regOnlyNumbersWithComaAndDot, "Prix doit être composé uniquement de chiffres. Il peut commencer par 0 uniquement si celui-ci est suivi d'une , ou . ,il ne peut contenir qu'un seul . ou une seule ,").required("Le champ est obligatoire"),
         description: Yup.string().max(200, "200 caractères maximum"),
         unite: Yup.string().required("Le champ est obligatoire"),
     });
