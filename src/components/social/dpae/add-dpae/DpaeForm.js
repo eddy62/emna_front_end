@@ -5,7 +5,12 @@ import UserService from "../../../../shared/services/UserService";
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import RegexService from "../../../../shared/services/RegexService";
-import {Link} from "react-router-dom";
+
+/**
+ * DpaeForm
+ *
+ * @author Created by Cédric Belot
+ */
 
 const ComponentDate = ({field, ...props}) => (
     <MDBInput
@@ -220,6 +225,7 @@ const dpaeSchema = (props) => {
             .min(Yup.ref("startContractDate"), "Doit être supérieure ou égale à la date de début"),
         trialTime: Yup.number()
             .min(0, "Doit être positive ou nulle")
+            // max étrange mais correspondant à la demande urssaf
             .max(999, "Doit être inférieure à la durée maximale légale"),
         comment: Yup.string()
     })
@@ -229,26 +235,12 @@ class DpaeForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            society: this.props.society,
-            employee: this.props.employee,
-            disabled: false,
             oneYearBeforeNow: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
             oneYearFromNow: new Date(new Date().setFullYear(new Date().getFullYear() + 1))
         }
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.employee !== this.props.employee) {
-            this.setState({employee: this.props.employee})
-        }
-    }
-
-    componentDidMount() {
-        console.log(this.state.society);
-        console.log(this.state.employee);
-    }
-
-    //TODO submit
+    //TODO submit appel au back
     submit = (values, actions) => {
         // formatage urssaf
         values.apeCode = values.apeCode.toUpperCase();
@@ -286,69 +278,39 @@ class DpaeForm extends React.Component {
                 indicator: 1,
 
                 // employeur
-                designation: this.state.society.raisonSociale,
-                siret: this.state.society.siret,
-                apeCode: this.state.society.domaineDactivite,
-                urssafCode: this.state.society.codeUrssaf,
-                streetDesignation: this.state.society.numeroRue + " " + this.state.society.nomRue,
-                town: this.state.society.ville,
-                postalCode: this.state.society.codePostal,
-                phoneNumber: this.state.society.telephone,
+                designation: this.props.dpae.raisonSociale,
+                siret: this.props.dpae.siret,
+                apeCode: this.props.dpae.domaineDactivite,
+                urssafCode: this.props.dpae.codeUrssaf,
+                streetDesignation: this.props.dpae.numeroRue + " " + this.props.dpae.nomRue,
+                town: this.props.dpae.ville,
+                postalCode: this.props.dpae.codePostal,
+                phoneNumber: this.props.dpae.telephone,
 
                 // salarie
-                surname: this.state.employee.nomNaissance,
-                customaryName: this.state.employee.nomUsage,
-                christianName: this.state.employee.prenom,
-                sex: this.state.employee.civilite === "M" ? 1 : 2,
-                nir: this.state.employee.numeroSecuriteSociale,
+                surname: this.props.dpae.nomNaissance,
+                customaryName: this.props.dpae.nomUsage,
+                christianName: this.props.dpae.prenom,
+                sex: this.props.dpae.civilite === "M" ? 1 : 2,
+                nir: this.props.dpae.numeroSecuriteSociale,
                 nirKey: "",
-                birthDate: this.state.employee.dateNaissance,
-                birthTown: this.state.employee.villeNaissance,
-                departmentBirth: this.state.employee.departementNaissance,
-                countryBirth: this.state.employee.paysNaissance,
+                birthDate: this.props.dpae.dateNaissance,
+                birthTown: this.props.dpae.villeNaissance,
+                departmentBirth: this.props.dpae.departementNaissance,
+                countryBirth: this.props.dpae.paysNaissance,
 
                 // contrat
-                // TODO récupérer bonne variable ?
-                startContractDate: this.state.employee.dateEmbauche,
+                startContractDate: this.props.dpae.dateDebut,
                 startContractTime: "",
-                // TODO récupérer bonne variable ?
+                // TODO récupérer bonne variable
                 endContractDate: "",
-                trialTime: this.state.employee.periodeEssai,
-                nature: this.state.employee.codeRefContrat,
-                healthService: this.state.society.serviceSanteTravail,
+                trialTime: this.props.dpae.periodeEssai,
+                nature: this.props.dpae.codeRef,
+                healthService: this.props.dpae.serviceSanteTravail,
                 comment: ""
 
-                // // employeur
-                // designation: "",
-                // siret: "",
-                // apeCode: "",
-                // urssafCode: "",
-                // streetDesignation: "",
-                // town: "",
-                // postalCode: "",
-                // phoneNumber: "",
-                //
-                // // salarie
-                // surname: "",
-                // customaryName: "",
-                // christianName: "",
-                // sex: "",
-                // nir: "",
-                // nirKey: "",
-                // birthDate: "",
-                // birthTown: "",
-                // departmentBirth: "",
-                // countryBirth: "",
-                //
-                // // contrat
-                // startContractDate: "",
-                // startContractTime: "",
-                // endContractDate: "",
-                // trialTime: "",
-                // nature: "",
-                // healthService: "",
-                // comment: ""
             }}
+                    enableReinitialize
                     onSubmit={this.submit}
                     validationSchema={dpaeSchema(this.state)}
             >
@@ -374,7 +336,7 @@ class DpaeForm extends React.Component {
                                                 name="siret"
                                                 value={values.siret}
                                                 label="SIRET*"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentText}
                                             />
                                             <ErrorMessage name="siret" component={ComponentError}/>
@@ -384,7 +346,7 @@ class DpaeForm extends React.Component {
                                                 name="urssafCode"
                                                 value={values.urssafCode}
                                                 label="Code Urssaf*"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentText}
                                             />
                                             <ErrorMessage name="urssafCode" component={ComponentError}/>
@@ -395,7 +357,7 @@ class DpaeForm extends React.Component {
                                                 value={values.apeCode}
                                                 validate={values.nature === "CTT" ? validateApeCode : null}
                                                 label="Code APE*"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentText}
                                             />
                                             <ErrorMessage name="apeCode" component={ComponentError}/>
@@ -408,7 +370,7 @@ class DpaeForm extends React.Component {
                                                 name="designation"
                                                 value={values.designation}
                                                 label="Désignation*"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentText}
                                             />
                                             <ErrorMessage name="designation" component={ComponentError}/>
@@ -421,7 +383,7 @@ class DpaeForm extends React.Component {
                                                 name="streetDesignation"
                                                 value={values.streetDesignation}
                                                 label="Adresse*"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentText}
                                             />
                                             <ErrorMessage name="streetDesignation" component={ComponentError}/>
@@ -434,7 +396,7 @@ class DpaeForm extends React.Component {
                                                 name="postalCode"
                                                 value={values.postalCode}
                                                 label="Code Postal*"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentText}
                                             />
                                             <ErrorMessage name="postalCode" component={ComponentError}/>
@@ -444,7 +406,7 @@ class DpaeForm extends React.Component {
                                                 name="town"
                                                 value={values.town}
                                                 label="Ville*"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentText}
                                             />
                                             <ErrorMessage name="town" component={ComponentError}/>
@@ -456,7 +418,7 @@ class DpaeForm extends React.Component {
                                                 name="phoneNumber"
                                                 value={values.phoneNumber}
                                                 label="Téléphone"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentText}
                                             />
                                             <ErrorMessage name="phoneNumber" component={ComponentError}/>
@@ -466,7 +428,6 @@ class DpaeForm extends React.Component {
                             </MDBCard>
                         </MDBCardBody>
                         {/*salarie*/}
-                        {/*<pre>{JSON.stringify(values, null, 4)}</pre>*/}
                         <MDBCardBody>
                             <MDBCardTitle className="text" tag="h5">Salarié</MDBCardTitle>
                             <MDBCard className="cadre">
@@ -478,7 +439,7 @@ class DpaeForm extends React.Component {
                                                 name="surname"
                                                 value={values.surname}
                                                 label="Nom*"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentText}
                                             />
                                             <ErrorMessage name="surname" component={ComponentError}/>
@@ -488,7 +449,7 @@ class DpaeForm extends React.Component {
                                                 name="customaryName"
                                                 value={values.customaryName}
                                                 label="Nom d'Usage"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentText}
                                             />
                                             <ErrorMessage name="customaryName" component={ComponentError}/>
@@ -501,7 +462,7 @@ class DpaeForm extends React.Component {
                                                 name="christianName"
                                                 value={values.christianName}
                                                 label="Prénom*"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentText}
                                             />
                                             <ErrorMessage name="christianName" component={ComponentError}/>
@@ -511,7 +472,7 @@ class DpaeForm extends React.Component {
                                                 name="sex"
                                                 value={values.sex}
                                                 label="Sexe*"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 options={listOptionsSex}
                                                 component={ComponentSelect}
                                             />
@@ -525,7 +486,7 @@ class DpaeForm extends React.Component {
                                                 name="nir"
                                                 value={values.nir}
                                                 label="N° de Sécurité Sociale"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentText}
                                             />
                                             <ErrorMessage name="nir" component={ComponentError}/>
@@ -535,7 +496,7 @@ class DpaeForm extends React.Component {
                                                 name="birthDate"
                                                 value={values.birthDate}
                                                 label="Date de Naissance*"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentDate}
                                             />
                                             <ErrorMessage name="birthDate" component={ComponentError}/>
@@ -548,7 +509,7 @@ class DpaeForm extends React.Component {
                                                 name="departmentBirth"
                                                 value={values.departmentBirth}
                                                 label="Département de Naissance*"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentText}
                                             />
                                             <ErrorMessage name="departmentBirth" component={ComponentError}/>
@@ -558,7 +519,7 @@ class DpaeForm extends React.Component {
                                                 name="birthTown"
                                                 value={values.birthTown}
                                                 label="Commune de Naissance*"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentText}
                                             />
                                             <ErrorMessage name="birthTown" component={ComponentError}/>
@@ -568,7 +529,7 @@ class DpaeForm extends React.Component {
                                                 name="countryBirth"
                                                 value={values.countryBirth}
                                                 label="Pays de Naissance*"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentText}
                                             />
                                             <ErrorMessage name="countryBirth" component={ComponentError}/>
@@ -578,7 +539,6 @@ class DpaeForm extends React.Component {
                             </MDBCard>
                         </MDBCardBody>
                         {/*contrat*/}
-                        {/*<pre>{JSON.stringify(values, null, 4)}</pre>*/}
                         <MDBCardBody>
                             <MDBCardTitle className="text" tag="h5">Contrat</MDBCardTitle>
                             <MDBCard className="cadre">
@@ -590,7 +550,7 @@ class DpaeForm extends React.Component {
                                                 name="nature"
                                                 value={values.nature}
                                                 label="Nature du Contrat*"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 options={listOptionNature}
                                                 component={ComponentSelect}
                                             />
@@ -602,7 +562,7 @@ class DpaeForm extends React.Component {
                                                 value={values.healthService}
                                                 validate={values.nature !== "CTT" ? validateHealthService : null}
                                                 label={values.nature !== "CTT" ? "Service de Santé au Travail*" : "Service de Santé au Travail"}
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentText}
                                             />
                                             <ErrorMessage name="healthService" component={ComponentError}/>
@@ -615,7 +575,7 @@ class DpaeForm extends React.Component {
                                                 name="startContractDate"
                                                 value={values.startContractDate}
                                                 label="Date de Début de Contrat*"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 mindate={this.state.oneYearBeforeNow}
                                                 maxdate={this.state.oneYearFromNow}
                                                 component={ComponentDate}
@@ -642,7 +602,7 @@ class DpaeForm extends React.Component {
                                                 name="endContractDate"
                                                 value={values.endContractDate}
                                                 label="Date de Fin de Contrat*"
-                                                disabled={this.state.disabled}
+                                                disabled={false}
                                                 validate={validateEndContractDate}
                                                 component={ComponentDate}
                                             />
@@ -653,7 +613,7 @@ class DpaeForm extends React.Component {
                                                 name="trialTime"
                                                 value={values.trialTime}
                                                 label="Période d'Essai (en Jours)"
-                                                disabled={this.state.disabled}
+                                                disabled={true}
                                                 component={ComponentNumber}
                                             />
                                             <ErrorMessage name="trialTime" component={ComponentError}/>
@@ -696,20 +656,18 @@ class DpaeForm extends React.Component {
                             >
                                 Réinitialiser
                             </MDBBtn>
-                            <Link to={"/socialHome/" + this.state.society.id}>
                                 <MDBBtn
                                     color="teal accent-3"
                                     rounded
                                     size="sm"
-                                    // onClick={() => {
-                                    //     // this.props.history.push(
-                                    //     //     "/socialHome/" + this.state.society.id
-                                    //     // );
-                                    // }}
+                                    onClick={() => {
+                                        this.props.history.push(
+                                            "/socialHome/" + this.props.dpae.societyId
+                                        );
+                                    }}
                                 >
                                     Annuler
                                 </MDBBtn>
-                            </Link>
                         </MDBRow>
                     </Form>
                 )}

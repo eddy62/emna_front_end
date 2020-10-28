@@ -20,6 +20,7 @@ class SupprimerClient extends Component {
   }
 
   supprimerProduit = () => {
+    
     AxiosCenter.deleteCustomerSupplier(this.props.client.id, this.state.userId)
       .then((response) => {
         toast.success(
@@ -33,6 +34,7 @@ class SupprimerClient extends Component {
           modal: !this.state.modal,
           redirect: true,
         });
+        this.props.delete(this.props.client)
       })
       .catch((error) => {
         console.log(error)
