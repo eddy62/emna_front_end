@@ -95,6 +95,14 @@ class ListeContrat extends React.Component {
                                             contrat
                                         </button>
                                     </Link>
+                                    <Link to={"/creeravenant/" + employe.id}>
+                                        <button type="button" className="btn btn-outline-success text-right">Creer un avenant
+                                        </button>
+                                    </Link>
+                                    <Link to={"/contrat/avenant/" + employe.idContrat}>
+                                        <button type="button" className="btn btn-outline-success">Voir ces avenants
+                                        </button>
+                                    </Link>
                                     <MDBBtn onClick={() => props.archiveContract(employe.idContrat)} color={"info"}>
                                         Archiver
                                     </MDBBtn>
@@ -131,7 +139,6 @@ class ListeContrat extends React.Component {
                 <Link to={"/contrat/"}>
                     <button type="button" className="btn btn-outline-success">Retour</button>
                 </Link>
-
                 <form className="md-form">
 
                 </form>
@@ -155,4 +162,5 @@ class ListeContrat extends React.Component {
             </div>)
     }
 }
+
 export default ListeContrat;
