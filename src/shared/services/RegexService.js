@@ -4,6 +4,7 @@
  * @author Ruyck Robin et Belot Cédric
  *
  */
+
 const RegexService = {
 
     /*contrôles génériques nombres et lettres*/

@@ -465,6 +465,13 @@ const AxiosCenter = {
     });
   },
 
+  getClientBySiretAndSocietyId(siret){
+    return ApiBackEnd({
+      method: "GET",
+      url: `/clients-fournisseurs/siret/${siret}`
+    });
+  },
+
   // Fin Get
 
   //Post
