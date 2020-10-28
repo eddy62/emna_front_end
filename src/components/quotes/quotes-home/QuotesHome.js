@@ -19,19 +19,31 @@ export default class QuotesHome extends Component {
 
   constructor() {
     super();
-    this.state = { 
-      quotes: {},
+    this.state = {
+      quotes: [{}],
       societyId: UserService.getSocietyId(),
       loaded: false,
     };
   }
 
+  delete = (quote) => {
+    const quoteCopy = this.state.quotes.slice()
+    const index = quoteCopy.findIndex(q => {
+      return quote.id === q.id
+    })
+    quoteCopy.splice(index, 1)
+    console.log(quoteCopy)
+    this.setState({
+      quotes:quoteCopy
+    })
+  }
+
   componentDidMount() {
     Axios.getAllQuotesBySociety(this.state.societyId).then((res) => {
       const quotes = res.data;
-      this.setState({quotes, loaded: true});
+      this.setState({ quotes, loaded: true });
     })
-    .catch((err) => console.log(err));
+      .catch((err) => console.log(err));
   }
     reload() {
     
@@ -45,17 +57,17 @@ export default class QuotesHome extends Component {
   render() {
     if (!this.state.loaded) return <Loading />
     return (
-      <MDBContainer>   
+      <MDBContainer>
         <MDBCardHeader color="default-color">
           <MDBCardTitle>Gestion des Devis</MDBCardTitle>
           <br />
-        </MDBCardHeader>         
-        <hr />  
-        <MDBCardTitle tag="h3">Devis en cours</MDBCardTitle> 
+        </MDBCardHeader>
+        <hr />
+        <MDBCardTitle tag="h3">Devis en cours</MDBCardTitle>
         <hr />
         <MDBCard>
-          <MDBCardBody>            
-            <MDBTable >
+          <MDBCardBody>
+            <MDBTable striped>
               <MDBTableHead>
                 <tr>
                   <th scope="col">Numéro</th>
@@ -66,18 +78,18 @@ export default class QuotesHome extends Component {
               </MDBTableHead>
               <MDBTableBody>
                 {this.state.quotes.map((quote, index) => (
-                  <QuotationElement key={quote.id} quote={quote} reload={()=>this.reload()} societyId={this.state.societyId} />
+                  <QuotationElement delete={(quote) => this.delete(quote)} key={quote.id} quote={quote} societyId={this.state.societyId}  />
                 ))}
               </MDBTableBody>
-            </MDBTable>             
+            </MDBTable>
           </MDBCardBody>
-        </MDBCard>        
-        <br />  
+        </MDBCard>
+        <br />
         <div className="row d-flex justify-content-center ">
-          <RedirectionBtn color="default-color" to="/menu/comptabilite" txt="retour" size="sm"/>
-          <RedirectionBtn color="default-color" to="/devis/créer" txt="Créer un devis" size="sm"/>
-        </div> 
-      </MDBContainer>       
+          <RedirectionBtn color="default-color" to="/menu/comptabilite" txt="retour" size="sm" />
+          <RedirectionBtn color="default-color" to="/devis/créer" txt="Créer un devis" size="sm" />
+        </div>
+      </MDBContainer>
     );
   }
 }

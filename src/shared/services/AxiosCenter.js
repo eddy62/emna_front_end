@@ -458,6 +458,20 @@ const AxiosCenter = {
     });
   },
 
+  getProduitsByNomOrReferenceAndSocieteId(keyWord){
+    return ApiBackEnd({
+      method: "GET",
+      url: `/products/q/${keyWord}`
+    });
+  },
+
+  getAllWrapperDpaesToDoBySociety(societyId) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/wrapper-dpaes-to-do/society/${societyId}`,
+    })
+  },
+
   // Fin Get
 
   //Post
@@ -465,6 +479,14 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "post",
       url: `/account/reset-password/finish`,
+      data: values,
+    });
+  },
+
+  createAvenant(values) {
+    return ApiBackEnd({
+      method: "post",
+      url: `/avenants/add/new`,
       data: values,
     });
   },
@@ -706,7 +728,7 @@ const AxiosCenter = {
     })
   },
 
-  
+
   // Fin Post
 
   //Put
@@ -890,6 +912,13 @@ const AxiosCenter = {
     });
   },
 
+  archiveContrat(idContrat){
+    return ApiBackEnd({
+      method: "put",
+      url: `/archiveContrat/${idContrat}`,
+    });
+  },
+
   // Fin Put
 
   //Delete
@@ -1002,6 +1031,19 @@ const AxiosCenter = {
     return ApiBackEnd({
       method: "DELETE",
       url: `/documents/${id}/${filename}`
+    });
+  },
+
+  getInvoicesByOperationId(id){
+    return ApiBackEnd({
+      method: "GET",
+      url:`facture/operation/${id}`
+    })
+  },
+  deleteQuoteById(id) {
+    return ApiBackEnd({
+      method: "DELETE",
+      url: `/devis/${id}`
     });
   },
 
