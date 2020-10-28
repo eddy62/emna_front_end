@@ -17,6 +17,18 @@ const RegexService = {
     },
 
     /**
+     * only numbers and starting only with a number between 1 and 9 and accepting them . and the ,
+     * @example 123456789
+     * @example 1.0123456789
+     * @example 1,0123456789
+     * @example 0.0123456789
+     * @example 0,0123456789
+     */
+    onlyNumbersWithComaAndDot() {
+        return /^([1-9][0-9]*(,|.){0,1}|(0,|0\.)+)[0-9]*$/
+    },
+
+    /**
      * only numbers + minimal length + maximal length
      * @param {number} min - minimal length
      * @param {number} max - maximal length

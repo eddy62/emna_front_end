@@ -5,6 +5,7 @@ import AxiosCenter from "../../../shared/services/AxiosCenter";
 import {Link} from 'react-router-dom';
 import {MDBBtn, MDBCardHeader, MDBCardTitle, MDBContainer, MDBInput,} from "mdbreact";
 import {toast} from "react-toastify";
+import RegexService from "../../../shared/services/RegexService";
 
 const ComposantErreur = (props) => (
     <div className="text-danger">{props.children}</div>
@@ -36,6 +37,8 @@ const ComposantSelect = ({field, form: {touched, errors}, ...props}) => (
         </select>
     </div>
 );
+
+const regOnlyNumbersWithComaAndDot = RegexService.onlyNumbersWithComaAndDot();
 
 class UpdateProduit extends Component {
 
@@ -102,7 +105,7 @@ class UpdateProduit extends Component {
         tva: Yup.string()
             .matches(/^[0-9.]+$/, "Tva doit être composé uniquement de chiffres").required("Le champ est obligatoire"),
         prix: Yup.string()
-            .matches(/^[0-9.]+$/, "Prix doit être composé uniquement de chiffres")
+            .matches(regOnlyNumbersWithComaAndDot, "Prix doit être composé uniquement de chiffres. Il peut commencer par 0 uniquement si celui-ci est suivi d'une , ou . ,il ne peut contenir qu'un seul . ou une seule ,")
             .required("Le champ est obligatoire"),
         description: Yup.string().max(200, "200 caractères maximum"),
         unite: Yup.string().required("Le champ est obligatoire"),
