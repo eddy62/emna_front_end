@@ -12,7 +12,7 @@ import React from "react";
 const BackBtn = ({history, to, size}) => {
     return (
         <RedirectionBtn
-            color="teal"
+            color="teal lighten-2"
             icon="arrow-left"
             txt="Retour"
             rounded
