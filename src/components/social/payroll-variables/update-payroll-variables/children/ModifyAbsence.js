@@ -77,28 +77,28 @@ const notify = (type, message) => {
             case "severalPayroll":
             toast.warning(
                 <div className="text-center">
-                    <strong>{variable} non enregistrée : plusieurs autres variables de paie existent entre le {message} !</strong>
+                    <strong>{variable} non Modifiée : plusieurs autres variables de paie existent entre le {message} !</strong>
                 </div>
             );
             break;
         case "warningOther":
             toast.warning(
                 <div className="text-center">
-                    <strong>{variable} non enregistrée : une Autre Variable existe entre le {message} !</strong>
+                    <strong>{variable} non Modifiée : une Autre Variable existe entre le {message} !</strong>
                 </div>
             );
             break;
         case "warningOvertime":
             toast.warning(
                 <div className="text-center">
-                    <strong>{variable} non enregistrée : une Heure Supplémentaire existe entre le {message} !</strong>
+                    <strong>{variable} non Modifiée : une Heure Supplémentaire existe entre le {message} !</strong>
                 </div>
             );
             break;
         case "warningExpenseReport":
             toast.warning(
                 <div className="text-center">
-                    <strong>{variable} non enregistrée : une Note de Frais existe entre le {message} !</strong>
+                    <strong>{variable} non Modifiée : une Note de Frais existe entre le {message} !</strong>
                 </div>
             );
             break;

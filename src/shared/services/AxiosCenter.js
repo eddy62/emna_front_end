@@ -465,6 +465,20 @@ const AxiosCenter = {
     });
   },
 
+  getClientBySiretAndSocietyId(siret){
+    return ApiBackEnd({
+      method: "GET",
+      url: `/clients-fournisseurs/siret/${siret}`
+    });
+  },
+
+  getAllWrapperDpaesToDoBySociety(societyId) {
+    return ApiBackEnd({
+      method: "GET",
+      url: `/wrapper-dpaes-to-do/society/${societyId}`,
+    })
+  },
+
   // Fin Get
 
   //Post

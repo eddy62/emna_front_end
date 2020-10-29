@@ -173,7 +173,11 @@ class TableOtherPayrollVariable extends React.Component {
                                                     onClick={() => this.toggleModalDeleteOther(index)}>SUPPRIMER</MDBBtn>
                                         </td>
                                     ) : (
-                                        <td>Confirmé</td>
+                                        other.etatVariablePaieId === 2 ? (
+                                            <td>Confirmé</td>
+                                        ) : (
+                                            <td>Validé</td>
+                                        )
                                     )}
                                 </tr>
                             ))}

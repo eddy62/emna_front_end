@@ -165,6 +165,7 @@ export default class ParentUpdatePayrollVariables extends Component {
     }
 
     componentDidMount() {
+        window.scrollTo(0, 0)
         //Récupération de l'id de la société
         const societyId = this.props.match.params.societyId;
         const employeId = this.props.match.params.id;
@@ -222,7 +223,7 @@ export default class ParentUpdatePayrollVariables extends Component {
         if (!this.state.loaded) return <Loading />
         else return (
             <div className="App">
-                <div className="social">
+                <div className="social" style={{marginTop: "-50px"}}>
                     <MDBContainer>
                         <div className="titre">
                             <MDBCardHeader color="default-color">

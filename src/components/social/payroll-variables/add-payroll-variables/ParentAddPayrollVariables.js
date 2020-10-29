@@ -62,6 +62,8 @@ export default class ParentAddPayrollVariables extends Component {
     }
 
     componentDidMount() {
+        //Pour afficher le haut de la page lorsqu'on arrive dessus
+        window.scrollTo(0, 0)
 
         //Récupération de l'id de la société
         const idSociete = this.props.match.params.id;
@@ -133,7 +135,7 @@ export default class ParentAddPayrollVariables extends Component {
         const {collapseID} = this.state;
         return (
             <div className="App">
-                <div className="social">
+                <div className="social" style={{marginTop: "-50px"}}>
                     <MDBContainer>
                         <div className="titre">
                             <MDBCardHeader color="default-color">
