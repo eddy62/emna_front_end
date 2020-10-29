@@ -94,7 +94,11 @@ export default class TableBonus extends React.Component {
                                                     onClick={() => this.toggleModaleDelete(index)}>SUPPRIMER</MDBBtn>                                            
                                         </td>
                                     ) : (
-                                        <td>Confirmé</td>
+                                        prime.etatVariablePaieId === 2 ? (
+                                            <td>Confirmé</td>
+                                        ) : (
+                                            <td>Validé</td>
+                                        )
                                     )}
                                 </tr>
                             ))}

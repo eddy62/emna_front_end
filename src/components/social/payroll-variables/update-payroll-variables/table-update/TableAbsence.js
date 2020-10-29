@@ -142,7 +142,11 @@ class TableAbsence extends React.Component {
                                                     onClick={() => this.toggleModalDeleteAbsence(index)}>SUPPRIMER</MDBBtn>
                                         </td>
                                     ) : (
-                                        <td>Confirmé</td>
+                                        abs.etatVariablePaieId === 2 ? (
+                                            <td>Confirmé</td>
+                                        ) : (
+                                            <td>Validé</td>
+                                        )
                                     )}
                                 </tr>
                             ))}

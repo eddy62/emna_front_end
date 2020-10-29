@@ -66,8 +66,12 @@ export default class TableOvertime extends React.Component {
                                                 onClick={() =>this.toggleModaleDelete(index)}>SUPPRIMER</MDBBtn>                                            
                                         </td>
                                     ) : (
+                                        hsupp.etatVariablePaieId === 2 ? (
                                             <td>Confirmé</td>
-                                        )}
+                                        ) : (
+                                            <td>Validé</td>
+                                        )
+                                    )}
                                 </tr>
                             ))}
                         </MDBTableBody>

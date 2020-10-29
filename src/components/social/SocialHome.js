@@ -199,7 +199,7 @@ class SocialHome extends React.Component {
                                                             size="sm"
                                                             onClick={() => {
                                                                 this.props.history.push(
-                                                                    "/modify-payroll-variables/" + this.state.societe.id + "/1/" + new Date().getFullYear() + "/" + new Date().getMonth()
+                                                                    "/modify-payroll-variables/" + this.state.societe.id + "/1/" + new Date().getFullYear() + "/" + (new Date().getMonth()+1)
                                                                 );
                                                             }}
                                                         >
