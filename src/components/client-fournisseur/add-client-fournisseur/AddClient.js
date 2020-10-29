@@ -34,7 +34,7 @@ class AddClientFournisseur extends React.Component {
         if(error.data = 'A new clientFournisseur cannot already have an SIRET'){
             toast.error(
                 <div className="text-center">
-                    <strong>Erreur le SIRET est déjà utiliser par un autre Client Fournisseur &nbsp;&nbsp;!</strong>
+                    <strong>Erreur le SIRET est déjà utilisé par un autre Client Fournisseur &nbsp;&nbsp;!</strong>
                     <br />
                 </div>,
                 { position: "top-right" }

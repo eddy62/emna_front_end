@@ -100,7 +100,7 @@ class SocialHome extends React.Component {
                                                         /*l'id de la société est undefined sur le compte accountant*/
                                                         onClick={() => {
                                                             this.props.history.push(
-                                                                "/listEmployes/" + this.state.societe.id
+                                                                "/newEmploye/" + this.state.societe.id
                                                             );
                                                         }}
                                                     >
