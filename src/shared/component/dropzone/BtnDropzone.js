@@ -21,12 +21,13 @@ class BtnDropzone extends Component {
     }
 
     send = () => {
-        this.setState({send: true})
+        this.setState({"send": true})
     }
 
     activeBtn = (active) =>{
-        this.setState({activeBtn: active})
+        this.setState({"activeBtn": active})
     }
+
 
     render() {
         return (
@@ -40,9 +41,12 @@ class BtnDropzone extends Component {
                     </MDBModalHeader>
                     <MDBModalBody>
                         <Dropzone send={this.state.send}
-                                  url={`/upload/avenant/${this.props.id}`}
+                                  url={`/upload/avenant/${this.props.id}/${this.props.idContrat}`}
                                   typeFichiers={['application/pdf']}
                                   activeBtn = {this.activeBtn}
+                                  idAmendement={this.props.id}
+                                  idContrat={this.props.idContrat}
+                                  onSigne = {()=>this.props.onSigne(this.props.id)}
                         />
                     </MDBModalBody>
                     <MDBModalFooter>

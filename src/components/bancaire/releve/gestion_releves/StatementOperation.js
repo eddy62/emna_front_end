@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import {MDBBtn} from "mdbreact";
 import UserService from "../../../../shared/services/UserService";
 import AxiosCenter from "../../../../shared/services/AxiosCenter";
+import {withRouter} from "react-router-dom";
 
 
-export default class StatementOperation extends Component {
+class StatementOperation extends Component {
 
     mergeProcess = () => {
         if (this.props.selectedFactures.length === 0) return
@@ -25,6 +26,9 @@ export default class StatementOperation extends Component {
         await AxiosCenter.updateRapprochementOperation(this.props.operation.id);
     }
 
+    goToList = (id) => {
+        this.props.history.push(`/detailsoperation/${id}`);
+    }
 
 
     render() {
@@ -35,10 +39,17 @@ export default class StatementOperation extends Component {
                 <td>{this.props.operation.description}</td>
                 <td>{this.props.operation.solde}</td>
                 <td>{this.props.operation.type}</td>
+                {this.props.operation.rapproche &&
+                <td>
+                    <MDBBtn onClick={() => this.goToList(this.props.operation.id)}
+                            color=" teal lighten-2" rounded size="sm">
+                        <span>detail</span>
+                    </MDBBtn>
+                </td>}
                 {(UserService.isAdmin() || UserService.isAccountant()) &&
                 <td>
                     {
-                        this.props.isCheckBoxVisible &&  this.props.operation.rapproche === false &&
+                        this.props.isCheckBoxVisible && this.props.operation.rapproche === false &&
                         <MDBBtn onClick={this.mergeProcess}
                                 color=" teal lighten-2" rounded size="sm">
                             <span id={this.props.operation.id}>Valider</span>
@@ -50,3 +61,5 @@ export default class StatementOperation extends Component {
         );
     }
 }
+
+export default withRouter(StatementOperation)

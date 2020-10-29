@@ -1,9 +1,6 @@
 import React from "react";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import Loading from "../../../shared/component/Loading";
-import DragFileUpload from "../../../shared/component/drag-n-drop/DragFileUpload";
-import UploadFileBtn from "../../../shared/component/drag-n-drop/UploadFileBtn";
-import Dropzone from "../../../shared/component/dropzone/Dropzone";
 import BtnDropzone from "../../../shared/component/dropzone/BtnDropzone";
 
 export default class AmendmentList extends React.Component {
@@ -12,6 +9,8 @@ export default class AmendmentList extends React.Component {
         this.state = {
             amendments: [],
             loaded: false,
+
+
         }
         this.amendmentList = this.amendmentList.bind(this);
     }
@@ -22,6 +21,16 @@ export default class AmendmentList extends React.Component {
         })
     }
 
+    signedAmendment = (amendmentId) => {
+        console.log('amendmentID= ' + amendmentId)
+        const amendments = this.state.amendments.slice()
+        const index= amendments.findIndex(a =>{
+            return a.id === amendmentId;
+        })
+        amendments[index].signe= true;
+        this.setState({amendments})
+    }
+
     amendmentList() {
         if (this.state.amendments.length > 0 && !null) {
             const amendments = this.state.amendments.map((amendment) => (
@@ -30,7 +39,8 @@ export default class AmendmentList extends React.Component {
                         <h5 className="clearfix">{amendment.id} - {amendment.reference} : {amendment.dateDeCreation} - {(amendment.signe === true) ? "Signé le :" : "En attente de signature"} {amendment.dateDeSignature}
                             {(amendment.signe !== true) &&
                             <div className="float-right">
-                               <BtnDropzone id={amendment.id} title={"Upload Amendment"}/>
+                                <BtnDropzone id={amendment.id} idContrat={this.props.match.params.id}
+                                             title={"Upload Amendment"} onSigne={(amendmentId)=>this.signedAmendment(amendmentId)}/>
                             </div>
                             }
                         </h5>

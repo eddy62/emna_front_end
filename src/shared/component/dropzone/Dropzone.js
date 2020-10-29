@@ -150,6 +150,7 @@ const Dropzone = (props) => {
                         setUnsupportedFiles([...validFiles]);
 
                     }
+                    props.onSigne(props.idAmendement)
                 },
             ).catch(() => {
                 uploadRef.current.innerHTML = `<span class="error">Error Uploading File(s)</span>`;
