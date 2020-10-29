@@ -31,7 +31,17 @@ class ListerClientFournisseur extends Component {
     }
   }
 
-
+  deleteClient = (client) => {
+    const clientCopy = this.state.clients.slice()
+    const index = clientCopy.findIndex(c => {
+      return client.id === c.id
+    })
+    clientCopy.splice(index, 1)
+    console.log(clientCopy)
+    this.setState({
+      clients:clientCopy
+    })
+  }
   render() {
     return (
       <MDBContainer>
@@ -64,7 +74,9 @@ class ListerClientFournisseur extends Component {
                             <span>Detail</span>
                           </MDBBtn>
                         </Link>
-                        <SupprimerClientFournisseur client={c} />
+
+                        <SupprimerClientFournisseur client={c} delete={(client)=>this.deleteClient(client)} />
+
                       </div>
 
                     </td>

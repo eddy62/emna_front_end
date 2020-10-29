@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
+import { MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter,MDBIcon } from 'mdbreact';
 
 /**
  * Composant permettant de créer une modale sur un bouton et de lui attribuer une action
@@ -9,12 +9,14 @@ import { MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from '
  * @param color couleur du bouton
  * @param rounded permet l'arrondi du bouton
  * @param size déffinit sa taille
+ * @param text text inside the ModalBody 
+ * @param icon name of the icon on font awesome
  * @author TALLA Brahim
  * @constructor
  */
 
 const ConfirmationModal =
-    ({title,action, name, color, rounded, size }) => {
+    ({title,action, name, color, rounded, size , text, icon }) => {
        const [isOpen, setIsOpen] = useState(false);
 
         return (
@@ -24,11 +26,12 @@ const ConfirmationModal =
                         rounded={rounded}
                         size={size}>
                     {name}
+                     <MDBIcon icon={icon}/>
                 </MDBBtn>
                 <MDBModal isOpen={isOpen}>
                     <MDBModalHeader>{title}</MDBModalHeader>
                     <MDBModalBody>
-                    {/*    texte optionnel*/}
+                    {text}
                     </MDBModalBody>
                     <MDBModalFooter>
                         <MDBBtn color="secondary" onClick={() => setIsOpen(false)}>Annuler</MDBBtn>

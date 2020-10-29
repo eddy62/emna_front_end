@@ -1,12 +1,13 @@
 import React from 'react';
 import {Field, Form, Formik} from 'formik';
-import Loading from "../../../shared/component/Loading";
-import {Link} from "react-router-dom";
 import AxiosCenter from "../../../shared/services/AxiosCenter";
 import UserService from "../../../shared/services/UserService";
 import {MDBCard, MDBCardBody, MDBCol, MDBCollapse, MDBCollapseHeader, MDBContainer, MDBInput} from "mdbreact";
 import {toast} from "react-toastify";
 import NotificationService from "../../../shared/services/NotificationService";
+import {Link} from "react-router-dom";
+import Loading from "../../../shared/component/Loading";
+import SimpleModal from "../../../shared/component/SimpleModal";
 
 const ComponentText = ({field, ...props}) => (
     <MDBInput
@@ -28,6 +29,7 @@ const ComponentDate = ({field, ...props}) => (
     </div>
 
 );
+
 
 const ComposantNumber = ({field, ...props}) => (
     <MDBInput
@@ -71,6 +73,7 @@ const notify = type => {
 };
 
 export default class CreerContrat extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -82,34 +85,38 @@ export default class CreerContrat extends React.Component {
             typeContracts: [],
             articles: [],
             isSubmitDisabled: true,
-            //clauses: [],
+            showModal: false,
+            showOptionalItem: false,
         };
+        this.accordionContent = [];
     }
 
     handleOnChange = async (e) => {
         await this.setState({
             idTypeContrat: this.state.typeContracts[e.target.value].id,
             title: this.state.typeContracts[e.target.value].intitule
-        })
-        const isSubmitDisabled = await (this.state.idEmploye === null) || (this.state.idTypeContrat === null);
+        });
+        const isSubmitDisabled = await (this.state.selectedEmploye === null) || (this.state.idTypeContrat === null);
         this.setState({
             isSubmitDisabled
-        })
-
-    }
+        });
+    };
 
     handleOnChangeEmploye = async (e) => {
         await this.setState({
             selectedEmploye: this.state.employes[e.target.value]
         })
-        const isSubmitDisabled = await (this.state.idEmploye === null) || (this.state.idTypeContrat === null);
+        const isSubmitDisabled = await (this.state.selectedEmploye === null) || (this.state.idTypeContrat === null);
         this.setState({
             isSubmitDisabled
         })
-    }
+    };
 
     checkFields(inputs) {
-        const nbArticles = this.state.articles.length;
+        let isCDI = this.state.idTypeContrat === 3;
+        let nbArticles = this.state.articles.length;
+        if (isCDI)
+            nbArticles = this.state.articles.length - 1;
         let isError = (inputs.length !== nbArticles);
         let index = 0;
 
@@ -130,31 +137,7 @@ export default class CreerContrat extends React.Component {
         }
 
         return isError;
-    }
-
-    /*handleOnChangeClause = (clause) => {
-        var present= false;
-        var index=0;
-        for(var i = 0; i < this.state.clauses.length; i++){
-            present=false;
-            if ( this.state.clauses[i] == clause) {
-                present=true;
-                index=i;
-                break;
-            }
-        }
-        if(present){
-            const list = this.state.clauses;
-            list.splice(index,1);
-            this.setState({clauses:list});
-
-        }else{
-            this.state.clauses.push(clause);
-        }
-
-
-
-    }*/
+    };
 
     componentDidMount() {
         AxiosCenter.getAllWrapperEmployesBySociety(UserService.getSocietyId()).then((result1) => {
@@ -172,6 +155,7 @@ export default class CreerContrat extends React.Component {
                 }).catch((err) => console.log(err));
             }).catch((err) => console.log(err));
         }).catch((err) => console.log(err));
+
     }
 
     toggleCollapse = collapseID => () =>
@@ -191,26 +175,47 @@ export default class CreerContrat extends React.Component {
                 <option key={index} value={index}>{typeContract.intitule}</option>
             )
         })
-
         //Show all Articles + inputs
         const articles = props.articles.map((article, index) => {
-            const name = "wrapperSaisieArticles[" + index + "].libelle_" + article.id
-            return (
-                <MDBCard key={index}>
-                    <MDBCollapseHeader onClick={this.toggleCollapse(index)} className="bg-transparent">
-                        {article.titre} : {article.intitule}
-                        <i className={props.collapseID === index ? "fa fa-angle-up" : "fa fa-angle-down"}/>
-                    </MDBCollapseHeader>
-                    <MDBCollapse id={index} isOpen={props.collapseID}>
-                        <MDBCardBody>
-                            {article.description}
-                            {renderInputs(index, name)}
-                            {/*<ErrorMessForm error={errors.name}/>*/}
-                        </MDBCardBody>
-                    </MDBCollapse>
-                </MDBCard>
-            )
+
+            if ((index !== 8 || props.idTypeContrat !== 3) && !this.state.articles[index].optional) {
+                const name = "wrapperSaisieArticles[" + index + "].libelle_" + article.id
+                return (
+                    <MDBCard key={index}>
+                        <MDBCollapseHeader onClick={this.toggleCollapse(index)} className="bg-transparent">
+                            {article.titre} : {article.intitule}
+                            <i className={props.collapseID === index ? "fa fa-angle-up" : "fa fa-angle-down"}/>
+                        </MDBCollapseHeader>
+                        <MDBCollapse id={index} isOpen={props.collapseID}>
+                            <MDBCardBody>
+                                {article.description}
+                                {renderInputs(index, name)}
+                                {/*<ErrorMessForm error={errors.name}/>*/}
+                            </MDBCardBody>
+                        </MDBCollapse>
+                    </MDBCard>
+                )
+            }
         })
+        const bodyModal = props.articles.map((article, index) => {
+            return <div key={index}>
+                {index > 8 &&
+                <div className="custom-control custom-checkbox">
+                    <input type="checkbox"
+                           className="custom-control-input"
+                           ref={ref => (this.accordionContent[index] = ref)}
+                           id={index} checked={!article.optional}
+                           onChange={() => {
+                           }}/>
+                    <label className="custom-control-label"
+                           htmlFor="defaultChecked2"
+                           onClick={() => this.checkedClick(this.accordionContent[index])}>
+                        {article.titre} : {article.intitule}
+                    </label>
+                </div>
+                }
+            </div>
+        });
 
         function renderInputs(index, name) {
             switch (index) {
@@ -242,6 +247,16 @@ export default class CreerContrat extends React.Component {
                                 component={ComposantNumber}>€</Field>
                         </MDBCol>
                     );
+
+                case 8:
+                    return (
+                        <MDBCol md="4">
+                            <Field
+                                name={name}
+                                component={ComponentDate}
+                            />
+                        </MDBCol>
+                    );
             }
         }
 
@@ -260,32 +275,6 @@ export default class CreerContrat extends React.Component {
             return newListSaisiesArticle;
         }
 
-        /*const Articles = props.employe.articleVMList.map((article, b) =>{
-            /!*const Clause = article.listClauses.map((clause, c) => {
-                return (
-                    <div key={c}>
-                        <div className="form-group">
-                            <div id="feedback">
-                                <div className="form-check">
-
-                                    <input type="checkbox" className="form-check-input" name="channel[]"
-                                           id={clause.clauseId} value={clause} onChange={(event)=>this.handleOnChangeClause(clause)}/>
-                                    <label htmlFor={clause.clauseId}
-                                           className="form-check-label">{clause.clauseDesciption}</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )
-            })*!/
-            return (
-                <div key={b}>
-                    <h5>{article.articleTitre} : {article.articleDescription}</h5>
-                    {article.articleReference}
-                    {/!*Clause*!/}
-                </div>
-            )
-        })*/
 
         return (
             <div>
@@ -369,8 +358,22 @@ export default class CreerContrat extends React.Component {
 
                             <MDBContainer>
                                 {articles}
+                                <button type="button" className="btn btn-outline-mdb-color float-right"
+                                        onClick={() => {
+                                            this.setState({showModal: true})
+                                        }}>Ajouter un article
+                                </button>
                             </MDBContainer>
 
+                            <SimpleModal
+                                body={bodyModal}
+                                isOpen={this.state.showModal}
+                                btnClick={() => this.setState({showModal: false})}
+                                title = {"Ajouter un article"}
+                                btnText = {"Fermer"}
+                            />
+                            <br/>
+                            <br/>
                             <div className="clearfix">
                                 <div className="form-group">
                                     <button type="submit"
@@ -391,7 +394,12 @@ export default class CreerContrat extends React.Component {
             </div>
         );
     }
-
+    checkedClick = (e) => {
+        e.checked = !e.checked
+        const articles = this.state.articles.slice();
+        articles[e.id].optional = !e.checked
+        this.setState({articles})
+    }
 
     render() {
         const {collapseID} = this.state;
@@ -402,7 +410,8 @@ export default class CreerContrat extends React.Component {
                 typeContracts={this.state.typeContracts}
                 articles={this.state.articles}
                 collapseID={collapseID}
-                onChange={this.handleOnChange}/>
+                idTypeContrat={this.state.idTypeContrat}
+            />
         );
     }
 }
