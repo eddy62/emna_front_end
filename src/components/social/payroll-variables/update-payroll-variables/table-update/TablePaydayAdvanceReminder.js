@@ -74,7 +74,11 @@ export default class TablePaydayAdvanceReminder extends React.Component {
                                                     onClick={() => this.toggleModaleDelete(index)}>SUPPRIMER</MDBBtn>                                            
                                         </td>
                                     ) : (
-                                        <td>Confirmé</td>
+                                        avrap.etatVariablePaieId === 2 ? (
+                                            <td>Confirmé</td>
+                                        ) : (
+                                            <td>Validé</td>
+                                        )
                                     )}
                                 </tr>
                             ))}

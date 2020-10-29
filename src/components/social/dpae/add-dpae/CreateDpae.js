@@ -5,6 +5,11 @@ import AxiosCenter from "../../../../shared/services/AxiosCenter";
 import Loading from "../../../../shared/component/Loading";
 import DpaeForm from "./DpaeForm";
 
+/**
+ * CreateDpae
+ *
+ * @author Created by Cédric Belot
+ */
 
 class CreateDpae extends React.Component {
     constructor(props) {
@@ -12,22 +17,21 @@ class CreateDpae extends React.Component {
         this.state = {
             loaded: false,
             society: {},
-            employees: [],
-            employeeIndex: "default"
+            dpaes: [],
+            dpaeIndex: "default"
         }
-        this.handleChange = this.handleChange.bind(this)
     }
 
     componentDidMount() {
         // get society
         AxiosCenter.getSocietyById(this.props.match.params.id)
             .then((responseSociety) => {
-                // get employees
-                AxiosCenter.getAllWrapperEmployesBySociety(this.props.match.params.id)
-                    .then((responseEmployees) => {
+                // get dpaes
+                AxiosCenter.getAllWrapperDpaesToDoBySociety(this.props.match.params.id)
+                    .then((responseDpaes) => {
                         this.setState({
                             society: responseSociety.data,
-                            employees: responseEmployees.data,
+                            dpaes: responseDpaes.data,
                             loaded: true
                         })
                     })
@@ -41,7 +45,7 @@ class CreateDpae extends React.Component {
     }
 
     handleChange = (event) => {
-        this.setState({employeeIndex: event.target.value});
+        this.setState({dpaeIndex: event.target.value});
     }
 
     render() {
@@ -70,24 +74,24 @@ class CreateDpae extends React.Component {
                         {/*select employé*/}
                         <div>
                             <select className="browser-default custom-select"
-                                    value={this.state.employeeIndex}
+                                    value={this.state.dpaeIndex}
                                     onChange={this.handleChange}
                             >
                                 <option value="default" disabled={true}>Sélectionner un employé avec contrat et sans
                                     DPAE
                                 </option>
-                                {this.state.employees.map((object, index) => (
+                                {this.state.dpaes.map((object, index) => (
                                     <option key={index}
-                                            value={index}>{object.matricule + " " + object.nomNaissance + " " + object.prenom}</option>))}
+                                            value={index}>{object.nomNaissance + " " + object.prenom}</option>))}
                             </select>
                         </div>
-                        {/*<p>{this.state.employeeIndex}</p>*/}
                         <br/>
                         {/*ternaire formulaire dpae ou bouton annuler*/}
-                        {((this.state.employeeIndex) && (this.state.employeeIndex !== "default")) ?
+                        {((this.state.dpaeIndex) && (this.state.dpaeIndex !== "default")) ?
                             <DpaeForm
                                 society={this.state.society}
-                                employee={this.state.employees[this.state.employeeIndex]}
+                                dpae={this.state.dpaes[this.state.dpaeIndex]}
+                                history={this.props.history}
                             />
                             :
                             <MDBRow around between>
@@ -109,6 +113,7 @@ class CreateDpae extends React.Component {
             </div>
         );
     }
+
 
 }
 
