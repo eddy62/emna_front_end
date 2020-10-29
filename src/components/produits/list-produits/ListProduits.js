@@ -13,7 +13,7 @@ class ListeProduits extends React.Component {
             listeProduits: [],
             loaded: false,
             data: {},
-
+            message: "liste de produits vide"         
         }
     }
 
@@ -65,6 +65,10 @@ class ListeProduits extends React.Component {
                         };
                         rows.push(produits);
                     });
+                    if(!rows.length){
+                        console.log("test ok")
+                    
+                    };
                     this.setState({
                         listeProduits: listeProduits,
                         data: {columns, rows},
@@ -79,6 +83,8 @@ class ListeProduits extends React.Component {
 
     render() {
         return (
+            <>
+            {this.state.listeProduits.length>0 && 
             <MDBContainer>
                 <div>
                     <MDBCardHeader color="default-color">Gestion Produits </MDBCardHeader>
@@ -93,7 +99,11 @@ class ListeProduits extends React.Component {
                 <div className="row d-flex justify-content-center">
                     <BackBtn history={this.props.history}/>
                 </div>
-            </MDBContainer>);
+            </MDBContainer> }
+            {this.state.listeProduits.length===0 && 
+            <h3 style={{color:"red"}}>Vous ne possédez aucun produit</h3>}
+            </>);
+
     }
 }
 
