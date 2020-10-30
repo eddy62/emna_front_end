@@ -160,7 +160,7 @@ const RegexService = {
 
     /**
      * specific input control for Urssaf employee address
-     * (town + birth)
+     * (town birth + country birth)
      */
     matchUrssafControlForEmployeeAddress() {
         return /^[a-zA-ZâàäéèêëîïöôûüùçÂÀÄÉÈÊËÎÏÖÔÛÜÙÇ0-9 .'-]*$/;

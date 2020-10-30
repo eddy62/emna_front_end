@@ -438,7 +438,7 @@ class DpaeForm extends React.Component {
                                             <Field
                                                 name="surname"
                                                 value={values.surname}
-                                                label="Nom*"
+                                                label="Nom de Naissance*"
                                                 disabled={true}
                                                 component={ComponentText}
                                             />
@@ -662,7 +662,7 @@ class DpaeForm extends React.Component {
                                     size="sm"
                                     onClick={() => {
                                         this.props.history.push(
-                                            "/socialHome/" + this.props.dpae.societyId
+                                            "/socialHome/" + UserService.getSocietyId()
                                         );
                                     }}
                                 >
