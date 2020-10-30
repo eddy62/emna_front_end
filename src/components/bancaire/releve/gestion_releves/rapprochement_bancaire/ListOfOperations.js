@@ -25,9 +25,7 @@ class ListOfOperations extends Component {
         });
     }
 
-    goToList = (id) => {
-    this.props.history.push(`/detailsoperation/${id}`);
-    }
+
 
     render() {
         if (!this.state.loaded) return <Loading/>
@@ -50,7 +48,6 @@ class ListOfOperations extends Component {
                     <MDBTableBody>
                         {this.state.operations.map((operation, index) => (
                             <StatementOperation key={operation.id} operation={operation}
-                                                onClick={() => this.goToList(operation.id)}
                                                 isCheckBoxVisible={this.props.isCheckBoxVisible}
                                                 changeCheckboxVisible={this.props.changeCheckboxVisible}
                                                 selectedFactures={this.props.selectedFactures}

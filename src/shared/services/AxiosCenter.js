@@ -735,7 +735,16 @@ const AxiosCenter = {
     })
   },
 
-  
+  uploadFiles(url,file,config){
+    return ApiBackEnd({
+      method: 'POST',
+      url: url,
+      data: file,
+      onUploadProgress: config
+    })
+  },
+
+
   // Fin Post
 
   //Put

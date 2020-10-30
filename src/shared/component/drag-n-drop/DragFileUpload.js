@@ -12,7 +12,8 @@ class DragFileUpload extends React.Component {
         this.state = {
             loaded: false,
             inputText: "",
-            isAdvancedUpload: false
+            isAdvancedUpload: false,
+            file: []
         }
     }
 
@@ -47,7 +48,8 @@ class DragFileUpload extends React.Component {
     }
 
     getInputText = (advancedUpload) => {
-        let file = this.props.files[0]
+
+        let file = this.state.file;
         let text = "Choisir un fichier";
         if (file) return <label htmlFor="file">{file.name}</label>
         return <span>
@@ -61,13 +63,11 @@ class DragFileUpload extends React.Component {
 
     isFormatAccepted = (files) => {
         if (!this.props.fileFormats) return true
-        let i = 0
         let file = {};
-        while (i < files.length) {
+        for (let i = 0; i < files.length; i++) {
             file = files[i];
             if (!this.props.fileFormats.includes(file.type))
                 return false;
-            i++;
         }
         return true;
     }
@@ -78,6 +78,9 @@ class DragFileUpload extends React.Component {
 
     onFileDropped = (event) => {
         let files = Array.from(event.originalEvent.dataTransfer.files);
+        this.setState(prevState => ({
+            file: [...prevState.file, files[0]]
+        }))
         if (this.isMultipleFile(files)) {
             toast.error(
                 <div className="text-center">
@@ -106,6 +109,7 @@ class DragFileUpload extends React.Component {
     cancel = async () => {
         await this.props.updateFiles([]);
         this.updateText()
+        this.setState({})
     }
 
     render() {
@@ -126,10 +130,12 @@ class DragFileUpload extends React.Component {
                         />
                         <label htmlFor="file">
                             {
-                                this.state.inputText
+                                this.state.file.map(f => {
+                                    {console.log(f.name)}
+                                })
                             }
-                            .
                         </label>
+
                     </MDBCardText>
                 </MDBCardBody>
                 <MDBBtn color="primary" disabled={this.props.files.length === 0} onClick={this.props.submit}>
@@ -144,10 +150,10 @@ class DragFileUpload extends React.Component {
 }
 
 DragFileUpload.propTypes = {
-    submit      : PropTypes.func,
-    files       : PropTypes.array.isRequired,
-    updateFiles : PropTypes.func.isRequired,
-    fileFormats : PropTypes.string,
+    submit: PropTypes.func,
+    files: PropTypes.array.isRequired,
+    updateFiles: PropTypes.func.isRequired,
+    fileFormats: PropTypes.string,
 };
 
 export default DragFileUpload;

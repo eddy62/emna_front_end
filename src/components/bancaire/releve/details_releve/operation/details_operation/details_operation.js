@@ -18,7 +18,8 @@ export default class DetailsOperation extends Component {
     }
 
     componentDidMount() {
-        AxiosCenter.getInvoicesByOperationId(14).then((response) => {
+        console.log()
+        AxiosCenter.getInvoicesByOperationId(this.props.match.params.id).then((response) => {
             const columns = [
                 {
                     label: 'Num',
