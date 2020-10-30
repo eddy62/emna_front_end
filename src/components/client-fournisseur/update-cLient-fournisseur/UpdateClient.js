@@ -102,7 +102,7 @@ class ModifierClient extends Component {
                 <div>
                     <MDBCardHeader color="default-color">Gestion Client Fournisseur </MDBCardHeader>
                     <br></br>
-                    <MDBCardTitle tag="h3">Modifier les donnnées d'un Client Fournisseur  </MDBCardTitle>
+                    <MDBCardTitle tag="h3">Modifier les données d'un Client Fournisseur  </MDBCardTitle>
                     <hr></hr>
                     <div className="container-fluid ">
                         <Formik

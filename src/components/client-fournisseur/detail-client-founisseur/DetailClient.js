@@ -39,7 +39,7 @@ class Details extends React.Component {
                         Gestion Client Fournisseur
                     </MDBCardHeader>
                     <br></br>
-                    <MDBCardTitle tag="h3">  Details: Du Client   {this.state.client.nom}</MDBCardTitle>
+                    <MDBCardTitle tag="h3">  Détails du Client-Fournisseur  {this.state.client.nom}</MDBCardTitle>
                     <hr></hr>
 
                     <div>
