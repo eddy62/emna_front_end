@@ -1,4 +1,5 @@
 import Cookies from "universal-cookie";
+import {Roles} from "../constants/Roles";
 
 const cookies = new Cookies();
 
@@ -28,15 +29,15 @@ const UserService = {
   },
 
   isAdmin() {
-    return this.getRole() === "ROLE_ADMIN"
+    return this.getRole() === Roles.Admin
   },
 
   isSociety() {
-    return this.getRole() === "ROLE_SOCIETY";
+    return this.getRole() === Roles.SOCIETY;
   },
 
   isAccountant() {
-    return this.getRole() === "ROLE_ACCOUNTANT";
+    return this.getRole() === Roles.ACCOUNTANT;
   }
 };
 

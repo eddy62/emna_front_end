@@ -31,7 +31,6 @@ class SideNavigation extends React.Component {
           societes: response.data,
         });
         UserService.setSocietyId(response.data[0].id);
-        console.log(this.state.societes)
       }).catch(e=> {
         // console.log(e)
       });

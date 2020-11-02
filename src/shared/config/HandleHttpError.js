@@ -4,7 +4,7 @@ import React from "react";
 
 const errorHandler = (error) => {
     console.log("-------------------------------- Response error --------------------------------")
-    console.log(error)
+    console.log(error.response)
     console.log("------------------------------ End response error ------------------------------")
 
     if (!error.response) {
@@ -12,14 +12,14 @@ const errorHandler = (error) => {
     } else if (isHandlerEnabled(error.config)) {
         toast.error(
             <div className="text-center">
-                <strong>Erreur dans : {error.response.config.baseURL}
+                <strong>Erreur dans : {error.response.request.responseURL}
                     <br/>{error.response.status} : {error.response.statusText}</strong>
             </div>
         )
     } else if (error.response.status === 403 || error.response.status === 401) {
         toast.error(
             <div className="text-center">
-                <strong>Erreur dans : {error.response.config.baseURL}
+                <strong>Erreur dans : {error.response.request.responseURL}
                     <br/>{error.response.status} : {error.response.statusText}</strong>
             </div>
         )

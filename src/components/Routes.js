@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Switch} from "react-router-dom";
 import {PrivateRoute} from "../helpers/PrivateRoute";
+import {Roles} from "../shared/constants/Roles";
 //Gestion Social import
 import SocialHome from "./social/SocialHome";
 import ListEmployes from "./social/employee-management/ListEmployes";
@@ -9,7 +10,6 @@ import CreateEmploye from "./social/employee-management/CreateEmploye";
 import UpdateEmploye from "./social/employee-management/UpdateEmploye";
 import DeleteEmploye from "./social/employee-management/DeleteEmploye";
 import ArchiveEmploye from "./social/employee-management/ArchiveEmploye";
-
 import ListeContrat from "./contrat/list-contract/ListeContrat";
 import CreerAvenant from "./contrat/list-contract/detail-contract/CreerAvenant";
 import Contrat from "./contrat/Contrat";
@@ -40,7 +40,7 @@ import ListeRelevesInvalide from "./bancaire/releve/historique_releves/liste_rel
 import ListeRelevesValide from "./bancaire/releve/historique_releves/liste_releves_valide";
 import ListeRelevesNonArchive from "./bancaire/releve/historique_releves/liste_releves_non_archive";
 import PageAddOperationStatement
-    from "./bancaire/releve/details_releve/operation/creation_operation/pageAddOperationStatement";
+        from "./bancaire/releve/details_releve/operation/creation_operation/pageAddOperationStatement";
 import BankReconciliation from "./bancaire/releve/gestion_releves/rapprochement_bancaire/BankReconciliation";
 import ListOfOperations from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfOperations";
 import ListOfInvoices from "./bancaire/releve/gestion_releves/rapprochement_bancaire/ListOfInvoices";
@@ -95,260 +95,332 @@ import ListArticle from "./contrat/referencial/article/list-article/ListArticle"
 //gestion Variables de paie
 import ParentAddPayrollVariables from "./social/payroll-variables/add-payroll-variables/ParentAddPayrollVariables";
 import ParentUpdatePayrollVariables
-    from "./social/payroll-variables/update-payroll-variables/ParentUpdatePayrollVariables";
+        from "./social/payroll-variables/update-payroll-variables/ParentUpdatePayrollVariables";
 
 import ParentUpdatePayrollVariablesAccountants
-    from "./social/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants";
+        from "./social/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants";
 
 import ParentPayslip from "./social/payslip/ParentPayslip";
 import UpdateDepense from "./gestion_factures/depenses/update-depense/UpdateDepense";
 import ConsultDeclarationOfEmployment
-    from "./social/declaration-of-employment/consult-declaration-of-employment/ConsultDeclarationOfEmployment";
+        from "./social/declaration-of-employment/consult-declaration-of-employment/ConsultDeclarationOfEmployment";
 import AmendmentList from "./amendment/amendment-list/AmendmentList";
 import QuoteDetails from "./quotes/quotes-details/QuotesDetails";
 
 
-
 export default class Routes extends Component {
-  render() {
-    return (
-      <Switch>
-        <PrivateRoute exact path="/" component={HomeMenu} />
-        <PrivateRoute path="/menu/comptabilite" component={ComptabiliteMenu} />
-        <PrivateRoute path="/menu/juridique" component={JuridiqueMenu} />
-        {/* Gestion Social */}
-        <PrivateRoute path="/socialHome/:id" component={SocialHome} />
-        <PrivateRoute path="/listEmployes/:id" component={ListEmployes} />
-        <PrivateRoute path="/detailEmploye/:id" component={DetailEmploye} />
-        <PrivateRoute path="/newEmploye/:id" component={CreateEmploye} />
-        <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye} />
-        <PrivateRoute path="/deleteEmploye/:id" component={DeleteEmploye} />
-        <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye} />
-        <PrivateRoute
-          path="/add-payroll-variables/:id" component={ParentAddPayrollVariables} />
-        <PrivateRoute
-          path="/modify-payroll-variables/:societyId/:id/:yearSelected/:monthSelected"
-          component={ParentUpdatePayrollVariables}
-        />
-        <PrivateRoute path="/add-declaration-of-employment/:id" component={CreateDpae} />
-        <PrivateRoute path="/consult-declaration-of-employment/:id" component={ConsultDeclarationOfEmployment} />
-        <PrivateRoute path="/payslip/ParentPayslip/:id" component={ParentPayslip} />
-        <PrivateRoute path="/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants/:id" component={ParentUpdatePayrollVariablesAccountants} />
-        <PrivateRoute path="/contentHtmlDpae/:id" component={ContentHtmlDpae} />
-          {/* Gestion Facture */}
-        <PrivateRoute path="/accueilfactures" component={AccueilFacture} />
-        <PrivateRoute path="/accueildepenses" component={AccueilDepense} />
-        <PrivateRoute path="/newfacture" component={CreerFacture} />
-        <PrivateRoute exact path="/depenses/create" component={CreateDepense} />
-        <PrivateRoute exact path="/depenses/update/:id" component={UpdateDepense} />
-        <PrivateRoute exact path="/depenses/details/:id" component={DetailDepense} />
+    render() {
+        return (
+            /**
+             * ********************************
+             * Utilisation de la PrivateRoute *
+             * ********************************
+             *
+             * <PrivateRoute path="le chemin de la route" component={le composant}  roles={la liste des roles autoriser a consulter la route}  />
+             * exemeple: autoriser que l'admin et le comptable à acceder au 'menu/comptabilite'
+             *  <PrivateRoute path="/menu/comptabilite" component={ComptabiliteMenu}  roles={[Roles.Admin, Roles.ACCOUNTANT]}  />
+             * */
 
-        {/* Gestion Devis */}
-        <PrivateRoute path="/devis/accueil" component={QuotesHome} />
-        <PrivateRoute path="/devis/créer" component={QuoteCreate} />
-        <PrivateRoute path="/devis/modifier/:id" component={QuoteEdit} />
-        <PrivateRoute path="/devis/details/:id" component={QuoteDetails} />
+            <Switch>
+                <PrivateRoute exact path="/" component={HomeMenu}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute path="/menu/comptabilite" component={ComptabiliteMenu}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute path="/menu/juridique" component={JuridiqueMenu}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                {/* Gestion Social */}
+                <PrivateRoute path="/socialHome/:id" component={SocialHome}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute path="/listEmployes/:id" component={ListEmployes}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute path="/detailEmploye/:id" component={DetailEmploye}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute path="/newEmploye/:id" component={CreateEmploye}
+                              roles={[Roles.Admin,Roles.SOCIETY]}/>
+                <PrivateRoute path="/updateEmploye/:id" component={UpdateEmploye}
+                              roles={[Roles.Admin,Roles.SOCIETY]}/>
+                <PrivateRoute path="/deleteEmploye/:id" component={DeleteEmploye}
+                              roles={[Roles.Admin,Roles.SOCIETY]}/>
+                <PrivateRoute path="/archiveEmploye/:id" component={ArchiveEmploye}
+                              roles={[Roles.Admin,Roles.SOCIETY]}/>
+                <PrivateRoute
+                    path="/add-payroll-variables/:id" component={ParentAddPayrollVariables}
+                    roles={[Roles.Admin,Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute
+                    path="/modify-payroll-variables/:societyId/:id/:yearSelected/:monthSelected"
+                    component={ParentUpdatePayrollVariables}
+                    roles={[Roles.Admin,Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute path="/add-declaration-of-employment/:id" component={CreateDpae}
+                              roles={[Roles.Admin,Roles.SOCIETY]}/>
+                <PrivateRoute path="/consult-declaration-of-employment/:id" component={ConsultDeclarationOfEmployment}
+                              roles={[Roles.Admin,Roles.SOCIETY]}/>
+                <PrivateRoute path="/payslip/ParentPayslip/:id" component={ParentPayslip}
+                              roles={[Roles.Admin,Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute
+                    path="/validation-comptable/update-payroll-variables/ParentUpdatePayrollVariablesAccountants/:id"
+                    component={ParentUpdatePayrollVariablesAccountants}
+                    roles={[Roles.Admin,Roles.ACCOUNTANT]}/>
+                <PrivateRoute path="/contentHtmlDpae/:id" component={ContentHtmlDpae}
+                              roles={[Roles.Admin,Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                {/* Gestion Facture  Admin societe*/}
+                <PrivateRoute path="/accueilfactures" component={AccueilFacture}
+                              roles={[Roles.Admin,  Roles.SOCIETY]}/>
+                <PrivateRoute path="/accueildepenses" component={AccueilDepense}
+                              roles={[Roles.Admin,  Roles.SOCIETY]}/>
+                <PrivateRoute path="/newfacture" component={CreerFacture}
+                              roles={[Roles.Admin,  Roles.SOCIETY]}/>
+                <PrivateRoute exact path="/depenses/create" component={CreateDepense}
+                              roles={[Roles.Admin,  Roles.SOCIETY]}/>
+                <PrivateRoute exact path="/depenses/update/:id" component={UpdateDepense}
+                              roles={[Roles.Admin,  Roles.SOCIETY]}/>
+                <PrivateRoute exact path="/depenses/details/:id" component={DetailDepense}
+                              roles={[Roles.Admin,  Roles.SOCIETY]}/>
 
-        {/* Juridique  */}
+                {/* Gestion Devis Admin society*/}
+                <PrivateRoute path="/devis/accueil" component={QuotesHome}
+                              roles={[Roles.Admin,  Roles.SOCIETY]}/>
+                <PrivateRoute path="/devis/créer" component={QuoteCreate}
+                              roles={[Roles.Admin,  Roles.SOCIETY]}/>
+                <PrivateRoute path="/devis/modifier/:id" component={QuoteEdit}
+                              roles={[Roles.Admin,  Roles.SOCIETY]}/>
+                <PrivateRoute path="/devis/details/:id" component={QuoteDetails}
+                              roles={[Roles.Admin,  Roles.SOCIETY]}/>
 
-        {/* Gestion des Contrats*/}
-        <PrivateRoute path="/listcontrat" component={ListeContrat} />
-        <PrivateRoute exact path="/contrat" component={Contrat} />
-        <PrivateRoute path="/detailcontrat/:id" component={DetailContrat} />
-        <PrivateRoute path="/creercontrat" component={CreerContrat} />
-        <PrivateRoute path="/creeravenant/:id" component={CreerAvenant} />
-        {/*<PrivateRoute path="/clauses/society/:id" component={ListOfClauses} />*/}
-        <PrivateRoute exact path="/articles" component={ListArticle} />
-        <PrivateRoute exact path="/articles/create" component={CreateArticle} />
-        <PrivateRoute exact path="/articles/edit/:id" component={EditArticle} />
-        {/*<PrivateRoute exact path="/articles/delete/:id" component={DeleteArticle}/>*/}
-        <PrivateRoute exact path="/contrat/avenant/:id" component={AmendmentList} />
-        {/* gestionUserRoutes */}
-        {/* <PrivateRoute exact path="/users" component={Users} />
-        <PrivateRoute exact path="/users/add" component={AddUser} /> */}
+                {/* Juridique  */}
 
-        <PrivateRoute exact path="/users/edit/:id" component={EditUser} />
-        <PrivateRoute exact path="/users/view/:id" component={ViewUser} />
-        <PrivateRoute exact path="/users/stvu/admins" component={ListUser} />
-        <PrivateRoute exact path="/users/stvu/users/add" component={AddUser} />
-        <PrivateRoute exact path="/users/stvu/all" component={ListAllUsers} />
-        <PrivateRoute exact path="/users/stvu" component={selectToViewUser} />
-        {/*stvu stands for : Select to view user*/}
-        <PrivateRoute
-          exact
-          path="/users/stvu/comptables"
-          component={ListComptable}
-        />
-        <PrivateRoute
-          exact
-          path="/users/stvu/societes"
-          component={ListSociete}
-        />
-        <PrivateRoute
-          exact
-          path="/users/stvu/comptables/add"
-          component={AddComptable}
-        />
-        <PrivateRoute
-          exact
-          path="/users/view/comptable/:id"
-          component={ViewComptable}
-        />
-        <PrivateRoute
-          exact
-          path="/users/edit/comptable/:id"
-          component={EditComptable}
-        />
-        <PrivateRoute
-          exact
-          path="/users/stvu/comptables/active"
-          component={ListComptableByType}
-        />
-        <PrivateRoute
-          exact
-          path="/users/stvu/comptables/desactive"
-          component={ListComptableByType}
-        />
-        <PrivateRoute
-          exact
-          path="/users/stvu/comptables/all"
-          component={ListComptableByType}
-        />
-        <PrivateRoute
-          exact
-          path="/users/stvu/admins/all"
-          component={ListAdminByType}
-        />
-        <PrivateRoute
-          exact
-          path="/users/stvu/admins/active"
-          component={ListAdminByType}
-        />
-        <PrivateRoute
-          exact
-          path="/users/stvu/admins/desactive"
-          component={ListAdminByType}
-        />
-        <PrivateRoute
-          exact
-          path="/users/stvu/societes/all"
-          component={ListSocieteByType}
-        />
-        <PrivateRoute
-          exact
-          path="/users/stvu/societes/active"
-          component={ListSocieteByType}
-        />
-        <PrivateRoute
-          exact
-          path="/users/stvu/societes/desactive"
-          component={ListSocieteByType}
-        />
-        <PrivateRoute
-          exact
-          path="/users/stvu/societes/add"
-          component={AddSociete}
-        />
-        <PrivateRoute
-          exact
-          path="/users/view/societe/:id"
-          component={ViewSociete}
-        />
-        <PrivateRoute
-          exact
-          path="/users/edit/societe/:id"
-          component={EditSociete}
-        />
-        <PrivateRoute exact path="/users/stau" component={SelectToAddUser} />{" "}
-        {/*stau stands for : Select to add user*/}
-        {/* finGestionUserRoutes */}
-        <PrivateRoute path="/bancaire" component={Bancaire} />
-        <PrivateRoute
-          path="/creationoperation/:id"
-          component={PageAddOperationStatement}
-        />
-        <PrivateRoute path="/menureleve" component={Releve} />
-        <PrivateRoute path="/historiquereleve/:id" component={ListeReleves} />
-        <PrivateRoute path="/detailsreleve/:id" component={DetailsReleve} />
-        <PrivateRoute
-          path="/detailsreleveinvalide/:id"
-          component={DetailsReleveInvalide}
-        />
-        
-        <PrivateRoute path="/modification/:id" component={EditStatement} />
+                {/* Gestion des Contrats admin society */}
+                <PrivateRoute path="/listcontrat" component={ListeContrat}
+                              roles={[Roles.Admin,  Roles.SOCIETY]}/>
+                <PrivateRoute exact path="/contrat" component={Contrat}
+                              roles={[Roles.Admin,  Roles.SOCIETY]}/>
+                <PrivateRoute path="/detailcontrat/:id" component={DetailContrat}
+                              roles={[Roles.Admin,  Roles.SOCIETY]}/>
+                <PrivateRoute path="/creercontrat" component={CreerContrat}
+                              roles={[Roles.Admin,  Roles.SOCIETY]}/>
+                <PrivateRoute path="/creeravenant/:id" component={CreerAvenant}
+                              roles={[Roles.Admin, Roles.SOCIETY]}/>
+                {/*<PrivateRoute path="/clauses/society/:id" component={ListOfClauses}  roles={[Roles.Admin, Roles.ACCOUNTANT,Roles.SOCIETY]}  />*/}
+                <PrivateRoute exact path="/articles" component={ListArticle}
+                              roles={[Roles.Admin, Roles.SOCIETY]}/>
+                <PrivateRoute exact path="/articles/create" component={CreateArticle}
+                              roles={[Roles.Admin, Roles.SOCIETY]}/>
+                <PrivateRoute exact path="/articles/edit/:id" component={EditArticle}
+                              roles={[Roles.Admin, Roles.SOCIETY]}/>
+                {/*<PrivateRoute exact path="/articles/delete/:id" component={DeleteArticle} roles={[Roles.Admin, Roles.ACCOUNTANT,Roles.SOCIETY]}  />*/}
+                <PrivateRoute exact path="/contrat/avenant/:id" component={AmendmentList}
+                              roles={[Roles.Admin, Roles.SOCIETY]}/>
+                {/* gestionUserRoutes admin */}
+                {/* <PrivateRoute exact path="/users" component={Users}  roles={[Roles.Admin, Roles.ACCOUNTANT,Roles.SOCIETY]}  />
+        <PrivateRoute exact path="/users/add" component={AddUser}  roles={[Roles.Admin, Roles.ACCOUNTANT,Roles.SOCIETY]}  /> */}
 
-        <PrivateRoute
-          path="/detailsrelevenonarchive/:id"
-          component={DetailsReleveNonArchive}
-        />
-        <PrivateRoute path="/creationreleve" component={CreationReleve} />
-        <PrivateRoute
-          path="/detailsoperation/:id"
-          component={DetailsOperation}
-        />
+                <PrivateRoute exact path="/users/edit/:id" component={EditUser}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute exact path="/users/view/:id" component={ViewUser}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute exact path="/users/stvu/admins" component={ListUser}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute exact path="/users/stvu/users/add" component={AddUser}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute exact path="/users/stvu/all" component={ListAllUsers}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute exact path="/users/stvu" component={selectToViewUser}
+                              roles={[Roles.Admin, Roles.SOCIETY]}/>
+                {/*stvu stands for : Select to view user admin only*/}
+                <PrivateRoute
+                    exact
+                    path="/users/stvu/comptables"
+                    component={ListComptable}
+                    roles={[Roles.Admin]}/>
+                <PrivateRoute
+                    exact
+                    path="/users/stvu/societes"
+                    component={ListSociete}
+                    roles={[Roles.Admin]}/>
+                <PrivateRoute
+                    exact
+                    path="/users/stvu/comptables/add"
+                    component={AddComptable}
+                    roles={[Roles.Admin]}/>
+                <PrivateRoute
+                    exact
+                    path="/users/view/comptable/:id"
+                    component={ViewComptable}
+                    roles={[Roles.Admin]}/>
+                <PrivateRoute
+                    exact
+                    path="/users/edit/comptable/:id"
+                    component={EditComptable}
+                    roles={[Roles.Admin]}/>
+                <PrivateRoute
+                    exact
+                    path="/users/stvu/comptables/active"
+                    component={ListComptableByType}
+                    roles={[Roles.Admin]}/>
+                <PrivateRoute
+                    exact
+                    path="/users/stvu/comptables/desactive"
+                    component={ListComptableByType}
+                    roles={[Roles.Admin]}/>
+                <PrivateRoute
+                    exact
+                    path="/users/stvu/comptables/all"
+                    component={ListComptableByType}
+                    roles={[Roles.Admin]}/>
+                <PrivateRoute
+                    exact
+                    path="/users/stvu/admins/all"
+                    component={ListAdminByType}
+                    roles={[Roles.Admin]}/>
+                <PrivateRoute
+                    exact
+                    path="/users/stvu/admins/active"
+                    component={ListAdminByType}
+                    roles={[Roles.Admin]}/>
+                <PrivateRoute
+                    exact
+                    path="/users/stvu/admins/desactive"
+                    component={ListAdminByType}
+                    roles={[Roles.Admin]}/>
+                <PrivateRoute
+                    exact
+                    path="/users/stvu/societes/all"
+                    component={ListSocieteByType}
+                    roles={[Roles.Admin]}/>
+                <PrivateRoute
+                    exact
+                    path="/users/stvu/societes/active"
+                    component={ListSocieteByType}
+                    roles={[Roles.Admin]}/>
+                <PrivateRoute
+                    exact
+                    path="/users/stvu/societes/desactive"
+                    component={ListSocieteByType}
+                    roles={[Roles.Admin]}/>
+                <PrivateRoute
+                    exact
+                    path="/users/stvu/societes/add"
+                    component={AddSociete}
+                    roles={[Roles.Admin]}/>
+                <PrivateRoute
+                    exact
+                    path="/users/view/societe/:id"
+                    component={ViewSociete}
+                    roles={[Roles.Admin]}/>
+                <PrivateRoute
+                    exact
+                    path="/users/edit/societe/:id"
+                    component={EditSociete}
+                    roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute exact path="/users/stau" component={SelectToAddUser}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>{" "}
+                {/*stau stands for : Select to add user*/}
+                {/* finGestionUserRoutes */}
+                <PrivateRoute path="/bancaire" component={Bancaire}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute
+                    path="/creationoperation/:id"
+                    component={PageAddOperationStatement}
+                    roles={[Roles.Admin, Roles.SOCIETY]}/>
+                <PrivateRoute path="/menureleve" component={Releve}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute path="/historiquereleve/:id" component={ListeReleves}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute path="/detailsreleve/:id" component={DetailsReleve}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute
+                    path="/detailsreleveinvalide/:id"
+                    component={DetailsReleveInvalide}
+                    roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
 
-        <PrivateRoute path="/editoperation/:id" component={EditOperation} />
-        <PrivateRoute path="/menurelevenon" component={MenuReleveNon} />
-        {/* Rapprochement bancaire */}
-        <PrivateRoute path="/gestionReleves/rapprochementBancaire/:id" component={BankReconciliation} />
-        <PrivateRoute path="/gestionReleves/rapprochementBancaire/listeOperations" component={ListOfOperations} />
-        <PrivateRoute path="/gestionReleves/rapprochementBancaire/listeFactures" component={ListOfInvoices} />
-        <PrivateRoute path="/operationsmerger/:id" component={OperationsMerger} />
+                <PrivateRoute path="/modification/:id" component={EditStatement}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
 
-        <PrivateRoute
-          path="/gestionReleves/rapprochementBancaire"
-          component={BankReconciliation}
-        />
-        <PrivateRoute
-          path="/gestionReleves/rapprochementBancaire/listeOperations"
-          component={ListOfOperations}
-        />
-        <PrivateRoute
-          path="/gestionReleves/rapprochementBancaire/listeFactures"
-          component={ListOfInvoices}
-        />
-        <PrivateRoute path="/releveinvalide" component={ListeRelevesInvalide} />
-        <PrivateRoute
-            path="/relevevalide"
-            component={ListeRelevesValide}
-        />
-        <PrivateRoute
-          path="/relevenonarchive/:id"
-          component={ListeRelevesNonArchive}
-        />
-        {/* gestionClientFournisseur */}
-        <PrivateRoute
-          path="/client-fournisseur"
-          component={MenuClientFournisseur}
-        />
-        <PrivateRoute
-          path="/clientFournisseur/modifier/:id"
-          component={ModifierClient}
-        />
-        <PrivateRoute
-          path="/clientFournisseur/liste"
-          component={ListerClients}
-        />
-        <PrivateRoute path="/clientFournisseur/creer" component={AddClient} />
-        <PrivateRoute
-          path="/clientFournisseur/delete/:id"
-          component={SupprimerClient}
-        />
-        <PrivateRoute
-          path="/clientFournisseur/detail/:id"
-          component={DetailsClient}
-        />
-        {/* finGestionClientFournisseur */}
-        {/* GestionProduit */}
-        <PrivateRoute exact path="/produits"            component={ListeProduits} />
-        <PrivateRoute exact path="/produits/detail/:id" component={DetailsProduit} />
-        <PrivateRoute exact path="/produits/update/:id" component={UpdateProduit} />
-        <PrivateRoute exact path="/produits/create"     component={AddProduit} />
-        {/* Gestion Referentiels */}
-        <PrivateRoute path="/ref" component={Referentiels} />
-        {/* <Route component={NotFound} /> */}
-        <PrivateRoute component={NotFound} />
-      </Switch>
-    );
-  }
+                <PrivateRoute
+                    path="/detailsrelevenonarchive/:id"
+                    component={DetailsReleveNonArchive}
+                    roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute path="/creationreleve" component={CreationReleve}
+                              roles={[Roles.Admin, Roles.SOCIETY]}/>
+                <PrivateRoute
+                    path="/detailsoperation/:id"
+                    component={DetailsOperation}
+                    roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+
+                <PrivateRoute path="/editoperation/:id" component={EditOperation}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute path="/menurelevenon" component={MenuReleveNon}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                {/* Rapprochement bancaire */}
+                <PrivateRoute path="/gestionReleves/rapprochementBancaire/:id" component={BankReconciliation}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute path="/gestionReleves/rapprochementBancaire/listeOperations" component={ListOfOperations}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute path="/gestionReleves/rapprochementBancaire/listeFactures" component={ListOfInvoices}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute path="/operationsmerger/:id" component={OperationsMerger}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+
+                <PrivateRoute
+                    path="/gestionReleves/rapprochementBancaire"
+                    component={BankReconciliation}
+                    roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute
+                    path="/gestionReleves/rapprochementBancaire/listeOperations"
+                    component={ListOfOperations}
+                    roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute
+                    path="/gestionReleves/rapprochementBancaire/listeFactures"
+                    component={ListOfInvoices}
+                    roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute path="/releveinvalide" component={ListeRelevesInvalide}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute
+                    path="/relevevalide"
+                    component={ListeRelevesValide}
+                    roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                <PrivateRoute
+                    path="/relevenonarchive/:id"
+                    component={ListeRelevesNonArchive}
+                    roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                {/* gestionClientFournisseur aDmin society */}
+                <PrivateRoute
+                    path="/client-fournisseur"
+                    component={MenuClientFournisseur}
+                    roles={[Roles.Admin, Roles.SOCIETY]}/>
+                <PrivateRoute
+                    path="/clientFournisseur/modifier/:id"
+                    component={ModifierClient}
+                    roles={[Roles.Admin, Roles.SOCIETY]}/>
+                <PrivateRoute
+                    path="/clientFournisseur/liste"
+                    component={ListerClients}
+                    roles={[Roles.Admin, Roles.SOCIETY]}/>
+                <PrivateRoute path="/clientFournisseur/creer" component={AddClient}
+                              roles={[Roles.Admin, Roles.SOCIETY]}/>
+                <PrivateRoute
+                    path="/clientFournisseur/delete/:id"
+                    component={SupprimerClient}
+                    roles={[Roles.Admin, Roles.SOCIETY]}/>
+                <PrivateRoute
+                    path="/clientFournisseur/detail/:id"
+                    component={DetailsClient}
+                    roles={[Roles.Admin, Roles.SOCIETY]}/>
+                {/* finGestionClientFournisseur */}
+                {/* GestionProduit Admin , Society */}
+                <PrivateRoute exact path="/produits" component={ListeProduits}
+                              roles={[Roles.Admin, Roles.SOCIETY]}/>
+                <PrivateRoute exact path="/produits/detail/:id" component={DetailsProduit}
+                              roles={[Roles.Admin, Roles.SOCIETY]}/>
+                <PrivateRoute exact path="/produits/update/:id" component={UpdateProduit}
+                              roles={[Roles.Admin, Roles.SOCIETY]}/>
+                <PrivateRoute exact path="/produits/create" component={AddProduit}
+                              roles={[Roles.Admin, Roles.SOCIETY]}/>
+                {/* Gestion Referentiels all */}
+                <PrivateRoute path="/ref" component={Referentiels}
+                              roles={[Roles.Admin, Roles.ACCOUNTANT, Roles.SOCIETY]}/>
+                {/* <Route component={NotFound} /> */}
+                <PrivateRoute component={NotFound}/>
+            </Switch>
+        );
+    }
 }
